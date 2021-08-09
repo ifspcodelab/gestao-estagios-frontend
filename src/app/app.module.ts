@@ -8,11 +8,16 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { CampusComponent } from './campus/campus.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    SidebarComponent,
+    CampusComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +25,8 @@ import { MatButtonModule } from "@angular/material/button";
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]
