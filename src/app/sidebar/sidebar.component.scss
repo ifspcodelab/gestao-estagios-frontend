@@ -40,6 +40,15 @@ mat-sidenav {
   padding-top: 16px;
 }
 
+mat-list-item:hover {
+  background-color: #f6f3ff !important;
+}
+
+.active-list-item {
+  background-color: #f6f3ff;
+  color: #673ab7 !important;
+}
+
 .mat-sidenav-content {
   padding: 0 30px;
 }

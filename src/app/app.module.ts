@@ -12,13 +12,15 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { CampusComponent } from './campus/campus.component';
 import {MatListModule} from "@angular/material/list";
+import { DepartmentComponent } from './department/department.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
     SidebarComponent,
-    CampusComponent
+    CampusComponent,
+    DepartmentComponent
   ],
   imports: [
     BrowserModule,
