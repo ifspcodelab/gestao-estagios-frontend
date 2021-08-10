@@ -11,6 +11,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { CampusComponent } from './campus/campus.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CampusComponent } from './campus/campus.component';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

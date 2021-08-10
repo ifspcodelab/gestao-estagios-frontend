@@ -1,6 +1,37 @@
-<mat-sidenav-container>
+<mat-sidenav-container autosize="true">
   <mat-sidenav #sidenav mode="side" opened>
-    <a routerLink="/campus">Campus</a>
+    <mat-nav-list>
+      <mat-list-item disableRipple>
+        <mat-icon matListIcon class="material-icons-outlined">directions_run</mat-icon>
+        <a matLine routerLink="/campus">Estágios</a>
+      </mat-list-item>
+      <mat-list-item disableRipple>
+        <mat-icon matListIcon class="material-icons-outlined">meeting_room</mat-icon>
+        <a matLine routerLink="/campus">Pedidos de orientação</a>
+      </mat-list-item>
+      <mat-list-item disableRipple>
+        <mat-icon matListIcon class="material-icons-outlined">people</mat-icon>
+        <a matLine routerLink="/campus">Estudantes</a>
+      </mat-list-item>
+      <mat-list-item disableRipple>
+        <mat-icon matListIcon class="material-icons-outlined">supervised_user_circle</mat-icon>
+        <a matLine routerLink="/campus">Orientadores</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <h2 mat-subheader>ADMIN</h2>
+      <mat-list-item disableRipple>
+        <mat-icon matListIcon class="material-icons-outlined">home_work</mat-icon>
+        <a matLine routerLink="/campus">Campus</a>
+      </mat-list-item>
+      <mat-list-item disableRipple>
+        <mat-icon matListIcon class="material-icons-outlined">meeting_room</mat-icon>
+        <a matLine routerLink="/campus">Departamentos</a>
+      </mat-list-item>
+      <mat-list-item disableRipple>
+        <mat-icon matListIcon class="material-icons-outlined">description</mat-icon>
+        <a matLine routerLink="/campus">Cursos</a>
+      </mat-list-item>
+    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
