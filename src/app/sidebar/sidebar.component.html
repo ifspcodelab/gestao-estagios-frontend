@@ -1,36 +1,55 @@
 <mat-sidenav-container autosize="true">
   <mat-sidenav #sidenav mode="side" opened>
     <mat-nav-list>
-      <mat-list-item disableRipple>
-        <mat-icon matListIcon class="material-icons-outlined">directions_run</mat-icon>
-        <a matLine routerLink="/estagios" routerLinkActive="active-list-item">Estágios</a>
-      </mat-list-item>
-      <mat-list-item disableRipple>
-        <mat-icon matListIcon class="material-icons-outlined">meeting_room</mat-icon>
-        <a matLine routerLink="/pedidos-orientacao" routerLinkActive="active-list-item">Pedidos de orientação</a>
-      </mat-list-item>
-      <mat-list-item disableRipple>
-        <mat-icon matListIcon class="material-icons-outlined">people</mat-icon>
-        <a matLine routerLink="/estudantes" routerLinkActive="active-list-item">Estudantes</a>
-      </mat-list-item>
-      <mat-list-item disableRipple>
-        <mat-icon matListIcon class="material-icons-outlined">supervised_user_circle</mat-icon>
-        <a matLine routerLink="/orientadores" routerLinkActive="active-list-item">Orientadores</a>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <h2 mat-subheader>ADMIN</h2>
-      <mat-list-item disableRipple routerLinkActive="active-list-item">
-        <mat-icon matListIcon class="material-icons-outlined">home_work</mat-icon>
-        <a matLine routerLink="/campus">Campus</a>
-      </mat-list-item>
-      <mat-list-item disableRipple routerLinkActive="active-list-item">
-        <mat-icon matListIcon class="material-icons-outlined">meeting_room</mat-icon>
-        <a matLine routerLink="/departamentos">Departamentos</a>
-      </mat-list-item>
-      <mat-list-item disableRipple routerLinkActive="active-list-item">
-        <mat-icon matListIcon class="material-icons-outlined">description</mat-icon>
-        <a matLine routerLink="/cursos">Cursos</a>
-      </mat-list-item>
+      <div *ngFor="let group of sideBarGroups ">
+        <h2 *ngIf="group.name != 'default'" mat-subheader>{{ group.name | uppercase }}</h2>
+        <mat-list-item *ngFor="let item of group.items" routerLinkActive="active-list-item" disableRipple>
+          <mat-icon matListIcon class="material-icons-outlined">{{ item.icon }}</mat-icon>
+          <a matLine routerLink="{{ item.url }}" routerLinkActive="active-list-item">{{ item.name }}</a>
+        </mat-list-item>
+      </div>
+
+<!--      <mat-list-item *ngFor="let item of itens" routerLinkActive="active-list-item" disableRipple>-->
+<!--        <mat-icon matListIcon class="material-icons-outlined">{{ item.icon }}</mat-icon>-->
+<!--        <a matLine routerLink="{{ item.url }}" routerLinkActive="active-list-item">{{ item.name }}</a>-->
+<!--      </mat-list-item>-->
+
+<!--      <mat-list-item disableRipple routerLinkActive="active-list-item">-->
+<!--        <mat-icon matListIcon class="material-icons-outlined">home_work</mat-icon>-->
+<!--        <a matLine routerLink="/admin/campus">Campus</a>-->
+<!--      </mat-list-item>-->
+
+
+<!--      <mat-list-item disableRipple>-->
+<!--        <mat-icon matListIcon class="material-icons-outlined">directions_run</mat-icon>-->
+<!--        <a matLine routerLink="/estagios" routerLinkActive="active-list-item">Estágios</a>-->
+<!--      </mat-list-item>-->
+<!--      <mat-list-item disableRipple>-->
+<!--        <mat-icon matListIcon class="material-icons-outlined">meeting_room</mat-icon>-->
+<!--        <a matLine routerLink="/pedidos-orientacao" routerLinkActive="active-list-item">Pedidos de orientação</a>-->
+<!--      </mat-list-item>-->
+<!--      <mat-list-item disableRipple>-->
+<!--        <mat-icon matListIcon class="material-icons-outlined">people</mat-icon>-->
+<!--        <a matLine routerLink="/estudantes" routerLinkActive="active-list-item">Estudantes</a>-->
+<!--      </mat-list-item>-->
+<!--      <mat-list-item disableRipple>-->
+<!--        <mat-icon matListIcon class="material-icons-outlined">supervised_user_circle</mat-icon>-->
+<!--        <a matLine routerLink="/orientadores" routerLinkActive="active-list-item">Orientadores</a>-->
+<!--      </mat-list-item>-->
+<!--      <mat-divider></mat-divider>-->
+<!--      <h2 mat-subheader>ADMIN</h2>-->
+<!--      <mat-list-item disableRipple routerLinkActive="active-list-item">-->
+<!--        <mat-icon matListIcon class="material-icons-outlined">home_work</mat-icon>-->
+<!--        <a matLine routerLink="/admin/campus">Campus</a>-->
+<!--      </mat-list-item>-->
+<!--      <mat-list-item disableRipple routerLinkActive="active-list-item">-->
+<!--        <mat-icon matListIcon class="material-icons-outlined">meeting_room</mat-icon>-->
+<!--        <a matLine routerLink="/admin/department">Departamentos</a>-->
+<!--      </mat-list-item>-->
+<!--      <mat-list-item disableRipple routerLinkActive="active-list-item">-->
+<!--        <mat-icon matListIcon class="material-icons-outlined">description</mat-icon>-->
+<!--        <a matLine routerLink="/admin/course">Cursos</a>-->
+<!--      </mat-list-item>-->
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

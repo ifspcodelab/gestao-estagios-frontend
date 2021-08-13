@@ -1,0 +1,7 @@
+<mat-toolbar>
+  <h1 class="mat-subheader">{{ data.pluralize }}</h1>
+  <span class="example-spacer"></span>
+  <button *ngIf="data.newAction" mat-button color="primary" routerLink="{{ data.newAction.url }}">
+    Novo {{ data.name }}
+  </button>
+</mat-toolbar>

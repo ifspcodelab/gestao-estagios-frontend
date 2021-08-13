@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import {SidebarComponent} from "./sidebar.component";
+import { SidebarItem } from "./sidebar.item.model";
+import { SideBarGroup } from "./sidebar.group.model";
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,10 @@ export class SidebarService {
   }
 
   public toggle(): void {
-    console.log(this.sidebar);
     this.sidebar.toggle();
+  }
+
+  public setSideBarGroup(sideBarGroups: SideBarGroup[]) {
+    this.sidebar.setSideBarGroup(sideBarGroups);
   }
 }
