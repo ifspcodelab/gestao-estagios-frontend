@@ -28,6 +28,5 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.setSideBarGroup);
   }
 }

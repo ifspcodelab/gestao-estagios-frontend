@@ -1,1 +1,76 @@
-<p>campus-create works!</p>
+<form class="example-form" [formGroup]="campusForm">
+
+  <mat-form-field>
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="" formControlName="name" name="name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Sigla</mat-label>
+    <input matInput placeholder="" formControlName="abbreviation" name="abbreviation">
+  </mat-form-field>
+
+  <div formGroupName="address">
+
+    <mat-form-field>
+      <mat-label>postalCode</mat-label>
+      <input matInput placeholder="" formControlName="postalCode" name="postalCode">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>street</mat-label>
+      <input matInput placeholder="" formControlName="street" name="street">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>neighborhood</mat-label>
+      <input matInput placeholder="" formControlName="neighborhood" name="neighborhood">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>city</mat-label>
+      <input matInput placeholder="" formControlName="city" name="city">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>state</mat-label>
+      <input matInput placeholder="" formControlName="state" name="state">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>number</mat-label>
+      <input matInput placeholder="" formControlName="number" name="number">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>complement</mat-label>
+      <input matInput placeholder="" formControlName="complement" name="complement">
+    </mat-form-field>
+
+  </div>
+
+  <div formGroupName="internshipSector">
+
+    <mat-form-field>
+      <mat-label>telephone</mat-label>
+      <input matInput placeholder="" formControlName="telephone" name="telephone">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>email</mat-label>
+      <input matInput placeholder="" formControlName="email" name="email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>website</mat-label>
+      <input matInput placeholder="" formControlName="website" name="website">
+    </mat-form-field>
+
+  </div>
+
+  <div>
+    <button mat-flat-button (click)="cancel()">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="create()">Adicionar</button>
+  </div>
+
+</form>

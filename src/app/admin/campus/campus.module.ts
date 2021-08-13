@@ -6,6 +6,7 @@ import { CampusComponent } from './campus.component';
 import { CampusListComponent } from './campus-list/campus-list.component';
 import { CampusCreateComponent } from './campus-create/campus-create.component';
 import { SharedModule } from "../../shared/shared.module";
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -17,7 +18,9 @@ import { SharedModule } from "../../shared/shared.module";
   imports: [
     CommonModule,
     CampusRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
-export class CampusModule { }
+export class CampusModule {
+}

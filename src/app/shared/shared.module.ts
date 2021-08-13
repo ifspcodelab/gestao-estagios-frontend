@@ -4,6 +4,8 @@ import { FeatureHeaderComponent } from './feature-header/feature-header.componen
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { RouterModule } from "@angular/router";
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 
 @NgModule({
@@ -11,7 +13,10 @@ import { RouterModule } from "@angular/router";
     FeatureHeaderComponent
   ],
   exports: [
-    FeatureHeaderComponent
+    FeatureHeaderComponent,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule
   ],
   imports: [
     CommonModule,
