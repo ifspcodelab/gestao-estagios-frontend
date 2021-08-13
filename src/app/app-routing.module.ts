@@ -5,7 +5,8 @@ import {DepartmentComponent} from "./department/department.component";
 
 const routes: Routes = [
   { path: "campus", component: CampusComponent },
-  { path: "departamentos", component: DepartmentComponent }
+  { path: "departamentos", component: DepartmentComponent },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) }
 ];
 
 @NgModule({
