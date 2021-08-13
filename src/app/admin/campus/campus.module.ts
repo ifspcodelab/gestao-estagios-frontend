@@ -5,6 +5,7 @@ import { CampusRoutingModule } from './campus-routing.module';
 import { CampusComponent } from './campus.component';
 import { CampusListComponent } from './campus-list/campus-list.component';
 import { CampusCreateComponent } from './campus-create/campus-create.component';
+import { SharedModule } from "../../shared/shared.module";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { CampusCreateComponent } from './campus-create/campus-create.component';
   ],
   imports: [
     CommonModule,
-    CampusRoutingModule
+    CampusRoutingModule,
+    SharedModule
   ]
 })
 export class CampusModule { }

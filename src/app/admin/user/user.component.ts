@@ -1,15 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { FeatureHeader } from "../../shared/feature-header/feature-header.model";
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  template: `
+    <app-feature-header [data]="data"></app-feature-header>
+    <router-outlet></router-outlet>
+  `
 })
 export class UserComponent implements OnInit {
+  data: FeatureHeader
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
+    this.data =  {
+      name: "Usuário",
+      pluralize: "Usuários"
+    }
   }
 
 }
