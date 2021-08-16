@@ -1,8 +1,10 @@
 export interface FeatureHeader {
-  readonly name: string
-  readonly pluralize: string
-  readonly newAction?: Action
+  readonly title: string
+  readonly action?: Action
 }
 export interface Action {
-  readonly url: string
+  readonly type: string,
+  readonly title: string,
+  readonly url?: string,
+  readonly fn?: () => void
 }

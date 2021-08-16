@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import { SideBarGroup } from "./sidebar.group.model";
 
@@ -9,14 +9,20 @@ import { SideBarGroup } from "./sidebar.group.model";
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
   sideBarGroups: SideBarGroup[] = [];
+  screenWidth: number;
 
   @ViewChild("sidenav", { static: true })
   private sidenav: MatSidenav;
 
-  constructor() { }
-
   ngOnInit(): void {
+    if(window.innerWidth <= 700) {
+      this.sidenav.close();
+    }
+  }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    event.target.innerWidth <= 700 ? this.sidenav.close() : this.sidenav.open();
   }
 
   public toggle() {

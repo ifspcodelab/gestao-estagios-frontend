@@ -10,6 +10,7 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
+import { SharedModule } from "../shared/shared.module";
 
 
 @NgModule({
@@ -21,11 +22,7 @@ import { MatListModule } from "@angular/material/list";
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule
+    SharedModule
   ]
 })
 export class AdminModule { }

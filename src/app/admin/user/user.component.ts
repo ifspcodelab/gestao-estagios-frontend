@@ -16,8 +16,12 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.data =  {
-      name: "Usuário",
-      pluralize: "Usuários"
+      title: "Usuários",
+      action: {
+        type: "",
+        title: "Novo Usuário",
+        url: "/admin/user/create"
+      }
     }
   }
 
