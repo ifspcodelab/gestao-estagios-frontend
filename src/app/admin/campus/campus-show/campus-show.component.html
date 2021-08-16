@@ -1,0 +1,35 @@
+<ng-template #indicator>
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+</ng-template>
+<div *ngIf="!loading; else indicator">
+  <mat-toolbar>
+    <button mat-icon-button (click)="location.back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="mat-subheader">Campus {{ campus.name }} - {{ campus.abbreviation }}</h1>
+    <span class="example-spacer"></span>
+    <button mat-flat-button color="primary" routerLink="/admin/campus/{{ campus.id }}/edit">
+      Editar
+    </button>
+    <button mat-stroked-button color="accent">
+      Remover
+    </button>
+  </mat-toolbar>
+
+  <div>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListIcon>place</mat-icon>
+        <h3 matLine> Endereço </h3>
+        <p matLine>  {{ campus.address.street }}, número {{ campus.address.number }}, {{ campus.address.neighborhood }}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListIcon>contact_support</mat-icon>
+        <h3 matLine> Informações Setor de Estágio </h3>
+        <p matLine> {{ campus.internshipSector.telephone }}</p>
+        <p matLine> {{ campus.internshipSector.email }}</p>
+        <p matLine> {{ campus.internshipSector.website }}</p>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>

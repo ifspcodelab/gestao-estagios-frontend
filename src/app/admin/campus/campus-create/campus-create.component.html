@@ -1,1 +1,202 @@
-<p>campus-create works!</p>
+<ng-template #indicator>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>
+
+<div *ngIf="createMode || campus; else indicator">
+  <mat-toolbar>
+    <button mat-icon-button (click)="location.back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="mat-subheader" *ngIf="createMode">Novo Campus</h1>
+    <h1 class="mat-subheader" *ngIf="!createMode">Editar Campus</h1>
+    <span class="example-spacer"></span>
+    <button type="submit" form="campus-form" mat-flat-button color="primary">
+      <span>Salvar Campus</span>
+    </button>
+  </mat-toolbar>
+
+  <form id="campus-form" class="my-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <fieldset>
+
+      <mat-form-field class="form-field-md">
+        <mat-label>Nome</mat-label>
+        <input appearance="fill" matInput placeholder="" formControlName="name" name="name">
+
+        <mat-error *ngIf="form.get('name')?.errors?.serverError && submitted">
+          {{ form.get('name')?.errors?.serverError }}
+        </mat-error>
+
+<!--        <mat-error *ngIf="form.get('name')?.errors?.required && submitted">-->
+<!--          Nome é <strong>obrigatório</strong>-->
+<!--        </mat-error>-->
+
+
+        <!--      <mat-error *ngIf="form.get('name')?.errors?.whitespace && submitted">-->
+        <!--        Nome não pode ser vazio-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-field-sm">
+        <mat-label>Sigla</mat-label>
+        <input matInput placeholder="" formControlName="abbreviation" name="abbreviation">
+
+        <mat-error *ngIf="form.get('abbreviation')?.errors?.serverError && submitted">
+          {{ form.get('abbreviation')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('abbreviation')?.errors?.required && submitted">-->
+        <!--        Sigla é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+
+      </mat-form-field>
+
+    </fieldset>
+
+    <fieldset formGroupName="address">
+      <legend>Endereço</legend>
+      <mat-form-field class="form-field-sm">
+        <mat-label>CEP</mat-label>
+        <input matInput placeholder="" formControlName="postalCode" name="postalCode">
+
+        <mat-error *ngIf="form.get('address.postalCode')?.errors?.serverError && submitted">
+          {{ form.get('address.postalCode')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('address.postalCode')?.errors?.required && submitted">-->
+        <!--        CEP é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-field-md">
+        <mat-label>Rua</mat-label>
+        <input matInput placeholder="" formControlName="street" name="street">
+
+        <mat-error *ngIf="form.get('address.street')?.errors?.serverError && submitted">
+          {{ form.get('address.street')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('address.street')?.errors?.required && submitted">-->
+        <!--        Rua é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field class="form-field-sm">
+        <mat-label>Bairro</mat-label>
+        <input matInput placeholder="" formControlName="neighborhood" name="neighborhood">
+
+        <mat-error *ngIf="form.get('address.neighborhood')?.errors?.serverError && submitted">
+          {{ form.get('address.neighborhood')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('address.neighborhood')?.errors?.required && submitted">-->
+        <!--        Bairro é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-field-sm">
+        <mat-label>Cidade</mat-label>
+        <input matInput placeholder="" formControlName="city" name="city">
+
+        <mat-error *ngIf="form.get('address.city')?.errors?.serverError && submitted">
+          {{ form.get('address.city')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('address.city')?.errors?.required && submitted">-->
+        <!--        Cidade é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-field-sm">
+        <mat-label>Estado</mat-label>
+        <input matInput placeholder="" formControlName="state" name="state">
+
+        <mat-error *ngIf="form.get('address.state')?.errors?.serverError && submitted">
+          {{ form.get('address.state')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('address.state')?.errors?.required && submitted">-->
+        <!--        Estado é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field class="form-field-sm">
+        <mat-label>Número</mat-label>
+        <input matInput placeholder="" formControlName="number" name="number">
+
+        <mat-error *ngIf="form.get('address.number')?.errors?.serverError && submitted">
+          {{ form.get('address.number')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('address.number')?.errors?.required && submitted">-->
+        <!--        Estado é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-field-sm">
+        <mat-label>Complemento</mat-label>
+        <input matInput placeholder="" formControlName="complement" name="complement">
+
+        <mat-error *ngIf="form.get('address.complement')?.errors?.serverError && submitted">
+          {{ form.get('address.complement')?.errors?.serverError }}
+        </mat-error>
+      </mat-form-field>
+
+    </fieldset>
+
+    <br>
+
+    <fieldset formGroupName="internshipSector">
+      <legend>Informações setor de estágio</legend>
+      <mat-form-field class="form-field-sm">
+        <mat-label>Telefone</mat-label>
+        <input matInput placeholder="" formControlName="telephone" name="telephone">
+
+        <mat-error *ngIf="form.get('internshipSector.telephone')?.errors?.serverError && submitted">
+          {{ form.get('internshipSector.telephone')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('internshipSector.telephone')?.errors?.required && submitted">-->
+        <!--        Telefone é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-field-sm">
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="" formControlName="email" name="email">
+
+        <mat-error *ngIf="form.get('internshipSector.email')?.errors?.serverError && submitted">
+          {{ form.get('internshipSector.email')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('internshipSector.email')?.errors?.required && submitted">-->
+        <!--        E-mail é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+
+        <!--      <mat-error *ngIf="form.get('internshipSector.email')?.errors?.email && submitted">-->
+        <!--        E-mail deve ser <strong>válido</strong>-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-field-sm">
+        <mat-label>Website</mat-label>
+        <input matInput placeholder="" formControlName="website" name="website">
+
+        <mat-error *ngIf="form.get('internshipSector.website')?.errors?.serverError && submitted">
+          {{ form.get('internshipSector.website')?.errors?.serverError }}
+        </mat-error>
+
+        <!--      <mat-error *ngIf="form.get('internshipSector.website')?.errors?.required && submitted">-->
+        <!--        E-mail é <strong>obrigatório</strong>-->
+        <!--      </mat-error>-->
+      </mat-form-field>
+
+    </fieldset>
+  </form>
+
+
+</div>
+

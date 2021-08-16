@@ -6,18 +6,25 @@ import { CampusComponent } from './campus.component';
 import { CampusListComponent } from './campus-list/campus-list.component';
 import { CampusCreateComponent } from './campus-create/campus-create.component';
 import { SharedModule } from "../../shared/shared.module";
+import { ReactiveFormsModule } from "@angular/forms";
+import { CoreModule } from "../../core/core.module";
+import { CampusShowComponent } from './campus-show/campus-show.component';
 
 
 @NgModule({
   declarations: [
     CampusComponent,
     CampusListComponent,
-    CampusCreateComponent
+    CampusCreateComponent,
+    CampusShowComponent
   ],
   imports: [
     CommonModule,
     CampusRoutingModule,
-    SharedModule
+    SharedModule,
+    CoreModule,
+    ReactiveFormsModule
   ]
 })
-export class CampusModule { }
+export class CampusModule {
+}

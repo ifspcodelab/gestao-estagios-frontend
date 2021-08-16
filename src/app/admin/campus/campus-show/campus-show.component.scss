@@ -1,5 +1,5 @@
 mat-toolbar {
-  padding: 35px 30px;
+  padding: 35px 30px 35px 10px;
   background-color: #ffffff;
   color: rgba(0,0,0,.7);
   border-bottom: 1px solid rgba(0,0,0,.10);
@@ -25,20 +25,8 @@ mat-toolbar {
 
 mat-card {
   margin-bottom: 20px;
-  padding: 25px;
 }
 
 mat-card-header {
   cursor: pointer;
-
-  mat-card-title {
-    font-size: 18px;
-  }
-}
-
-mat-card-actions {
-  padding: 20px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 }
