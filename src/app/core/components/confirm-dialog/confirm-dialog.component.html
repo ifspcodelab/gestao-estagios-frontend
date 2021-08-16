@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Descartar dados?</h1>
+<h1 mat-dialog-title>{{ data.name }}</h1>
 <div mat-dialog-content>
-<p>Os dados do formulário ainda não foram salvos. Considere salvar antes de sair.</p>
+<p>{{ data.text }}</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Continuar no formulário</button>
-  <button mat-button [mat-dialog-close]="true">Descartar dados</button>
+  <button mat-button mat-dialog-close>{{ data.cancelText }}</button>
+  <button mat-button [mat-dialog-close]="true">{{ data.okText }}</button>
 </div>

@@ -21,7 +21,14 @@ export class FormGuard implements CanDeactivate<CanBeSave> {
       return of(true);
     }
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {});
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        name: 'Descartar dados?',
+        text: 'Os dados do formulário ainda não foram salvos. Considere salvar antes de sair.',
+        cancelText: 'Continuar no formulário',
+        okText: 'Descartar dados'
+      }
+    });
     return dialogRef.afterClosed();
 
   }

@@ -32,4 +32,8 @@ export class CampusService {
     return this.httpClient.put<Campus>(`${this.apiUrl}/${id}`, campus, this.httpOptions);
   }
 
+  deleteCampus(id: String): Observable<unknown> {
+    return this.httpClient.delete(`${this.apiUrl}/${id}`, this.httpOptions);
+  }
+
 }
