@@ -5,5 +5,5 @@ export class Address {
   city: string;
   state: string;
   number: string;
-  complement: string;
+  complement: string | null;
 }

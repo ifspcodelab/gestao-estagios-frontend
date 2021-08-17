@@ -17,7 +17,7 @@ export class CampusService {
   };
   constructor(private httpClient: HttpClient) { }
 
-  postCampus(campus: any): Observable<Campus> {
+  postCampus(campus: Campus): Observable<Campus> {
     return this.httpClient.post<any>(this.apiUrl, campus, this.httpOptions);
   }
 
@@ -29,7 +29,7 @@ export class CampusService {
     return this.httpClient.get<Campus>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
 
-  updateCampus(id: String, campus: any): Observable<Campus> {
+  updateCampus(id: String, campus: Campus): Observable<Campus> {
     return this.httpClient.put<Campus>(`${this.apiUrl}/${id}`, campus, this.httpOptions);
   }
 

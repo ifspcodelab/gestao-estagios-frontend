@@ -123,6 +123,9 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     // if (this.form.invalid) {
     //   return;
     // }
+    if(this.form.value.address.complement == '') {
+      this.form.value.address.complement = null
+    }
 
     if(this.createMode) {
       this.createCampus();
