@@ -1,7 +1,7 @@
 {
   "name": "gestao-estagios-frontend",
   "short_name": "gestao-estagios-frontend",
-  "theme_color": "#1976d2",
+  "theme_color": "#482880",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
