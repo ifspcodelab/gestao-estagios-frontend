@@ -6,6 +6,11 @@ import { finalize } from "rxjs/operators";
 import { HttpErrorResponse } from "@angular/common/http";
 import { NotificationService } from "../../../core/services/notification.service";
 import { ConfirmDialogService } from "../../../core/services/confirm-dialog.service";
+import { DepartmentService } from 'src/app/core/services/department.service';
+import { Department } from 'src/app/core/models/department.model';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { DepartmentCreateComponent } from '../department-create/department-create.component';
+
 
 @Component({
   selector: 'app-campus-show',
@@ -15,13 +20,17 @@ import { ConfirmDialogService } from "../../../core/services/confirm-dialog.serv
 export class CampusShowComponent implements OnInit {
   loading: boolean = true;
   campus: Campus;
+  departments: Department[];
   id: string | null;
+
   constructor(
     private campusService: CampusService,
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private departmentService: DepartmentService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +39,32 @@ export class CampusShowComponent implements OnInit {
     if(this.id) {
       this.getCampus(this.id);
     }
+  }
+
+  openDialog(department: Department | null) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { 
+      campusId: this.campus.id,
+      department: department,
+      campusAbbreviation: this.campus.abbreviation,
+    };
+
+    const dialogRef = this.dialog.open(DepartmentCreateComponent, dialogConfig);
+    
+    dialogRef.afterClosed().subscribe(department => {
+      if (department) {
+        const departmentFound = this.departments.find(d => d.id == department.id);
+        if (departmentFound) {
+          departmentFound.abbreviation = department.abbreviation;
+          departmentFound.name = department.name;
+        }
+        else {
+          this.departments.push(department);
+        }
+      }
+    })
   }
 
   getCampus(id: string) {
@@ -41,9 +76,18 @@ export class CampusShowComponent implements OnInit {
         campus => {
           this.campus = campus;
           this.loading = false;
+          this.getDepartments(id);
         },
         error => this.handleError(error)
       )
+  }
+
+  getDepartments(campusId: string) {
+    this.departmentService.getDepartments(campusId).subscribe(
+      departments => {
+        this.departments = departments
+      }
+    )
   }
 
   handleError(error: any) {
@@ -64,6 +108,22 @@ export class CampusShowComponent implements OnInit {
               console.log(result);
               this.notificationService.success(`Campus ${this.campus.abbreviation} removido com sucesso`);
               this.navigateToList();
+            },
+            error => this.handleError(error)
+          )
+        }
+      }
+    )
+  }
+
+  deleteDepartment(department: Department | null) {
+    this.confirmDialogService.confirm().subscribe(
+      result => {
+        if(result) {
+          this.departmentService.deleteDepartment(this.id!, department!.id).subscribe(
+            result => {
+              this.departments = this.departments.filter(d => d.id != department!.id);
+              this.notificationService.success(`Department ${department!.abbreviation} removido com sucesso`);
             },
             error => this.handleError(error)
           )

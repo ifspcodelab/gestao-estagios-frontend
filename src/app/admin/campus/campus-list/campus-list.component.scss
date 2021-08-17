@@ -7,6 +7,10 @@ mat-card {
   padding: 25px;
 }
 
+mat-card:hover {
+  box-shadow: -1px 10px 29px 0px rgba(0,0,0,0.3);
+}
+
 mat-card-header {
   cursor: pointer;
 
