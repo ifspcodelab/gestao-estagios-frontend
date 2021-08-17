@@ -1,6 +1,6 @@
 <mat-sidenav-container autosize="true">
-  <mat-sidenav #sidenav mode="side" opened>
-    <mat-nav-list>
+  <mat-sidenav #sidenav [mode]="isDesktop() ? 'side' : 'over'" opened>
+    <mat-nav-list (click)="!isDesktop() ? toggle() : ''">
       <div *ngFor="let group of sideBarGroups ">
         <h2 *ngIf="group.name != 'default'" mat-subheader>{{ group.name | uppercase }}</h2>
         <mat-list-item *ngFor="let item of group.items" routerLinkActive="active-list-item" disableRipple>
