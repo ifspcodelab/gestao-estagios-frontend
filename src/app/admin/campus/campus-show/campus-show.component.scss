@@ -11,3 +11,40 @@
     padding-right: 10px;
   }
 }
+
+.mat-card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 15px;
+  padding: 16px;
+}
+
+mat-card {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+mat-card:hover {
+  box-shadow: -1px 10px 29px 0px rgba(0,0,0,0.3);
+}
+
+mat-card-header {
+  cursor: pointer;
+
+  mat-card-title {
+    font-size: 18px;
+  }
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media (max-width: 850px) {
+  .mat-card-container {
+    display: flex;
+    flex-direction: column;
+  }
+}

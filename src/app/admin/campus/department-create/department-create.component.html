@@ -1,0 +1,28 @@
+<h1 id="header" mat-dialog-title></h1>
+<div mat-dialog-content>
+  <form id="department-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field class="form-field-lg">
+      <mat-label>Nome</mat-label>
+      <input appearance="fill" matInput placeholder="" formControlName="name" name="name">
+      <mat-error *ngIf="form.get('name')?.errors?.serverError && submitted">
+        {{ form.get('name')?.errors?.serverError }}
+      </mat-error>
+    </mat-form-field>
+
+    <br/>
+
+    <mat-form-field class="form-field-lg">
+      <mat-label>Sigla</mat-label>
+      <input appearance="fill" matInput placeholder="" formControlName="abbreviation" name="abbreviation">
+      <mat-error *ngIf="form.get('abbreviation')?.errors?.serverError && submitted">
+        {{ form.get('abbreviation')?.errors?.serverError }}
+      </mat-error>
+    </mat-form-field>
+    
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button type="submit" form="department-form" mat-button color="primary">Salvar</button>
+</div>

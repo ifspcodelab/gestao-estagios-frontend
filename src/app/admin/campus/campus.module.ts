@@ -8,6 +8,7 @@ import { CampusCreateComponent } from './campus-create/campus-create.component';
 import { SharedModule } from "../../shared/shared.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CampusShowComponent } from './campus-show/campus-show.component';
+import { DepartmentCreateComponent } from './department-create/department-create.component';
 
 
 @NgModule({
@@ -15,13 +16,14 @@ import { CampusShowComponent } from './campus-show/campus-show.component';
     CampusComponent,
     CampusListComponent,
     CampusCreateComponent,
-    CampusShowComponent
+    CampusShowComponent,
+    DepartmentCreateComponent
   ],
   imports: [
     CommonModule,
     CampusRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class CampusModule {
