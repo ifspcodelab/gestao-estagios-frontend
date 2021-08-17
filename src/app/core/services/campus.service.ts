@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Campus } from "../models/campus.model";
 import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CampusService {
-  apiUrl = 'http://localhost:8080/api/v1/campuses';
+  apiUrl = `${environment.apiUrl}/campuses`;
 
   httpOptions = {
     headers: new HttpHeaders({
