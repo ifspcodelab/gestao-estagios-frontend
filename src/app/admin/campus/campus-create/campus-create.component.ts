@@ -192,4 +192,8 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   isDataSaved(): boolean {
     return !this.form.dirty
   }
+
+  getBackUrl(): string {
+    return this.createMode ? '/admin/campus' : `/admin/campus/${this.campus.id}`;
+  }
 }

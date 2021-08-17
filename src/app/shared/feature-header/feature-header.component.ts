@@ -8,7 +8,7 @@ import { Location } from "@angular/common";
 })
 export class FeatureHeaderComponent implements OnInit {
   @Input() title: string = '';
-  @Input() backArrow: boolean = false;
+  @Input() backUrl: string | undefined;
 
   constructor(public location: Location) {
   }
