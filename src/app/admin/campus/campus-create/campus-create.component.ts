@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common'
 import { CampusService } from "../../../core/services/campus.service";
 import {
   FormBuilder,
@@ -29,7 +28,6 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    public location: Location,
     private notificationService: NotificationService
   ) { }
 

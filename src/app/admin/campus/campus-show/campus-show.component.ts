@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Campus } from "../../../core/models/campus.model";
 import { CampusService } from "../../../core/services/campus.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Location } from "@angular/common";
 import { finalize } from "rxjs/operators";
 import { HttpErrorResponse } from "@angular/common/http";
 import { NotificationService } from "../../../core/services/notification.service";
@@ -21,7 +20,6 @@ export class CampusShowComponent implements OnInit {
     private campusService: CampusService,
     private route: ActivatedRoute,
     private router: Router,
-    public location: Location,
     private notificationService: NotificationService,
     private confirmDialogService: ConfirmDialogService
   ) { }
