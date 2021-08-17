@@ -3,7 +3,8 @@
 </ng-template>
 
 <div *ngIf="createMode || campus; else indicator">
-  <app-feature-header [backArrow]="true" [title]="createMode ? 'Novo Campus' : 'Editar Campus'">
+  <app-feature-header [title]="createMode ? 'Novo Campus' : 'Editar Campus'"
+    [backUrl]="getBackUrl()">
     <button type="submit" form="campus-form" mat-flat-button color="primary">
       <span>Salvar</span>
     </button>

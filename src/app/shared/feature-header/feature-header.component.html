@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <button *ngIf="backArrow" mat-icon-button (click)="location.back()">
+  <button *ngIf="backUrl" mat-icon-button [routerLink]="backUrl">
     <mat-icon>arrow_back</mat-icon>
   </button>
   <h1 class="mat-subheader">{{ title }}</h1>

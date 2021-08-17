@@ -2,7 +2,7 @@
   <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 </ng-template>
 <div *ngIf="!loading; else indicator">
-  <app-feature-header [backArrow]="true" title="{{ campus.abbreviation }}">
+  <app-feature-header title="{{ campus.abbreviation }}" backUrl="/admin/campus">
     <button mat-button color="primary" routerLink="/admin/campus/{{ campus.id }}/edit">
       Editar
     </button>
