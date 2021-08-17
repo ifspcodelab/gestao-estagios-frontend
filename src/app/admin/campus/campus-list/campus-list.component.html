@@ -2,17 +2,14 @@
   <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 </ng-template>
 <div *ngIf="campuses$ | async as campuses; else indicator">
-  <mat-toolbar>
-    <h1 class="mat-subheader">Campus</h1>
-    <span class="example-spacer"></span>
+  <app-feature-header title="Campus">
     <button mat-icon-button>
       <mat-icon>filter_list</mat-icon>
     </button>
     <button mat-button color="primary" routerLink="/admin/campus/create">
       Novo Campus
     </button>
-  </mat-toolbar>
-
+  </app-feature-header>
 
   <div class="mat-card-container">
     <mat-card *ngFor="let campus of campuses" class="mat-elevation-z1">

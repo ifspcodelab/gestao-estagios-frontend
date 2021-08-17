@@ -2,21 +2,18 @@
   <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 </ng-template>
 <div *ngIf="!loading; else indicator">
-  <mat-toolbar>
-    <button mat-icon-button (click)="location.back()">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <h1 class="mat-subheader">Campus {{ campus.name }} - {{ campus.abbreviation }}</h1>
-    <span class="example-spacer"></span>
+  <app-feature-header [backArrow]="true" title="{{ campus.abbreviation }}">
     <button mat-button color="primary" routerLink="/admin/campus/{{ campus.id }}/edit">
       Editar
     </button>
     <button mat-button color="warn" (click)="delete()">
       Remover
     </button>
-  </mat-toolbar>
+  </app-feature-header>
 
-  <div>
+  <div class="container">
+    <h1 class="headline"> <mat-icon matListIcon>home_work</mat-icon> Campus {{ campus.name }} - {{ campus.abbreviation }}</h1>
+
     <mat-list>
       <mat-list-item>
         <mat-icon matListIcon>place</mat-icon>

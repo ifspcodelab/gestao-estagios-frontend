@@ -1,32 +1,13 @@
-mat-toolbar {
-  padding: 35px 30px 35px 10px;
-  background-color: #ffffff;
-  color: rgba(0,0,0,.7);
-  border-bottom: 1px solid rgba(0,0,0,.10);
+.container {
+  padding: 20px 0;
+}
+.headline {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  margin: 0;
 
-  .mat-subheader {
-    font-size: 1.2rem;
-    font-weight: normal;
-    padding: 0;
+  mat-icon {
+    padding-right: 10px;
   }
-
-  button {
-    font-size: 13px;
-  }
-}
-
-.example-spacer {
-  flex: 1 1 auto;
-}
-
-.mat-card-container {
-  padding: 30px;
-}
-
-mat-card {
-  margin-bottom: 20px;
-}
-
-mat-card-header {
-  cursor: pointer;
 }

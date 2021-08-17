@@ -3,17 +3,11 @@
 </ng-template>
 
 <div *ngIf="createMode || campus; else indicator">
-  <mat-toolbar>
-    <button mat-icon-button (click)="location.back()">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <h1 class="mat-subheader" *ngIf="createMode">Novo Campus</h1>
-    <h1 class="mat-subheader" *ngIf="!createMode">Editar Campus</h1>
-    <span class="example-spacer"></span>
+  <app-feature-header [backArrow]="true" [title]="createMode ? 'Novo Campus' : 'Editar Campus'">
     <button type="submit" form="campus-form" mat-flat-button color="primary">
-      <span>Salvar Campus</span>
+      <span>Salvar</span>
     </button>
-  </mat-toolbar>
+  </app-feature-header>
 
   <form id="campus-form" class="my-form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <fieldset>

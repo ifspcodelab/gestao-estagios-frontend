@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FeatureHeader } from "./feature-header.model";
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-feature-header',
@@ -7,12 +7,12 @@ import { FeatureHeader } from "./feature-header.model";
   styleUrls: ['./feature-header.component.scss']
 })
 export class FeatureHeaderComponent implements OnInit {
-  @Input() data: FeatureHeader;
+  @Input() title: string = '';
+  @Input() backArrow: boolean = false;
 
-  constructor() {
+  constructor(public location: Location) {
   }
 
   ngOnInit(): void {
   }
-
 }

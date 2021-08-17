@@ -1,11 +1,8 @@
 <mat-toolbar>
-  <h1 class="mat-subheader">{{ data.title }}</h1>
+  <button *ngIf="backArrow" mat-icon-button (click)="location.back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <h1 class="mat-subheader">{{ title }}</h1>
   <span class="example-spacer"></span>
-  <button *ngIf="data.action?.fn" mat-flat-button color="primary" (click)="data.action?.fn">
-    {{ data.action?.title }}
-  </button>
-
-  <button *ngIf="data.action?.url" mat-button color="primary" routerLink="{{ data.action?.url }}">
-    {{ data.action?.title }}
-  </button>
+  <ng-content></ng-content>
 </mat-toolbar>

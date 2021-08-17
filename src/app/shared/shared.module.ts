@@ -14,7 +14,6 @@ import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -39,8 +38,18 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
   imports: [
     CommonModule,
     RouterModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatDialogModule,
     MatToolbarModule,
-    MatButtonModule
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule,
+    MatSlideToggleModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SharedModule {
