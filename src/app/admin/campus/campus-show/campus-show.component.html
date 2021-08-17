@@ -8,10 +8,10 @@
     </button>
     <h1 class="mat-subheader">Campus {{ campus.name }} - {{ campus.abbreviation }}</h1>
     <span class="example-spacer"></span>
-    <button mat-flat-button color="primary" routerLink="/admin/campus/{{ campus.id }}/edit">
+    <button mat-button color="primary" routerLink="/admin/campus/{{ campus.id }}/edit">
       Editar
     </button>
-    <button mat-stroked-button color="accent">
+    <button mat-button color="warn" (click)="delete()">
       Remover
     </button>
   </mat-toolbar>

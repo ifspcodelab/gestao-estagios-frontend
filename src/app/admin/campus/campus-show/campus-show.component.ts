@@ -6,6 +6,7 @@ import { Location } from "@angular/common";
 import { finalize } from "rxjs/operators";
 import { HttpErrorResponse } from "@angular/common/http";
 import { NotificationService } from "../../../core/services/notification.service";
+import { ConfirmDialogService } from "../../../core/services/confirm-dialog.service";
 
 @Component({
   selector: 'app-campus-show',
@@ -21,7 +22,8 @@ export class CampusShowComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public location: Location,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private confirmDialogService: ConfirmDialogService
   ) { }
 
   ngOnInit(): void {
@@ -49,14 +51,30 @@ export class CampusShowComponent implements OnInit {
   handleError(error: any) {
     if (error instanceof HttpErrorResponse) {
       if(error.status === 404) {
-        this.notificationService.error(`Campus não encontrado com id ${this.id}`)
+        this.notificationService.error(`Campus não encontrado com id ${this.id}`);
       }
       this.navigateToList();
     }
   }
 
+  delete() {
+    this.confirmDialogService.confirm().subscribe(
+      result => {
+        if(result) {
+          this.campusService.deleteCampus(this.id!).subscribe(
+            result => {
+              console.log(result);
+              this.notificationService.success(`Campus ${this.campus.abbreviation} removido com sucesso`);
+              this.navigateToList();
+            },
+            error => this.handleError(error)
+          )
+        }
+      }
+    )
+  }
+
   navigateToList() {
     this.router.navigate(['admin/campus']);
   }
-
 }
