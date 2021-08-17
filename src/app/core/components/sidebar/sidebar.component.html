@@ -3,9 +3,9 @@
     <mat-nav-list (click)="!isDesktop() ? toggle() : ''">
       <div *ngFor="let group of sideBarGroups ">
         <h2 *ngIf="group.name != 'default'" mat-subheader>{{ group.name | uppercase }}</h2>
-        <mat-list-item *ngFor="let item of group.items" routerLinkActive="active-list-item" disableRipple>
+        <mat-list-item *ngFor="let item of group.items" routerLinkActive="active-list-item" routerLink="{{ item.url }}" disableRipple>
           <mat-icon matListIcon class="material-icons-outlined">{{ item.icon }}</mat-icon>
-          <a matLine routerLink="{{ item.url }}" routerLinkActive="active-list-item">{{ item.name }}</a>
+          <a matLine routerLink="{{ item.url }}">{{ item.name }}</a>
         </mat-list-item>
       </div>
 

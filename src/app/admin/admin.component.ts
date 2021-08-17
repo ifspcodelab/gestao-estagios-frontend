@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SidebarComponent } from "../sidebar/sidebar.component";
-import { SidebarService } from "../sidebar/sidebar.service";
+import { SidebarComponent } from "../core/components/sidebar/sidebar.component";
+import { SidebarService } from "../core/components/sidebar/sidebar.service";
 
 @Component({
   selector: 'app-admin',

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {SidebarComponent} from "./sidebar.component";
-import { SidebarItem } from "./sidebar.item.model";
 import { SideBarGroup } from "./sidebar.group.model";
 
 
