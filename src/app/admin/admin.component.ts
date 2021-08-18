@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit {
         name: "admin",
         items: [
           { name: "Campus", url: "/admin/campus", icon: "home_work" },
-          { name: "Departamentos", url: "/admin/department", icon: "meeting_room"  },
+          // { name: "Departamentos", url: "/admin/department", icon: "meeting_room"  },
           { name: "Cursos", url: "/admin/course", icon: "school"  },
           { name: "Users", url: "/admin/user", icon: "groups"  }
         ]

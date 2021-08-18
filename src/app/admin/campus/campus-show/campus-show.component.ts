@@ -10,6 +10,7 @@ import { DepartmentService } from 'src/app/core/services/department.service';
 import { Department } from 'src/app/core/models/department.model';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { DepartmentCreateComponent } from '../department-create/department-create.component';
+import { ProblemDetail } from "../../../core/interfaces/problem-detail.interface";
 
 
 @Component({
@@ -45,14 +46,14 @@ export class CampusShowComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
-    dialogConfig.data = { 
+    dialogConfig.data = {
       campusId: this.campus.id,
       department: department,
       campusAbbreviation: this.campus.abbreviation,
     };
 
     const dialogRef = this.dialog.open(DepartmentCreateComponent, dialogConfig);
-    
+
     dialogRef.afterClosed().subscribe(department => {
       if (department) {
         const departmentFound = this.departments.find(d => d.id == department.id);
@@ -92,10 +93,17 @@ export class CampusShowComponent implements OnInit {
 
   handleError(error: any) {
     if (error instanceof HttpErrorResponse) {
+      const problemDetail: ProblemDetail = error.error;
+
       if(error.status === 404) {
         this.notificationService.error(`Campus não encontrado com id ${this.id}`);
+        this.navigateToList();
       }
-      this.navigateToList();
+      if(error.status === 409) {
+        if(problemDetail.title == 'Referential integrity exception') {
+          this.notificationService.error('O campus possui departamentos associados e não pode ser excluído.');
+        }
+      }
     }
   }
 
