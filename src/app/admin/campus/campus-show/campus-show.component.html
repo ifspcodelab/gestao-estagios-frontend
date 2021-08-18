@@ -2,51 +2,85 @@
   <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 </ng-template>
 <div *ngIf="!loading; else indicator">
-  <app-feature-header title="{{ campus.abbreviation }}" backUrl="/admin/campus">
+
+  <app-feature-header backUrl="/admin/campus">
     <button mat-button color="primary" routerLink="/admin/campus/{{ campus.id }}/edit">
       Editar
     </button>
     <button mat-button color="warn" (click)="delete()">
-      Remover
+      Excluir
     </button>
-    <button mat-button color="primary" (click)="openDialog(null)">
-      Novo Departamento
-    </button>
+<!--    <button mat-icon-button (click)="delete()">-->
+<!--      <mat-icon>delete_outline</mat-icon>-->
+<!--    </button>-->
   </app-feature-header>
 
   <div class="container">
-    <h1 class="headline"> <mat-icon matListIcon>home_work</mat-icon> Campus {{ campus.name }} - {{ campus.abbreviation }}</h1>
+    <header>
+      <h1 class="headline">
+<!--        <mat-icon matListIcon>home_work</mat-icon>-->
+        {{ campus.name }}
+        <abbr>{{ campus.abbreviation }}</abbr>
+      </h1>
+
+    </header>
+
 
     <mat-list>
       <mat-list-item>
         <mat-icon matListIcon>place</mat-icon>
-        <h3 matLine> Endereço </h3>
+        <h3 matLine>Endereço</h3>
         <p matLine>  {{ campus.address.street }}, número {{ campus.address.number }}, {{ campus.address.neighborhood }}</p>
       </mat-list-item>
       <mat-list-item>
         <mat-icon matListIcon>contact_support</mat-icon>
-        <h3 matLine> Informações Setor de Estágio </h3>
+        <h3 matLine>Setor de Estágio</h3>
         <p matLine> {{ campus.internshipSector.telephone }}</p>
         <p matLine> {{ campus.internshipSector.email }}</p>
         <p matLine> {{ campus.internshipSector.website }}</p>
       </mat-list-item>
     </mat-list>
+
+
+    <section class="department-section">
+      <header>
+        <h2 class="headline"><mat-icon matListIcon>domain</mat-icon>Departamentos</h2>
+        <button mat-icon-button (click)="openDialog(null)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </header>
+
+      <div *ngIf="departments.length == 0" class="empty-state">
+        <p>Nenhum departamento cadastrado</p>
+<!--        <button mat-stroked-button color="primary">Cadastrar um departamento</button>-->
+      </div>
+
+      <div class="mat-card-container">
+        <mat-card *ngFor="let department of departments" class="mat-elevation-z1">
+          <mat-card-header (click)="openDialog(department)">
+            <mat-card-title>{{ department.name }}</mat-card-title>
+            <mat-card-subtitle><abbr>{{ department.abbreviation }}</abbr></mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <!--        <button mat-button color="primary" (click)="openDialog(department)">-->
+            <!--          Editar-->
+            <!--        </button>-->
+            <!--        <button mat-button color="warn" (click)="deleteDepartment(department)">-->
+            <!--          Remover-->
+            <!--        </button>-->
+            <button mat-icon-button (click)="deleteDepartment(department)">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+
+
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </section>
+
+
+
   </div>
 </div>
 
-<h1 class="headline"><mat-icon matListIcon>domain</mat-icon>Departamentos</h1>
-<div class="mat-card-container">
-  <mat-card *ngFor="let department of departments" class="mat-elevation-z1">
-    <mat-card-header>
-      <mat-card-title> {{ department.name }} <small>{{ department.abbreviation }}</small></mat-card-title>
-    </mat-card-header>
-    <mat-card-actions>
-      <button mat-button color="primary" (click)="openDialog(department)">
-        Editar
-      </button>
-      <button mat-button color="warn" (click)="deleteDepartment(department)">
-        Remover
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+

@@ -21,7 +21,7 @@ import { ProblemDetail } from "../../../core/interfaces/problem-detail.interface
 export class CampusShowComponent implements OnInit {
   loading: boolean = true;
   campus: Campus;
-  departments: Department[];
+  departments: Department[] = [];
   id: string | null;
 
   constructor(
@@ -108,7 +108,7 @@ export class CampusShowComponent implements OnInit {
   }
 
   delete() {
-    this.confirmDialogService.confirm().subscribe(
+    this.confirmDialogService.confirmRemoval('Campus').subscribe(
       result => {
         if(result) {
           this.campusService.deleteCampus(this.id!).subscribe(
@@ -125,7 +125,7 @@ export class CampusShowComponent implements OnInit {
   }
 
   deleteDepartment(department: Department | null) {
-    this.confirmDialogService.confirm().subscribe(
+    this.confirmDialogService.confirmRemoval('Departamento').subscribe(
       result => {
         if(result) {
           this.departmentService.deleteDepartment(this.id!, department!.id).subscribe(

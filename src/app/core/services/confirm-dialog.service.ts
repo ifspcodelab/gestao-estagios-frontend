@@ -10,13 +10,13 @@ export class ConfirmDialogService {
 
   constructor(private dialog: MatDialog) { }
 
-  confirm(): Observable<boolean> {
+  confirmRemoval(entity: string): Observable<boolean> {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        name: 'Excluir',
-        text: 'Deseja realmente excluir?',
-        cancelText: 'Cancelar',
-        okText: 'Sim'
+        name: `Excluir ${entity}?`,
+        text: `O ${entity} será excluido de forma definitiva.`,
+        cancelText: 'CANCELAR',
+        okText: 'EXCLUIR'
       }
     });
     return dialogRef.afterClosed();

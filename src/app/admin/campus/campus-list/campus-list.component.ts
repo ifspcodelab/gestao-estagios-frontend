@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from "rxjs";
 import { Campus } from "../../../core/models/campus.model";
 import { CampusService } from "../../../core/services/campus.service";
+import { NotificationService } from "../../../core/services/notification.service";
 
 @Component({
   selector: 'app-campus-list',
@@ -12,7 +13,10 @@ export class CampusListComponent implements OnInit {
   campuses$: Observable<Campus[]>;
   loading: boolean = true;
 
-  constructor(private campusService: CampusService) { }
+  constructor(
+    private campusService: CampusService,
+    private notificationService: NotificationService
+  ) { }
 
   ngOnInit(): void {
     this.campuses$ = this.campusService.getCampuses();
@@ -21,4 +25,7 @@ export class CampusListComponent implements OnInit {
     )
   }
 
+  toggleCampus() {
+    this.notificationService.success("Campus desativado com sucesso");
+  }
 }
