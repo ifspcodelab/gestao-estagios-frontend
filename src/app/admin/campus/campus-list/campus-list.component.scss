@@ -1,40 +1,44 @@
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  p {
-    margin-top: 30px;
-    color: #bbbbbb;
-    font-weight: normal;
-    text-align: center;
-  }
+.feature-main-content {
+  background-color: red;
 }
 
-.mat-card-container {
-  padding: 16px;
-}
-
-mat-card {
-  margin-bottom: 20px;
-  padding: 25px;
-}
-
-mat-card:hover {
-  box-shadow: -1px 2px 8px 0px rgba(0,0,0,0.3);
-}
-
-mat-card-header {
-  cursor: pointer;
-
-  mat-card-title {
-    font-size: 18px;
-  }
-}
-
-mat-card-actions {
-  padding: 20px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
+//.empty-state {
+//  display: flex;
+//  flex-direction: column;
+//  align-items: center;
+//
+//  p {
+//    margin-top: 30px;
+//    color: #bbbbbb;
+//    font-weight: normal;
+//    text-align: center;
+//  }
+//}
+//
+//.mat-card-container {
+//  padding: 16px;
+//}
+//
+//mat-card {
+//  margin-bottom: 20px;
+//  padding: 25px;
+//}
+//
+//mat-card:hover {
+//  box-shadow: -1px 2px 8px 0px rgba(0,0,0,0.3);
+//}
+//
+//mat-card-header {
+//  cursor: pointer;
+//
+//  mat-card-title {
+//    font-size: 18px;
+//  }
+//}
+//
+//mat-card-actions {
+//  padding: 20px;
+//  display: flex;
+//  justify-content: flex-end;
+//  align-items: center;
+//}

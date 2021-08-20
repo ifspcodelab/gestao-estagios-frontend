@@ -1,35 +1,17 @@
-<ng-template #indicator>
-  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-</ng-template>
-<div *ngIf="campuses$ | async as campuses; else indicator">
-  <app-feature-header title="Campus">
-<!--    <button mat-icon-button>-->
-<!--      <mat-icon>filter_list</mat-icon>-->
-<!--    </button>-->
-<!--    <button mat-icon-button routerLink="/admin/campus/create">-->
-<!--      <mat-icon>add</mat-icon>-->
-<!--    </button>-->
+<app-feature>
+  <app-feat-header title="Campus" header>
     <button mat-button color="primary" routerLink="/admin/campus/create">
       Novo Campus
     </button>
-  </app-feature-header>
-
-  <div *ngIf="campuses.length == 0" class="empty-state">
-    <p>Nenhum campus cadastrado</p>
-  </div>
-
-  <div class="mat-card-container">
-    <mat-card *ngFor="let campus of campuses" class="mat-elevation-z1">
-      <mat-card-header routerLink="/admin/campus/{{campus.id}}">
-        <mat-card-title>{{ campus.name }} <small>{{ campus.abbreviation }}</small></mat-card-title>
-        <mat-card-subtitle>{{ campus.address.street }}, número {{ campus.address.number }}, {{ campus.address.neighborhood }} </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-actions>
-        <!--      <button mat-button color="primary" routerLink="/admin/campus/{{campus.id}}/edit">Editar</button>-->
-        <mat-slide-toggle color="primary" checked (click)="toggleCampus()"></mat-slide-toggle>
-
-      </mat-card-actions>
-    </mat-card>
-  </div>
-
-</div>
+  </app-feat-header>
+  <app-feat-content *ngIf="!loading" [emptyState]="campuses.length == 0" [loading]="loading" content>
+    <app-card *ngFor="let campus of campuses"
+      [title]="campus.name"
+      [subtitle]="campus.address.street"
+      [link]="'/admin/campus/' + campus.id">
+      <div card-actions>
+        <mat-slide-toggle color="primary" checked (click)="toggleCampus($event)"></mat-slide-toggle>
+      </div>
+    </app-card>
+  </app-feat-content>
+</app-feature>
