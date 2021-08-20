@@ -1,0 +1,47 @@
+:host {
+  flex: 0 0 100%;
+  margin-bottom: 10px;
+
+  mat-card {
+    cursor: pointer;
+    &:hover {
+      box-shadow: -1px 2px 8px 0px rgba(0,0,0,0.3);
+    }
+
+    mat-card-header {
+      padding: 0;
+      margin: 0;
+      mat-card-title {
+        font-size: 18px;
+      }
+    }
+
+    mat-card-actions {
+      padding: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+  }
+}
+
+@media screen and (min-width: 801px) {
+  :host {
+    flex: 0 0 calc(50% - 15px);
+    margin-bottom: 25px;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  :host {
+    flex: 0 0 calc(33.333% - 15px);
+  }
+}
+
+
+
+
+
+
+
+

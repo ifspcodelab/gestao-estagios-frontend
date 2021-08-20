@@ -10,7 +10,7 @@ import { NotificationService } from "../../../core/services/notification.service
   styleUrls: ['./campus-list.component.scss']
 })
 export class CampusListComponent implements OnInit {
-  campuses$: Observable<Campus[]>;
+  campuses: Campus[];
   loading: boolean = true;
 
   constructor(
@@ -19,13 +19,16 @@ export class CampusListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.campuses$ = this.campusService.getCampuses();
-    this.campuses$.subscribe(
-      () => this.loading = false
-    )
+    this.campusService.getCampuses().subscribe(
+      campus => {
+        this.campuses = campus;
+        this.loading = false;
+      }
+    );
   }
 
-  toggleCampus() {
+  toggleCampus($event: Event) {
+    $event.stopPropagation();
     this.notificationService.success("Campus desativado com sucesso");
   }
 }

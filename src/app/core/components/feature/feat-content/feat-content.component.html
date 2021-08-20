@@ -1,0 +1,8 @@
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<ng-container  *ngIf="!loading">
+  <div class="feature-main-content">
+    <app-empty-state *ngIf="emptyState"></app-empty-state>
+    <ng-content></ng-content>
+  </div>
+</ng-container>
+

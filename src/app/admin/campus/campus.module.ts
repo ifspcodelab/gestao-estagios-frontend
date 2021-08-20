@@ -9,6 +9,7 @@ import { SharedModule } from "../../shared/shared.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CampusShowComponent } from './campus-show/campus-show.component';
 import { DepartmentCreateComponent } from './department-create/department-create.component';
+import { CoreModule } from "../../core/core.module";
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { DepartmentCreateComponent } from './department-create/department-create
     CommonModule,
     CampusRoutingModule,
     SharedModule,
+    CoreModule,
     ReactiveFormsModule,
   ]
 })
