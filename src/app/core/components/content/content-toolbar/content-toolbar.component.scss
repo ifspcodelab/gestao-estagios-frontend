@@ -1,9 +1,7 @@
 mat-toolbar {
   top: 0;
   z-index: 1000;
-  position: -webkit-sticky; /* Safari */
   position: sticky;
-  padding: 0 10px;
   background-color: #ffffff;
   color: rgba(0,0,0,.7);
   border-bottom: 1px solid rgba(0,0,0,.10);
@@ -24,5 +22,3 @@ mat-toolbar {
 .example-spacer {
   flex: 1 1 auto;
 }
-
-

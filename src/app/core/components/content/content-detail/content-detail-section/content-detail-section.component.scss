@@ -1,0 +1,50 @@
+.app-content-detail-section {
+  margin-top: 15px;
+  header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #bbb;
+    margin-bottom: 10px;
+
+    .headline {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+
+      mat-icon {
+        padding-right: 10px;
+      }
+    }
+  }
+  .mat-card-container {
+
+    mat-card {
+
+      mat-card-header {
+        padding: 0;
+        margin: 0;
+        //background-color: red;
+
+        .mat-card-header-text {
+          padding: 0;
+          margin: 0;
+        }
+
+        mat-card-title {
+          margin: 0;
+        }
+        mat-card-subtitle {
+          margin: 0;
+        }
+
+      }
+
+      mat-card-actions {
+        margin: 0;
+        //background-color: yellow;
+      }
+    }
+  }
+}

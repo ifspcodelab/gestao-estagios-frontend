@@ -11,6 +11,9 @@ import { Department } from 'src/app/core/models/department.model';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { DepartmentCreateComponent } from '../department-create/department-create.component';
 import { ProblemDetail } from "../../../core/interfaces/problem-detail.interface";
+import { ListItens } from "../../../core/components/content/content-detail/content-detail.component";
+import { LoaderService } from "../../../core/services/loader.service";
+import { Address } from "../../../core/models/address.model";
 
 
 @Component({
@@ -19,25 +22,27 @@ import { ProblemDetail } from "../../../core/interfaces/problem-detail.interface
   styleUrls: ['./campus-show.component.scss']
 })
 export class CampusShowComponent implements OnInit {
-  loading: boolean = true;
   campus: Campus;
   departments: Department[] = [];
+  loading: boolean = true;
   id: string | null;
 
   constructor(
     private campusService: CampusService,
+    private departmentService: DepartmentService,
+    private loaderService: LoaderService,
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
     private confirmDialogService: ConfirmDialogService,
-    private departmentService: DepartmentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
 
     if(this.id) {
+      this.loaderService.show();
       this.getCampus(this.id);
     }
   }
@@ -71,12 +76,14 @@ export class CampusShowComponent implements OnInit {
   getCampus(id: string) {
     this.campusService.getCampusById(id)
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => {
+          this.loaderService.hide();
+          this.loading = false;
+        })
       )
       .subscribe(
         campus => {
           this.campus = campus;
-          this.loading = false;
           this.getDepartments(id);
         },
         error => this.handleError(error)
@@ -124,7 +131,8 @@ export class CampusShowComponent implements OnInit {
     )
   }
 
-  deleteDepartment(department: Department | null) {
+  deleteDepartment($event: Event, department: Department | null) {
+    $event.stopPropagation();
     this.confirmDialogService.confirmRemoval('Departamento').subscribe(
       result => {
         if(result) {
@@ -142,5 +150,24 @@ export class CampusShowComponent implements OnInit {
 
   navigateToList() {
     this.router.navigate(['admin/campus']);
+  }
+
+  campusDetails(): ListItens {
+    const getAddressData = () => {
+      const address: Address = this.campus.address;
+      return `${address.street}, ${address.number}, CEP ${address.postalCode}, ${address.city}, ${address.state}, ${address.neighborhood}`
+    }
+    return {
+      itens: [
+        { icon: 'place', title: 'Endereço', lines: [getAddressData()]
+        },
+        { icon: 'contact_support', title: 'Setor de Estágio', lines: [
+            this.campus.internshipSector.telephone,
+            this.campus.internshipSector.email,
+            this.campus.internshipSector.website,
+          ]
+        }
+      ]
+    };
   }
 }

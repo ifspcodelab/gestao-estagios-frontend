@@ -6,11 +6,9 @@ import { CampusComponent } from './campus.component';
 import { CampusListComponent } from './campus-list/campus-list.component';
 import { CampusCreateComponent } from './campus-create/campus-create.component';
 import { SharedModule } from "../../shared/shared.module";
-import { ReactiveFormsModule } from "@angular/forms";
 import { CampusShowComponent } from './campus-show/campus-show.component';
 import { DepartmentCreateComponent } from './department-create/department-create.component';
 import { CoreModule } from "../../core/core.module";
-
 
 @NgModule({
   declarations: [
@@ -25,7 +23,6 @@ import { CoreModule } from "../../core/core.module";
     CampusRoutingModule,
     SharedModule,
     CoreModule,
-    ReactiveFormsModule,
   ]
 })
 export class CampusModule {

@@ -10,6 +10,8 @@ import { CanBeSave } from "../../../core/interfaces/can-be-save.interface";
 import { HttpErrorResponse } from "@angular/common/http";
 import { NotificationService } from "../../../core/services/notification.service";
 import { Campus } from "../../../core/models/campus.model";
+import { LoaderService } from "../../../core/services/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-campus-create',
@@ -17,6 +19,7 @@ import { Campus } from "../../../core/models/campus.model";
   styleUrls: ['./campus-create.component.scss']
 })
 export class CampusCreateComponent implements OnInit, CanBeSave {
+  loading: boolean = true;
   form: FormGroup;
   submitted = false;
   createMode: boolean;
@@ -28,7 +31,8 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
@@ -36,18 +40,27 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
 
     if(this.id) {
       this.createMode = false;
+      this.loading = true;
+      this.loaderService.show();
       this.getCampus(this.id);
     } else {
       this.createMode = true;
+      this.loading = false;
     }
 
     this.form = this.buildForm();
   }
 
   getCampus(id: String) {
-    this.campusService.getCampusById(id).subscribe(
+    this.campusService.getCampusById(id)
+      .pipe(
+        finalize(() => {
+          this.loaderService.hide();
+          this.loading = false;
+        })
+      )
+    .subscribe(
       campus => {
-        console.log(campus)
         this.campus = campus;
         this.form.patchValue(campus)
       }, error => {
@@ -115,12 +128,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
 
   public onSubmit() {
     this.submitted = true;
-    // console.log(this.form)
-    // console.log(JSON.stringify(this.form.value, null, 2));
 
-    // if (this.form.invalid) {
-    //   return;
-    // }
     if(this.form.value.address.complement == '') {
       this.form.value.address.complement = null
     }
@@ -145,6 +153,10 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   }
 
   updateCampus() {
+    if(!this.form.dirty) {
+      this.navigateToShow();
+      return;
+    }
     this.campusService.updateCampus(this.id!, this.form.value).subscribe(
       campus => {
         this.form.reset();
