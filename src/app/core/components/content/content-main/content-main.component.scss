@@ -1,0 +1,9 @@
+.app-content-main {
+  padding: 0.5rem 0.5rem 2rem;
+}
+
+@media only screen and (min-width: 700px) {
+  .app-content-main {
+    padding: 1rem;
+  }
+}

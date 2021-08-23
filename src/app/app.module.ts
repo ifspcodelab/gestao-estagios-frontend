@@ -26,6 +26,7 @@ import { environment } from '../environments/environment';
   registrationStrategy: 'registerWhenStable:30000'
 })
   ],
+  // providers: [httpInterceptorProviders],
   providers: [],
   exports: [],
   bootstrap: [AppComponent]

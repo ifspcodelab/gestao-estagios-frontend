@@ -1,0 +1,16 @@
+<article class="app-content-detail">
+  <header>
+    <h1 *ngIf="title" class="headline">{{ title }}</h1>
+    <h2 *ngIf="subtitle">{{ subtitle }}</h2>
+  </header>
+
+  <mat-list *ngIf="listItens">
+    <mat-list-item *ngFor="let item of listItens.itens">
+      <mat-icon matListIcon>{{ item.icon }}</mat-icon>
+      <h3 matLine>{{ item.title }}</h3>
+      <p matLine *ngFor="let line of item.lines">{{ line }}</p>
+    </mat-list-item>
+  </mat-list>
+
+  <ng-content></ng-content>
+</article>

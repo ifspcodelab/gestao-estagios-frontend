@@ -1,17 +1,20 @@
-<app-feature>
-  <app-feat-header title="Campus" header>
+<app-content *ngIf="!loading">
+  <app-content-toolbar title="Campus">
     <button mat-button color="primary" routerLink="/admin/campus/create">
       Novo Campus
     </button>
-  </app-feat-header>
-  <app-feat-content *ngIf="!loading" [emptyState]="campuses.length == 0" [loading]="loading" content>
-    <app-card *ngFor="let campus of campuses"
-      [title]="campus.name"
-      [subtitle]="campus.address.street"
-      [link]="'/admin/campus/' + campus.id">
-      <div card-actions>
-        <mat-slide-toggle color="primary" checked (click)="toggleCampus($event)"></mat-slide-toggle>
-      </div>
-    </app-card>
-  </app-feat-content>
-</app-feature>
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-cards [emptyState]="campuses.length == 0">
+      <app-card
+        *ngFor="let campus of campuses"
+        [title]="campus.name"
+        [subtitle]="campus.address.street"
+        [link]="'/admin/campus/' + campus.id">
+        <div card-actions>
+          <mat-slide-toggle color="primary" checked (click)="toggleCampus($event)"></mat-slide-toggle>
+        </div>
+      </app-card>
+    </app-content-cards>
+  </app-content-main>
+</app-content>

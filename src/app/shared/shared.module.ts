@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FeatureHeaderComponent } from './feature-header/feature-header.component';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { RouterModule } from "@angular/router";
@@ -17,11 +16,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 
 @NgModule({
-  declarations: [
-    FeatureHeaderComponent
-  ],
+  declarations: [],
   exports: [
-    FeatureHeaderComponent,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,

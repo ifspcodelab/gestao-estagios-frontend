@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FeatContentComponent } from './feat-content.component';
+import { ContentMainComponent } from './content-main.component';
 
-describe('FeatContentComponent', () => {
-  let component: FeatContentComponent;
-  let fixture: ComponentFixture<FeatContentComponent>;
+describe('ContentMainComponent', () => {
+  let component: ContentMainComponent;
+  let fixture: ComponentFixture<ContentMainComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FeatContentComponent ]
+      declarations: [ ContentMainComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FeatContentComponent);
+    fixture = TestBed.createComponent(ContentMainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

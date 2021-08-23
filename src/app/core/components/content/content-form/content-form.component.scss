@@ -1,0 +1,55 @@
+:host {
+  .my-form {
+
+    fieldset {
+      border: none;
+      margin-bottom: 20px;
+      padding: 0;
+
+
+      legend {
+        text-transform: uppercase;
+        font-size: 11px;
+        color: #aaa;
+      }
+    }
+
+    mat-form-field {
+      margin-right: 20px;
+      margin-top: 20px;
+    }
+
+    input {
+
+    }
+  }
+
+  .form-field-sm {
+    width: 20%;
+  }
+
+  .form-field-md {
+    width:40%;
+  }
+
+  .form-field-lg {
+    width: 60%;
+  }
+
+  .form-field-xl {
+    width: 80%;
+  }
+
+  .form-field-xxl {
+    width: 80%;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .my-form {
+      padding: 20px;
+    }
+    .form-field-sm, .form-field-md, .form-field-lg, .form-field-xl, .form-field-xxl {
+      width: 100%;
+    }
+  }
+}
