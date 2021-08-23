@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CampusService } from "../../../core/services/campus.service";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { finalize } from "rxjs/operators";
+
 import { CanBeSave } from "../../../core/interfaces/can-be-save.interface";
 import { HttpErrorResponse } from "@angular/common/http";
 import { NotificationService } from "../../../core/services/notification.service";
 import { Campus } from "../../../core/models/campus.model";
 import { LoaderService } from "../../../core/services/loader.service";
-import { finalize } from "rxjs/operators";
+import { AppValidators } from "../../../core/validators/app-validators";
 
 @Component({
   selector: 'app-campus-create',
@@ -76,58 +74,45 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     this.navigateToList();
   }
 
-
-  // TODO: move to another place for reuse (https://angular.io/guide/form-validation#defining-custom-validators)
-  noWhitespaceValidator(control: FormControl) {
-    const isWhitespace = (control.value || '').trim().length === 0;
-    const isValid = !isWhitespace;
-    return isValid ? null : { 'whitespace': true };
+  field(path: string) {
+    return this.form.get(path);
   }
 
-  // buildForm(): FormGroup {
-  //   return this.fb.group({
-  //     name: ['', [Validators.required, this.noWhitespaceValidator]],
-  //     abbreviation: ['', [Validators.required]],
-  //     address: this.fb.group({
-  //       postalCode: ['', [Validators.required]],
-  //       street: ['', [Validators.required]],
-  //       neighborhood: ['', [Validators.required]],
-  //       city: ['', [Validators.required]],
-  //       state: ['', [Validators.required]],
-  //       number: ['', [Validators.required]],
-  //       complement: ['', []]
-  //     }),
-  //     internshipSector: this.fb.group({
-  //       telephone: ['', [Validators.required]],
-  //       email: ['', [Validators.required, Validators.email]],
-  //       website: ['', [Validators.required]]
-  //     })
-  //   });
-  // }
+  fieldErrors(path: string) {
+    return this.field(path)?.errors;
+  }
 
   buildForm(): FormGroup {
     return this.fb.group({
-      name: ['', []],
-      abbreviation: ['', []],
+      name: ['',
+        [Validators.required, AppValidators.notBlank, AppValidators.alpha]
+      ],
+      abbreviation: ['',
+        [Validators.required, AppValidators.notBlank, AppValidators.exactLength(3)]
+      ],
       address: this.fb.group({
-        postalCode: ['', []],
-        street: ['', []],
-        neighborhood: ['', []],
-        city: ['', []],
-        state: ['', []],
-        number: ['', []],
+        postalCode: ['', [Validators.required, AppValidators.postalCode]],
+        street: ['', [Validators.required, AppValidators.notBlank]],
+        neighborhood: ['', [Validators.required, AppValidators.notBlank]],
+        city: ['', [Validators.required]],
+        state: ['', [Validators.required]],
+        number: ['', [Validators.required, AppValidators.numeric]],
         complement: ['', []]
       }),
       internshipSector: this.fb.group({
-        telephone: ['', []],
-        email: ['', []],
-        website: ['', []]
+        telephone: ['', [Validators.required, AppValidators.numeric]],
+        email: ['', [Validators.required, Validators.email]],
+        website: ['', [Validators.required, AppValidators.url]]
       })
     });
   }
 
   public onSubmit() {
     this.submitted = true;
+
+    if(this.form.invalid) {
+      return;
+    }
 
     if(this.form.value.address.complement == '') {
       this.form.value.address.complement = null
