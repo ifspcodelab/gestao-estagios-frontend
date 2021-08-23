@@ -21,8 +21,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   mat-form-field {
     margin-right: 20px;
     margin-top: 20px;
-  }
 
+    // Display only single validation error at a time
+    mat-error {
+      display: none;
+    }
+
+    mat-error:first-child {
+      display: block;
+    }
+  }
   .form-field-sm, .form-field-md, .form-field-lg, .form-field-xl, .form-field-xxl {
     width: 100%;
   }
