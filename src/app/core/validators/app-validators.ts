@@ -7,9 +7,12 @@ export class AppValidators {
     return isValid ? null : { 'notblank': true };
   }
 
-  static exactLength(length: number): ValidatorFn {
+  static exactLength(exactLength: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      return  control.value.length != length ? { 'exactlength': true } : null;
+      if(control.value != null && control.value.length !== exactLength) {
+        return { 'exactlength': true }
+      }
+      return null;
     };
   }
 
