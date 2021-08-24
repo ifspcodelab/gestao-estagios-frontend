@@ -4,6 +4,7 @@ import { CampusService } from "../../../core/services/campus.service";
 import { NotificationService } from "../../../core/services/notification.service";
 import { LoaderService } from "../../../core/services/loader.service";
 import { finalize } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-campus-list',
@@ -11,8 +12,7 @@ import { finalize } from "rxjs/operators";
   styleUrls: ['./campus-list.component.scss']
 })
 export class CampusListComponent implements OnInit {
-  campuses: Campus[];
-  loading: boolean = true;
+  campuses$: Observable<Campus[]>;
 
   constructor(
     private campusService: CampusService,
@@ -22,17 +22,11 @@ export class CampusListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loaderService.show();
-    this.campusService.getCampuses()
+    this.campuses$ = this.campusService.getCampuses()
       .pipe(
         finalize(() => {
           this.loaderService.hide();
-          this.loading = false;
         })
-      )
-      .subscribe(
-        campus => {
-          this.campuses = campus;
-        }
     );
   }
 

@@ -1,4 +1,4 @@
-<app-content *ngIf="!loading">
+<app-content *ngIf="campuses$ | async as campuses">
   <app-content-toolbar title="Campus">
     <button mat-button color="primary" routerLink="/admin/campus/create">
       Novo Campus
