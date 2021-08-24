@@ -48,13 +48,7 @@ export class CampusShowComponent implements OnInit {
 
   fetchCampus(id: string) {
     this.campusService.getCampusById(id)
-      .pipe(
-        first(),
-        finalize(() => {
-          this.loaderService.hide();
-          this.loading = false;
-        })
-      )
+      .pipe(first())
       .subscribe(
         campus => {
           this.campus = campus;
@@ -71,7 +65,13 @@ export class CampusShowComponent implements OnInit {
 
   fetchDepartments(campusId: string) {
     this.departmentService.getDepartments(campusId)
-      .pipe(first())
+      .pipe(
+        first(),
+        finalize(() => {
+          this.loaderService.hide();
+          this.loading = false;
+        })
+      )
       .subscribe(
         departments => {
           this.departments = departments

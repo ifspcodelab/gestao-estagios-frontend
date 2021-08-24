@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CampusService } from "../../../core/services/campus.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { finalize } from "rxjs/operators";
+import { finalize, first } from "rxjs/operators";
 
 import { CanBeSave } from "../../../core/interfaces/can-be-save.interface";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -52,16 +52,18 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   getCampus(id: String) {
     this.campusService.getCampusById(id)
       .pipe(
+        first(),
         finalize(() => {
           this.loaderService.hide();
           this.loading = false;
         })
       )
     .subscribe(
-      campus => {
+      (campus: Campus) => {
         this.campus = campus;
         this.form.patchValue(campus)
-      }, error => {
+      },
+      error => {
         if(error.status === 404) {
           this.handleNotFoundError();
         }
@@ -126,15 +128,18 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   }
 
   createCampus() {
-    this.campusService.postCampus(this.form.value).subscribe(
-      campus => {
-        this.form.reset();
-        this.id = campus.id;
-        this.campus = campus;
-        this.notificationService.success(`Campus ${this.campus.abbreviation} criado com sucesso!`);
-        this.navigateToShow()
-      }, error => this.handleError(error)
-    )
+    this.campusService.postCampus(this.form.value)
+      .pipe(first())
+      .subscribe(
+        (campus: Campus) => {
+          this.form.reset();
+          this.id = campus.id;
+          this.campus = campus;
+          this.notificationService.success(`Campus ${this.campus.abbreviation} criado com sucesso!`);
+          this.navigateToShow()
+        },
+        error => this.handleError(error)
+      )
   }
 
   updateCampus() {
@@ -142,15 +147,18 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
       this.navigateToShow();
       return;
     }
-    this.campusService.updateCampus(this.id!, this.form.value).subscribe(
-      campus => {
-        this.form.reset();
-        this.id = campus.id;
-        this.campus = campus;
-        this.notificationService.success(`Campus ${this.campus.abbreviation} editado com sucesso!`);
-        this.navigateToShow();
-      }, error => this.handleError(error)
-    )
+    this.campusService.updateCampus(this.id!, this.form.value)
+      .pipe(first())
+      .subscribe(
+        (campus: Campus) => {
+          this.form.reset();
+          this.id = campus.id;
+          this.campus = campus;
+          this.notificationService.success(`Campus ${this.campus.abbreviation} editado com sucesso!`);
+          this.navigateToShow();
+        },
+        error => this.handleError(error)
+      )
   }
 
   handleError(error: any) {

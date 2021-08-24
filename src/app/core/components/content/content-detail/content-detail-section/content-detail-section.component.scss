@@ -1,5 +1,6 @@
 .app-content-detail-section {
   margin-top: 15px;
+
   header {
     display: flex;
     justify-content: space-between;
@@ -18,33 +19,8 @@
       }
     }
   }
-  .mat-card-container {
 
-    mat-card {
-
-      mat-card-header {
-        padding: 0;
-        margin: 0;
-        //background-color: red;
-
-        .mat-card-header-text {
-          padding: 0;
-          margin: 0;
-        }
-
-        mat-card-title {
-          margin: 0;
-        }
-        mat-card-subtitle {
-          margin: 0;
-        }
-
-      }
-
-      mat-card-actions {
-        margin: 0;
-        //background-color: yellow;
-      }
-    }
+  .app-content-detail-section-content {
+    padding: 10px;
   }
 }
