@@ -9,7 +9,7 @@ export class ContentDetailSectionComponent implements OnInit {
   @Input() emptyState: boolean = false;
   @Input() icon: string | undefined;
   @Input() title: string | undefined;
-  @Output() openDialogEvent = new EventEmitter<string>();
+  @Output() openDialogEvent = new EventEmitter<void>();
 
   constructor() { }
 
@@ -17,7 +17,7 @@ export class ContentDetailSectionComponent implements OnInit {
   }
 
   openDialog() {
-    this.openDialogEvent.emit('open');
+    this.openDialogEvent.emit();
   }
 
 }

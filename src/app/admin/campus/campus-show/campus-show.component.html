@@ -3,21 +3,22 @@
     <button mat-button color="primary" routerLink="/admin/campus/{{ campus.id }}/edit">
       Editar
     </button>
-    <button mat-button color="warn" (click)="delete()">
-      Excluir
-    </button>
+    <div matTooltip="Não é possível excluir um campus que possui departamentos" [matTooltipDisabled]="departments.length == 0">
+      <button mat-button color="warn" (click)="handlerDeleteCampus()" [disabled]="departments.length != 0">
+        Excluir
+      </button>
+    </div>
   </app-content-toolbar>
   <app-content-main>
     <app-content-detail *ngIf="!loading" [title]="campus.name" [subtitle]="campus.abbreviation"[listItens]="campusDetails()">
-      <app-content-detail-section title="Departamentos" icon="domain" (openDialogEvent)="openDialog(null)">
+      <app-content-detail-section title="Departamentos" icon="domain" (openDialogEvent)="handlerCreateDepartment()">
         <app-content-cards [emptyState]="departments.length == 0">
           <app-card *ngFor="let department of departments"
-            (click)="openDialog(department)"
+            (click)="handlerUpdateDepartment(department)"
             [title]="department.name"
-            [subtitle]="department.abbreviation"
-            [link]="'/admin/campus/' + campus.id">
+            [subtitle]="department.abbreviation">
             <div card-actions>
-              <button mat-icon-button (click)="deleteDepartment($event, department)">
+              <button mat-icon-button (click)="handlerDeleteDepartment($event, department)">
                 <mat-icon>delete_outline</mat-icon>
               </button>
             </div>

@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Violation } from 'src/app/core/interfaces/violation.interface';
 import { Department } from 'src/app/core/models/department.model';
 import { DepartmentService } from 'src/app/core/services/department.service';
+import { Campus } from "../../../core/models/campus.model";
 
 @Component({
   selector: 'app-department-create',
@@ -20,7 +21,7 @@ export class DepartmentCreateComponent implements OnInit {
     private fb: FormBuilder,
     private departmentService: DepartmentService,
     private dialogRef: MatDialogRef<DepartmentCreateComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { campusId: string, department: Department | null, campusAbbreviation: string }
+    @Inject(MAT_DIALOG_DATA) public data: { campus: Campus, department?: Department }
   ) { }
 
   ngOnInit(): void {
@@ -63,23 +64,23 @@ export class DepartmentCreateComponent implements OnInit {
   }
 
   createDepartment() {
-    this.departmentService.postDepartments(this.data.campusId, this.form.value).subscribe(
+    this.departmentService.postDepartments(this.data.campus.id, this.form.value).subscribe(
       department => {
         this.dialogRef.close(department);
       },
       error => {
-        this.handleError(error);        
+        this.handleError(error);
       }
     );
   }
 
   updateDepartment() {
-    this.departmentService.putDepartment(this.data.campusId, this.data.department!.id, this.form.value).subscribe(
+    this.departmentService.putDepartment(this.data.campus.id, this.data.department!.id, this.form.value).subscribe(
       department => {
         this.dialogRef.close(department);
       },
       error => {
-        this.handleError(error);        
+        this.handleError(error);
       }
     );
   }
@@ -103,7 +104,7 @@ export class DepartmentCreateComponent implements OnInit {
       if(error.status === 409) {
         const formControl = this.form.get("abbreviation")!;
         formControl?.setErrors({
-          serverError: `Departamento já existente com abreviação ${this.form.value.abbreviation} para Campus ${this.data.campusAbbreviation}`
+          serverError: `Departamento já existente com abreviação ${this.form.value.abbreviation} para Campus ${this.data.campus.abbreviation}`
         });
       }
     }
