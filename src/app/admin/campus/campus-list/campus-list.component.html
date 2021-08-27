@@ -6,10 +6,7 @@
   </app-content-toolbar>
   <app-content-main>
     <app-content-cards [emptyState]="campuses.length == 0">
-      <app-card
-        *ngFor="let campus of campuses"
-        [title]="campus.name"
-        [subtitle]="campus.address.street"
+      <app-card *ngFor="let campus of campuses" [title]="campus.name" [subtitle]="campus.address.street"
         [link]="'/admin/campus/' + campus.id">
         <div card-actions>
           <mat-slide-toggle color="primary" checked (click)="toggleCampus($event)"></mat-slide-toggle>
