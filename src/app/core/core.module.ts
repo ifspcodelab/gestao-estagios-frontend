@@ -15,6 +15,7 @@ import { ContentDetailComponent } from './components/content/content-detail/cont
 import { ContentFormComponent } from './components/content/content-form/content-form.component';
 import { ContentDetailSectionComponent } from './components/content/content-detail/content-detail-section/content-detail-section.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { AutocompleteInputComponent } from './components/autocomplete-input/autocomplete-input.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     ContentDetailComponent,
     ContentDetailSectionComponent,
     ContentFormComponent,
+    AutocompleteInputComponent,
   ],
   imports: [
     CommonModule,
