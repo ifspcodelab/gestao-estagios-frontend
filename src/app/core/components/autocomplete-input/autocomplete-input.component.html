@@ -1,1 +1,17 @@
-<p>autocomplete-input works!</p>
+<mat-form-field class="form-field-sm">
+  <mat-label>{{name}}</mat-label>
+  <input type="text"
+         placeholder="Selecione..."
+         matInput
+         [formControl]="myControl"
+         [matAutocomplete]="auto">
+  <!--<mat-error *ngIf="fieldErrors('address.state')?.required && submitted">Estado é obrigatório</mat-error>
+  <mat-error *ngIf="fieldErrors('address.state')?.serverError && submitted">
+    {{ form.get('address.state')?.errors?.serverError }}
+  </mat-error>-->
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      {{option}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

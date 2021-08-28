@@ -77,15 +77,15 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="form-field-sm">
+          <!--<mat-form-field class="form-field-sm">
             <mat-label>Estado</mat-label>
             <input matInput placeholder="" formControlName="state" name="state">
             <mat-error *ngIf="fieldErrors('address.state')?.required && submitted">Estado é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('address.state')?.serverError && submitted">
               {{ form.get('address.state')?.errors?.serverError }}
             </mat-error>
-          </mat-form-field>
-
+          </mat-form-field>-->
+          <app-autocomplete-input name="Estado"></app-autocomplete-input>
           <br>
 
           <mat-form-field class="form-field-sm">
