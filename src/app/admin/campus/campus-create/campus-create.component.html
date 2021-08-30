@@ -96,7 +96,7 @@
                    name="state"
                    [formControl]="myControl"
                    [matAutocomplete]="auto">
-            <mat-error *ngIf="fieldErrors('address.state')?.required && submitted">Estado é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('address.state')?.required && submitted">Selecione uma opção válida</mat-error>
             <mat-error *ngIf="fieldErrors('address.state')?.serverError && submitted">
               {{ form.get('address.state')?.errors?.serverError }}
             </mat-error>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CampusService } from "../../../core/services/campus.service";
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize, first, map, startWith } from "rxjs/operators";
 
@@ -14,6 +14,16 @@ import { AppValidators } from "../../../core/validators/app-validators";
 import { State } from 'src/app/core/models/state.model';
 import { StateService } from 'src/app/core/services/state.service';
 import { Observable } from 'rxjs';
+
+function autocompleteStringValidator(validOptions: Array<string>): 
+ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (validOptions.indexOf(control.value) !== -1) {
+      return null  /* valid option selected */
+    }
+    return { 'invalidAutocompleteString': { value: control.value } }
+  }
+}
 
 @Component({
   selector: 'app-campus-create',
@@ -30,7 +40,6 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   states$: Observable<State[]>;
   statesName$: string[] = [];
   filteredOptions: Observable<string[]> | undefined;
-  myControl = new FormControl();
 
   constructor(
     private campusService: CampusService,
@@ -41,6 +50,10 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     private loaderService: LoaderService,
     private stateService: StateService
   ) { }
+
+  public myControl = new FormControl('', 
+    { validators: [autocompleteStringValidator(this.statesName$), Validators.required] }
+  )
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
