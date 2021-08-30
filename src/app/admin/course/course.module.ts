@@ -6,12 +6,13 @@ import { CourseComponent } from './course.component';
 import { CourseListComponent } from './course-list/course-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
-
+import { CourseCreateComponent } from './course-create/course-create.component';
 
 @NgModule({
   declarations: [
     CourseComponent,
-    CourseListComponent
+    CourseListComponent,
+    CourseCreateComponent
   ],
   imports: [
     CommonModule,
