@@ -44,6 +44,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   statesName$: string[] = [];
   filteredOptions: Observable<string[]> | undefined;
   cities$: Observable<City[]>;
+  citiesName$: string[] = [];
 
   constructor(
     private campusService: CampusService,
@@ -84,6 +85,18 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
       startWith(''),
       map(value => this._filter(value))
     );
+  }
+
+  stateSelected(stateSelected: string){
+    this.citiesName$ = []
+    this.states$.forEach(stateArray => stateArray.forEach(state => { 
+        if(state.name === stateSelected){
+          this.cityService.getCities(state.abbreviation)
+            .subscribe(cityArray => cityArray.forEach(city => this.citiesName$.push(city.name)));
+        }
+    }));
+
+    console.log(this.citiesName$)
   }
 
   private _filter(value: string): string[] {

@@ -100,7 +100,7 @@
             <mat-error *ngIf="fieldErrors('address.state')?.serverError && submitted">
               {{ form.get('address.state')?.errors?.serverError }}
             </mat-error>
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)='stateSelected($event.option.value)'>
               <mat-option *ngFor="let stateName of filteredOptions | async" [value]="stateName">
                 {{stateName}}
               </mat-option>
