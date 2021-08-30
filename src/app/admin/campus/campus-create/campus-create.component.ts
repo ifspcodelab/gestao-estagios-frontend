@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CampusService } from "../../../core/services/campus.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { finalize, first } from "rxjs/operators";
+import { finalize, first, map, startWith } from "rxjs/operators";
 
 import { CanBeSave } from "../../../core/interfaces/can-be-save.interface";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -10,6 +10,10 @@ import { NotificationService } from "../../../core/services/notification.service
 import { Campus } from "../../../core/models/campus.model";
 import { LoaderService } from "../../../core/services/loader.service";
 import { AppValidators } from "../../../core/validators/app-validators";
+
+import { State } from 'src/app/core/models/state.model';
+import { StateService } from 'src/app/core/services/state.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-campus-create',
@@ -23,6 +27,10 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   createMode: boolean;
   id: string | null;
   campus: Campus;
+  states$: Observable<State[]>;
+  statesName$: string[] = [];
+  filteredOptions: Observable<string[]> | undefined;
+  myControl = new FormControl();
 
   constructor(
     private campusService: CampusService,
@@ -30,7 +38,8 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private stateService: StateService
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +56,22 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     }
 
     this.form = this.buildForm();
+
+    this.states$ = this.stateService.getStates()
+    //this.states$.forEach(o => o.forEach(e => e.name))
+    this.stateService.getStates()
+      .subscribe(s => s.forEach(e => this.statesName$.push(e.name)));
+
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.statesName$.filter(stateName => stateName.toLowerCase().includes(filterValue));
   }
 
   getCampus(id: String) {

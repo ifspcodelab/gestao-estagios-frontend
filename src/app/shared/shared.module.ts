@@ -14,6 +14,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     MatSlideToggleModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatAutocompleteModule
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     MatSlideToggleModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatAutocompleteModule
   ]
 })
 export class SharedModule {

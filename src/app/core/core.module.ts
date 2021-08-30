@@ -15,7 +15,6 @@ import { ContentDetailComponent } from './components/content/content-detail/cont
 import { ContentFormComponent } from './components/content/content-form/content-form.component';
 import { ContentDetailSectionComponent } from './components/content/content-detail/content-detail-section/content-detail-section.component';
 import { ReactiveFormsModule } from "@angular/forms";
-import { AutocompleteInputComponent } from './components/autocomplete-input/autocomplete-input.component';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
@@ -33,7 +32,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ContentDetailComponent,
     ContentDetailSectionComponent,
     ContentFormComponent,
-    AutocompleteInputComponent,
   ],
   imports: [
     CommonModule,
@@ -56,7 +54,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ContentDetailSectionComponent,
     ContentFormComponent,
     ReactiveFormsModule,
-    AutocompleteInputComponent,
   ]
 })
 export class CoreModule { }

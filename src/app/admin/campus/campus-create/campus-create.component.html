@@ -84,8 +84,29 @@
             <mat-error *ngIf="fieldErrors('address.state')?.serverError && submitted">
               {{ form.get('address.state')?.errors?.serverError }}
             </mat-error>
-          </mat-form-field>-->
-          <app-autocomplete-input name="Estado"></app-autocomplete-input>
+          </mat-form-field>
+          
+          <app-autocomplete-input name="Estado" [options]="statesName$"></app-autocomplete-input>
+          -->
+          <mat-form-field class="form-field-sm">
+            <mat-label>Estado</mat-label>
+            <input type="text"
+                   placeholder="Selecione..."
+                   matInput
+                   name="state"
+                   [formControl]="myControl"
+                   [matAutocomplete]="auto">
+            <mat-error *ngIf="fieldErrors('address.state')?.required && submitted">Estado é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('address.state')?.serverError && submitted">
+              {{ form.get('address.state')?.errors?.serverError }}
+            </mat-error>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let stateName of filteredOptions | async" [value]="stateName">
+                {{stateName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
           <br>
 
           <mat-form-field class="form-field-sm">
