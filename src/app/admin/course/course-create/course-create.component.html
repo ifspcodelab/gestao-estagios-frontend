@@ -1,0 +1,71 @@
+<app-content *ngIf="!loading">
+  <app-content-toolbar [title]="createMode ? 'Novo Curso' : 'Editar Curso'" [backUrl]="getBackUrl()">
+    <button type="submit" form="course-form" mat-flat-button color="primary">
+      <span>Salvar</span>
+    </button>
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-form>
+      <form id="course-form" class="app-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <fieldset>
+          <mat-form-field class="form-field-md">
+            <mat-label>Nome</mat-label>
+            <input appearance="fill" matInput placeholder="" formControlName="name" name="name">
+            <mat-error *ngIf="fieldErrors('name')?.required && submitted">Nome é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.notblank && submitted">Nome não pode ser vazio</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.alpha && submitted">Nome deve conter apenas letras</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.serverError && submitted">
+              {{ fieldErrors('name')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field-sm">
+            <mat-label>Sigla</mat-label>
+            <input matInput placeholder="" formControlName="abbreviation" name="abbreviation">
+            <mat-error *ngIf="fieldErrors('abbreviation')?.required && submitted">Sigla é obrigatória</mat-error>
+            <mat-error *ngIf="fieldErrors('abbreviation')?.notblank && submitted">Sigla não pode ser vazia</mat-error>
+            <mat-error *ngIf="fieldErrors('abbreviation')?.exactlength && submitted">Sigla deve ter 3 caracteres
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('abbreviation')?.serverError && submitted">
+              {{ fieldErrors('abbreviation')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+        </fieldset>
+
+        <fieldset formGroupName="course">
+          <legend>Informações do Curso</legend>
+
+          <mat-form-field class="form-field-sm">
+            <mat-label>Número de Períodos</mat-label>
+            <input appearance="fill" matInput placeholder="" formControlName="numberOfPeriods" name="numberOfPeriods">
+            <mat-error *ngIf="fieldErrors('course.numberOfPeriods')?.required && submitted">Número de Período é
+              obrigatório
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('course.numberOfPeriods')?.numberOfPeriods && submitted">Número de Período
+              inválido
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('course.numberOfPeriods')?.numeric && submitted">Número de Período deve conter
+              apenas
+              números</mat-error>
+            <mat-error *ngIf="fieldErrors('course.numberOfPeriods')?.serverError && submitted">
+              {{ fieldErrors('course.numberOfPeriods')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field-md">
+            <mat-label>Departamento</mat-label>
+            <input matInput placeholder="" formControlName="departmentId" name="departmentId">
+            <mat-error *ngIf="fieldErrors('course.departmentId')?.required && submitted">Departamento é obrigatório
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('course.departmentId')?.notblank && submitted">Departamento não pode ser vazio
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('course.departmentId')?.serverError && submitted">
+              {{ form.get('course.departmentId')?.errors?.serverError }}
+            </mat-error>
+          </mat-form-field>
+        </fieldset>
+      </form>
+
+    </app-content-form>
+  </app-content-main>
+</app-content>
