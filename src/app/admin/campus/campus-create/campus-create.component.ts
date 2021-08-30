@@ -15,6 +15,9 @@ import { State } from 'src/app/core/models/state.model';
 import { StateService } from 'src/app/core/services/state.service';
 import { Observable } from 'rxjs';
 
+import { CityService } from 'src/app/core/services/city.service';
+import { City } from 'src/app/core/models/city.model';
+
 function autocompleteStringValidator(validOptions: Array<string>): 
 ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -40,6 +43,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   states$: Observable<State[]>;
   statesName$: string[] = [];
   filteredOptions: Observable<string[]> | undefined;
+  cities$: Observable<City[]>;
 
   constructor(
     private campusService: CampusService,
@@ -48,7 +52,8 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private loaderService: LoaderService,
-    private stateService: StateService
+    private stateService: StateService,
+    private cityService: CityService
   ) { }
 
   public myControl = new FormControl('', 
