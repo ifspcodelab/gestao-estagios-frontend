@@ -18,7 +18,19 @@ export class CourseService {
 
   constructor(private httpClient: HttpClient) { }
 
+  postCourse(course: Course): Observable<Course> {
+    return this.httpClient.post<any>(this.apiUrl, course, this.httpOptions);
+  }
+
   getCourses(): Observable<Course[]> {
     return this.httpClient.get<Course[]>(this.apiUrl, this.httpOptions);
+  }
+
+  getCourseById(id: String): Observable<Course> {
+    return this.httpClient.get<Course>(`${this.apiUrl}/${id}`, this.httpOptions);
+  }
+
+  updateCourse(id: String, course: Course): Observable<Course> {
+    return this.httpClient.put<Course>(`${this.apiUrl}/${id}`, course, this.httpOptions);
   }
 }
