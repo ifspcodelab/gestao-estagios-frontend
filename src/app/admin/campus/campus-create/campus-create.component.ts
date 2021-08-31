@@ -22,7 +22,7 @@ function autocompleteStateValidator(validOptions: Array<string>):
 ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (validOptions.indexOf(control.value) !== -1) {
-      return null  /* valid option selected */
+      return null
     }
     return { 'invalidAutocompleteString': { value: control.value } };
   }
@@ -51,11 +51,11 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   id: string | null;
   campus: Campus;
   states$: Observable<State[]>;
-  statesName: string[] = [];
-  filteredOptionsState: Observable<string[]> | undefined;
+  statesNames: string[] = [];
+  stateFilteredOptions: Observable<string[]> | undefined;
   cities$: Observable<City[]>;
-  citiesName$: string[] = [];
-  filteredOptionsCity: Observable<string[]> | undefined;
+  citiesNames: string[] = [];
+  cityFilteredOptions: Observable<string[]> | undefined;
 
   constructor(
     private campusService: CampusService,
@@ -69,11 +69,11 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   ) { }
 
   public stateFormControl = new FormControl('', 
-    { validators: [autocompleteStateValidator(this.statesName), Validators.required] }
+    { validators: [autocompleteStateValidator(this.statesNames), Validators.required] }
   )
 
   public cityFormControl = new FormControl('', 
-    { validators: [autocompleteCityValidator(this.citiesName$), Validators.required] }
+    { validators: [autocompleteCityValidator(this.citiesNames), Validators.required] }
   )
 
   ngOnInit(): void {
@@ -92,40 +92,31 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     this.form = this.buildForm();
 
     this.states$ = this.stateService.getStates()
-    //this.states$.forEach(o => o.forEach(e => e.name))
+    
     this.stateService.getStates()
       .subscribe(s => {
-        s.forEach(e => this.statesName.push(e.name))
-        this.filteredOptionsState = this.stateFormControl.valueChanges.pipe(
+        s.forEach(e => this.statesNames.push(e.name))
+        this.stateFilteredOptions = this.stateFormControl.valueChanges.pipe(
           startWith(''),
           map(value => this._filterState(value))
         );
     });
 
-    
-
-    /*this.filteredOptionsCity = this.cityFormControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterCity(value))
-    );*/
-
     this.cityFormControl.disable()
   }
 
-  stateSelected(stateSelected: string){
-    this.citiesName$ = []
+  onStateSelected(selectedOption: string){
 
+    this.citiesNames = []
     this.cityFormControl.setValue('');
 
-    
-
     this.states$.forEach(stateArray => stateArray.forEach(state => { 
-        if(state.name === stateSelected){
+        if(state.name === selectedOption){
           this.cityService.getCities(state.abbreviation)
             .subscribe(cityArray => { 
-              cityArray.forEach(city => this.citiesName$.push(city.name))
+              cityArray.forEach(city => this.citiesNames.push(city.name))
 
-              this.filteredOptionsCity = this.cityFormControl.valueChanges.pipe(
+              this.cityFilteredOptions = this.cityFormControl.valueChanges.pipe(
                 startWith(''),
                 map(value => this._filterCity(value))
               );
@@ -133,23 +124,20 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
         }
     }));
 
-
-    this.cityFormControl.setValidators(autocompleteCityValidator(this.citiesName$))
-
-    this.form.get('address.city')?.enable()
+    this.cityFormControl.setValidators(autocompleteCityValidator(this.citiesNames))
     this.cityFormControl.enable()
   }
 
   private _filterState(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.statesName.filter(stateName => stateName.toLowerCase().includes(filterValue));
+    return this.statesNames.filter(stateName => stateName.toLowerCase().includes(filterValue));
   }
 
   private _filterCity(value: string): string[] {
     const filterValues = value.toLowerCase();
     
-    return this.citiesName$.filter(cityName => cityName.toLowerCase().includes(filterValues));
+    return this.citiesNames.filter(cityName => cityName.toLowerCase().includes(filterValues));
   }
 
   getCampus(id: String) {
@@ -199,7 +187,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
         postalCode: ['', [Validators.required, AppValidators.postalCode]],
         street: ['', [Validators.required, AppValidators.notBlank]],
         neighborhood: ['', [Validators.required, AppValidators.notBlank]],
-        city: [{value: '', disabled: true}, [Validators.required]],
+        city: ['', [Validators.required]],
         state: ['', [Validators.required]],
         number: ['', [Validators.required, AppValidators.numeric]],
         complement: ['', []]
