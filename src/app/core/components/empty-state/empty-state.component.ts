@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-empty-state',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./empty-state.component.scss']
 })
 export class EmptyStateComponent implements OnInit {
+  @Input() entityName: string;
 
   constructor() { }
 
