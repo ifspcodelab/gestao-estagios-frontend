@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { Observable } from 'rxjs';
-import { Course } from '../models/course.model';
+import { Course, CourseCreate } from '../models/course.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class CourseService {
 
   constructor(private httpClient: HttpClient) { }
 
-  postCourse(course: Course): Observable<Course> {
+  postCourse(course: CourseCreate): Observable<Course> {
     return this.httpClient.post<any>(this.apiUrl, course, this.httpOptions);
   }
 

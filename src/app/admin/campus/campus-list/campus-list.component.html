@@ -5,7 +5,7 @@
     </button>
   </app-content-toolbar>
   <app-content-main>
-    <app-content-cards [emptyState]="campuses.length == 0">
+    <app-content-cards entityName="campus" [emptyState]="campuses.length == 0">
       <app-card *ngFor="let campus of campuses" [title]="campus.name" [subtitle]="campus.address.street"
         [link]="'/admin/campus/' + campus.id">
         <div card-actions>
