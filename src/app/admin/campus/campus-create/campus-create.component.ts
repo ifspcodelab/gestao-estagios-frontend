@@ -18,13 +18,23 @@ import { Observable } from 'rxjs';
 import { CityService } from 'src/app/core/services/city.service';
 import { City } from 'src/app/core/models/city.model';
 
-function autocompleteStringValidator(validOptions: Array<string>): 
+function autocompleteStateValidator(validOptions: Array<string>): 
 ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (validOptions.indexOf(control.value) !== -1) {
       return null  /* valid option selected */
     }
-    return { 'invalidAutocompleteString': { value: control.value } }
+    return { 'invalidAutocompleteString': { value: control.value } };
+  }
+}
+
+function autocompleteCityValidator(validOptions: Array<string>): 
+ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (validOptions.indexOf(control.value) !== -1) {
+      return null 
+    }
+    return { 'invalidAutocompleteString': { value: control.value } };
   }
 }
 
@@ -42,9 +52,10 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   campus: Campus;
   states$: Observable<State[]>;
   statesName$: string[] = [];
-  filteredOptions: Observable<string[]> | undefined;
+  filteredOptionsState: Observable<string[]> | undefined;
   cities$: Observable<City[]>;
   citiesName$: string[] = [];
+  filteredOptionsCity: Observable<string[]> | undefined;
 
   constructor(
     private campusService: CampusService,
@@ -57,8 +68,12 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     private cityService: CityService
   ) { }
 
-  public myControl = new FormControl('', 
-    { validators: [autocompleteStringValidator(this.statesName$), Validators.required] }
+  public stateFormControl = new FormControl('', 
+    { validators: [autocompleteStateValidator(this.statesName$), Validators.required] }
+  )
+
+  public cityFormControl = new FormControl('', 
+    { validators: [autocompleteCityValidator(this.citiesName$), Validators.required] }
   )
 
   ngOnInit(): void {
@@ -81,14 +96,24 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     this.stateService.getStates()
       .subscribe(s => s.forEach(e => this.statesName$.push(e.name)));
 
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptionsState = this.stateFormControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value))
+      map(value => this._filterState(value))
     );
+
+    this.filteredOptionsCity = this.cityFormControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterCity(value))
+    );
+
+    this.cityFormControl.disable()
   }
 
   stateSelected(stateSelected: string){
     this.citiesName$ = []
+
+    this.cityFormControl.setValue('');
+
     this.states$.forEach(stateArray => stateArray.forEach(state => { 
         if(state.name === stateSelected){
           this.cityService.getCities(state.abbreviation)
@@ -96,13 +121,20 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
         }
     }));
 
-    console.log(this.citiesName$)
+    this.form.get('address.city')?.enable()
+    this.cityFormControl.enable()
   }
 
-  private _filter(value: string): string[] {
+  private _filterState(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.statesName$.filter(stateName => stateName.toLowerCase().includes(filterValue));
+  }
+
+  private _filterCity(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    console.log(this.citiesName$)
+    return this.citiesName$.filter(cityName => cityName.toLowerCase().includes(filterValue));
   }
 
   getCampus(id: String) {
@@ -152,7 +184,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
         postalCode: ['', [Validators.required, AppValidators.postalCode]],
         street: ['', [Validators.required, AppValidators.notBlank]],
         neighborhood: ['', [Validators.required, AppValidators.notBlank]],
-        city: ['', [Validators.required]],
+        city: [{value: '', disabled: true}, [Validators.required]],
         state: ['', [Validators.required]],
         number: ['', [Validators.required, AppValidators.numeric]],
         complement: ['', []]
