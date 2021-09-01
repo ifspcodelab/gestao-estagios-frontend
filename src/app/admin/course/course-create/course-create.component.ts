@@ -14,7 +14,7 @@ import { Campus } from "../../../core/models/campus.model";
 import { Department } from "../../../core/models/department.model";
 import { LoaderService } from "../../../core/services/loader.service";
 import { AppValidators } from "../../../core/validators/app-validators";
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-course-create',
@@ -56,6 +56,9 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
 
+    this.form = this.buildForm();
+    this.fetchCampuses();
+
     if (this.id) {
       this.createMode = false;
       this.loading = true;
@@ -66,9 +69,10 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
       this.loading = false;
     }
 
-    this.form = this.buildForm();
-
     //this.campuses$ = this.campusService.getCampuses();
+  }
+
+  fetchCampuses() {
     this.campusService.getCampuses().subscribe(campuses => {
       campuses.forEach(c => this.campusesName.push(c.name))
       this.campuses = campuses;
@@ -127,7 +131,16 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
       .subscribe(
         (course: Course) => {
           this.course = course;
-          this.form.patchValue(course)
+          this.form.patchValue(course);
+          this.departmentSelected = this.course.department;
+          this.departmentService.getDepartments(this.course.department.campus.id)
+            .subscribe(departmentArray => {
+              /* this.departmentsName = departmentArray.map(department => department.name); */
+              departmentArray.forEach(department => this.departmentsName.push(department.name));
+              this.departmentFilteredOptions$ = of(this.departmentsName);
+              this.form.get('campus')?.patchValue(this.course.department.campus.name);
+              this.form.get('department')?.patchValue(this.course.department.name);
+            })
         },
         error => {
           if (error.status === 404) {

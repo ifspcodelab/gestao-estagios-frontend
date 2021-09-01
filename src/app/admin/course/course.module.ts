@@ -7,12 +7,14 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { CourseCreateComponent } from './course-create/course-create.component';
+import { CourseShowComponent } from './course-show/course-show.component';
 
 @NgModule({
   declarations: [
     CourseComponent,
     CourseListComponent,
-    CourseCreateComponent
+    CourseCreateComponent,
+    CourseShowComponent
   ],
   imports: [
     CommonModule,
