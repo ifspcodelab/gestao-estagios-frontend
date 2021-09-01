@@ -10,12 +10,22 @@
         <fieldset>
           <mat-form-field class="form-field-sm">
             <mat-label>Campus</mat-label>
-            <input matInput placeholder="" [formControl]="campusControl" name="campus" [matAutocomplete]="campusAuto">
-            <mat-error *ngIf="fieldErrors('campusId')?.required && submitted">Campus é obrigatório
+            <input 
+              matInput 
+              placeholder=""
+              formControlName="campus"
+              name="campus"
+              [matAutocomplete]="campusAuto"
+              #campus
+              (keyup)="onCampusSelected(campus.value)"
+            >
+            <mat-error *ngIf="fieldErrors('campus')?.autocomplete && submitted">Campus Inválido
             </mat-error>
-            <mat-error *ngIf="fieldErrors('campusId')?.notblank && submitted">Campus não pode ser vazio
+            <mat-error *ngIf="fieldErrors('campus')?.required && submitted">Campus é obrigatório
             </mat-error>
-            <mat-error *ngIf="fieldErrors('campusId')?.serverError && submitted">
+            <mat-error *ngIf="fieldErrors('campus')?.notblank && submitted">Campus não pode ser vazio
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('campus')?.serverError && submitted">
               {{ form.get('campusId')?.errors?.serverError }}
             </mat-error>
             <mat-autocomplete autoActiveFirstOption #campusAuto="matAutocomplete"
@@ -28,8 +38,17 @@
 
           <mat-form-field class=" form-field-sm">
             <mat-label>Departamento</mat-label>
-            <input matInput placeholder="" [formControl]="departmentControl" name="department"
-              [matAutocomplete]="departmentAuto">
+            <input 
+              matInput
+              placeholder=""
+              formControlName="department"
+              name="department"
+              [matAutocomplete]="departmentAuto"
+              #department
+              (keyup)="onDepartmentSelected(department.value)"
+            >
+            <mat-error *ngIf="fieldErrors('department')?.autocomplete && submitted">Departamento Inválido
+            </mat-error>
             <mat-error *ngIf="fieldErrors('department')?.required && submitted">Departamento é obrigatório
             </mat-error>
             <mat-error *ngIf="fieldErrors('department')?.notblank && submitted">Departamento não pode ser vazio

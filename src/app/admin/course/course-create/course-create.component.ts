@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from 'src/app/core/services/course.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize, first, map, startWith } from "rxjs/operators";
 
@@ -29,14 +29,14 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
   id: string | null;
   course: Course;
 
-  campusControl = new FormControl();
-  campuses$: Observable<Campus[]>;
+  //campusControl: FormControl;
+  //campuses$: Observable<Campus[]>;
   campusesName: string[] = [];
   campusFilteredOptions$: Observable<string[]>;
   campuses: Campus[] = [];
 
-  departmentControl = new FormControl();
-  departments$: Observable<Department[]>;
+  //departmentControl: FormControl;
+  //departments$: Observable<Department[]>;
   departmentsName: string[] = [];
   departmentFilteredOptions$: Observable<string[]>;
   departments: Department[] = [];
@@ -66,23 +66,24 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
       this.loading = false;
     }
 
-    this.campuses$ = this.campusService.getCampuses();
+    this.form = this.buildForm();
+
+    //this.campuses$ = this.campusService.getCampuses();
     this.campusService.getCampuses().subscribe(campuses => {
       campuses.forEach(c => this.campusesName.push(c.name))
       this.campuses = campuses;
-      this.campusFilteredOptions$ = this.campusControl.valueChanges.pipe(
+      this.campusFilteredOptions$ = this.form.get('campus')!.valueChanges.pipe(
         startWith(''),
         map(value => this._filterCampus(value))
       );
     })
-
-    this.form = this.buildForm();
   }
 
   onCampusSelected(campusSelected: string) {
     this.departmentsName = [];
 
-    this.departmentControl.setValue('');
+    //this.departmentControl.setValue('');
+    this.form.get('department')!.setValue('');
 
     this.campuses.forEach(campus => {
       if (campus.name === campusSelected) {
@@ -90,21 +91,18 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
           .subscribe(departmentArray => {
             departmentArray.forEach(department => this.departmentsName.push(department.name))
             this.departments = departmentArray;
-            this.departmentFilteredOptions$ = this.departmentControl.valueChanges.pipe(
+            this.departmentFilteredOptions$ = this.form.get('campus')!.valueChanges.pipe(
               startWith(''),
               map(value => this._filterDepartment(value))
             );
           });
       }
     });
-
+    this.form.get('department')!.setValidators(AppValidators.autocomplete(this.departmentsName));
   }
 
   onDepartmentSelected(departmentName: string) {
-    console.log(departmentName);
     this.departmentSelected = this.departments.find(department => department.name == departmentName);
-    console.log(this.departmentSelected);
-
   }
 
   private _filterCampus(value: string): string[] {
@@ -153,6 +151,12 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
   }
 
   buildForm(): FormGroup {
+    // this.campusControl = new FormControl('',
+    //   [AppValidators.autocompleteValidator(this.campusesName)]
+    // );
+    // this.departmentControl = new FormControl('',
+    //   //[AppValidators.autocompleteCityValidator(this.departmentsName)]
+    // );
     return this.fb.group({
       name: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.alpha]
@@ -164,10 +168,10 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
         [Validators.required, AppValidators.numeric]
       ],
       campus: ['',
-        [Validators.required, AppValidators.notBlank]
+        [AppValidators.autocomplete(this.campusesName), Validators.required]
       ],
       department: ['',
-        [Validators.required, AppValidators.notBlank]
+        [AppValidators.autocomplete(this.departmentsName), Validators.required]
       ]
     });
   }
@@ -175,10 +179,9 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
   public onSubmit() {
     this.submitted = true;
 
-    /* if (this.form.invalid) {
+    if (this.form.invalid) {
       return;
-    } */
-    console.log(this.form.value);
+    }
 
     if (this.createMode) {
       this.createCourse();
