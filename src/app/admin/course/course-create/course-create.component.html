@@ -10,15 +10,8 @@
         <fieldset>
           <mat-form-field class="form-field-sm">
             <mat-label>Campus</mat-label>
-            <input 
-              matInput 
-              placeholder=""
-              formControlName="campus"
-              name="campus"
-              [matAutocomplete]="campusAuto"
-              #campus
-              (keyup)="onCampusSelected(campus.value)"
-            >
+            <input matInput placeholder="" formControlName="campus" name="campus" [matAutocomplete]="campusAuto" #campus
+              (keyup)="onCampusSelected(campus.value)">
             <mat-error *ngIf="fieldErrors('campus')?.autocomplete && submitted">Campus Inválido
             </mat-error>
             <mat-error *ngIf="fieldErrors('campus')?.required && submitted">Campus é obrigatório
@@ -38,15 +31,8 @@
 
           <mat-form-field class=" form-field-sm">
             <mat-label>Departamento</mat-label>
-            <input 
-              matInput
-              placeholder=""
-              formControlName="department"
-              name="department"
-              [matAutocomplete]="departmentAuto"
-              #department
-              (keyup)="onDepartmentSelected(department.value)"
-            >
+            <input matInput placeholder="" formControlName="department" name="department"
+              [matAutocomplete]="departmentAuto" #department (keyup)="onDepartmentSelected(department.value)">
             <mat-error *ngIf="fieldErrors('department')?.autocomplete && submitted">Departamento Inválido
             </mat-error>
             <mat-error *ngIf="fieldErrors('department')?.required && submitted">Departamento é obrigatório
@@ -63,9 +49,10 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
+        </fieldset>
 
-          <br>
-
+        <fieldset>
+          <legend>Informações do Curso</legend>
           <mat-form-field class="form-field-lg">
             <mat-label>Nome</mat-label>
             <input appearance="fill" matInput placeholder="" formControlName="name" name="name" autocomplete="off">
@@ -84,8 +71,8 @@
             <input matInput placeholder="" formControlName="abbreviation" name="abbreviation" autocomplete="off">
             <mat-error *ngIf="fieldErrors('abbreviation')?.required && submitted">Sigla é obrigatória</mat-error>
             <mat-error *ngIf="fieldErrors('abbreviation')?.notblank && submitted">Sigla não pode ser vazia</mat-error>
-            <mat-error *ngIf="fieldErrors('abbreviation')?.exactlength && submitted">Sigla deve ter 3 caracteres
-            </mat-error>
+            <mat-error *ngIf="fieldErrors('abbreviation')?.exactlength && submitted">Sigla deve ter no máximo 10
+              caracteres</mat-error>
             <mat-error *ngIf="fieldErrors('abbreviation')?.serverError && submitted">
               {{ fieldErrors('abbreviation')?.serverError }}
             </mat-error>
@@ -93,8 +80,8 @@
 
           <mat-form-field class="form-field-sm">
             <mat-label>Número de Períodos</mat-label>
-            <input type="number" min="0" max="10" appearance="fill" matInput placeholder=""
-              formControlName="numberOfPeriods" name="numberOfPeriods" autocomplete="off">
+            <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="numberOfPeriods"
+              name="numberOfPeriods" autocomplete="off">
             <mat-error *ngIf="fieldErrors('numberOfPeriods')?.required && submitted">Número de Período é
               obrigatório
             </mat-error>
@@ -108,6 +95,7 @@
             </mat-error>
           </mat-form-field>
         </fieldset>
+
       </form>
     </app-content-form>
   </app-content-main>

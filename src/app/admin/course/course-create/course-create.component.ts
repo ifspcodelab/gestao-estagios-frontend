@@ -162,7 +162,7 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
         [Validators.required, AppValidators.notBlank, AppValidators.alpha]
       ],
       abbreviation: ['',
-        [Validators.required, AppValidators.notBlank, AppValidators.exactLength(3)]
+        [Validators.required, AppValidators.notBlank, Validators.max(10)]
       ],
       numberOfPeriods: ['',
         [Validators.required, AppValidators.numeric]
@@ -229,7 +229,7 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
 
   handleError(error: any) {
     if (error instanceof HttpErrorResponse) {
-      console.log(error);
+      /* console.log(error); */
 
       if (error.status === 400) {
         const violations: Array<{ name: string; reason: string }> = error.error.violations;
