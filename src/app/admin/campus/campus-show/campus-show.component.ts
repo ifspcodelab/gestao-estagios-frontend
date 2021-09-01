@@ -177,7 +177,7 @@ export class CampusShowComponent implements OnInit {
   campusDetails(): ListItens {
     const getAddressData = () => {
       const address: Address = this.campus.address;
-      return `${address.street}, ${address.number}, CEP ${address.postalCode}, ${address.city.name}, ${address.neighborhood}`;
+      return `${address.street}, ${address.number}, CEP ${address.postalCode}, ${address.city.name}, ${address.city.state.abbreviation}, ${address.neighborhood}`;
     }
     return {
       itens: [
