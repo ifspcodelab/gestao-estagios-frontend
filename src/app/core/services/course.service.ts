@@ -30,7 +30,7 @@ export class CourseService {
     return this.httpClient.get<Course>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
 
-  updateCourse(id: String, course: Course): Observable<Course> {
+  updateCourse(id: String, course: CourseCreate): Observable<Course> {
     return this.httpClient.put<Course>(`${this.apiUrl}/${id}`, course, this.httpOptions);
   }
 
