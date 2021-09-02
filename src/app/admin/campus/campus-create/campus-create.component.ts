@@ -118,12 +118,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   getCampus(id: String) {
     this.campusService.getCampusById(id)
       .pipe(
-        first(),
-        finalize(() => {
-          this.loaderService.hide();
-          this.loading = false;
-          
-        })
+        first()
       )
     .subscribe(
       (campus: Campus) => {
@@ -131,6 +126,12 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
         this.form.patchValue(campus);
         this.citySelected = this.campus.address.city;
         this.cityService.getCities(this.campus.address.city.state.abbreviation)
+          .pipe(
+            finalize(() => {
+              this.loaderService.hide();
+              this.loading = false;
+            })
+          )
           .subscribe(cities => {
             this.cities = cities;
             this.cityFilteredOptions$ = of(this.cities);
