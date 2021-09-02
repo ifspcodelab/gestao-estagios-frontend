@@ -21,4 +21,16 @@ export class ConfirmDialogService {
     });
     return dialogRef.afterClosed();
   }
+
+  confirmRemovalFemaleArticle(entity: string): Observable<boolean> {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        name: `Excluir ${entity}?`,
+        text: `A ${entity} será excluida de forma definitiva.`,
+        cancelText: 'CANCELAR',
+        okText: 'EXCLUIR'
+      }
+    });
+    return dialogRef.afterClosed();
+  }
 }
