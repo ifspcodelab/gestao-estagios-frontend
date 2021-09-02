@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Campus } from "../models/campus.model";
+import { Campus, CampusCreate } from "../models/campus.model";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 
@@ -29,7 +29,7 @@ export class CampusService {
     return this.httpClient.get<Campus>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
 
-  updateCampus(id: String, campus: Campus): Observable<Campus> {
+  updateCampus(id: String, campus: Campus | CampusCreate): Observable<Campus> {
     return this.httpClient.put<Campus>(`${this.apiUrl}/${id}`, campus, this.httpOptions);
   }
 

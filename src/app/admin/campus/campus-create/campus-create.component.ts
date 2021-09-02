@@ -7,7 +7,7 @@ import { finalize, first, map, startWith } from "rxjs/operators";
 import { CanBeSave } from "../../../core/interfaces/can-be-save.interface";
 import { HttpErrorResponse } from "@angular/common/http";
 import { NotificationService } from "../../../core/services/notification.service";
-import { Campus } from "../../../core/models/campus.model";
+import { Campus, CampusCreate } from "../../../core/models/campus.model";
 import { LoaderService } from "../../../core/services/loader.service";
 import { AppValidators } from "../../../core/validators/app-validators";
 
@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 import { CityService } from 'src/app/core/services/city.service';
 import { City } from 'src/app/core/models/city.model';
 import { of } from 'rxjs';
+import { Address, AddressCreate } from 'src/app/core/models/address.model';
 
 @Component({
   selector: 'app-campus-create',
@@ -229,7 +230,22 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
       this.navigateToShow();
       return;
     }
-    this.campusService.updateCampus(this.id!, this.form.value)
+    const addressCreate = new AddressCreate(
+      this.field('address.postalCode')?.value,
+      this.field('address.street')?.value,
+      this.field('address.neighborhood')?.value,
+      this.cities.find(c => c.name == this.field('address.city')?.value)?.id!,
+      this.field('address.number')?.value,
+      this.field('address.complement')?.value
+    );
+    const campusCreate = new CampusCreate(
+      this.field('name')?.value,
+      this.field('abbreviation')?.value,
+      addressCreate,
+      this.field('internshipSector')?.value
+    );
+    //this.campusService.updateCampus(this.id!, this.form.value)
+    this.campusService.updateCampus(this.id!, campusCreate)
       .pipe(first())
       .subscribe(
         (campus: Campus) => {
