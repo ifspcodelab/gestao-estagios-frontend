@@ -17,26 +17,7 @@ import { Observable } from 'rxjs';
 
 import { CityService } from 'src/app/core/services/city.service';
 import { City } from 'src/app/core/models/city.model';
-
-function autocompleteStateValidator(validOptions: Array<string>): 
-ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    if (validOptions.indexOf(control.value) !== -1) {
-      return null
-    }
-    return { 'invalidAutocompleteString': { value: control.value } };
-  }
-}
-
-function autocompleteCityValidator(validOptions: Array<string>): 
-ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    if (validOptions.indexOf(control.value) !== -1) {
-      return null 
-    }
-    return { 'invalidAutocompleteString': { value: control.value } };
-  }
-}
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-campus-create',
@@ -50,12 +31,13 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   createMode: boolean;
   id: string | null;
   campus: Campus;
-  states$: Observable<State[]>;
-  statesNames: string[] = [];
-  stateFilteredOptions: Observable<string[]> | undefined;
-  cities$: Observable<City[]>;
-  citiesNames: string[] = [];
-  cityFilteredOptions: Observable<string[]> | undefined;
+
+  states: State[];
+  stateFilteredOptions$: Observable<State[]>;
+
+  cities: City[];
+  cityFilteredOptions$: Observable<City[]>;
+  citySelected?: City;
 
   constructor(
     private campusService: CampusService,
@@ -68,25 +50,11 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     private cityService: CityService
   ) { }
 
-  public stateFormControl = new FormControl('', 
-    { validators: [autocompleteStateValidator(this.statesNames), Validators.required] }
-  )
-
-  public cityFormControl = new FormControl('', 
-    { validators: [autocompleteCityValidator(this.citiesNames), Validators.required] }
-  )
-
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
 
-    this.stateService.getStates()
-      .subscribe(s => {
-        s.forEach(e => this.statesNames.push(e.name))
-        this.stateFilteredOptions = this.stateFormControl.valueChanges.pipe(
-          startWith(''),
-          map(value => this._filterState(value))
-        );
-    });
+    this.form = this.buildForm();
+    this.fetchStates();
 
     if(this.id) {
       this.createMode = false;
@@ -97,51 +65,54 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     } else {
       this.createMode = true;
       this.loading = false;
-      this.cityFormControl.disable();
     }
-
-    this.form = this.buildForm();
-
-    this.states$ = this.stateService.getStates()
-    
-    
-
-    
   }
 
-  onStateSelected(selectedOption: string){
-
-    this.citiesNames = []
-    this.cityFormControl.setValue('');
-
-    this.states$.forEach(stateArray => stateArray.forEach(state => { 
-        if(state.name === selectedOption){
-          this.cityService.getCities(state.abbreviation)
-            .subscribe(cityArray => { 
-              cityArray.forEach(city => this.citiesNames.push(city.name))
-
-              this.cityFilteredOptions = this.cityFormControl.valueChanges.pipe(
-                startWith(''),
-                map(value => this._filterCity(value))
-              );
-            });
-        }
-    }));
-
-    this.cityFormControl.setValidators(autocompleteCityValidator(this.citiesNames))
-    this.cityFormControl.enable()
+  fetchStates(){
+    this.stateService.getStates().subscribe(states => {
+        this.states = states;
+        this.field('address.state').setValidators(AppValidators.autocomplete(this.states.map(s => s.name)))
+        this.stateFilteredOptions$ = this.field('address.state').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterState(value))
+        );
+    });
   }
 
-  private _filterState(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  onStateSelected(stateSelected: string){
+    this.cities = [];
+    
+    this.field('address.city').enable();
+    this.field('address.city').setValue('');
 
-    return this.statesNames.filter(stateName => stateName.toLowerCase().includes(filterValue));
+    const state = this.states.find(s => s.name == stateSelected);
+
+    if (state) {
+      this.cityService.getCities(state.abbreviation)
+        .subscribe(cities => {
+          this.cities = cities;
+          this.refreshCitiesValidator();
+          this.cityFilteredOptions$ = this.field('address.city').valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCity(value))
+          );
+        });
+    }
   }
 
-  private _filterCity(value: string): string[] {
+  private refreshCitiesValidator() {
+    this.field('address.city').setValidators(AppValidators.autocomplete(this.cities.map(c => c.name)));
+  }
+
+  private _filterState(value: string): State[] {
+    const filteredValue = value.toLowerCase();
+    return this.states.filter(state => state.name.toLowerCase().includes(filteredValue));
+  }
+
+  private _filterCity(value: string): City[] {
     const filterValues = value.toLowerCase();
     
-    return this.citiesNames.filter(cityName => cityName.toLowerCase().includes(filterValues));
+    return this.cities.filter(city => city.name.toLowerCase().includes(filterValues));
   }
 
   getCampus(id: String) {
@@ -157,23 +128,21 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     .subscribe(
       (campus: Campus) => {
         this.campus = campus;
-        this.form.patchValue(campus)
-        this.stateFormControl.patchValue(this.campus.address.city.state.name)
-        this.stateFormControl.setValidators(autocompleteStateValidator(this.statesNames))
-        this.cityFormControl.setValue(this.campus.address.city.name);
-        this.cityFormControl.setValidators(autocompleteCityValidator(this.citiesNames));
-
+        this.form.patchValue(campus);
+        this.citySelected = this.campus.address.city;
         this.cityService.getCities(this.campus.address.city.state.abbreviation)
-        .subscribe(cityArray => { 
-          cityArray.forEach(city => this.citiesNames.push(city.name))
-          this.cityFilteredOptions = this.cityFormControl.valueChanges.pipe(
-            startWith(''),
-            map(value => this._filterCity(value))
-          );
-        });
-        console.log(this.campus.address.city.name)
-        //this.cityFormControl.setValue(this.campus.address.city.name)
-        this.cityFormControl.setValidators(autocompleteCityValidator(this.citiesNames))
+          .subscribe(cities => {
+            this.cities = cities;
+            this.cityFilteredOptions$ = of(this.cities);
+            this.cityFilteredOptions$ = this.field('address.city').valueChanges.pipe(
+              startWith(''),
+              map(value => this._filterCity(value))
+            );
+            this.field('address.state').patchValue(this.campus.address.city.state.name);
+            this.field('address.city').patchValue(this.campus.address.city.name);
+            this.refreshCitiesValidator();
+            this.field('address.city').enable();
+          })
       },
       error => {
         if(error.status === 404) {
@@ -189,7 +158,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   }
 
   field(path: string) {
-    return this.form.get(path);
+    return this.form.get(path)!;
   }
 
   fieldErrors(path: string) {
@@ -208,7 +177,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
         postalCode: ['', [Validators.required, AppValidators.postalCode]],
         street: ['', [Validators.required, AppValidators.notBlank]],
         neighborhood: ['', [Validators.required, AppValidators.notBlank]],
-        city: ['', [Validators.required]],
+        city: [{value: '', disabled: true}, [Validators.required]],
         state: ['', [Validators.required]],
         number: ['', [Validators.required, AppValidators.numeric]],
         complement: ['', []]
@@ -275,7 +244,6 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
 
   handleError(error: any) {
     if (error instanceof HttpErrorResponse) {
-      console.log(error);
 
       if(error.status === 400) {
         const violations: Array<{ name: string; reason: string }> = error.error.violations;
