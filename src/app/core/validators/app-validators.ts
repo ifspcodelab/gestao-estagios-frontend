@@ -46,8 +46,8 @@ export class AppValidators {
 
   static autocomplete(validOptions: string[]): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      console.log(control.value);
-      console.log(validOptions);
+      // console.log(control.value);
+      // console.log(validOptions);
       if (validOptions.indexOf(control.value) != -1) {
         return null
       }
