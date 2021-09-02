@@ -79,20 +79,6 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
 
-    if(this.id) {
-      this.createMode = false;
-      this.loading = true;
-      this.loaderService.show();
-      this.getCampus(this.id);
-    } else {
-      this.createMode = true;
-      this.loading = false;
-    }
-
-    this.form = this.buildForm();
-
-    this.states$ = this.stateService.getStates()
-    
     this.stateService.getStates()
       .subscribe(s => {
         s.forEach(e => this.statesNames.push(e.name))
@@ -102,7 +88,25 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
         );
     });
 
-    this.cityFormControl.disable()
+    if(this.id) {
+      this.createMode = false;
+      this.loading = true;
+      this.loaderService.show();
+      this.getCampus(this.id);
+
+    } else {
+      this.createMode = true;
+      this.loading = false;
+      this.cityFormControl.disable();
+    }
+
+    this.form = this.buildForm();
+
+    this.states$ = this.stateService.getStates()
+    
+    
+
+    
   }
 
   onStateSelected(selectedOption: string){
@@ -147,12 +151,29 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
         finalize(() => {
           this.loaderService.hide();
           this.loading = false;
+          
         })
       )
     .subscribe(
       (campus: Campus) => {
         this.campus = campus;
         this.form.patchValue(campus)
+        this.stateFormControl.patchValue(this.campus.address.city.state.name)
+        this.stateFormControl.setValidators(autocompleteStateValidator(this.statesNames))
+        this.cityFormControl.setValue(this.campus.address.city.name);
+        this.cityFormControl.setValidators(autocompleteCityValidator(this.citiesNames));
+
+        this.cityService.getCities(this.campus.address.city.state.abbreviation)
+        .subscribe(cityArray => { 
+          cityArray.forEach(city => this.citiesNames.push(city.name))
+          this.cityFilteredOptions = this.cityFormControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCity(value))
+          );
+        });
+        console.log(this.campus.address.city.name)
+        //this.cityFormControl.setValue(this.campus.address.city.name)
+        this.cityFormControl.setValidators(autocompleteCityValidator(this.citiesNames))
       },
       error => {
         if(error.status === 404) {
