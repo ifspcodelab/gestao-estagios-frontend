@@ -5,8 +5,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { finalize, first } from "rxjs/operators";
 import { NotificationService } from "../../../core/services/notification.service";
 import { ConfirmDialogService } from "../../../core/services/confirm-dialog.service";
-/* import { DepartmentService } from 'src/app/core/services/department.service'; */
-/* import { Curriculum } from 'src/app/core/models/curriculum.model'; */
 import { MatDialog } from "@angular/material/dialog";
 /* import { DepartmentCreateComponent } from '../department-create/department-create.component'; */
 import { ProblemDetail } from "../../../core/interfaces/problem-detail.interface";
@@ -14,10 +12,8 @@ import { ListItens } from "../../../core/components/content/content-detail/conte
 import { LoaderService } from "../../../core/services/loader.service";
 import { Department } from 'src/app/core/models/department.model';
 import { Campus } from 'src/app/core/models/campus.model';
-/* import { Address } from "../../../core/models/address.model"; */
-
-
-
+import { CurriculumService } from 'src/app/core/services/curriculum.service';
+import { Curriculum } from 'src/app/core/models/curriculum.model';
 
 @Component({
   selector: 'app-course-show',
@@ -26,13 +22,13 @@ import { Campus } from 'src/app/core/models/campus.model';
 })
 export class CourseShowComponent implements OnInit {
   course: Course;
-  /* curriculum: Curriculum[] = []; */
+  curriculums: Curriculum[] = []; 
   loading: boolean = true;
   id: string | null;
 
   constructor(
     private courseService: CourseService,
-    /*     private curriculumService: CurriculumService, */
+    private curriculumService: CurriculumService,
     private loaderService: LoaderService,
     private route: ActivatedRoute,
     private router: Router,
@@ -57,9 +53,7 @@ export class CourseShowComponent implements OnInit {
       .subscribe(
         course => {
           this.course = course;
-          this.loaderService.hide();
-          this.loading = false;
-          /* this.fetchDepartments(id); */
+          this.fetchCurriculums(id);
         },
         error => {
           if (error.status >= 400 || error.status <= 499) {
@@ -70,8 +64,8 @@ export class CourseShowComponent implements OnInit {
       )
   }
 
-  /* fetchDepartments(campusId: string) {
-    this.departmentService.getDepartments(campusId)
+  fetchCurriculums(courseId: string) {
+    this.curriculumService.getCurriculums(courseId)
       .pipe(
         first(),
         finalize(() => {
@@ -80,26 +74,26 @@ export class CourseShowComponent implements OnInit {
         })
       )
       .subscribe(
-        departments => {
-          this.departments = departments
+        curriculums => {
+          this.curriculums = curriculums
         },
         error => {
           if (error.status >= 400 || error.status <= 499) {
             console.error(error);
-            this.notificationService.error(`Error ao carregar departamentos`);
+            this.notificationService.error(`Error ao carregar matrizes`);
             this.navigateToList();
           }
         }
       )
-  } */
+  }
 
-  /*   handlerDeleteCourse() {
-      if (this.departments.length != 0) {
-        this.notificationService.error('O campus possui departamentos associados e não pode ser excluído.');
-      } else {
-        this.deleteCampus()
-      }
-    } */
+  handlerDeleteCourse() {
+    if (this.curriculums.length != 0) {
+      this.notificationService.error('O curso possui matrizes associadas e não pode ser excluído.');
+    } else {
+      this.deleteCourse();
+    }
+  }
 
   deleteCourse() {
     this.confirmDialogService.confirmRemoval('Curso').subscribe(
@@ -126,15 +120,15 @@ export class CourseShowComponent implements OnInit {
     );
   }
 
-  /*  private getDialogConfig(department?: Department) {
-     return {
-       autoFocus: true,
-       data: {
-         campus: this.campus,
-         department: department
-       }
-     };
-   } */
+  private getDialogConfig(curriculum?: Curriculum) {
+    return {
+      autoFocus: true,
+      data: {
+        course: this.course,
+        curriculum: curriculum
+      }
+    };
+ }
 
   /*  handlerCreateDepartment() {
      this.dialog.open(DepartmentCreateComponent, this.getDialogConfig(undefined))
@@ -160,22 +154,22 @@ export class CourseShowComponent implements OnInit {
         }
         );
     } */
-  /* 
-    handlerDeleteDepartment($event: Event, department: Department | null) {
-      $event.stopPropagation();
-      this.confirmDialogService.confirmRemoval('Departamento').subscribe(
-        result => {
-          if (result) {
-            this.departmentService.deleteDepartment(this.id!, department!.id).subscribe(
-              _ => {
-                this.departments = this.departments.filter(d => d.id != department!.id);
-                this.notificationService.success(`Department ${department!.abbreviation} removido com sucesso`);
-              }
-            );
-          }
+
+  handlerDeleteCurriculum($event: Event, curriculum: Curriculum | null) {
+    $event.stopPropagation();
+    this.confirmDialogService.confirmRemovalFemaleArticle('Matriz').subscribe(
+      result => {
+        if (result) {
+          this.curriculumService.deleteCurriculum(this.id!, curriculum!.id).subscribe(
+            _ => {
+              this.curriculums = this.curriculums.filter(c => c.id != curriculum!.id);
+              this.notificationService.success(`Curriculum ${curriculum!.code} removido com sucesso`);
+            }
+          );
         }
-      );
-    } */
+      }
+    );
+  }
 
   navigateToList() {
     this.router.navigate(['admin/course']);
