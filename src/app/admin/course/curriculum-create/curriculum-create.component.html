@@ -1,0 +1,61 @@
+<h1 id="header" mat-dialog-title></h1>
+<div mat-dialog-content>
+  <form id="curriculum-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field class="form-field-lg">
+      <mat-label>Código</mat-label>
+      <input appearance="fill" matInput placeholder="" formControlName="code" name="code">
+      <mat-error *ngIf="form.get('code')?.errors?.serverError && submitted">
+        {{ form.get('code')?.errors?.serverError }}
+      </mat-error>
+    </mat-form-field>
+
+    <br />
+
+    <mat-form-field class="form-field-lg">
+      <mat-label>Carga Horária</mat-label>
+      <input appearance="fill" matInput placeholder="" formControlName="courseLoad" name="courseLoad">
+      <mat-error *ngIf="form.get('courseLoad')?.errors?.serverError && submitted">
+        {{ form.get('courseLoad')?.errors?.serverError }}
+      </mat-error>
+    </mat-form-field>
+
+    <br />
+
+    <mat-form-field class="form-field-lg">
+      <mat-label>Carga Horária de Estágio Obrigatório</mat-label>
+      <input appearance="fill" matInput placeholder="" formControlName="internshipCourseLoad"
+        name="internshipCourseLoad">
+      <mat-error *ngIf="form.get('internshipCourseLoad')?.errors?.serverError && submitted">
+        {{ form.get('internshipCourseLoad')?.errors?.serverError }}
+      </mat-error>
+    </mat-form-field>
+
+    <br />
+
+    <mat-form-field class="form-field-lg">
+      <mat-label>Critérios de Início de Estágio</mat-label>
+      <input appearance="fill" matInput placeholder="" formControlName="internshipStartCriteria"
+        name="internshipStartCriteria">
+      <mat-error *ngIf="form.get('internshipStartCriteria')?.errors?.serverError && submitted">
+        {{ form.get('internshipStartCriteria')?.errors?.serverError }}
+      </mat-error>
+    </mat-form-field>
+
+    <br />
+
+    <mat-form-field class="form-field-lg">
+      <mat-label>Atividades Permitidas de Estágio</mat-label>
+      <input appearance="fill" matInput placeholder="" formControlName="internshipAllowedActivities"
+        name="internshipAllowedActivities">
+      <mat-error *ngIf="form.get('internshipAllowedActivities')?.errors?.serverError && submitted">
+        {{ form.get('internshipAllowedActivities')?.errors?.serverError }}
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button type="submit" form="curriculum-form" mat-button color="primary">Salvar</button>
+</div>
