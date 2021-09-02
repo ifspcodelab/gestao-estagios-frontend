@@ -12,7 +12,7 @@
             <mat-label>Campus</mat-label>
             <input matInput placeholder="" formControlName="campus" name="campus" [matAutocomplete]="campusAuto" #campus
               (keyup)="onCampusSelected(campus.value)">
-            <mat-error *ngIf="fieldErrors('campus')?.autocomplete && submitted">Campus Inválido
+            <mat-error *ngIf="fieldErrors('campus')?.autocomplete">Campus Inválido
             </mat-error>
             <mat-error *ngIf="fieldErrors('campus')?.required && submitted">Campus é obrigatório
             </mat-error>
@@ -23,8 +23,8 @@
             </mat-error>
             <mat-autocomplete autoActiveFirstOption #campusAuto="matAutocomplete"
               (optionSelected)="onCampusSelected($event.option.value)">
-              <mat-option *ngFor="let campus of campusFilteredOptions$ | async" [value]="campus">
-                {{campus}}
+              <mat-option *ngFor="let campus of campusFilteredOptions$ | async" [value]="campus.name">
+                {{campus.name}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
@@ -33,7 +33,7 @@
             <mat-label>Departamento</mat-label>
             <input matInput placeholder="" formControlName="department" name="department"
               [matAutocomplete]="departmentAuto" #department (keyup)="onDepartmentSelected(department.value)">
-            <mat-error *ngIf="fieldErrors('department')?.autocomplete && submitted">Departamento Inválido
+            <mat-error *ngIf="fieldErrors('department')?.autocomplete">Departamento Inválido
             </mat-error>
             <mat-error *ngIf="fieldErrors('department')?.required && submitted">Departamento é obrigatório
             </mat-error>
@@ -44,8 +44,8 @@
             </mat-error>
             <mat-autocomplete autoActiveFirstOption #departmentAuto="matAutocomplete"
               (optionSelected)="onDepartmentSelected($event.option.value)">
-              <mat-option *ngFor="let department of departmentFilteredOptions$ | async" [value]="department">
-                {{department}}
+              <mat-option *ngFor="let department of departmentFilteredOptions$ | async" [value]="department.name">
+                {{department.name}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>

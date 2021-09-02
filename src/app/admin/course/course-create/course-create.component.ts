@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from 'src/app/core/services/course.service';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize, first, map, startWith } from "rxjs/operators";
 
@@ -29,16 +29,10 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
   id: string | null;
   course: Course;
 
-  //campusControl: FormControl;
-  //campuses$: Observable<Campus[]>;
-  campusesName: string[] = [];
-  campusFilteredOptions$: Observable<string[]>;
+  campusFilteredOptions$: Observable<Campus[]>;
   campuses: Campus[] = [];
 
-  //departmentControl: FormControl;
-  //departments$: Observable<Department[]>;
-  departmentsName: string[] = [];
-  departmentFilteredOptions$: Observable<string[]>;
+  departmentFilteredOptions$: Observable<Department[]>;
   departments: Department[] = [];
   departmentSelected?: Department;
 
@@ -68,15 +62,13 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
       this.createMode = true;
       this.loading = false;
     }
-
-    //this.campuses$ = this.campusService.getCampuses();
   }
 
-  fetchCampuses() {
+  fetchCampuses() {  
     this.campusService.getCampuses().subscribe(campuses => {
-      campuses.forEach(c => this.campusesName.push(c.name))
       this.campuses = campuses;
-      this.campusFilteredOptions$ = this.form.get('campus')!.valueChanges.pipe(
+      this.field('campus').setValidators(AppValidators.autocomplete(this.campuses.map(c => c.name)))
+      this.campusFilteredOptions$ = this.field('campus').valueChanges.pipe(
         startWith(''),
         map(value => this._filterCampus(value))
       );
@@ -84,39 +76,41 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
   }
 
   onCampusSelected(campusSelected: string) {
-    this.departmentsName = [];
+    this.departments = [];
 
-    //this.departmentControl.setValue('');
-    this.form.get('department')!.setValue('');
+    this.field('department').setValue('');
 
-    this.campuses.forEach(campus => {
-      if (campus.name === campusSelected) {
-        this.departmentService.getDepartments(campus.id)
-          .subscribe(departmentArray => {
-            departmentArray.forEach(department => this.departmentsName.push(department.name))
-            this.departments = departmentArray;
-            this.departmentFilteredOptions$ = this.form.get('campus')!.valueChanges.pipe(
-              startWith(''),
-              map(value => this._filterDepartment(value))
-            );
-          });
-      }
-    });
-    this.form.get('department')!.setValidators(AppValidators.autocomplete(this.departmentsName));
+    const campus = this.campuses.find(c => c.name == campusSelected);
+
+    if (campus) {
+      this.departmentService.getDepartments(campus.id)
+        .subscribe(departments => {
+          this.departments = departments;
+          this.refreshDepartmentValidator();
+          this.departmentFilteredOptions$ = this.field('department').valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterDepartment(value))
+          );
+        });
+    }
+  }
+
+  private refreshDepartmentValidator() {
+    this.field('department').setValidators(AppValidators.autocomplete(this.departments.map(d => d.name)));
   }
 
   onDepartmentSelected(departmentName: string) {
     this.departmentSelected = this.departments.find(department => department.name == departmentName);
   }
 
-  private _filterCampus(value: string): string[] {
+  private _filterCampus(value: string): Campus[] {
     const filteredValue = value.toLowerCase()
-    return this.campusesName.filter(campus => campus.toLowerCase().includes(filteredValue));
+    return this.campuses.filter(campus => campus.name.toLowerCase().includes(filteredValue));
   }
 
-  private _filterDepartment(value: string): string[] {
+  private _filterDepartment(value: string): Department[] {
     const filteredValue = value.toLowerCase();
-    return this.departmentsName.filter(departmentName => departmentName.toLowerCase().includes(filteredValue));
+    return this.departments.filter(department => department.name.toLowerCase().includes(filteredValue));
   }
 
   getCourse(id: String) {
@@ -134,12 +128,16 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
           this.form.patchValue(course);
           this.departmentSelected = this.course.department;
           this.departmentService.getDepartments(this.course.department.campus.id)
-            .subscribe(departmentArray => {
-              /* this.departmentsName = departmentArray.map(department => department.name); */
-              departmentArray.forEach(department => this.departmentsName.push(department.name));
-              this.departmentFilteredOptions$ = of(this.departmentsName);
-              this.form.get('campus')?.patchValue(this.course.department.campus.name);
-              this.form.get('department')?.patchValue(this.course.department.name);
+            .subscribe(departments => {
+              this.departments = departments;
+              this.departmentFilteredOptions$ = of(this.departments);
+              this.departmentFilteredOptions$ = this.field('department').valueChanges.pipe(
+                startWith(''),
+                map(value => this._filterDepartment(value))
+              );
+              this.field('campus').patchValue(this.course.department.campus.name);
+              this.field('department').patchValue(this.course.department.name);
+              this.refreshDepartmentValidator();
             })
         },
         error => {
@@ -156,7 +154,7 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
   }
 
   field(path: string) {
-    return this.form.get(path);
+    return this.form.get(path)!;
   }
 
   fieldErrors(path: string) {
@@ -164,12 +162,6 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
   }
 
   buildForm(): FormGroup {
-    // this.campusControl = new FormControl('',
-    //   [AppValidators.autocompleteValidator(this.campusesName)]
-    // );
-    // this.departmentControl = new FormControl('',
-    //   //[AppValidators.autocompleteCityValidator(this.departmentsName)]
-    // );
     return this.fb.group({
       name: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.alpha]
@@ -181,10 +173,10 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
         [Validators.required, AppValidators.numeric]
       ],
       campus: ['',
-        [AppValidators.autocomplete(this.campusesName), Validators.required]
+        [Validators.required]
       ],
       department: ['',
-        [AppValidators.autocomplete(this.departmentsName), Validators.required]
+        [Validators.required]
       ]
     });
   }
@@ -226,7 +218,10 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
       this.navigateToShow();
       return;
     }
-    this.courseService.updateCourse(this.id!, this.form.value)
+    const courseCreate = new CourseCreate(
+      this.form.value.name, this.form.value.abbreviation, this.form.value.numberOfPeriods, this.departmentSelected!.id
+    );
+    this.courseService.updateCourse(this.id!, courseCreate)
       .pipe(first())
       .subscribe(
         (course: Course) => {
@@ -242,8 +237,6 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
 
   handleError(error: any) {
     if (error instanceof HttpErrorResponse) {
-      /* console.log(error); */
-
       if (error.status === 400) {
         const violations: Array<{ name: string; reason: string }> = error.error.violations;
         violations.forEach(violation => {
