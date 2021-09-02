@@ -218,7 +218,10 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
       this.navigateToShow();
       return;
     }
-    this.courseService.updateCourse(this.id!, this.form.value)
+    const courseCreate = new CourseCreate(
+      this.form.value.name, this.form.value.abbreviation, this.form.value.numberOfPeriods, this.departmentSelected!.id
+    );
+    this.courseService.updateCourse(this.id!, courseCreate)
       .pipe(first())
       .subscribe(
         (course: Course) => {
