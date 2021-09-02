@@ -6,7 +6,6 @@ import { finalize, first } from "rxjs/operators";
 import { NotificationService } from "../../../core/services/notification.service";
 import { ConfirmDialogService } from "../../../core/services/confirm-dialog.service";
 import { MatDialog } from "@angular/material/dialog";
-/* import { DepartmentCreateComponent } from '../department-create/department-create.component'; */
 import { ProblemDetail } from "../../../core/interfaces/problem-detail.interface";
 import { ListItens } from "../../../core/components/content/content-detail/content-detail.component";
 import { LoaderService } from "../../../core/services/loader.service";
@@ -14,6 +13,7 @@ import { Department } from 'src/app/core/models/department.model';
 import { Campus } from 'src/app/core/models/campus.model';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { Curriculum } from 'src/app/core/models/curriculum.model';
+import { CurriculumCreateComponent } from '../curriculum-create/curriculum-create.component';
 
 @Component({
   selector: 'app-course-show',
@@ -22,7 +22,7 @@ import { Curriculum } from 'src/app/core/models/curriculum.model';
 })
 export class CourseShowComponent implements OnInit {
   course: Course;
-  curriculums: Curriculum[] = []; 
+  curriculums: Curriculum[] = [];
   loading: boolean = true;
   id: string | null;
 
@@ -128,32 +128,35 @@ export class CourseShowComponent implements OnInit {
         curriculum: curriculum
       }
     };
- }
+  }
 
-  /*  handlerCreateDepartment() {
-     this.dialog.open(DepartmentCreateComponent, this.getDialogConfig(undefined))
-       .afterClosed()
-       .subscribe(result => {
-         if (result) {
-           this.departments = [...this.departments, result]
-         }
-       });
-   } */
+  handlerCreateCurriculum() {
+    this.dialog.open(CurriculumCreateComponent, this.getDialogConfig(undefined))
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.curriculums = [...this.curriculums, result]
+        }
+      });
+  }
 
-  /*   handlerUpdateDepartment(department: Department) {
-      this.dialog.open(DepartmentCreateComponent, this.getDialogConfig(department))
-        .afterClosed()
-        .subscribe(result => {
-          if (result) {
-            const departmentFound = this.departments.find(d => d.id == result.id);
-            if (departmentFound) {
-              departmentFound.abbreviation = result.abbreviation;
-              departmentFound.name = result.name;
-            }
+  handlerUpdateCurriculum(curriculum: Curriculum) {
+    this.dialog.open(CurriculumCreateComponent, this.getDialogConfig(curriculum))
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          const curriculumFound = this.curriculums.find(c => c.id == result.id);
+          if (curriculumFound) {
+            curriculumFound.code = result.code;
+            curriculumFound.courseLoad = result.courseLoad;
+            curriculumFound.internshipCourseLoad = result.internshipCourseLoad;
+            curriculumFound.internshipStartCriteria = result.internshipStartCriteria;
+            curriculumFound.internshipAllowedActivities = result.internshipAllowedActivities;
           }
         }
-        );
-    } */
+      }
+      );
+  }
 
   handlerDeleteCurriculum($event: Event, curriculum: Curriculum | null) {
     $event.stopPropagation();

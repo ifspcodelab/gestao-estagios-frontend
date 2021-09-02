@@ -3,7 +3,8 @@
     <button mat-button color="primary" routerLink="/admin/course/{{course.id}}/edit">
       Editar
     </button>
-    <div matTooltip="Não é possível excluir um curso que possui matrizes" [matTooltipDisabled]="curriculums.length == 0">
+    <div matTooltip="Não é possível excluir um curso que possui matrizes"
+      [matTooltipDisabled]="curriculums.length == 0">
       <button mat-button color="warn" (click)="handlerDeleteCourse()" [disabled]="curriculums.length != 0">
         Excluir
       </button>
@@ -12,20 +13,20 @@
   <app-content-main>
     <app-content-detail *ngIf="!loading" title="{{course.name}} - {{course.abbreviation}}"
       [listItens]="courseDetails()">
-      <!-- <app-content-detail-section title="Matrizes" icon="domain" (openDialogEvent)="handlerCreateCurriculum()"> -->
-        <app-content-detail-section title="Matrizes" icon="domain">
-          <app-content-cards entityName="matriz" [emptyState]="curriculums.length == 0">
-            <!-- <app-card *ngFor="let curriculum of Curriculums" (click)="handlerUpdateCurriculum(curriculum)"
-              [title]="curriculum.code" [subtitle]="curriculum.courseLoad.toString()"> -->
-            <app-card *ngFor="let curriculum of curriculums" [title]="curriculum.code" [subtitle]="curriculum.courseLoad.toString()">
-              <div card-actions>
-                <button mat-icon-button (click)="handlerDeleteCurriculum($event, curriculum)">
-                  <mat-icon>delete_outline</mat-icon>
-                </button>
-              </div>
-            </app-card>
-          </app-content-cards>
-        </app-content-detail-section>
+      <app-content-detail-section title="Matrizes" icon="domain" (openDialogEvent)="handlerCreateCurriculum()">
+        <!-- <app-content-detail-section title="Matrizes" icon="domain"> -->
+        <app-content-cards entityName="matriz" [emptyState]="curriculums.length == 0">
+          <app-card *ngFor="let curriculum of curriculums" (click)="handlerUpdateCurriculum(curriculum)"
+            [title]="curriculum.code" [subtitle]="curriculum.courseLoad.toString()">
+            <!-- <app-card *ngFor="let curriculum of curriculums" [title]="curriculum.code" [subtitle]="curriculum.courseLoad.toString()"> -->
+            <div card-actions>
+              <button mat-icon-button (click)="handlerDeleteCurriculum($event, curriculum)">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </app-card>
+        </app-content-cards>
+      </app-content-detail-section>
     </app-content-detail>
   </app-content-main>
 </app-content>
