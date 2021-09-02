@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./content-cards.component.scss']
 })
 export class ContentCardsComponent implements OnInit {
+  @Input() entityName: string;
   @Input() emptyState: boolean = false;
 
   constructor() { }

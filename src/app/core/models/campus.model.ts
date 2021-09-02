@@ -7,4 +7,5 @@ export class Campus {
   abbreviation: string;
   address: Address;
   internshipSector: InternshipSector;
+
 }
