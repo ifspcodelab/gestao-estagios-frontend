@@ -211,7 +211,22 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
   }
 
   createCampus() {
-    this.campusService.postCampus(this.form.value)
+    const addressCreate = new AddressCreate(
+      this.field('address.postalCode')?.value,
+      this.field('address.street')?.value,
+      this.field('address.neighborhood')?.value,
+      this.cities.find(c => c.name == this.field('address.city')?.value)?.id!,
+      this.field('address.number')?.value,
+      this.field('address.complement')?.value
+    );
+    const campusCreate = new CampusCreate(
+      this.field('name')?.value,
+      this.field('abbreviation')?.value,
+      addressCreate,
+      this.field('internshipSector')?.value
+    );
+    //this.campusService.postCampus(this.form.value)
+    this.campusService.postCampus(campusCreate)
       .pipe(first())
       .subscribe(
         (campus: Campus) => {

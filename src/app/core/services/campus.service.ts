@@ -17,7 +17,7 @@ export class CampusService {
   };
   constructor(private httpClient: HttpClient) { }
 
-  postCampus(campus: Campus): Observable<Campus> {
+  postCampus(campus: CampusCreate): Observable<Campus> {
     return this.httpClient.post<any>(this.apiUrl, campus, this.httpOptions);
   }
 
