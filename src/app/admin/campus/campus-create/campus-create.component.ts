@@ -217,7 +217,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
       this.field('address.neighborhood')?.value,
       this.cities.find(c => c.name == this.field('address.city')?.value)?.id!,
       this.field('address.number')?.value,
-      this.field('address.complement')?.value
+      (this.field('address.complement')?.value == '' ? null : this.field('address.complement')?.value)
     );
     const campusCreate = new CampusCreate(
       this.field('name')?.value,
@@ -251,7 +251,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
       this.field('address.neighborhood')?.value,
       this.cities.find(c => c.name == this.field('address.city')?.value)?.id!,
       this.field('address.number')?.value,
-      this.field('address.complement')?.value
+      (this.field('address.complement')?.value == '' ? null : this.field('address.complement')?.value)
     );
     const campusCreate = new CampusCreate(
       this.field('name')?.value,
