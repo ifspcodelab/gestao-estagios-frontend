@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { Observable } from 'rxjs';
-import { Curriculum } from '../models/curriculum.model';
+import { Curriculum, CurriculumCreate } from '../models/curriculum.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class CurriculumService {
 
   constructor(private httpClient: HttpClient) { }
 
-  postCurriculum(courseId: string, curriculum: Curriculum): Observable<Curriculum> {
+  postCurriculum(courseId: string, curriculum: CurriculumCreate): Observable<Curriculum> {
     const url = `${this.apiUrl}/${courseId}/curriculums`;
     return this.httpClient.post<Curriculum>(url, curriculum, this.httpOptions);
   }
@@ -29,7 +29,7 @@ export class CurriculumService {
     return this.httpClient.get<Curriculum[]>(url, this.httpOptions);
   }
 
-  putCurriculum(courseId: string, curriculumId: string, curriculum: Curriculum): Observable<Curriculum> {
+  putCurriculum(courseId: string, curriculumId: string, curriculum: CurriculumCreate): Observable<Curriculum> {
     const url = `${this.apiUrl}/${courseId}/curriculums/${curriculumId}`;
     return this.httpClient.put<Curriculum>(url, curriculum, this.httpOptions);
   }
