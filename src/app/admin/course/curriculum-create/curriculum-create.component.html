@@ -4,52 +4,61 @@
 
     <mat-form-field class="form-field-lg">
       <mat-label>Código</mat-label>
-      <input appearance="fill" matInput placeholder="" formControlName="code" name="code">
-      <mat-error *ngIf="form.get('code')?.errors?.serverError && submitted">
-        {{ form.get('code')?.errors?.serverError }}
+      <input appearance="fill" matInput placeholder="" formControlName="code" name="code" autocomplete="off">
+      <mat-error *ngIf="fieldErrors('code')?.required && submitted">Código é obrigatório</mat-error>
+      <mat-error *ngIf="fieldErrors('code')?.notblank && submitted">Código não pode ser vazio</mat-error>
+      <mat-error *ngIf="fieldErrors('code')?.serverError && submitted">
+        {{ fieldErrors('code')?.serverError }}
       </mat-error>
     </mat-form-field>
 
-    <br />
+    <br>
 
     <mat-form-field class="form-field-lg">
       <mat-label>Carga Horária</mat-label>
-      <input appearance="fill" matInput placeholder="" formControlName="courseLoad" name="courseLoad">
-      <mat-error *ngIf="form.get('courseLoad')?.errors?.serverError && submitted">
-        {{ form.get('courseLoad')?.errors?.serverError }}
+      <input appearance="fill" matInput placeholder="" formControlName="courseLoad" name="courseLoad" autocomplete="off">
+      <mat-error *ngIf="fieldErrors('courseLoad')?.required && submitted">Carga Horária é obrigatória</mat-error>
+      <mat-error *ngIf="fieldErrors('courseLoad')?.notblank && submitted">Carga Horária não pode ser vazia</mat-error>
+      <mat-error *ngIf="fieldErrors('courseLoad')?.numeric && submitted">Carga Horária deve conter apenas números</mat-error>
+      <mat-error *ngIf="fieldErrors('courseLoad')?.serverError && submitted">
+        {{ fieldErrors('courseLoad')?.serverError }}
       </mat-error>
     </mat-form-field>
 
-    <br />
+    <br>
 
     <mat-form-field class="form-field-lg">
       <mat-label>Carga Horária de Estágio Obrigatório</mat-label>
-      <input appearance="fill" matInput placeholder="" formControlName="internshipCourseLoad"
-        name="internshipCourseLoad">
-      <mat-error *ngIf="form.get('internshipCourseLoad')?.errors?.serverError && submitted">
-        {{ form.get('internshipCourseLoad')?.errors?.serverError }}
+      <input appearance="fill" matInput placeholder="" formControlName="internshipCourseLoad" name="internshipCourseLoad" autocomplete="off">
+      <mat-error *ngIf="fieldErrors('internshipCourseLoad')?.required && submitted">Carga Horária de Estágio é obrigatória</mat-error>
+      <mat-error *ngIf="fieldErrors('internshipCourseLoad')?.notblank && submitted">Carga Horária de Estágio não pode ser vazia</mat-error>
+      <mat-error *ngIf="fieldErrors('internshipCourseLoad')?.numeric && submitted">Carga Horária de Estágio deve conter apenas números</mat-error>
+      <mat-error *ngIf="fieldErrors('internshipCourseLoad')?.serverError && submitted">
+        {{ fieldErrors('internshipCourseLoad')?.serverError }}
       </mat-error>
     </mat-form-field>
 
-    <br />
+    <br>
 
     <mat-form-field class="form-field-lg">
       <mat-label>Critérios de Início de Estágio</mat-label>
-      <input appearance="fill" matInput placeholder="" formControlName="internshipStartCriteria"
-        name="internshipStartCriteria">
-      <mat-error *ngIf="form.get('internshipStartCriteria')?.errors?.serverError && submitted">
-        {{ form.get('internshipStartCriteria')?.errors?.serverError }}
+      <input appearance="fill" matInput placeholder="" formControlName="internshipStartCriteria" name="internshipStartCriteria" autocomplete="off">
+      <mat-error *ngIf="fieldErrors('internshipStartCriteria')?.required && submitted">Critérios de Início de Estágio são obrigatórios</mat-error>
+      <mat-error *ngIf="fieldErrors('internshipStartCriteria')?.notblank && submitted">Critérios de Início de Estágio não pode ser vazio</mat-error>
+      <mat-error *ngIf="fieldErrors('internshipStartCriteria')?.serverError && submitted">
+        {{ fieldErrors('internshipStartCriteria')?.serverError }}
       </mat-error>
     </mat-form-field>
 
-    <br />
+    <br>
 
     <mat-form-field class="form-field-lg">
       <mat-label>Atividades Permitidas de Estágio</mat-label>
-      <input appearance="fill" matInput placeholder="" formControlName="internshipAllowedActivities"
-        name="internshipAllowedActivities">
-      <mat-error *ngIf="form.get('internshipAllowedActivities')?.errors?.serverError && submitted">
-        {{ form.get('internshipAllowedActivities')?.errors?.serverError }}
+      <input appearance="fill" matInput placeholder="" formControlName="internshipAllowedActivities" name="internshipAllowedActivities" autocomplete="off">
+      <mat-error *ngIf="fieldErrors('internshipAllowedActivities')?.required && submitted">Atividades Permitidas são obrigatórias</mat-error>
+      <mat-error *ngIf="fieldErrors('internshipAllowedActivities')?.notblank && submitted">Atividades Permitidas não pode ser vazia</mat-error>
+      <mat-error *ngIf="fieldErrors('internshipAllowedActivities')?.serverError && submitted">
+        {{ fieldErrors('internshipAllowedActivities')?.serverError }}
       </mat-error>
     </mat-form-field>
 

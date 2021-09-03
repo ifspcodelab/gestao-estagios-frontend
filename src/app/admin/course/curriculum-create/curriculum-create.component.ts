@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Violation } from 'src/app/core/interfaces/violation.interface';
-import { Curriculum } from 'src/app/core/models/curriculum.model';
+import { Curriculum, CurriculumCreate } from 'src/app/core/models/curriculum.model';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
+import { AppValidators } from 'src/app/core/validators/app-validators';
 import { Course } from "../../../core/models/course.model";
 
 @Component({
@@ -46,18 +47,41 @@ export class CurriculumCreateComponent implements OnInit {
     }
   }
 
+  field(path: string) {
+    return this.form.get(path);
+  }
+
+  fieldErrors(path: string) {
+    return this.field(path)?.errors;
+  }
+
   buildForm(): FormGroup {
     return this.fb.group({
-      code: ['', []],
-      courseLoad: ['', []],
-      internshipCourseLoad: ['', []],
-      internshipStartCriteria: ['', []],
-      internshipAllowedActivities: ['', []]
+      code: ['',
+        [Validators.required, AppValidators.notBlank]
+      ],
+      courseLoad: ['',
+        [Validators.required, AppValidators.notBlank, AppValidators.numeric]
+      ],
+      internshipCourseLoad: ['',
+        [Validators.required, AppValidators.notBlank, AppValidators.numeric]
+      ],
+      internshipStartCriteria: ['',
+        [Validators.required, AppValidators.notBlank]
+      ],
+      internshipAllowedActivities: ['',
+        [Validators.required, AppValidators.notBlank]
+      ]
     });
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.submitted = true;
+
+    if (this.form.invalid) {
+      return;
+    }
+
     if (this.createMode) {
       this.createCurriculum();
     }
@@ -67,14 +91,24 @@ export class CurriculumCreateComponent implements OnInit {
   }
 
   createCurriculum() {
-    this.curriculumService.postCurriculum(this.data.course.id, this.form.value).subscribe(
-      curriculum => {
-        this.dialogRef.close(curriculum);
-      },
-      error => {
-        this.handleError(error);
-      }
+    const curriculum = new CurriculumCreate(
+      this.form.get("code")?.value,
+      Number(this.form.get("courseLoad")?.value),
+      Number(this.form.get("internshipCourseLoad")?.value),
+      this.form.get("internshipStartCriteria")?.value,
+      this.form.get("internshipAllowedActivities")?.value
     );
+    this.curriculumService.postCurriculum(this.data.course.id, curriculum)
+      .pipe()
+      .subscribe(
+        curriculum => {
+          this.form.reset();
+          this.dialogRef.close(curriculum);
+        },
+        error => {
+          this.handleError(error);
+        }
+      );
   }
 
   updateCurriculum() {
@@ -107,10 +141,9 @@ export class CurriculumCreateComponent implements OnInit {
       if (error.status === 409) {
         const formControl = this.form.get("code")!;
         formControl?.setErrors({
-          serverError: `Departamento já existente com código ${this.form.value.code} para Curso ${this.data.course.abbreviation}`
+          serverError: error.error.title
         });
       }
     }
   }
-
 }
