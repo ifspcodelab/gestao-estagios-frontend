@@ -59,6 +59,16 @@
           <br>
 
           <mat-form-field class="form-field-sm">
+            <mat-label>Número</mat-label>
+            <input matInput placeholder="" formControlName="number" name="number">
+            <mat-error *ngIf="fieldErrors('address.number')?.required && submitted">Número é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('address.number')?.numeric && submitted">Deve conter apenas números</mat-error>
+            <mat-error *ngIf="fieldErrors('address.number')?.serverError && submitted">
+              {{ form.get('address.number')?.errors?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field-sm">
             <mat-label>Estado</mat-label>
             <input type="text"
                    placeholder="Selecione..."
@@ -104,6 +114,8 @@
             </mat-autocomplete>
           </mat-form-field>
 
+          <br>
+
           <mat-form-field class="form-field-sm">
             <mat-label>Bairro</mat-label>
             <input matInput placeholder="" formControlName="neighborhood" name="neighborhood">
@@ -111,18 +123,6 @@
             <mat-error *ngIf="fieldErrors('address.neighborhood')?.notblank && submitted">Bairro não pode ser vazio</mat-error>
             <mat-error *ngIf="fieldErrors('address.neighborhood')?.serverError && submitted">
               {{ form.get('address.neighborhood')?.errors?.serverError }}
-            </mat-error>
-          </mat-form-field>
-
-          <br>
-
-          <mat-form-field class="form-field-sm">
-            <mat-label>Número</mat-label>
-            <input matInput placeholder="" formControlName="number" name="number">
-            <mat-error *ngIf="fieldErrors('address.number')?.required && submitted">Número é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('address.number')?.numeric && submitted">Deve conter apenas números</mat-error>
-            <mat-error *ngIf="fieldErrors('address.number')?.serverError && submitted">
-              {{ form.get('address.number')?.errors?.serverError }}
             </mat-error>
           </mat-form-field>
 
