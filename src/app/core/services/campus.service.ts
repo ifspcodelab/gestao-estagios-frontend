@@ -29,7 +29,7 @@ export class CampusService {
     return this.httpClient.get<Campus>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
 
-  updateCampus(id: String, campus: Campus | CampusCreate): Observable<Campus> {
+  updateCampus(id: String, campus: CampusCreate): Observable<Campus> {
     return this.httpClient.put<Campus>(`${this.apiUrl}/${id}`, campus, this.httpOptions);
   }
 
