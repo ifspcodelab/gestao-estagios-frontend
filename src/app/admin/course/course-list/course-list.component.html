@@ -1,0 +1,17 @@
+<app-content *ngIf="courses$ | async as courses">
+    <app-content-toolbar title="Cursos">
+        <button mat-button color="primary" routerLink="/admin/course/create">
+            Novo Curso
+        </button>
+    </app-content-toolbar>
+    <app-content-main>
+        <app-content-cards entityName="curso" [emptyState]="courses.length == 0">
+            <app-card *ngFor="let course of courses" [title]="course.name" [subtitle]="course.abbreviation"
+                [link]="'/admin/course/' + course.id">
+                <div card-actions>
+                    <mat-slide-toggle color="primary" checked (click)="toggleCourse($event)"></mat-slide-toggle>
+                </div>
+            </app-card>
+        </app-content-cards>
+    </app-content-main>
+</app-content>

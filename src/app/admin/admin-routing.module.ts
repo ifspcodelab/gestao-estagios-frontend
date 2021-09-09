@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -9,9 +10,9 @@ const routes: Routes = [
     children: [
       { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
       { path: 'campus', loadChildren: () => import('./campus/campus.module').then(m => m.CampusModule) },
+      { path: 'course', loadChildren: () => import('./course/course.module').then(m => m.CourseModule) },
     ]
   },
-
 ];
 
 @NgModule({

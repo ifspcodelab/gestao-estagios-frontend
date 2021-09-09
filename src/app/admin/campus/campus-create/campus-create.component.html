@@ -59,42 +59,70 @@
           <br>
 
           <mat-form-field class="form-field-sm">
-            <mat-label>Bairro</mat-label>
-            <input matInput placeholder="" formControlName="neighborhood" name="neighborhood">
-            <mat-error *ngIf="fieldErrors('address.neighborhood')?.required && submitted">Bairro é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('address.neighborhood')?.notblank && submitted">Bairro não pode ser vazio</mat-error>
-            <mat-error *ngIf="fieldErrors('address.neighborhood')?.serverError && submitted">
-              {{ form.get('address.neighborhood')?.errors?.serverError }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="form-field-sm">
-            <mat-label>Cidade</mat-label>
-            <input matInput placeholder="" formControlName="city" name="city">
-            <mat-error *ngIf="fieldErrors('address.city')?.required && submitted">Cidade é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('address.city')?.serverError && submitted">
-              {{ form.get('address.city')?.errors?.serverError }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="form-field-sm">
-            <mat-label>Estado</mat-label>
-            <input matInput placeholder="" formControlName="state" name="state">
-            <mat-error *ngIf="fieldErrors('address.state')?.required && submitted">Estado é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('address.state')?.serverError && submitted">
-              {{ form.get('address.state')?.errors?.serverError }}
-            </mat-error>
-          </mat-form-field>
-
-          <br>
-
-          <mat-form-field class="form-field-sm">
             <mat-label>Número</mat-label>
             <input matInput placeholder="" formControlName="number" name="number">
             <mat-error *ngIf="fieldErrors('address.number')?.required && submitted">Número é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('address.number')?.numeric && submitted">Deve conter apenas números</mat-error>
             <mat-error *ngIf="fieldErrors('address.number')?.serverError && submitted">
               {{ form.get('address.number')?.errors?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field-sm">
+            <mat-label>Estado</mat-label>
+            <input type="text"
+                   placeholder="Selecione..."
+                   matInput
+                   name="state"
+                   formControlName="state"
+                   [matAutocomplete]="autoState">
+            <mat-error *ngIf="fieldErrors('address.state')?.autocomplete">Estado Inválido
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('address.state')?.required && submitted">Estado é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('address.state')?.notblank && submitted"> Estado não pode ser vazio
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('address.state')?.serverError && submitted">
+              {{ form.get('address.state')?.errors?.serverError }}
+            </mat-error>
+            <mat-autocomplete autoActiveFirstOption #autoState="matAutocomplete" (optionSelected)='onStateSelected($event.option.value)'>
+              <mat-option *ngFor="let state of stateFilteredOptions$ | async" [value]="state.name">
+                {{state.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field class="form-field-sm">
+            <mat-label>Cidade</mat-label>
+            <input type="text"
+                   placeholder="Selecione..."
+                   matInput
+                   name="city"
+                   formControlName="city"
+                   [matAutocomplete]="autoCity">
+            <mat-error *ngIf="fieldErrors('address.city')?.autocomplete">Cidade Inválida
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('address.city')?.required && submitted">Cidade é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('address.city')?.notblank && submitted">Cidade não pode ser vazio
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('address.city')?.serverError && submitted">
+              {{ form.get('address.city')?.errors?.serverError }}
+            </mat-error>
+            <mat-autocomplete autoActiveFirstOption #autoCity="matAutocomplete">
+              <mat-option *ngFor="let city of cityFilteredOptions$ | async" [value]="city.name">
+                {{city.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field class="form-field-sm">
+            <mat-label>Bairro</mat-label>
+            <input matInput placeholder="" formControlName="neighborhood" name="neighborhood">
+            <mat-error *ngIf="fieldErrors('address.neighborhood')?.required && submitted">Bairro é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('address.neighborhood')?.notblank && submitted">Bairro não pode ser vazio</mat-error>
+            <mat-error *ngIf="fieldErrors('address.neighborhood')?.serverError && submitted">
+              {{ form.get('address.neighborhood')?.errors?.serverError }}
             </mat-error>
           </mat-form-field>
 

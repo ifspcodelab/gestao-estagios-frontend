@@ -16,6 +16,8 @@ import { ContentFormComponent } from './components/content/content-form/content-
 import { ContentDetailSectionComponent } from './components/content/content-detail/content-detail-section/content-detail-section.component';
 import { ReactiveFormsModule } from "@angular/forms";
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
@@ -35,7 +37,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    MatAutocompleteModule
   ],
   exports: [
     ConfirmDialogComponent,
@@ -50,7 +53,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     ContentDetailComponent,
     ContentDetailSectionComponent,
     ContentFormComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class CoreModule { }

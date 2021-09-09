@@ -1,0 +1,102 @@
+<app-content *ngIf="!loading">
+  <app-content-toolbar [title]="createMode ? 'Novo Curso' : 'Editar Curso'" [backUrl]="getBackUrl()">
+    <button type="submit" form="course-form" mat-flat-button color="primary">
+      <span>Salvar</span>
+    </button>
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-form>
+      <form id="course-form" class="app-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <fieldset>
+          <mat-form-field class="form-field-sm">
+            <mat-label>Campus</mat-label>
+            <input matInput placeholder="" formControlName="campus" name="campus" [matAutocomplete]="campusAuto" #campus
+              (keyup)="onCampusSelected(campus.value)">
+            <mat-error *ngIf="fieldErrors('campus')?.autocomplete">Campus Inválido
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('campus')?.required && submitted">Campus é obrigatório
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('campus')?.notblank && submitted">Campus não pode ser vazio
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('campus')?.serverError && submitted">
+              {{ form.get('campusId')?.errors?.serverError }}
+            </mat-error>
+            <mat-autocomplete autoActiveFirstOption #campusAuto="matAutocomplete"
+              (optionSelected)="onCampusSelected($event.option.value)">
+              <mat-option *ngFor="let campus of campusFilteredOptions$ | async" [value]="campus.name">
+                {{campus.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field class=" form-field-sm">
+            <mat-label>Departamento</mat-label>
+            <input matInput placeholder="" formControlName="department" name="department"
+              [matAutocomplete]="departmentAuto" #department (keyup)="onDepartmentSelected(department.value)">
+            <mat-error *ngIf="fieldErrors('department')?.autocomplete">Departamento Inválido
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('department')?.required && submitted">Departamento é obrigatório
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('department')?.notblank && submitted">Departamento não pode ser vazio
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('department')?.serverError && submitted">
+              {{ form.get('department')?.errors?.serverError }}
+            </mat-error>
+            <mat-autocomplete autoActiveFirstOption #departmentAuto="matAutocomplete"
+              (optionSelected)="onDepartmentSelected($event.option.value)">
+              <mat-option *ngFor="let department of departmentFilteredOptions$ | async" [value]="department.name">
+                {{department.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </fieldset>
+
+        <fieldset>
+          <legend>Informações do Curso</legend>
+          <mat-form-field class="form-field-lg">
+            <mat-label>Nome</mat-label>
+            <input appearance="fill" matInput placeholder="" formControlName="name" name="name" autocomplete="off">
+            <mat-error *ngIf="fieldErrors('name')?.required && submitted">Nome é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.notblank && submitted">Nome não pode ser vazio</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.alpha && submitted">Nome deve conter apenas letras</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.serverError && submitted">
+              {{ fieldErrors('name')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field class="form-field-sm">
+            <mat-label>Sigla</mat-label>
+            <input matInput placeholder="" formControlName="abbreviation" name="abbreviation" autocomplete="off">
+            <mat-error *ngIf="fieldErrors('abbreviation')?.required && submitted">Sigla é obrigatória</mat-error>
+            <mat-error *ngIf="fieldErrors('abbreviation')?.notblank && submitted">Sigla não pode ser vazia</mat-error>
+            <mat-error *ngIf="fieldErrors('abbreviation')?.exactlength && submitted">Sigla deve ter no máximo 10
+              caracteres</mat-error>
+            <mat-error *ngIf="fieldErrors('abbreviation')?.serverError && submitted">
+              {{ fieldErrors('abbreviation')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field-sm">
+            <mat-label>Número de Períodos</mat-label>
+            <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="numberOfPeriods"
+              name="numberOfPeriods" autocomplete="off">
+            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.required && submitted">Número de Período é
+              obrigatório
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.numberOfPeriods && submitted">Número de Período
+              inválido
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.numeric && submitted">Número de Período deve conter
+              apenas números</mat-error>
+            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.serverError && submitted">
+              {{ fieldErrors('numberOfPeriods')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+        </fieldset>
+
+      </form>
+    </app-content-form>
+  </app-content-main>
+</app-content>
