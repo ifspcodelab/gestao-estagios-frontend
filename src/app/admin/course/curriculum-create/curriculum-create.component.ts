@@ -47,24 +47,16 @@ export class CurriculumCreateComponent implements OnInit {
     }
   }
 
-  field(path: string) {
-    return this.form.get(path);
-  }
-
-  fieldErrors(path: string) {
-    return this.field(path)?.errors;
-  }
-
   buildForm(): FormGroup {
     return this.fb.group({
       code: ['',
         [Validators.required, AppValidators.notBlank]
       ],
       courseLoad: ['',
-        [Validators.required, AppValidators.notBlank, AppValidators.numeric]
+        [Validators.required, AppValidators.numeric]
       ],
       internshipCourseLoad: ['',
-        [Validators.required, AppValidators.notBlank, AppValidators.numeric]
+        [Validators.required, AppValidators.numeric]
       ],
       internshipStartCriteria: ['',
         [Validators.required, AppValidators.notBlank]
@@ -75,7 +67,15 @@ export class CurriculumCreateComponent implements OnInit {
     });
   }
 
-  public onSubmit() {
+  field(path: string) {
+    return this.form.get(path);
+  }
+
+  fieldErrors(path: string) {
+    return this.field(path)?.errors;
+  }
+
+  onSubmit() {
     this.submitted = true;
 
     if (this.form.invalid) {
