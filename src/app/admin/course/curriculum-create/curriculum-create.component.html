@@ -18,7 +18,6 @@
       <mat-label>Carga Horária</mat-label>
       <input appearance="fill" matInput placeholder="" formControlName="courseLoad" name="courseLoad" autocomplete="off">
       <mat-error *ngIf="fieldErrors('courseLoad')?.required && submitted">Carga Horária é obrigatória</mat-error>
-      <mat-error *ngIf="fieldErrors('courseLoad')?.notblank && submitted">Carga Horária não pode ser vazia</mat-error>
       <mat-error *ngIf="fieldErrors('courseLoad')?.numeric && submitted">Carga Horária deve conter apenas números</mat-error>
       <mat-error *ngIf="fieldErrors('courseLoad')?.serverError && submitted">
         {{ fieldErrors('courseLoad')?.serverError }}
@@ -31,7 +30,6 @@
       <mat-label>Carga Horária de Estágio Obrigatório</mat-label>
       <input appearance="fill" matInput placeholder="" formControlName="internshipCourseLoad" name="internshipCourseLoad" autocomplete="off">
       <mat-error *ngIf="fieldErrors('internshipCourseLoad')?.required && submitted">Carga Horária de Estágio é obrigatória</mat-error>
-      <mat-error *ngIf="fieldErrors('internshipCourseLoad')?.notblank && submitted">Carga Horária de Estágio não pode ser vazia</mat-error>
       <mat-error *ngIf="fieldErrors('internshipCourseLoad')?.numeric && submitted">Carga Horária de Estágio deve conter apenas números</mat-error>
       <mat-error *ngIf="fieldErrors('internshipCourseLoad')?.serverError && submitted">
         {{ fieldErrors('internshipCourseLoad')?.serverError }}
