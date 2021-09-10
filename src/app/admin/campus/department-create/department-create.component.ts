@@ -1,10 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { first } from 'rxjs/operators';
 import { Violation } from 'src/app/core/interfaces/violation.interface';
 import { Department } from 'src/app/core/models/department.model';
 import { DepartmentService } from 'src/app/core/services/department.service';
+import { AppValidators } from 'src/app/core/validators/app-validators';
 import { Campus } from "../../../core/models/campus.model";
 
 @Component({
@@ -48,13 +50,16 @@ export class DepartmentCreateComponent implements OnInit {
 
   buildForm(): FormGroup {
     return this.fb.group({
-      name: ['', []],
-      abbreviation: ['', []]
+      name: ['', [Validators.required, AppValidators.notBlank]],
+      abbreviation: ['', [Validators.required, AppValidators.notBlank, AppValidators.exactLength(3)]]
     });
   }
 
   onSubmit() {
     this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
     if (this.createMode) {
       this.createDepartment();
     }
@@ -64,11 +69,15 @@ export class DepartmentCreateComponent implements OnInit {
   }
 
   createDepartment() {
-    this.departmentService.postDepartments(this.data.campus.id, this.form.value).subscribe(
-      department => {
+    this.departmentService.postDepartments(this.data.campus.id, this.form.value)
+      .pipe(first())
+      .subscribe(
+        department => {
+        this.form.reset();
         this.dialogRef.close(department);
       },
       error => {
+        this.form.reset();
         this.handleError(error);
       }
     );
@@ -83,6 +92,14 @@ export class DepartmentCreateComponent implements OnInit {
         this.handleError(error);
       }
     );
+  }
+
+  field(path: string) {
+    return this.form.get(path)!;
+  }
+
+  fieldErrors(path: string) {
+    return this.field(path)?.errors;
   }
 
   handleError(error: any) {
