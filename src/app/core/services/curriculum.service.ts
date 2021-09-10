@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { Observable } from 'rxjs';
 import { Curriculum, CurriculumCreate } from '../models/curriculum.model';
+import { EntityUpdateStatus } from '../models/status.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,9 @@ export class CurriculumService {
   deleteCurriculum(courseId: string, curriculumId: string): Observable<unknown> {
     const url = `${this.apiUrl}/${courseId}/curriculums/${curriculumId}`;
     return this.httpClient.delete(url, this.httpOptions);
+  }
+
+  patchCurriculum(courseId: string, curriculumId: string, curriculumUpdateStatus: EntityUpdateStatus): Observable<Curriculum> {
+    return this.httpClient.patch<Curriculum>(`${this.apiUrl}/${courseId}/curriculums/${curriculumId}`, curriculumUpdateStatus, this.httpOptions);
   }
 }

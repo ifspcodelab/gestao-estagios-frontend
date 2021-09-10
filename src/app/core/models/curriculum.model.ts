@@ -1,4 +1,5 @@
 import { Course } from "./course.model";
+import { EntityStatus } from "./enums/status";
 
 export class Curriculum {
   id: string;
@@ -8,6 +9,7 @@ export class Curriculum {
   internshipStartCriteria: string;
   internshipAllowedActivities: string;
   course: Course;
+  status: EntityStatus;
 }
 
 export class CurriculumCreate {
