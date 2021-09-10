@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, first } from "rxjs/operators";
 import { Course } from 'src/app/core/models/course.model';
+import { EntityStatus } from 'src/app/core/models/enums/status';
+import { EntityUpdateStatus } from 'src/app/core/models/status.model';
 import { CourseService } from 'src/app/core/services/course.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -30,9 +32,31 @@ export class CourseListComponent implements OnInit {
       );
   }
 
-  toggleCourse($event: Event) {
+  handleEnabled(course: Course): boolean {
+    return course.status == EntityStatus.ENABLED ? true : false;
+  }
+
+  toggleCourse($event: Event, course: Course) {
     $event.stopPropagation();
-    this.notificationService.success("Curso desativado com sucesso");
+    if (course.status === EntityStatus.ENABLED){
+      this.courseService.patchCampus(course.id, new EntityUpdateStatus(EntityStatus.DISABLED))
+        .pipe(first())
+        .subscribe(
+          _ => {
+            this.notificationService.success("Curso desativado com sucesso");
+            course.status = EntityStatus.DISABLED;
+          }
+        )
+    } else {
+      this.courseService.patchCampus(course.id, new EntityUpdateStatus(EntityStatus.ENABLED))
+        .pipe(first())
+        .subscribe(
+          _ => {
+            this.notificationService.success("Curso ativado com sucesso");
+            course.status = EntityStatus.ENABLED;
+          }
+        )
+    }
   }
 
 }

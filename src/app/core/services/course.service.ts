@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { Observable } from 'rxjs';
 import { Course, CourseCreate } from '../models/course.model';
+import { EntityUpdateStatus } from '../models/status.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,9 @@ export class CourseService {
 
   deleteCourse(id: String): Observable<unknown> {
     return this.httpClient.delete(`${this.apiUrl}/${id}`, this.httpOptions);
+  }
+
+  patchCampus(id: String, courseUpdateStatus: EntityUpdateStatus): Observable<Course> {
+    return this.httpClient.patch<Course>(`${this.apiUrl}/${id}`, courseUpdateStatus, this.httpOptions);
   }
 }

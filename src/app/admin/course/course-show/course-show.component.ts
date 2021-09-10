@@ -14,6 +14,8 @@ import { Campus } from 'src/app/core/models/campus.model';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { Curriculum } from 'src/app/core/models/curriculum.model';
 import { CurriculumCreateComponent } from '../curriculum-create/curriculum-create.component';
+import { EntityStatus } from 'src/app/core/models/enums/status';
+import { EntityUpdateStatus } from 'src/app/core/models/status.model';
 
 @Component({
   selector: 'app-course-show',
@@ -166,7 +168,7 @@ export class CourseShowComponent implements OnInit {
           this.curriculumService.deleteCurriculum(this.id!, curriculum!.id).subscribe(
             _ => {
               this.curriculums = this.curriculums.filter(c => c.id != curriculum!.id);
-              this.notificationService.success(`Curriculum ${curriculum!.code} removido com sucesso`);
+              this.notificationService.success(`Matriz ${curriculum!.code} removida com sucesso`);
             }
           );
         }
@@ -176,6 +178,33 @@ export class CourseShowComponent implements OnInit {
 
   navigateToList() {
     this.router.navigate(['admin/course']);
+  }
+
+  handleEnabled(curriculum: Curriculum): boolean {
+    return curriculum.status == EntityStatus.ENABLED ? true : false;
+  }
+
+  toggleCurriculum($event: Event, curriculum: Curriculum) {
+    $event.stopPropagation();
+    if (curriculum.status === EntityStatus.ENABLED){
+      this.curriculumService.patchCurriculum(curriculum.course.id, curriculum.id, new EntityUpdateStatus(EntityStatus.DISABLED))
+        .pipe(first())
+        .subscribe(
+          _ => {
+            this.notificationService.success("Matriz desativada com sucesso");
+            curriculum.status = EntityStatus.DISABLED;
+          }
+        )
+    } else {
+      this.curriculumService.patchCurriculum(curriculum.course.id, curriculum.id, new EntityUpdateStatus(EntityStatus.ENABLED))
+        .pipe(first())
+        .subscribe(
+          _ => {
+            this.notificationService.success("Matriz ativada com sucesso");
+            curriculum.status = EntityStatus.ENABLED;
+          }
+        )
+    }
   }
 
   courseDetails(): ListItens {
@@ -195,13 +224,6 @@ export class CourseShowComponent implements OnInit {
         {
           icon: 'school', title: 'Dados Curso', lines: [getNumberOfPeriodsData(), getCampusData(), getDepartmentData()]
         }
-        /* {
-          icon: 'contact_support', title: 'Setor de Estágio', lines: [
-            this.campus.internshipSector.telephone,
-            this.campus.internshipSector.email,
-            this.campus.internshipSector.website,
-          ]
-        } */
       ]
     };
   }

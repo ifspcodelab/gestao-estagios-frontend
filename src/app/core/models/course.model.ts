@@ -1,11 +1,12 @@
 import { Department } from "./department.model";
+import { EntityStatus } from "./enums/status";
 export class Course {
     id: string;
     name: string;
     abbreviation: string;
     numberOfPeriods: number;
     department: Department;
-    status: string;
+    status: EntityStatus;
 }
 
 export class CourseCreate {
