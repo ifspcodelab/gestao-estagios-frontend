@@ -13,6 +13,8 @@ import { ProblemDetail } from "../../../core/interfaces/problem-detail.interface
 import { ListItens } from "../../../core/components/content/content-detail/content-detail.component";
 import { LoaderService } from "../../../core/services/loader.service";
 import { Address } from "../../../core/models/address.model";
+import { EntityStatus } from 'src/app/core/models/enums/status';
+import { EntityUpdateStatus } from 'src/app/core/models/status.model';
 
 
 @Component({
@@ -172,6 +174,33 @@ export class CampusShowComponent implements OnInit {
 
   navigateToList() {
     this.router.navigate(['admin/campus']);
+  }
+
+  handleEnabled(department: Department): boolean {
+    return department.status == EntityStatus.ENABLED ? true : false;
+  }
+
+  toggleDepartment($event: Event, department: Department) {
+    $event.stopPropagation();
+    if (department.status === EntityStatus.ENABLED){
+      this.departmentService.patchDepartment(department.campus.id, department.id, new EntityUpdateStatus(EntityStatus.DISABLED))
+        .pipe(first())
+        .subscribe(
+          _ => {
+            this.notificationService.success("Departamento desativado com sucesso");
+            department.status = EntityStatus.DISABLED;
+          }
+        )
+    } else {
+      this.departmentService.patchDepartment(department.campus.id, department.id, new EntityUpdateStatus(EntityStatus.ENABLED))
+        .pipe(first())
+        .subscribe(
+          _ => {
+            this.notificationService.success("Departamento ativado com sucesso");
+            department.status = EntityStatus.ENABLED;
+          }
+        )
+    }
   }
 
   campusDetails(): ListItens {

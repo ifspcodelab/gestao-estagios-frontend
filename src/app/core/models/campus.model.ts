@@ -1,4 +1,5 @@
 import { Address, AddressCreate } from "./address.model";
+import { EntityStatus } from "./enums/status";
 import { InternshipSector } from "./internship-sector.model";
 
 export class Campus {
@@ -7,6 +8,7 @@ export class Campus {
   abbreviation: string;
   address: Address;
   internshipSector: InternshipSector;
+  status: EntityStatus;
 }
 
 export class CampusCreate {
