@@ -3,8 +3,10 @@ import { Campus } from "../../../core/models/campus.model";
 import { CampusService } from "../../../core/services/campus.service";
 import { NotificationService } from "../../../core/services/notification.service";
 import { LoaderService } from "../../../core/services/loader.service";
-import { finalize } from "rxjs/operators";
+import { finalize, first } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { EntityStatus } from 'src/app/core/models/enums/status';
+import { EntityUpdateStatus } from 'src/app/core/models/status.model';
 
 @Component({
   selector: 'app-campus-list',
@@ -30,8 +32,30 @@ export class CampusListComponent implements OnInit {
     );
   }
 
-  toggleCampus($event: Event) {
+  handleEnabled(campus: Campus): boolean {
+    return campus.status == EntityStatus.ENABLED ? true : false;
+  }
+
+  toggleCampus($event: Event, campus: Campus) {
     $event.stopPropagation();
-    this.notificationService.success("Campus desativado com sucesso");
+    if (campus.status === EntityStatus.ENABLED){
+      this.campusService.patchCampus(campus.id, new EntityUpdateStatus(EntityStatus.DISABLED))
+        .pipe(first())
+        .subscribe(
+          _ => {
+            this.notificationService.success("Campus desativado com sucesso");
+            campus.status = EntityStatus.DISABLED;
+          }
+        )
+    } else {
+      this.campusService.patchCampus(campus.id, new EntityUpdateStatus(EntityStatus.ENABLED))
+        .pipe(first())
+        .subscribe(
+          _ => {
+            this.notificationService.success("Campus ativado com sucesso");
+            campus.status = EntityStatus.ENABLED;
+          }
+        )
+    }
   }
 }

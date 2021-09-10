@@ -22,6 +22,12 @@
                 <mat-icon>delete_outline</mat-icon>
               </button>
             </div>
+            <div card-actions>
+              <mat-slide-toggle 
+                color="primary" 
+                [checked]="handleEnabled(department)"
+                (click)="toggleDepartment($event, department)"></mat-slide-toggle>
+            </div>
           </app-card>
         </app-content-cards>
       </app-content-detail-section>

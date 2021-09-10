@@ -5,6 +5,7 @@ import { CampusService } from './campus.service';
 import { Department } from '../models/department.model';
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
+import { EntityUpdateStatus } from '../models/status.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,9 @@ export class DepartmentService {
   deleteDepartment(campusId: string, departmentId: string): Observable<unknown> {
     const url = `${this.apiUrl}/${campusId}/departments/${departmentId}`;
     return this.httpClient.delete(url, this.httpOptions);
+  }
+
+  patchDepartment(campusId: string, idDepartment: string, departmentUpdateStatus: EntityUpdateStatus): Observable<Department> {
+    return this.httpClient.patch<Department>(`${this.apiUrl}/${campusId}/departments/${idDepartment}`, departmentUpdateStatus, this.httpOptions);
   }
 }

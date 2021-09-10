@@ -8,8 +8,12 @@
     <app-content-cards entityName="campus" [emptyState]="campuses.length == 0">
       <app-card *ngFor="let campus of campuses" [title]="campus.name" [subtitle]="campus.address.street"
         [link]="'/admin/campus/' + campus.id">
+        <div card-actions></div>
         <div card-actions>
-          <mat-slide-toggle color="primary" checked (click)="toggleCampus($event)"></mat-slide-toggle>
+          <mat-slide-toggle 
+            color="primary" 
+            [checked]="handleEnabled(campus)" 
+            (click)="toggleCampus($event, campus)"></mat-slide-toggle>
         </div>
       </app-card>
     </app-content-cards>
