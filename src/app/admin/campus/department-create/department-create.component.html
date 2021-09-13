@@ -5,10 +5,10 @@
     <mat-form-field class="form-field-lg">
       <mat-label>Nome</mat-label>
       <input appearance="fill" matInput placeholder="" formControlName="name" name="name">
-      <mat-error *ngIf="form.get('name')?.errors?.notblank && submitted">
+      <mat-error *ngIf="form.get('name')?.errors?.notblank">
         Nome não pode ser vazio
       </mat-error>
-      <mat-error *ngIf="form.get('name')?.errors?.required && submitted">
+      <mat-error *ngIf="form.get('name')?.errors?.required">
         Nome é obrigatório
       </mat-error>
       <mat-error *ngIf="form.get('name')?.errors?.serverError && submitted">
@@ -21,13 +21,13 @@
     <mat-form-field class="form-field-lg">
       <mat-label>Sigla</mat-label>
       <input appearance="fill" matInput placeholder="" formControlName="abbreviation" name="abbreviation">
-      <mat-error *ngIf="fieldErrors('abbreviation')?.notblank && submitted">
+      <mat-error *ngIf="fieldErrors('abbreviation')?.notblank">
         Sigla não pode ser vazio
       </mat-error>
-      <mat-error *ngIf="fieldErrors('abbreviation')?.required && submitted">
+      <mat-error *ngIf="fieldErrors('abbreviation')?.required">
         Sigla é obrigatória
       </mat-error>
-      <mat-error *ngIf="fieldErrors('abbreviation')?.exactlength && submitted">
+      <mat-error *ngIf="fieldErrors('abbreviation')?.exactlength">
         A sigla deve ter 3 caracteres
       </mat-error>
       <mat-error *ngIf="fieldErrors('abbreviation')?.serverError && submitted">

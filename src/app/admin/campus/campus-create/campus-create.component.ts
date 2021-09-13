@@ -225,12 +225,11 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
       addressCreate,
       this.field('internshipSector')?.value
     );
-    //this.campusService.postCampus(this.form.value)
     this.campusService.postCampus(campusCreate)
       .pipe(first())
       .subscribe(
         (campus: Campus) => {
-          this.form.reset();
+          this.form.reset({}, {emitEvent: false});
           this.id = campus.id;
           this.campus = campus;
           this.notificationService.success(`Campus ${this.campus.abbreviation} criado com sucesso!`);
@@ -264,7 +263,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
       .pipe(first())
       .subscribe(
         (campus: Campus) => {
-          this.form.reset();
+          this.form.reset({}, {emitEvent: false});
           this.id = campus.id;
           this.campus = campus;
           this.notificationService.success(`Campus ${this.campus.abbreviation} editado com sucesso!`);
