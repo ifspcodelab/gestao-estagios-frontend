@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Campus } from "../../../core/models/campus.model";
 import { CampusService } from "../../../core/services/campus.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { finalize, first } from "rxjs/operators";
+import { finalize, first, map } from "rxjs/operators";
 import { NotificationService } from "../../../core/services/notification.service";
 import { ConfirmDialogService } from "../../../core/services/confirm-dialog.service";
 import { DepartmentService } from 'src/app/core/services/department.service';
@@ -45,6 +45,42 @@ export class CampusShowComponent implements OnInit {
     if(this.id) {
       this.loaderService.show();
       this.fetchCampus(this.id);
+    }
+  }
+
+  handlerFilterSelected(selected: number) {
+    if (selected == 1) {
+      this.departmentService.getDepartments(this.campus.id)
+      .pipe(first())
+      .subscribe(
+        departments => {
+          this.departments = departments
+        },
+      )
+    }
+    if (selected == 2) {
+      this.departmentService.getDepartments(this.campus.id)
+      .pipe(
+        first(),
+        map(department => department.filter(d => d.status === EntityStatus.ENABLED)),
+      )
+      .subscribe(
+        departments => {
+          this.departments = departments
+        },
+      )
+    }
+    if (selected == 3) {
+      this.departmentService.getDepartments(this.campus.id)
+      .pipe(
+        first(),
+        map(department => department.filter(d => d.status === EntityStatus.DISABLED)),
+      )
+      .subscribe(
+        departments => {
+          this.departments = departments
+        },
+      )
     }
   }
 

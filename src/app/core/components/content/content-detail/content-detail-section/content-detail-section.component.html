@@ -1,6 +1,10 @@
 <section class="app-content-detail-section">
   <header>
     <h2 class="headline"><mat-icon matListIcon>{{ icon }}</mat-icon>{{ title }}</h2>
+    <span class="example-spacer"></span>
+    <button mat-icon-button color="primary" (click)="openFilterDialog()">
+      <mat-icon>filter_list</mat-icon>
+    </button>
     <button mat-icon-button (click)="openDialog()">
       <mat-icon>add</mat-icon>
     </button>

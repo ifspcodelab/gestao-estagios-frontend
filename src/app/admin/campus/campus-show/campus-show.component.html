@@ -11,7 +11,7 @@
   </app-content-toolbar>
   <app-content-main>
     <app-content-detail *ngIf="!loading" [title]="campus.name" [subtitle]="campus.abbreviation"[listItens]="campusDetails()">
-      <app-content-detail-section title="Departamentos" icon="domain" (openDialogEvent)="handlerCreateDepartment()">
+      <app-content-detail-section title="Departamentos" icon="domain" (openDialogEvent)="handlerCreateDepartment()" (openFilterEvent)="handlerFilterSelected($event)">
         <app-content-cards [emptyState]="departments.length == 0">
           <app-card *ngFor="let department of departments"
             (click)="handlerUpdateDepartment(department)"
