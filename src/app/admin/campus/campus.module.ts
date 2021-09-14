@@ -9,6 +9,7 @@ import { SharedModule } from "../../shared/shared.module";
 import { CampusShowComponent } from './campus-show/campus-show.component';
 import { DepartmentCreateComponent } from './department-create/department-create.component';
 import { CoreModule } from "../../core/core.module";
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { CoreModule } from "../../core/core.module";
     CampusListComponent,
     CampusCreateComponent,
     CampusShowComponent,
-    DepartmentCreateComponent
+    DepartmentCreateComponent,
+    FilterDialogComponent
   ],
   imports: [
     CommonModule,
