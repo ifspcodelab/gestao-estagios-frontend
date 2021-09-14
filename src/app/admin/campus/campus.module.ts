@@ -9,7 +9,7 @@ import { SharedModule } from "../../shared/shared.module";
 import { CampusShowComponent } from './campus-show/campus-show.component';
 import { DepartmentCreateComponent } from './department-create/department-create.component';
 import { CoreModule } from "../../core/core.module";
-import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+import { FilterDialogComponent } from '../../core/components/filter-dialog/filter-dialog.component';
 
 @NgModule({
   declarations: [
