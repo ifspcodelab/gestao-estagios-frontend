@@ -17,7 +17,6 @@ import { ContentDetailSectionComponent } from './components/content/content-deta
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,6 @@ import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.
     ContentDetailComponent,
     ContentDetailSectionComponent,
     ContentFormComponent,
-    FilterDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +53,6 @@ import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.
     ContentDetailComponent,
     ContentDetailSectionComponent,
     ContentFormComponent,
-    FilterDialogComponent,
     ReactiveFormsModule,
   ]
 })

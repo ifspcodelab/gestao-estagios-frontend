@@ -3,12 +3,14 @@ import { Campus } from "../../../core/models/campus.model";
 import { CampusService } from "../../../core/services/campus.service";
 import { NotificationService } from "../../../core/services/notification.service";
 import { LoaderService } from "../../../core/services/loader.service";
-import { finalize, first } from "rxjs/operators";
+import { finalize, first, map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { EntityStatus } from 'src/app/core/models/enums/status';
 import { EntityUpdateStatus } from 'src/app/core/models/status.model';
 import { MatDialog } from '@angular/material/dialog';
-import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/filter-dialog.component';
+import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
+import { MatRadioChange } from '@angular/material/radio';
+
 
 @Component({
   selector: 'app-campus-list',
@@ -17,12 +19,13 @@ import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/fil
 })
 export class CampusListComponent implements OnInit {
   campuses$: Observable<Campus[]>;
+  selectedFilter: number = 1; 
 
   constructor(
     private campusService: CampusService,
     private notificationService: NotificationService,
     private loaderService: LoaderService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -35,15 +38,64 @@ export class CampusListComponent implements OnInit {
     );
   }
 
+  loadAll(): void {
+    this.loaderService.show();
+    this.campuses$ = this.campusService.getCampuses()
+      .pipe(
+        finalize(() => {
+          this.loaderService.hide();
+        })
+    );
+  }
+  
   private getDialogConfig() {
     return {
       autoFocus: true,
       data: {
-        filters: [
-          "Todos",
-          "Habilitados",
-          "Desabilitados"
-        ]
+        onChange: ($event: MatRadioChange) => {
+          if ($event.value == 1) {
+            this.selectedFilter = 1;
+          }
+          if ($event.value == 2) {
+            this.selectedFilter = 2;
+          }
+          if ($event.value == 3) {
+            this.selectedFilter = 3;
+          } 
+        },
+        handleFilter: () => {
+          if (this.selectedFilter == 1) {
+            this.loaderService.show();
+            this.campuses$ = this.campusService.getCampuses()
+              .pipe(
+                finalize(() => {
+                  this.loaderService.hide();
+                })
+              );
+          }
+          if (this.selectedFilter == 2 ) {
+            this.loaderService.show();
+            this.campuses$ = this.campusService.getCampuses()
+              .pipe(
+                map(campus => campus.filter(c => c.status === EntityStatus.ENABLED)),
+                finalize(() => {
+                  this.loaderService.hide();
+                })
+              );
+          }
+          if (this.selectedFilter == 3) {
+            this.loaderService.show();
+            this.campuses$ = this.campusService.getCampuses()
+              .pipe(
+                map(campus => campus.filter(c => c.status === EntityStatus.DISABLED)),
+                finalize(() => {
+                  this.loaderService.hide();
+                })
+              );
+          }
+          this.dialog.closeAll();
+        },
+        selected: this.selectedFilter
       }
     };
   }
