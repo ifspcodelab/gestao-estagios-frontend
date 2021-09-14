@@ -77,7 +77,6 @@ export class DepartmentCreateComponent implements OnInit {
         this.dialogRef.close(department);
       },
       error => {
-        this.form.reset();
         this.handleError(error);
       }
     );
@@ -119,10 +118,12 @@ export class DepartmentCreateComponent implements OnInit {
       }
 
       if(error.status === 409) {
-        const formControl = this.form.get("abbreviation")!;
-        formControl?.setErrors({
-          serverError: `Departamento já existente com abreviação ${this.form.value.abbreviation} para Campus ${this.data.campus.abbreviation}`
-        });
+        const abbreviationControl = this.field("abbreviation");
+        if (error.error.title.includes("abbreviation")) {
+          abbreviationControl?.setErrors({
+            serverError: `Departamento já existente com sigla ${abbreviationControl.value} para campus ${this.data.campus.abbreviation}`
+          });
+        }
       }
     }
   }

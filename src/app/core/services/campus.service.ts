@@ -13,7 +13,8 @@ export class CampusService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Accept-Language': 'pt-BR'
     })
   };
   constructor(private httpClient: HttpClient) { }

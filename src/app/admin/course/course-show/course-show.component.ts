@@ -128,7 +128,7 @@ export class CourseShowComponent implements OnInit {
       data: {
         course: this.course,
         curriculum: curriculum
-      }
+      },
     };
   }
 

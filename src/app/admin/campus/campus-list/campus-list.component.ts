@@ -8,8 +8,8 @@ import { Observable } from "rxjs";
 import { EntityStatus } from 'src/app/core/models/enums/status';
 import { EntityUpdateStatus } from 'src/app/core/models/status.model';
 import { MatDialog } from '@angular/material/dialog';
-import { FilterDialogComponent } from '../../../core/components/filter-dialog/filter-dialog.component';
 import { MatRadioChange } from '@angular/material/radio';
+import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/filter-dialog.component';
 
 
 @Component({
