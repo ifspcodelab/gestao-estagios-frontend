@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Course } from "../../../core/models/course.model";
 import { CourseService } from 'src/app/core/services/course.service';
 import { ActivatedRoute, Router } from "@angular/router";
-import { finalize, first } from "rxjs/operators";
+import { finalize, first, map } from "rxjs/operators";
 import { NotificationService } from "../../../core/services/notification.service";
 import { ConfirmDialogService } from "../../../core/services/confirm-dialog.service";
 import { MatDialog } from "@angular/material/dialog";
@@ -46,6 +46,42 @@ export class CourseShowComponent implements OnInit {
     if (this.id) {
       this.loaderService.show();
       this.fetchCourse(this.id);
+    }
+  }
+
+  handlerFilterSelected(selected: number) {
+    if (selected == 1) {
+      this.curriculumService.getCurriculums(this.course.id)
+      .pipe(first())
+      .subscribe(
+        curriculums => {
+          this.curriculums = curriculums
+        },
+      )
+    }
+    if (selected == 2) {
+      this.curriculumService.getCurriculums(this.course.id)
+      .pipe(
+        first(),
+        map(curriculum => curriculum.filter(c => c.status === EntityStatus.ENABLED)),
+      )
+      .subscribe(
+        curriculums => {
+          this.curriculums = curriculums
+        },
+      )
+    }
+    if (selected == 3) {
+      this.curriculumService.getCurriculums(this.course.id)
+      .pipe(
+        first(),
+        map(curriculum => curriculum.filter(c => c.status === EntityStatus.DISABLED)),
+      )
+      .subscribe(
+        curriculums => {
+          this.curriculums = curriculums
+        },
+      )
     }
   }
 
