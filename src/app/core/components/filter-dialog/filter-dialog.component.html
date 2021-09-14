@@ -1,13 +1,15 @@
-<h1>Filtrar</h1>
-<mat-radio-group aria-label="Select an option" (change)="data.onChange($event)">
-  <mat-radio-button value="1" [checked]="data.selected == 1">Todos</mat-radio-button>
-  <br />
-  <br />
-  <mat-radio-button value="2" [checked]="data.selected == 2">Apenas habilitados</mat-radio-button>
-  <br />
-  <br />
-  <mat-radio-button value="3" [checked]="data.selected == 3">Apenas desabilitados</mat-radio-button>
-  <br />
-  <br />
-  <button mat-flat-button color="primary" mat-dialog-close (click)="data.handleFilter()">Confirmar</button>
-</mat-radio-group>
+<div class="container">
+  <h1 class="header">Filtrar</h1>
+  <mat-radio-group aria-label="Select an option" (change)="data.onChange($event)" color="primary">
+    <mat-radio-button value="1" [checked]="data.selected == 1">Todos</mat-radio-button>
+    <br />
+    <br />
+    <mat-radio-button value="2" [checked]="data.selected == 2">Apenas habilitados</mat-radio-button>
+    <br />
+    <br />
+    <mat-radio-button value="3" [checked]="data.selected == 3">Apenas desabilitados</mat-radio-button>
+    <br />
+    <br />
+  </mat-radio-group>
+  <button class="confirm" mat-flat-button color="primary" mat-dialog-close (click)="data.handleFilter()">Confirmar</button>
+</div>
