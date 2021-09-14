@@ -7,6 +7,8 @@ import { finalize, first } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { EntityStatus } from 'src/app/core/models/enums/status';
 import { EntityUpdateStatus } from 'src/app/core/models/status.model';
+import { MatDialog } from '@angular/material/dialog';
+import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/filter-dialog.component';
 
 @Component({
   selector: 'app-campus-list',
@@ -19,7 +21,8 @@ export class CampusListComponent implements OnInit {
   constructor(
     private campusService: CampusService,
     private notificationService: NotificationService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +33,24 @@ export class CampusListComponent implements OnInit {
           this.loaderService.hide();
         })
     );
+  }
+
+  private getDialogConfig() {
+    return {
+      autoFocus: true,
+      data: {
+        filters: [
+          "Todos",
+          "Habilitados",
+          "Desabilitados"
+        ]
+      }
+    };
+  }
+
+  openDialog() {
+    this.dialog.open(FilterDialogComponent, this.getDialogConfig())
+    .afterClosed()
   }
 
   handleEnabled(campus: Campus): boolean {
