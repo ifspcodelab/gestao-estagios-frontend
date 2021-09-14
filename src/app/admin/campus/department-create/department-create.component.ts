@@ -73,7 +73,6 @@ export class DepartmentCreateComponent implements OnInit {
       .pipe(first())
       .subscribe(
         department => {
-        this.form.reset();
         this.dialogRef.close(department);
       },
       error => {
