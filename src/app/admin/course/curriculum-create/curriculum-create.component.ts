@@ -102,7 +102,6 @@ export class CurriculumCreateComponent implements OnInit {
       .pipe()
       .subscribe(
         curriculum => {
-          this.form.reset();
           this.dialogRef.close(curriculum);
         },
         error => {

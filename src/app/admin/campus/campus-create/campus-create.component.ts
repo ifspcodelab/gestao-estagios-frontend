@@ -289,10 +289,18 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
       }
 
       if(error.status === 409) {
-        const formControl = this.form.get("abbreviation")!;
-        formControl?.setErrors({
-          serverError: error.error.title
-        });
+        const abbreviationControl = this.field("abbreviation");
+        const emailControl = this.field("internshipSector.email");
+        if (error.error.title.includes("Abbreviation")) {
+          abbreviationControl?.setErrors({
+            serverError: `Campus já existente com sigla ${abbreviationControl.value}`
+          });
+        }
+        if (error.error.title.includes("Email")) {
+            emailControl?.setErrors({
+            serverError: `Campus já existente com e-mail ${emailControl.value}`
+          });
+        }
       }
     }
   }

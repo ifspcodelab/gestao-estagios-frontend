@@ -15,6 +15,7 @@ import { Department } from "../../../core/models/department.model";
 import { LoaderService } from "../../../core/services/loader.service";
 import { AppValidators } from "../../../core/validators/app-validators";
 import { Observable, of } from 'rxjs';
+import { EntityStatus } from 'src/app/core/models/enums/status';
 
 @Component({
   selector: 'app-course-create',
@@ -110,7 +111,7 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
 
   private _filterDepartment(value: string): Department[] {
     const filteredValue = value.toLowerCase();
-    return this.departments.filter(department => department.name.toLowerCase().includes(filteredValue));
+    return this.departments.filter(department => department.name.toLowerCase().includes(filteredValue) && department.status == EntityStatus.ENABLED);
   }
 
   getCourse(id: String) {
@@ -203,7 +204,7 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
       .pipe(first())
       .subscribe(
         (course: Course) => {
-          this.form.reset();
+          this.form.reset({}, {emitEvent: false});
           this.id = course.id;
           this.course = course;
           this.notificationService.success(`Curso ${this.course.abbreviation} criado com sucesso!`);
@@ -225,7 +226,7 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
       .pipe(first())
       .subscribe(
         (course: Course) => {
-          this.form.reset();
+          this.form.reset({}, {emitEvent: false});
           this.id = course.id;
           this.course = course;
           this.notificationService.success(`Curso ${this.course.abbreviation} editado com sucesso!`);

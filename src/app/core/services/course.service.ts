@@ -13,7 +13,8 @@ export class CourseService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Accept-Language': 'pt-BR'
     })
   };
 
