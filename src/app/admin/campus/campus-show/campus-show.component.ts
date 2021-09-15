@@ -211,6 +211,14 @@ export class CampusShowComponent implements OnInit {
             _ => {
               this.departments = this.departments.filter(d => d.id != department!.id);
               this.notificationService.success(`Department ${department!.abbreviation} removido com sucesso`);
+            },
+            error => {
+              if(error.status === 409) {
+                const problemDetail: ProblemDetail = error.error;
+                if(problemDetail.title == 'Referential integrity exception') {
+                  this.notificationService.error('O Departamento possui curso associado e não pode ser excluído.');
+                }
+              }
             }
           );
         }
