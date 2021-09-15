@@ -4,6 +4,7 @@ import { Campus, CampusCreate } from "../models/campus.model";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { EntityUpdateStatus } from '../models/status.model';
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,9 @@ export class CampusService {
   }
 
   getCampuses(): Observable<Campus[]> {
-    return this.httpClient.get<Campus[]>(this.apiUrl, this.httpOptions);
+    return this.httpClient.get<Campus[]>(this.apiUrl, this.httpOptions).pipe(
+      map(results => results.sort((a, b) => a.name.localeCompare(b.name)))
+    );
   }
 
   getCampusById(id: String): Observable<Campus> {
