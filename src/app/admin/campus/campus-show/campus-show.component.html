@@ -11,7 +11,12 @@
   </app-content-toolbar>
   <app-content-main>
     <app-content-detail *ngIf="!loading" [title]="campus.name" [subtitle]="campus.abbreviation"[listItens]="campusDetails()">
-      <app-content-detail-section title="Departamentos" icon="domain" (openDialogEvent)="handlerCreateDepartment()" (openFilterEvent)="handlerFilterSelected($event)">
+      <app-content-detail-section
+        title="Departamentos"
+        icon="domain"
+        [parentEntityStatus]="campus.status"
+        (openDialogEvent)="handlerCreateDepartment()"
+        (openFilterEvent)="handlerFilterSelected($event)">
         <app-content-cards entityName="departamento" [emptyState]="departments.length == 0">
           <app-card *ngFor="let department of departments"
             (click)="handlerUpdateDepartment(department)"
@@ -23,8 +28,8 @@
               </button>
             </div>
             <div card-actions>
-              <mat-slide-toggle 
-                color="primary" 
+              <mat-slide-toggle
+                color="primary"
                 [checked]="handleEnabled(department)"
                 (click)="toggleDepartment($event, department)"></mat-slide-toggle>
             </div>

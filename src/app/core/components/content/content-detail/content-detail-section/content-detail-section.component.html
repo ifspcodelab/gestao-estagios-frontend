@@ -5,7 +5,7 @@
     <button mat-icon-button color="primary" (click)="openFilterDialog()">
       <mat-icon>filter_list</mat-icon>
     </button>
-    <button mat-icon-button (click)="openDialog()">
+    <button mat-icon-button (click)="openDialog()" [disabled]="disableAddButton()">
       <mat-icon>add</mat-icon>
     </button>
   </header>
