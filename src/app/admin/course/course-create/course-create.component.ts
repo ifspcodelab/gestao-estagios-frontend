@@ -65,15 +65,17 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
     }
   }
 
-  fetchCampuses() {  
-    this.campusService.getCampuses().subscribe(campuses => {
-      this.campuses = campuses;
-      this.field('campus').setValidators(AppValidators.autocomplete(this.campuses.map(c => c.name)))
-      this.campusFilteredOptions$ = this.field('campus').valueChanges.pipe(
-        startWith(''),
-        map(value => this._filterCampus(value))
-      );
-    })
+  fetchCampuses() {
+    this.campusService.getCampuses()
+      .pipe(map(courses => courses.filter(c => c.status === EntityStatus.ENABLED)))
+      .subscribe(campuses => {
+        this.campuses = campuses;
+        this.field('campus').setValidators(AppValidators.autocomplete(this.campuses.map(c => c.name)))
+        this.campusFilteredOptions$ = this.field('campus').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterCampus(value))
+        );
+      })
   }
 
   onCampusSelected(campusSelected: string) {
