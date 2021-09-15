@@ -1,15 +1,18 @@
-.mat-focus-indicator.confirm.mat-flat-button.mat-button-base.mat-primary {
-  margin: auto;
+mat-dialog-actions {
   display: flex;
+  justify-content: flex-end;
+}
+
+mat-dialog-content {
+  padding-top: 10px;
+}
+
+.confirm {
   margin-top: 10px;
 }
 
-.header {
-  margin-bottom: 20px;
-}
-
 @media only screen and (min-width: 800px) {
-  .container {
+  mat-dialog-content {
     width: 18.7rem;
   }
 }
