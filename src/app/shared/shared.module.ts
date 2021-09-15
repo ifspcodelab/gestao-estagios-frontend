@@ -16,6 +16,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [],
@@ -35,6 +36,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatTooltipModule,
     MatAutocompleteModule,
     MatRadioModule,
+    TextFieldModule,
   ],
   imports: [
     CommonModule,
@@ -54,6 +56,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatTooltipModule,
     MatAutocompleteModule,
     MatRadioModule,
+    TextFieldModule,
   ]
 })
 export class SharedModule {
