@@ -3,11 +3,9 @@
     <button mat-button color="primary" routerLink="/admin/campus/{{ campus.id }}/edit">
       Editar
     </button>
-    <div matTooltip="Não é possível excluir um campus que possui departamentos" [matTooltipDisabled]="departments.length == 0">
-      <button mat-button color="warn" (click)="handlerDeleteCampus()" [disabled]="departments.length != 0">
-        Excluir
-      </button>
-    </div>
+    <button mat-button color="warn" (click)="handlerDeleteCampus()">
+      Excluir
+    </button>
   </app-content-toolbar>
   <app-content-main>
     <app-content-detail *ngIf="!loading" [title]="campus.name" [subtitle]="campus.abbreviation"[listItens]="campusDetails()">

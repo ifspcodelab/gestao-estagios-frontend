@@ -3,12 +3,9 @@
     <button mat-button color="primary" routerLink="/admin/course/{{course.id}}/edit">
       Editar
     </button>
-    <div matTooltip="Não é possível excluir um curso que possui matrizes"
-      [matTooltipDisabled]="curriculums.length == 0">
-      <button mat-button color="warn" (click)="handlerDeleteCourse()" [disabled]="curriculums.length != 0">
-        Excluir
-      </button>
-    </div>
+    <button mat-button color="warn" (click)="handlerDeleteCourse()">
+      Excluir
+    </button>
   </app-content-toolbar>
   <app-content-main>
     <app-content-detail *ngIf="!loading" title="{{course.name}} - {{course.abbreviation}}"

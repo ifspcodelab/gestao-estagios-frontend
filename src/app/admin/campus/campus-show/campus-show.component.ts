@@ -133,28 +133,38 @@ export class CampusShowComponent implements OnInit {
   }
 
   deleteCampus() {
-    this.confirmDialogService.confirmRemoval('Campus').subscribe(
-      result => {
-        if(result) {
-          this.campusService.deleteCampus(this.id!)
-            .pipe(first())
-            .subscribe(
-              _ => {
-                this.notificationService.success(`Campus ${this.campus.abbreviation} removido com sucesso`);
-                this.navigateToList();
-              },
-              error => {
-                if(error.status === 409) {
-                  const problemDetail: ProblemDetail = error.error;
-                  if(problemDetail.title == 'Referential integrity exception') {
-                    this.notificationService.error('O campus possui departamentos associados e não pode ser excluído.');
-                  }
-                }
+    this.departmentService.getDepartments(this.campus.id)
+      .pipe(first())
+      .subscribe(
+        departments => {
+          if(departments.length > 0) {
+            this.notificationService.error('O campus possui departamentos associados e não pode ser excluído.');
+            return;
+          }
+          this.confirmDialogService.confirmRemoval('Campus').subscribe(
+            result => {
+              if(result) {
+                this.campusService.deleteCampus(this.id!)
+                  .pipe(first())
+                  .subscribe(
+                    _ => {
+                      this.notificationService.success(`Campus ${this.campus.abbreviation} removido com sucesso`);
+                      this.navigateToList();
+                    },
+                    error => {
+                      if(error.status === 409) {
+                        const problemDetail: ProblemDetail = error.error;
+                        if(problemDetail.title == 'Referential integrity exception') {
+                          this.notificationService.error('O campus possui departamentos associados e não pode ser excluído.');
+                        }
+                      }
+                    }
+                  )
               }
-            )
+            }
+          );
         }
-      }
-    );
+      );
   }
 
   private getDialogConfig(department?: Department) {

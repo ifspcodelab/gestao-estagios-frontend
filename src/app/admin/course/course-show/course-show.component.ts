@@ -134,28 +134,39 @@ export class CourseShowComponent implements OnInit {
   }
 
   deleteCourse() {
-    this.confirmDialogService.confirmRemoval('Curso').subscribe(
-      result => {
-        if (result) {
-          this.courseService.deleteCourse(this.id!)
-            .pipe(first())
-            .subscribe(
-              _ => {
-                this.notificationService.success(`Curso ${this.course.abbreviation} removido com sucesso`);
-                this.navigateToList();
-              },
-              error => {
-                if (error.status === 409) {
-                  const problemDetail: ProblemDetail = error.error;
-                  if (problemDetail.title == 'Referential integrity exception') {
-                    this.notificationService.error('O curso possui matrizes associados e não pode ser excluído.');
-                  }
-                }
+    this.curriculumService.getCurriculums(this.course.id)
+      .pipe(first())
+      .subscribe(
+        curriculums => {
+          if(curriculums.length > 0) {
+            this.notificationService.error('O curso possui matrizes associados e não pode ser excluído.');
+            return;
+          }
+
+          this.confirmDialogService.confirmRemoval('Curso').subscribe(
+            result => {
+              if (result) {
+                this.courseService.deleteCourse(this.id!)
+                  .pipe(first())
+                  .subscribe(
+                    _ => {
+                      this.notificationService.success(`Curso ${this.course.abbreviation} removido com sucesso`);
+                      this.navigateToList();
+                    },
+                    error => {
+                      if (error.status === 409) {
+                        const problemDetail: ProblemDetail = error.error;
+                        if (problemDetail.title == 'Referential integrity exception') {
+                          this.notificationService.error('O curso possui matrizes associados e não pode ser excluído.');
+                        }
+                      }
+                    }
+                  )
               }
-            )
+            }
+          );
         }
-      }
-    );
+      );
   }
 
   private getDialogConfig(curriculum?: Curriculum) {
