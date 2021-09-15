@@ -1,5 +1,5 @@
-<div class="container">
-  <h1 class="header">Filtrar</h1>
+<h1 mat-dialog-title>Filtrar</h1>
+<mat-dialog-content>
   <mat-radio-group aria-label="Select an option" (change)="data.onChange($event)" color="primary">
     <mat-radio-button value="1" [checked]="data.selected == 1">Todos</mat-radio-button>
     <br />
@@ -11,5 +11,7 @@
     <br />
     <br />
   </mat-radio-group>
+</mat-dialog-content>
+<mat-dialog-actions>
   <button class="confirm" mat-flat-button color="primary" mat-dialog-close (click)="data.handleFilter()">Confirmar</button>
-</div>
+</mat-dialog-actions>
