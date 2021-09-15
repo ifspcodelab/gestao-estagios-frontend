@@ -36,7 +36,18 @@
 
     <mat-form-field class="form-field-md">
       <mat-label>Critérios de Início de Estágio</mat-label>
-      <textarea appearance="fill" matInput placeholder="" formControlName="internshipStartCriteria" name="internshipStartCriteria" autocomplete="off"></textarea>
+      <textarea
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="4"
+        appearance="fill"
+        matInput
+        placeholder=""
+        formControlName="internshipStartCriteria"
+        name="internshipStartCriteria"
+        autocomplete="off">
+      </textarea>
       <mat-error *ngIf="fieldErrors('internshipStartCriteria')?.required">Critérios de Início de Estágio são obrigatórios</mat-error>
       <mat-error *ngIf="fieldErrors('internshipStartCriteria')?.notblank">Critérios de Início de Estágio não pode ser vazio</mat-error>
       <mat-error *ngIf="fieldErrors('internshipStartCriteria')?.serverError && submitted">
@@ -46,7 +57,18 @@
 
     <mat-form-field class="form-field-md">
       <mat-label>Atividades Permitidas de Estágio</mat-label>
-      <textarea appearance="fill" matInput placeholder="" formControlName="internshipAllowedActivities" name="internshipAllowedActivities" autocomplete="off"></textarea>
+      <textarea 
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="4"
+        appearance="fill"
+        matInput
+        placeholder=""
+        formControlName="internshipAllowedActivities"
+        name="internshipAllowedActivities"
+        autocomplete="off">
+      </textarea>
       <mat-error *ngIf="fieldErrors('internshipAllowedActivities')?.required">Atividades Permitidas são obrigatórias</mat-error>
       <mat-error *ngIf="fieldErrors('internshipAllowedActivities')?.notblank">Atividades Permitidas não pode ser vazia</mat-error>
       <mat-error *ngIf="fieldErrors('internshipAllowedActivities')?.serverError && submitted">
