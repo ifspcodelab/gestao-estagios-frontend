@@ -4,6 +4,7 @@ import { environment } from "../../../environments/environment";
 import { Observable } from 'rxjs';
 import { Course, CourseCreate } from '../models/course.model';
 import { EntityUpdateStatus } from '../models/status.model';
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,9 @@ export class CourseService {
   }
 
   getCourses(): Observable<Course[]> {
-    return this.httpClient.get<Course[]>(this.apiUrl, this.httpOptions);
+    return this.httpClient.get<Course[]>(this.apiUrl, this.httpOptions).pipe(
+      map(results => results.sort((a, b) => a.name.localeCompare(b.name)))
+    );
   }
 
   getCourseById(id: String): Observable<Course> {

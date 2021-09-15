@@ -4,6 +4,7 @@ import { environment } from "../../../environments/environment";
 import { Observable } from 'rxjs';
 import { Curriculum, CurriculumCreate } from '../models/curriculum.model';
 import { EntityUpdateStatus } from '../models/status.model';
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,9 @@ export class CurriculumService {
 
   getCurriculums(courseId: string): Observable<Curriculum[]> {
     const url = `${this.apiUrl}/${courseId}/curriculums`;
-    return this.httpClient.get<Curriculum[]>(url, this.httpOptions);
+    return this.httpClient.get<Curriculum[]>(url, this.httpOptions).pipe(
+      map(results => results.sort((a, b) => a.code.localeCompare(b.code)))
+    );
   }
 
   putCurriculum(courseId: string, curriculumId: string, curriculum: CurriculumCreate): Observable<Curriculum> {

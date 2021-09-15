@@ -6,13 +6,14 @@ import { Department } from '../models/department.model';
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { EntityUpdateStatus } from '../models/status.model';
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
   readonly apiUrl = `${environment.apiUrl}/campuses`;
-  
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -24,11 +25,13 @@ export class DepartmentService {
   postDepartments(campusId: string, department: Department): Observable<Department> {
     const url = `${this.apiUrl}/${campusId}/departments`;
     return this.httpClient.post<Department>(url, department, this.httpOptions);
-  } 
+  }
 
   getDepartments(campusId: string): Observable<Department[]> {
     const url = `${this.apiUrl}/${campusId}/departments`;
-    return this.httpClient.get<Department[]>(url, this.httpOptions);
+    return this.httpClient.get<Department[]>(url, this.httpOptions).pipe(
+      map(results => results.sort((a, b) => a.name.localeCompare(b.name)))
+    );
   }
 
   putDepartment(campusId: string, departmentId: string, department: Department): Observable<Department> {
