@@ -13,7 +13,12 @@
   <app-content-main>
     <app-content-detail *ngIf="!loading" title="{{course.name}} - {{course.abbreviation}}"
       [listItens]="courseDetails()">
-      <app-content-detail-section title="Matrizes" icon="domain" (openDialogEvent)="handlerCreateCurriculum()" (openFilterEvent)="handlerFilterSelected($event)">
+      <app-content-detail-section
+        title="Matrizes"
+        icon="domain"
+        [parentEntityStatus]="course.status"
+        (openDialogEvent)="handlerCreateCurriculum()"
+        (openFilterEvent)="handlerFilterSelected($event)">
         <app-content-cards entityName="matriz" [emptyState]="curriculums.length == 0">
           <app-card *ngFor="let curriculum of curriculums" (click)="handlerUpdateCurriculum(curriculum)"
             [title]="curriculum.code" [subtitle]="curriculum.courseLoad.toString()">
@@ -23,8 +28,8 @@
               </button>
             </div>
             <div card-actions>
-              <mat-slide-toggle 
-                color="primary" 
+              <mat-slide-toggle
+                color="primary"
                 [checked]="handleEnabled(curriculum)"
                 (click)="toggleCurriculum($event, curriculum)">
               </mat-slide-toggle>
