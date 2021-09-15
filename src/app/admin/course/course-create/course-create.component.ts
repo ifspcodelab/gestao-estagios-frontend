@@ -118,19 +118,19 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
 
   getCourse(id: String) {
     this.courseService.getCourseById(id)
-      .pipe(
-        first(),
-        finalize(() => {
-          this.loaderService.hide();
-          this.loading = false;
-        })
-      )
+      .pipe(first())
       .subscribe(
         (course: Course) => {
           this.course = course;
           this.form.patchValue(course);
           this.departmentSelected = this.course.department;
           this.departmentService.getDepartments(this.course.department.campus.id)
+            .pipe(
+              finalize(() => {
+                this.loaderService.hide();
+                this.loading = false;
+              })
+            )
             .subscribe(departments => {
               this.departments = departments;
               this.departmentFilteredOptions$ = of(this.departments);
