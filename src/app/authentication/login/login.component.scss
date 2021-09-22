@@ -5,7 +5,7 @@ mat-card {
   max-height: 600px;
 }
 
-.header{
+.header {
   text-align: center;
   font-size: clamp(1em, 4.5vw, 1.875em);
   color: #494949;
@@ -29,15 +29,11 @@ mat-card {
   padding-right: 2.5rem;
 }
 
-.forget-password{
-  padding-left: 0px;
-}
-
-.emailInput{
+.emailInput {
   padding-top: 10px;
 }
 
-.aLink{
+.aLink {
   float: right;
   padding-right: 60px;
   text-decoration: none;
