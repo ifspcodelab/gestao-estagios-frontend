@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import {AppValidators} from "../../core/validators/app-validators";
 
 @Component({
   selector: 'app-login',
@@ -9,24 +10,47 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 export class LoginComponent implements OnInit {
 
   hide: boolean = false;
+  form: FormGroup;
+  submitted = false;
 
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
+    this.form= this.buildForm();
   }
 
-  loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.pattern('^(?=.?[A-Z])(?=(.[a-z]){1,})(?=(.[\d]){1,})(?=(.[\W]){1,})(?!.*\s).{8,}$')]]
-  })
+  public onSubmit() {
+    this.submitted = true;
 
-
-  onLogin() {
-    if (!this.loginForm.valid) {
+    if (this.form.invalid) {
       return;
     }
-    console.log(this.loginForm.value);
+  }
+
+  field(path: string) {
+    return this.form.get(path)!;
+  }
+
+  fieldErrors(path: string) {
+    return this.field(path)?.errors;
+  }
+
+  buildForm(): FormGroup {
+    return this.fb.group({
+      email: ['',
+        [Validators.required, Validators.email, AppValidators.notBlank]
+      ],
+      password: ['',
+        [Validators.required, AppValidators.notBlank]
+      ]
+    })
+  }
+
+  onLogin() {
+    if (!this.form.valid) {
+      return;
+    }
   }
 
 }

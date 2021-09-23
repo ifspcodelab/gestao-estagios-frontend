@@ -3,31 +3,35 @@
     <div class="header">
       <p>Login</p>
     </div>
-    <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
+    <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="form" class="app-form">
       <div class="emailInput">
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>E-mail</mat-label>
           <input
             formControlName="email"
+            name="email"
             matInput
-            placeholder="Endereço de e-mail" required
+            placeholder="Endereço de e-mail"
+            autocomplete="off"
           />
-          <mat-error *ngIf="!loginForm.controls['email'].valid">
-            Insira um e-mail
+          <mat-error *ngIf="fieldErrors('email')?.required">E-mail é obrigatório</mat-error>
+          <mat-error *ngIf="fieldErrors('email')?.email">E-mail deve ser válido</mat-error>
+          <mat-error *ngIf="fieldErrors('email')?.notblank">E-mail não pode ser vazio</mat-error>
+          <!--<mat-error *ngIf="fieldErrors('email')?.required">E-mail incorreto</mat-error>-->
+          <mat-error *ngIf="fieldErrors('email')?.serverError && submitted">
+            {{ fieldErrors('email')?.serverError }}
           </mat-error>
         </mat-form-field>
       </div>
 
       <div>
-          <span>
-            <a class="text-link" class="aLink" routerLink="/auth/forgot-password">Esqueceu a senha?</a>
-          </span>
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Senha</mat-label>
           <input
             formControlName="password"
+            name="password"
             matInput [type]=" hide ? 'text' : 'password' "
-            placeholder="Senha" required
+            placeholder="Senha"
           />
           <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
                    [attr.aria-pressed]="hide">
@@ -35,10 +39,20 @@
               {{hide ? 'visibility' : 'visibility_off' }}
             </mat-icon>
           </button>
-          <mat-error *ngIf="!loginForm.controls['password'].valid">Insira uma senha</mat-error>
+          <mat-error *ngIf="fieldErrors('password')?.required">Senha é obrigatória</mat-error>
+          <mat-error *ngIf="fieldErrors('password')?.notblank">Senha não pode ser vazia</mat-error>
+          <!-- <mat-error *ngIf="!form.controls['password'].valid">Senha incorreta</mat-error>-->
+          <mat-error *ngIf="fieldErrors('password')?.serverError && submitted">
+            {{ fieldErrors('password')?.serverError }}
+          </mat-error>
         </mat-form-field>
+        <span>
+            <a class="aLink" routerLink="/auth/forgot-password">Esqueceu a senha?</a>
+          </span>
       </div>
-      <button mat-flat-button color="primary">Entrar</button>
+      <div class="button-login">
+        <button mat-flat-button color="primary">Entrar</button>
+      </div>
     </form>
 
     <div class="button-row">
