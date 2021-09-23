@@ -31,6 +31,26 @@ export class AppValidators {
     return pattern.test(control.value) ? null : { 'postalCode': true };
   }
 
+  static lowerCase(control: AbstractControl): ValidationErrors | null {
+    const pattern = /[a-z]/;
+    return pattern.test(control.value) ? null : { 'lowerCase': true };
+  }
+
+  static upperCase(control: AbstractControl): ValidationErrors | null {
+    const pattern = /[A-Z]/;
+    return pattern.test(control.value) ? null : { 'upperCase': true };
+  }
+
+  static number(control: AbstractControl): ValidationErrors | null {
+    const pattern = /\d/;
+    return pattern.test(control.value) ? null : { 'number': true };
+  }
+
+  static special(control: AbstractControl): ValidationErrors | null {
+    const pattern = /=.*\d/;
+    return pattern.test(control.value) ? null : { 'special': true };
+  }
+
   static url(control: AbstractControl): ValidationErrors | null {
     const validProtocols = ["http:", "https:"];
     try {
