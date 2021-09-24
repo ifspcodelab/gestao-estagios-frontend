@@ -3,6 +3,13 @@ mat-card {
   margin: 2em auto;
   text-align: center;
   max-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card.mat-card.mat-focus-indicator {
+  margin-top: 9%;
 }
 
 .header {
@@ -11,17 +18,23 @@ mat-card {
   color: #494949;
 }
 
+.header p {
+  margin-top: 10px;
+}
+
 .full-width {
   width: 80%;
 }
 
 .button-row {
-  padding-top: 20px;
+  margin-right: 14px;
 }
 
 .button-row a {
-  margin-right: 8px;
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
 }
 
 .mat-flat-button.mat-primary {
@@ -30,7 +43,7 @@ mat-card {
 }
 
 .button-login {
-  padding-top: 30px;
+  padding-top: 50px;
 }
 
 .emailInput {
@@ -40,6 +53,14 @@ mat-card {
 .aLink {
   float: right;
   padding-right: 60px;
+  text-decoration: none;
+  color: #673ab7;
+}
+
+.registration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
   color: #673ab7;
 }
