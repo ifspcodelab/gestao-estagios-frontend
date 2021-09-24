@@ -1,0 +1,105 @@
+<mat-card>
+  <mat-card-content>
+    <div class="header">
+      <p>Cadastro</p>
+    </div>
+    <form (ngSubmit)="onLogin()" name="registrationForm" [formGroup]="form" class="app-form">
+
+      <div class="nameInput">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input
+            formControlName="name"
+            name="name"
+            matInput
+            placeholder="Nome"
+            autocomplete="off"
+          />
+          <mat-error *ngIf="fieldErrors('name')?.required">Nome é obrigatório</mat-error>
+          <mat-error *ngIf="fieldErrors('name')?.notblank">Nome não pode ser vazio</mat-error>
+          <mat-error *ngIf="fieldErrors('name')?.alpha">Nome deve conter apenas letras</mat-error>
+          <mat-error *ngIf="fieldErrors('name')?.serverError && submitted">
+            {{ fieldErrors('nome')?.serverError }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="matriculationInput">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Matrícula</mat-label>
+          <input
+            formControlName="matriculation"
+            name="matriculation"
+            matInput
+            placeholder="Número de Matrícula"
+            autocomplete="off"
+          />
+          <mat-error *ngIf="fieldErrors('matriculation')?.required">Matrícula é obrigatória</mat-error>
+          <mat-error *ngIf="fieldErrors('matriculation')?.notblank">Matrícula não pode ser vazia</mat-error>
+          <mat-error *ngIf="fieldErrors('abbreviation')?.exactlength">Matrícula deve ter 9 caracteres</mat-error>
+          <mat-error *ngIf="fieldErrors('matriculation')?.serverError && submitted">
+            {{ fieldErrors('matriculation')?.serverError }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="emailInput">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input
+            formControlName="email"
+            name="email"
+            matInput
+            placeholder="Endereço de e-mail"
+            autocomplete="off"
+          />
+          <mat-error *ngIf="fieldErrors('email')?.required">E-mail é obrigatório</mat-error>
+          <mat-error *ngIf="fieldErrors('email')?.email">E-mail deve ser válido</mat-error>
+          <mat-error *ngIf="fieldErrors('email')?.notblank">E-mail não pode ser vazio</mat-error>
+          <mat-error *ngIf="fieldErrors('email')?.serverError && submitted">
+            {{ fieldErrors('email')?.serverError }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input
+            formControlName="password"
+            name="password"
+            matInput [type]=" hide ? 'text' : 'password' "
+            placeholder="Senha"
+          />
+          <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+                   [attr.aria-pressed]="hide">
+            <mat-icon>
+              {{hide ? 'visibility' : 'visibility_off' }}
+            </mat-icon>
+          </button>
+          <mat-error *ngIf="fieldErrors('password')?.required">Senha é obrigatória</mat-error>
+          <mat-error *ngIf="fieldErrors('password')?.notblank">Senha não pode ser vazia</mat-error>
+          <mat-error *ngIf="fieldErrors('password')?.lowerCase">Senha deve conter no mínimo um caracter minúsculo</mat-error>
+          <mat-error *ngIf="fieldErrors('password')?.upperCase">Senha deve conter no mínimo um caracter maiúsculo</mat-error>
+          <mat-error *ngIf="fieldErrors('password')?.number">Senha deve conter no mínimo um número</mat-error>
+          <mat-error *ngIf="fieldErrors('password')?.special">Senha deve conter no mínimo um caracter especial</mat-error>
+          <mat-error *ngIf="fieldErrors('password')?.minlength">Senha deve conter no mínimo um 9 caracteres</mat-error>
+          <mat-error *ngIf="fieldErrors('password')?.serverError && submitted">
+            {{ fieldErrors('password')?.serverError }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="button-login">
+        <button mat-flat-button color="primary">Cadastrar</button>
+      </div>
+
+      <div class="button-row">
+        <a mat-icon-button class="login" routerLink="/authentication/login">
+          <mat-icon>chevron_left</mat-icon> Voltar para o Login
+        </a>
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>
