@@ -1,0 +1,61 @@
+mat-card {
+  max-width: 600px;
+  margin: 2em auto;
+  text-align: center;
+  max-height: 600px;
+}
+
+mat-card.mat-card.mat-focus-indicator {
+  margin-top: 6.25rem;
+  margin-bottom: 6.25rem;
+}
+
+.header {
+  text-align: center;
+  font-size: clamp(1em, 4.5vw, 1.875em);
+  color: #494949;
+}
+
+.header p {
+  margin-top: 10px;
+}
+
+.full-width {
+  width: 80%;
+}
+
+.button-row {
+  padding-top: 20px;
+  margin-right: 12px;
+}
+
+.button-row a {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mat-flat-button.mat-primary {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.button-login {
+  padding-top: 30px;
+}
+
+.aLink {
+  float: right;
+  padding-right: 60px;
+  text-decoration: none;
+  color: #673ab7;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #673ab7;
+}
+
