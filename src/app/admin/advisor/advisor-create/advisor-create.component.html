@@ -1,0 +1,142 @@
+<app-content>
+  <app-content-toolbar [title]="'Novo Orientador'">
+    <button type="submit" form="advisor-form" mat-flat-button color="primary">
+      <span>Salvar</span>
+    </button>
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-form>
+      <form id="advisor-form" class="app-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <fieldset>
+          <mat-form-field class="form-field-md">
+            <mat-label>Nome</mat-label>
+            <input appearance="fill" matInput placeholder="" formControlName="name" name="name" autocomplete="off">
+            <mat-error *ngIf="fieldErrors('name')?.required && submitted">Nome é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.notblank && submitted">Nome não pode ser nulo</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.serverError && submitted">
+              {{ fieldErrors('name')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field-sm">
+            <mat-label>Matrícula</mat-label>
+            <input appearance="fill" matInput placeholder="" formControlName="registration" name="registration" autocomplete="off">
+            <mat-error *ngIf="fieldErrors('registration')?.required && submitted">Matrícula é obrigatória</mat-error>
+            <mat-error *ngIf="fieldErrors('registration')?.notblank && submitted">Matrícula não pode ser nula</mat-error>
+            <mat-error *ngIf="fieldErrors('registration')?.serverError && submitted">
+              {{ fieldErrors('name')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+        </fieldset>
+
+        <fieldset>
+          <mat-form-field class="form-field-sm">
+            <mat-label>E-mail</mat-label>
+            <input appearance="fill" matInput placeholder="" formControlName="email" name="email" autocomplete="off">
+            <mat-error *ngIf="fieldErrors('email')?.required && submitted">E-mail é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('email')?.notblank && submitted">E-mail não pode ser nulo</mat-error>
+            <mat-error *ngIf="fieldErrors('email')?.email && submitted">E-mail inválido</mat-error>
+            <mat-error *ngIf="fieldErrors('email')?.serverError && submitted">
+              {{ fieldErrors('name')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field-md">
+            <mat-label>Senha</mat-label>
+            <input type="password" appearance="fill" matInput placeholder="" formControlName="password" name="password" autocomplete="off">
+            <mat-error *ngIf="fieldErrors('password')?.required && submitted">Senha é obrigatória</mat-error>
+            <mat-error *ngIf="fieldErrors('password')?.notblank && submitted">Senha não pode ser nulo</mat-error>
+            <mat-error *ngIf="fieldErrors('password')?.minlength && submitted">Senha deve conter no mínimo 6 caracteres</mat-error>
+            <mat-error *ngIf="fieldErrors('password')?.maxlength && submitted">Senha deve conter no máximo 22 caracteres</mat-error>
+            <mat-error *ngIf="fieldErrors('email')?.serverError && submitted">
+              {{ fieldErrors('name')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+        </fieldset>
+
+        <fieldset>
+          <mat-form-field class="form-field-sm">
+            <mat-label>Campus</mat-label>
+            <input matInput
+              placeholder=""
+              formControlName="campus"
+              [name]="campus"
+              [matAutocomplete]="campusAuto"
+              #campus
+              (keyup)="onCampusSelected(campus.value)"
+            >
+            <mat-error *ngIf="fieldErrors('campus')?.autocomplete">Campus Inválido</mat-error>
+            <!-- <mat-error *ngIf="fieldErrors('campus')?.required">Campus é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('campus')?.notblank">Campus não pode ser vazio</mat-error> -->
+            <mat-error *ngIf="fieldErrors('campus')?.serverError && submitted">
+              {{ form.get('campus')?.errors?.serverError }}
+            </mat-error>
+            <mat-autocomplete autoActiveFirstOption #campusAuto="matAutocomplete"
+              (optionSelected)="onCampusSelected($event.option.value)">
+              <mat-option *ngFor="let campus of campusFilteredOptions$ | async" [value]="campus.name">
+                {{campus.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field class=" form-field-sm">
+            <mat-label>Departamento</mat-label>
+            <input matInput
+              placeholder=""
+              formControlName="department"
+              name="department"
+              [matAutocomplete]="departmentAuto"
+              #department (keyup)="onDepartmentSelected(department.value)"
+            >
+            <mat-error *ngIf="fieldErrors('department')?.autocomplete">Departamento Inválido</mat-error>
+            <!-- <mat-error *ngIf="fieldErrors('department')?.required">Departamento é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('department')?.notblank">Departamento não pode ser vazio</mat-error> -->
+            <mat-error *ngIf="fieldErrors('department')?.serverError && submitted">
+              {{ form.get('department')?.errors?.serverError }}
+            </mat-error>
+            <mat-autocomplete autoActiveFirstOption #departmentAuto="matAutocomplete"
+              (optionSelected)="onDepartmentSelected($event.option.value)">
+              <mat-option *ngFor="let department of departmentFilteredOptions$ | async" [value]="department.name">
+                {{department.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field class=" form-field-sm">
+            <mat-label>Curso</mat-label>
+            <input matInput
+              placeholder=""
+              formControlName="course"
+              name="course"
+              [matAutocomplete]="courseAuto"
+              #course (keyup)="onCourseSelected(course.value)"
+            >
+            <!-- <mat-error *ngIf="fieldErrors('course')?.autocomplete">Curso Inválido</mat-error>
+            <mat-error *ngIf="fieldErrors('course')?.required">Curso é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('course')?.notblank">Curso não pode ser vazio</mat-error> -->
+            <mat-error *ngIf="coursesIds.length == 0 && submitted">Pelo menos um curso precisa ser selecionado</mat-error> 
+            <mat-error *ngIf="fieldErrors('course')?.serverError && submitted">
+              {{ form.get('course')?.errors?.serverError }}
+            </mat-error>
+            <mat-autocomplete autoActiveFirstOption #courseAuto="matAutocomplete"
+              (optionSelected)="onCourseSelected($event.option.value)">
+              <mat-option *ngFor="let course of courseFilteredOptions$ | async" [value]="course.name">
+                {{course.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-button color="primary" type="button" (click)="addCourse()">Adicionar Curso</button>
+        </fieldset>
+        <mat-checkbox color="primary" (change)="handleIsAdmin()">Administrador do sistema</mat-checkbox>
+      </form>
+      <span *ngIf="coursesNames.length != 0">
+        <p>Cursos selecionados:</p>
+        <p *ngFor="let courseName of coursesNames">
+          {{ courseName }}
+        </p>
+      </span>
+    </app-content-form>
+  </app-content-main>
+</app-content>

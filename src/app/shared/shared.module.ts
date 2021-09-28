@@ -38,7 +38,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatAutocompleteModule,
     MatRadioModule,
     TextFieldModule,
-    MatCheckboxModule,
+    MatCheckboxModule
   ],
   imports: [
     CommonModule,
@@ -59,7 +59,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatAutocompleteModule,
     MatRadioModule,
     TextFieldModule,
-    MatCheckboxModule,
+    MatCheckboxModule
   ]
 })
 export class SharedModule {

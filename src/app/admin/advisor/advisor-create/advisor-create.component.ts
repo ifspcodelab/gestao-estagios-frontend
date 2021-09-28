@@ -1,0 +1,244 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { first, map, startWith } from 'rxjs/operators';
+import { Advisor, UserAdvisorCreate } from 'src/app/core/models/advisor.model';
+import { Campus } from 'src/app/core/models/campus.model';
+import { Course } from 'src/app/core/models/course.model';
+import { Department } from 'src/app/core/models/department.model';
+import { Role } from 'src/app/core/models/enums/role';
+import { EntityStatus } from 'src/app/core/models/enums/status';
+import { AdvisorService } from 'src/app/core/services/advisor.service';
+import { CampusService } from 'src/app/core/services/campus.service';
+import { CourseService } from 'src/app/core/services/course.service';
+import { DepartmentService } from 'src/app/core/services/department.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { AppValidators } from 'src/app/core/validators/app-validators';
+
+@Component({
+  selector: 'app-advisor-create',
+  templateUrl: './advisor-create.component.html',
+  styleUrls: ['./advisor-create.component.scss']
+})
+export class AdvisorCreateComponent implements OnInit {
+  form: FormGroup;
+  submitted = false;
+  isAdmin = false;
+  id: string | null;
+  advisor: Advisor;
+
+  campusFilteredOptions$: Observable<Campus[]>;
+  campuses: Campus[] = [];
+
+  departmentFilteredOptions$: Observable<Department[]>;
+  departments: Department[] = [];
+  departmentSelected?: Department;
+
+  courseFilteredOptions$: Observable<Course[]>;
+  courses: Course[] = [];
+  courseSelected?: Course;
+  coursesIds: string[] = [];
+
+  coursesNames: string[] = [];
+
+  constructor(
+    private advisorService: AdvisorService,
+    private campusService: CampusService,
+    private departmentService: DepartmentService,
+    private courseService: CourseService,
+    private fb: FormBuilder,
+    private router: Router,
+    private notificationService: NotificationService,
+  ) { }
+
+  ngOnInit(): void {
+    this.form = this.buildForm();
+    this.fetchCampuses();
+  }
+
+  fetchCampuses() {
+    this.campusService.getCampuses()
+      .pipe(map(courses => courses.filter(c => c.status === EntityStatus.ENABLED)))
+      .subscribe(campuses => {
+        this.campuses = campuses;
+        this.field('campus').setValidators(AppValidators.autocomplete(this.campuses.map(c => c.name)))
+        this.campusFilteredOptions$ = this.field('campus').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterCampus(value))
+        );
+      })
+  }
+
+  onCampusSelected(campusSelected: string) {
+    this.departments = [];
+
+    this.field('department').setValue('');
+
+    const campus = this.campuses.find(c => c.name == campusSelected);
+
+    if (campus) {
+      this.departmentService.getDepartments(campus.id)
+        .subscribe(departments => {
+          this.departments = departments;
+          this.refreshDepartmentValidator();
+          this.departmentFilteredOptions$ = this.field('department').valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterDepartment(value))
+          );
+        });
+    }
+  }
+
+  refreshDepartmentValidator() {
+    this.field('department').setValidators(AppValidators.autocomplete(this.departments.map(d => d.name)));  
+  }
+
+  onDepartmentSelected(departmentName: string) {
+    this.courses = [];
+
+    this.field('course').setValue('');
+
+    this.departmentSelected = this.departments.find(department => department.name == departmentName);
+
+    if (this.departmentSelected) {
+      this.courseService.getCourses()
+        .pipe(map(courses => courses.filter(c => c.department.id === this.departmentSelected!.id && !this.coursesIds.includes(c.id))))
+        .subscribe(courses => {
+          this.courses = courses;
+          this.refreshCourseValidator();
+          this.courseFilteredOptions$ = this.field('course').valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCourse(value))
+          ) 
+        })
+    }
+  }
+
+  refreshCourseValidator() {
+    this.field('course').setValidators(AppValidators.autocomplete(this.courses.map(c => c.name)));
+  }
+
+  onCourseSelected(courseName: string) {
+    this.courseSelected = this.courses.find(course => course.name == courseName);
+  }
+
+  private _filterCampus(value: any): any {
+    const filteredValue = value.toLowerCase()
+    return this.campuses.filter(campus => campus.name.toLowerCase().includes(filteredValue));
+  }
+
+  private _filterDepartment(value: string): Department[] {
+    const filteredValue = value.toLowerCase();
+    return this.departments.filter(department => department.name.toLowerCase().includes(filteredValue) && department.status == EntityStatus.ENABLED);
+  }
+
+  private _filterCourse(value: any): any {
+    const filteredValue = value.toLowerCase();
+    return this.courses.filter(course => course.name.toLowerCase().includes(filteredValue) && course.status == EntityStatus.ENABLED);
+  }
+
+  field(path: string) {
+    return this.form.get(path)!;
+  }
+
+  fieldErrors(path: string) {
+    return this.field(path)?.errors;
+  }
+
+  buildForm(): FormGroup {
+    return this.fb.group({
+      registration: ['', [Validators.required, AppValidators.notBlank]],
+      name: ['', [Validators.required, AppValidators.notBlank]],
+      password: ['', [Validators.required, AppValidators.notBlank, Validators.minLength(6), Validators.maxLength(22)]],
+      email: ['', [Validators.required, AppValidators.notBlank, Validators.email]],
+      campus: ['',],
+      department: ['', ],
+      course: ['', [Validators.required]]
+    });
+  }
+
+  public onSubmit() {
+    this.submitted = true;
+
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.createAdvisor();
+  }
+
+  createAdvisor() {
+    const roles = [Role.ROLE_ADVISOR];
+    if (this.isAdmin == true) {
+      roles.push(Role.ROLE_ADMIN);
+      console.log(roles);
+    }
+    const userAdvisorCreate = new UserAdvisorCreate (
+      this.form.value.registration,
+      this.form.value.name,
+      this.form.value.password,
+      this.form.value.email,
+      roles,
+      this.coursesIds
+    );
+    this.advisorService.postAdvisor(userAdvisorCreate)
+      .pipe(first())
+      .subscribe(
+        (advisor: Advisor) => {
+          this.form.reset({}, {emitEvent: false});
+          this.id = advisor.id
+          this.advisor = advisor;
+          this.notificationService.success(`Orientador ${this.advisor.user.name} criado com sucesso!`);
+          this.navigateToList();
+        },
+        error => this.handleError(error)
+      )
+  }
+
+  handleIsAdmin() {
+    this.isAdmin = this.isAdmin == false ? true : false;
+    console.log(this.isAdmin);
+  }
+
+  handleError(error: any) {
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 400) {
+        const violations: Array<{ name: string; reason: string }> = error.error.violations;
+        violations.forEach(violation => {
+          const formControl = this.form.get(violation.name);
+          if (formControl) {
+            formControl.setErrors({
+              serverError: violation.reason
+            });
+          }
+        })
+      }
+    }
+  }
+
+  navigateToList() {
+    this.router.navigate(['admin/advisor']);
+  }
+
+  addCourse() {
+    this.field('course').clearValidators();
+    this.coursesIds.push(this.courseSelected!.id);
+    this.coursesNames.push(this.field('course').value);
+    this.field('course').setValue('');
+    this.courseSelected = undefined;
+    console.log(this.coursesIds);
+
+    this.courseService.getCourses()
+        .pipe(map(courses => courses.filter(c => c.department.id === this.departmentSelected!.id && !this.coursesIds.includes(c.id))))
+        .subscribe(courses => {
+          this.courses = courses;
+          this.refreshCourseValidator();
+          this.courseFilteredOptions$ = this.field('course').valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCourse(value))
+          ) 
+        })
+  }
+}
