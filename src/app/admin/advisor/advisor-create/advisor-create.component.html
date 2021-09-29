@@ -8,6 +8,7 @@
     <app-content-form>
       <form id="advisor-form" class="app-form" [formGroup]="form" (ngSubmit)="onSubmit()">
 
+        <mat-checkbox class="admin" color="primary" (change)="handleIsAdmin()">Administrador</mat-checkbox>
         <fieldset>
           <mat-form-field class="form-field-md">
             <mat-label>Nome</mat-label>
@@ -27,8 +28,7 @@
             <mat-error *ngIf="fieldErrors('registration')?.serverError && submitted">
               {{ fieldErrors('name')?.serverError }}
             </mat-error>
-          </mat-form-field>
-
+          </mat-form-field>          
         </fieldset>
 
         <fieldset>
@@ -57,7 +57,7 @@
         </fieldset>
 
         <fieldset>
-          <mat-form-field class="form-field-sm">
+          <mat-form-field class="form-field-sm campus-department">
             <mat-label>Campus</mat-label>
             <mat-select (selectionChange)="onCampusSelected($event.value)">
               <mat-option *ngFor="let campus of campuses" [value]="campus.name">
@@ -66,7 +66,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class=" form-field-sm">
+          <mat-form-field class="form-field-sm campus-department">
             <mat-label>Departamento</mat-label>
             <mat-select (selectionChange)="onDepartmentSelected($event.value)">
               <mat-option *ngFor="let department of departments" [value]="department.name">
@@ -75,7 +75,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class=" form-field-sm">
+          <mat-form-field class="form-field-sm course">
             <mat-label>Curso</mat-label>
             <mat-select formControlName="course" name="course" (selectionChange)="onCourseSelected($event.value)">
               <mat-option *ngFor="let course of courses" [value]="course.name">
@@ -86,16 +86,28 @@
               {{ form.get('course')?.errors?.serverError }}
             </mat-error>
           </mat-form-field>
-          <button mat-button color="primary" type="button" (click)="addCourse()"><mat-icon>add</mat-icon></button>
+          <button class="add" mat-button color="primary" type="button" (click)="addCourse()"><mat-icon>add</mat-icon></button>
         </fieldset>
-        <mat-checkbox color="primary" (change)="handleIsAdmin()">Administrador</mat-checkbox>
       </form>
       <span *ngIf="coursesList.length != 0">
-        <p>Cursos selecionados:</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="course">Cursos selecionados</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let course of coursesList">
+              <td class="description">{{ course.name }}</td>
+              <button mat-button color="primary" type="button" (click)="removeCourse(course)"><mat-icon>clear</mat-icon></button>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <p>Cursos selecionados:</p>
         <p *ngFor="let course of coursesList">
           {{ course.name }}
           <button mat-button color="primary" type="button" (click)="removeCourse(course)"><mat-icon>clear</mat-icon></button>
-        </p>
+        </p> -->
       </span>
     </app-content-form>
   </app-content-main>

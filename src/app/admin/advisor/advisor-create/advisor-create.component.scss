@@ -1,0 +1,43 @@
+.data-table {
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-left: 1rem;
+  padding: 1rem 0 1rem 0;
+  height: 15.75px;
+}
+
+th.course {
+  display: inline;
+  margin-left: 1rem;
+  padding-top: 1rem;
+  color: #494949;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.description {
+  padding-left: 1rem;
+  padding-right: 2rem;
+}
+
+@media (max-width: 1015px) {
+  .form-field-sm.course {
+    width: 80%;
+  }
+
+  .form-field-sm.campus-department {
+    width: 45%;
+  }
+}
+
+@media (max-width: 799px) {
+  .form-field-sm.campus-department {
+    width: 100%
+  }
+}
+
+@media (max-width: 775px) {
+  .form-field-sm.course {
+    width: calc(100% - 85px);
+  }
+}
