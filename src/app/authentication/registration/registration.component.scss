@@ -1,12 +1,12 @@
 mat-card {
   max-width: 600px;
-  margin: 2em auto;
+  margin: 1em auto;
   text-align: center;
-  max-height: 600px;
+  max-height: 43.75rem;
 }
 
 mat-card.mat-card.mat-focus-indicator {
-  margin-top: 6.25rem;
+  margin-top: 2.25rem;
   margin-bottom: 6.25rem;
 }
 
@@ -57,5 +57,33 @@ mat-card.mat-card.mat-focus-indicator {
   align-items: center;
   text-decoration: none;
   color: #673ab7;
+}
+
+.politics {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #673ab7;
+  margin-top: 20px;
+}
+
+input:focus,
+select:focus {
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+}
+
+.help {
+  padding-right: 25px;
+  color: #673ab7;
+}
+
+@media (max-width: 800px) {
+  .mat-card.mat-focus-indicator  {
+    border: none;
+    box-shadow: none;
+  }
 }
 
