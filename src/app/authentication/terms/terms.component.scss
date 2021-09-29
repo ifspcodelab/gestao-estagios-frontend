@@ -1,0 +1,24 @@
+p {
+  font-size: 20px;
+}
+
+.text h4 {
+  font-size: 18px;
+}
+
+.text p {
+  font-size: 14px;
+  text-align: justify;
+}
+
+.button-close {
+  display: flex;
+  justify-content: right;
+}
+
+input:focus,
+select:focus {
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+}
