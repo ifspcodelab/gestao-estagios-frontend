@@ -77,7 +77,7 @@
 
           <mat-form-field class=" form-field-sm">
             <mat-label>Curso</mat-label>
-            <mat-select (selectionChange)="onCourseSelected($event.value)">
+            <mat-select formControlName="course" name="course" (selectionChange)="onCourseSelected($event.value)">
               <mat-option *ngFor="let course of courses" [value]="course.name">
                 {{ course.name }}
               </mat-option>
