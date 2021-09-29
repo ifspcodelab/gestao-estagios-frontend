@@ -15,7 +15,7 @@ import { TermsComponent } from "./terms/terms.component";
     AuthenticationComponent,
     LoginComponent,
     RegistrationComponent,
-    TermsComponent
+    TermsComponent,
   ],
   imports: [
     CommonModule,
