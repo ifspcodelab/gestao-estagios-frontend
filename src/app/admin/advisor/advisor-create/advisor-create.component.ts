@@ -39,9 +39,9 @@ export class AdvisorCreateComponent implements OnInit {
   courseFilteredOptions$: Observable<Course[]>;
   courses: Course[] = [];
   courseSelected?: Course;
-  coursesIds: string[] = [];
 
-  coursesNames: string[] = [];
+  coursesIds: string[] = [];
+  coursesList: Course[] = [];
 
   constructor(
     private advisorService: AdvisorService,
@@ -63,12 +63,25 @@ export class AdvisorCreateComponent implements OnInit {
       .pipe(map(courses => courses.filter(c => c.status === EntityStatus.ENABLED)))
       .subscribe(campuses => {
         this.campuses = campuses;
-        this.field('campus').setValidators(AppValidators.autocomplete(this.campuses.map(c => c.name)))
+        //this.field('campus').setValidators(AppValidators.autocomplete(this.campuses.map(c => c.name)))
         this.campusFilteredOptions$ = this.field('campus').valueChanges.pipe(
           startWith(''),
           map(value => this._filterCampus(value))
         );
       })
+  }
+
+  fetchCourses() {
+    this.courseService.getCourses()
+        .pipe(map(courses => courses.filter(c => c.department.id === this.departmentSelected!.id && !this.coursesIds.includes(c.id))))
+        .subscribe(courses => {
+          this.courses = courses;
+          //this.refreshCourseValidator();
+          this.courseFilteredOptions$ = this.field('course').valueChanges.pipe(
+            startWith(''),
+            map(value => this._filterCourse(value))
+          ) 
+        })
   }
 
   onCampusSelected(campusSelected: string) {
@@ -82,7 +95,7 @@ export class AdvisorCreateComponent implements OnInit {
       this.departmentService.getDepartments(campus.id)
         .subscribe(departments => {
           this.departments = departments;
-          this.refreshDepartmentValidator();
+          //this.refreshDepartmentValidator();
           this.departmentFilteredOptions$ = this.field('department').valueChanges.pipe(
             startWith(''),
             map(value => this._filterDepartment(value))
@@ -103,16 +116,7 @@ export class AdvisorCreateComponent implements OnInit {
     this.departmentSelected = this.departments.find(department => department.name == departmentName);
 
     if (this.departmentSelected) {
-      this.courseService.getCourses()
-        .pipe(map(courses => courses.filter(c => c.department.id === this.departmentSelected!.id && !this.coursesIds.includes(c.id))))
-        .subscribe(courses => {
-          this.courses = courses;
-          this.refreshCourseValidator();
-          this.courseFilteredOptions$ = this.field('course').valueChanges.pipe(
-            startWith(''),
-            map(value => this._filterCourse(value))
-          ) 
-        })
+      this.fetchCourses();
     }
   }
 
@@ -154,8 +158,8 @@ export class AdvisorCreateComponent implements OnInit {
       password: ['', [Validators.required, AppValidators.notBlank, Validators.minLength(6), Validators.maxLength(22)]],
       email: ['', [Validators.required, AppValidators.notBlank, Validators.email]],
       campus: ['',],
-      department: ['', ],
-      course: ['', [Validators.required]]
+      department: ['',],
+      course: ['',]
     });
   }
 
@@ -169,12 +173,13 @@ export class AdvisorCreateComponent implements OnInit {
     this.createAdvisor();
   }
 
+  
+  handleIsAdmin() {
+    this.isAdmin = this.isAdmin == false ? true : false;
+  }
+
   createAdvisor() {
-    const roles = [Role.ROLE_ADVISOR];
-    if (this.isAdmin == true) {
-      roles.push(Role.ROLE_ADMIN);
-      console.log(roles);
-    }
+    const roles = this.isAdmin == true ? [Role.ROLE_ADMIN, Role.ROLE_ADVISOR] : [Role.ROLE_ADVISOR]
     const userAdvisorCreate = new UserAdvisorCreate (
       this.form.value.registration,
       this.form.value.name,
@@ -195,11 +200,6 @@ export class AdvisorCreateComponent implements OnInit {
         },
         error => this.handleError(error)
       )
-  }
-
-  handleIsAdmin() {
-    this.isAdmin = this.isAdmin == false ? true : false;
-    console.log(this.isAdmin);
   }
 
   handleError(error: any) {
@@ -223,22 +223,20 @@ export class AdvisorCreateComponent implements OnInit {
   }
 
   addCourse() {
-    this.field('course').clearValidators();
-    this.coursesIds.push(this.courseSelected!.id);
-    this.coursesNames.push(this.field('course').value);
-    this.field('course').setValue('');
-    this.courseSelected = undefined;
-    console.log(this.coursesIds);
+    if (this.courseSelected) {
+      this.coursesList!.push(this.courseSelected!);
+      this.coursesIds = this.coursesList.map(c => c.id);
+      this.field('course').setValue('');
+      this.courseSelected = undefined;
+  
+      this.fetchCourses();
+    }
+  }
 
-    this.courseService.getCourses()
-        .pipe(map(courses => courses.filter(c => c.department.id === this.departmentSelected!.id && !this.coursesIds.includes(c.id))))
-        .subscribe(courses => {
-          this.courses = courses;
-          this.refreshCourseValidator();
-          this.courseFilteredOptions$ = this.field('course').valueChanges.pipe(
-            startWith(''),
-            map(value => this._filterCourse(value))
-          ) 
-        })
+  removeCourse(course: Course) {
+    this.coursesList = this.coursesList!.filter(c => c.id != course.id);
+    this.coursesIds = this.coursesIds.filter(c => c != course.id);
+
+    this.fetchCourses();
   }
 }

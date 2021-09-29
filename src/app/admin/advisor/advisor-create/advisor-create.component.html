@@ -67,8 +67,8 @@
               #campus
               (keyup)="onCampusSelected(campus.value)"
             >
-            <mat-error *ngIf="fieldErrors('campus')?.autocomplete">Campus Inválido</mat-error>
-            <!-- <mat-error *ngIf="fieldErrors('campus')?.required">Campus é obrigatório</mat-error>
+            <!-- <mat-error *ngIf="fieldErrors('campus')?.autocomplete">Campus Inválido</mat-error>
+            <mat-error *ngIf="fieldErrors('campus')?.required">Campus é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('campus')?.notblank">Campus não pode ser vazio</mat-error> -->
             <mat-error *ngIf="fieldErrors('campus')?.serverError && submitted">
               {{ form.get('campus')?.errors?.serverError }}
@@ -90,8 +90,8 @@
               [matAutocomplete]="departmentAuto"
               #department (keyup)="onDepartmentSelected(department.value)"
             >
-            <mat-error *ngIf="fieldErrors('department')?.autocomplete">Departamento Inválido</mat-error>
-            <!-- <mat-error *ngIf="fieldErrors('department')?.required">Departamento é obrigatório</mat-error>
+            <!-- <mat-error *ngIf="fieldErrors('department')?.autocomplete">Departamento Inválido</mat-error>
+            <mat-error *ngIf="fieldErrors('department')?.required">Departamento é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('department')?.notblank">Departamento não pode ser vazio</mat-error> -->
             <mat-error *ngIf="fieldErrors('department')?.serverError && submitted">
               {{ form.get('department')?.errors?.serverError }}
@@ -113,10 +113,10 @@
               [matAutocomplete]="courseAuto"
               #course (keyup)="onCourseSelected(course.value)"
             >
-            <!-- <mat-error *ngIf="fieldErrors('course')?.autocomplete">Curso Inválido</mat-error>
+            <!--<mat-error *ngIf="fieldErrors('course')?.autocomplete">Curso Inválido</mat-error>
             <mat-error *ngIf="fieldErrors('course')?.required">Curso é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('course')?.notblank">Curso não pode ser vazio</mat-error> -->
-            <mat-error *ngIf="coursesIds.length == 0 && submitted">Pelo menos um curso precisa ser selecionado</mat-error> 
+            <mat-error *ngIf="fieldErrors('course')?.notblank">Curso não pode ser vazio</mat-error> --> 
+            <mat-error class="course-error" *ngIf="coursesIds.length == 0 && submitted">Pelo menos um curso precisa ser selecionado</mat-error> 
             <mat-error *ngIf="fieldErrors('course')?.serverError && submitted">
               {{ form.get('course')?.errors?.serverError }}
             </mat-error>
@@ -131,10 +131,11 @@
         </fieldset>
         <mat-checkbox color="primary" (change)="handleIsAdmin()">Administrador do sistema</mat-checkbox>
       </form>
-      <span *ngIf="coursesNames.length != 0">
+      <span *ngIf="coursesList.length != 0">
         <p>Cursos selecionados:</p>
-        <p *ngFor="let courseName of coursesNames">
-          {{ courseName }}
+        <p *ngFor="let course of coursesList">
+          {{ course.name }}
+          <button mat-button color="primary" type="button" (click)="removeCourse(course)">Remover Curso</button>
         </p>
       </span>
     </app-content-form>
