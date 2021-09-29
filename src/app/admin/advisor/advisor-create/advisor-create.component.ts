@@ -203,5 +203,6 @@ export class AdvisorCreateComponent implements OnInit {
     this.coursesIds = this.coursesIds.filter(c => c != course.id);
 
     this.fetchCourses();
+    this.field('course').setValue('');
   }
 }
