@@ -64,3 +64,10 @@ mat-card.mat-card.mat-focus-indicator {
   text-decoration: none;
   color: #673ab7;
 }
+
+@media (max-width: 800px) {
+  .mat-card.mat-focus-indicator  {
+    border: none;
+    box-shadow: none;
+  }
+}

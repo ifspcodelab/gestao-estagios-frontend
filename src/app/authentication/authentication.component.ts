@@ -3,7 +3,9 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-authentication',
   template: `
-    <app-toolbar></app-toolbar>
+    <mat-toolbar color="primary">
+      <span>Gestão Estágios</span>
+    </mat-toolbar>
     <router-outlet></router-outlet>
   `,
 

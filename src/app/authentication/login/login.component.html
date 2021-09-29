@@ -4,22 +4,21 @@
       <p>Login</p>
     </div>
     <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="form" class="app-form">
-      <div class="emailInput">
+      <div class="matriculationInput">
         <mat-form-field class="full-width" appearance="outline">
-          <mat-label>E-mail</mat-label>
+          <mat-label>Matrícula</mat-label>
           <input
-            formControlName="email"
-            name="email"
+            formControlName="matriculation"
+            name="matriculation"
             matInput
-            placeholder="Endereço de e-mail"
+            placeholder="Matrícula"
             autocomplete="off"
           />
-          <mat-error *ngIf="fieldErrors('email')?.required">E-mail é obrigatório</mat-error>
-          <mat-error *ngIf="fieldErrors('email')?.email">E-mail deve ser válido</mat-error>
-          <mat-error *ngIf="fieldErrors('email')?.notblank">E-mail não pode ser vazio</mat-error>
-          <!--<mat-error *ngIf="fieldErrors('email')?.required">E-mail incorreto</mat-error>-->
-          <mat-error *ngIf="fieldErrors('email')?.serverError && submitted">
-            {{ fieldErrors('email')?.serverError }}
+          <mat-error *ngIf="fieldErrors('matriculation')?.required">Matricula é obrigatória</mat-error>
+          <mat-error *ngIf="fieldErrors('matriculation')?.notblank">Matrícula não pode ser vazia</mat-error>
+          <!--<mat-error *ngIf="fieldErrors('matriculation')?.required">E-mail incorreto</mat-error>-->
+          <mat-error *ngIf="fieldErrors('matriculation')?.serverError && submitted">
+            {{ fieldErrors('matriculation')?.serverError }}
           </mat-error>
         </mat-form-field>
       </div>
