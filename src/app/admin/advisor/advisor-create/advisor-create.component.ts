@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { first, map, startWith } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { Advisor, UserAdvisorCreate } from 'src/app/core/models/advisor.model';
 import { Campus } from 'src/app/core/models/campus.model';
 import { Course } from 'src/app/core/models/course.model';
@@ -63,11 +63,6 @@ export class AdvisorCreateComponent implements OnInit {
       .pipe(map(courses => courses.filter(c => c.status === EntityStatus.ENABLED)))
       .subscribe(campuses => {
         this.campuses = campuses;
-        //this.field('campus').setValidators(AppValidators.autocomplete(this.campuses.map(c => c.name)))
-        this.campusFilteredOptions$ = this.field('campus').valueChanges.pipe(
-          startWith(''),
-          map(value => this._filterCampus(value))
-        );
       })
   }
 
@@ -76,11 +71,6 @@ export class AdvisorCreateComponent implements OnInit {
         .pipe(map(courses => courses.filter(c => c.department.id === this.departmentSelected!.id && !this.coursesIds.includes(c.id))))
         .subscribe(courses => {
           this.courses = courses;
-          //this.refreshCourseValidator();
-          this.courseFilteredOptions$ = this.field('course').valueChanges.pipe(
-            startWith(''),
-            map(value => this._filterCourse(value))
-          ) 
         })
   }
 
@@ -95,11 +85,6 @@ export class AdvisorCreateComponent implements OnInit {
       this.departmentService.getDepartments(campus.id)
         .subscribe(departments => {
           this.departments = departments;
-          //this.refreshDepartmentValidator();
-          this.departmentFilteredOptions$ = this.field('department').valueChanges.pipe(
-            startWith(''),
-            map(value => this._filterDepartment(value))
-          );
         });
     }
   }
@@ -120,27 +105,8 @@ export class AdvisorCreateComponent implements OnInit {
     }
   }
 
-  refreshCourseValidator() {
-    this.field('course').setValidators(AppValidators.autocomplete(this.courses.map(c => c.name)));
-  }
-
   onCourseSelected(courseName: string) {
     this.courseSelected = this.courses.find(course => course.name == courseName);
-  }
-
-  private _filterCampus(value: any): any {
-    const filteredValue = value.toLowerCase()
-    return this.campuses.filter(campus => campus.name.toLowerCase().includes(filteredValue));
-  }
-
-  private _filterDepartment(value: string): Department[] {
-    const filteredValue = value.toLowerCase();
-    return this.departments.filter(department => department.name.toLowerCase().includes(filteredValue) && department.status == EntityStatus.ENABLED);
-  }
-
-  private _filterCourse(value: any): any {
-    const filteredValue = value.toLowerCase();
-    return this.courses.filter(course => course.name.toLowerCase().includes(filteredValue) && course.status == EntityStatus.ENABLED);
   }
 
   field(path: string) {
@@ -228,7 +194,6 @@ export class AdvisorCreateComponent implements OnInit {
       this.coursesIds = this.coursesList.map(c => c.id);
       this.field('course').setValue('');
       this.courseSelected = undefined;
-  
       this.fetchCourses();
     }
   }

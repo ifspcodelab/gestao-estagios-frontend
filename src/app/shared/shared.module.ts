@@ -18,6 +18,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [],
@@ -38,7 +39,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatAutocompleteModule,
     MatRadioModule,
     TextFieldModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ],
   imports: [
     CommonModule,
@@ -59,7 +61,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatAutocompleteModule,
     MatRadioModule,
     TextFieldModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ]
 })
 export class SharedModule {
