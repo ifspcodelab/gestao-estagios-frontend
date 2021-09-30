@@ -182,11 +182,11 @@ export class RegistrationComponent implements OnInit {
       name: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.alpha]
       ],
+      email: ['',
+        [Validators.required, Validators.email, AppValidators.notBlank, AppValidators.institutionEmail]
+      ],
       matriculation: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.exactLength(9)]
-      ],
-      email: ['',
-        [Validators.required, Validators.email, AppValidators.notBlank]
       ],
       campus: ['',
         [Validators.required, AppValidators.notBlank]
