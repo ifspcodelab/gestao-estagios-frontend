@@ -148,13 +148,13 @@ select:focus {
     width: 350px;
   }
 
-  .app-form mat-form-field {
-    margin-right: 0px;
+  .app-form .mat-form-field {
+    margin-right: 0;
   }
 }
 
 @media (max-width: 600px) {
   legend {
-    margin-left: 0px;
+    margin-left: 0;
   }
 }
