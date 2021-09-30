@@ -86,7 +86,7 @@ select:focus {
   outline: 0;
 }
 
-.app-form mat-form-field {
+.app-form .mat-form-field {
   margin-bottom: -20px;
 }
 
@@ -107,15 +107,11 @@ select:focus {
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
-
-
   position: absolute;
   z-index: 1;
   bottom: 125%;
   left: 90%;
   margin-left: -300px;
-
-
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -157,10 +153,8 @@ select:focus {
   }
 }
 
-
 @media (max-width: 600px) {
   legend {
     margin-left: 0px;
   }
 }
-
