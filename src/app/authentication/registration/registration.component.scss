@@ -2,7 +2,7 @@
   max-width: 600px;
   margin: 1em auto;
   text-align: center;
-  max-height: 43.75rem;
+  max-height: 56.75rem;
 }
 
 .mat-card.mat-card.mat-focus-indicator {
@@ -22,6 +22,12 @@
 
 .full-width {
   width: 80%;
+}
+
+legend {
+  text-align: left;
+  margin-left: 3.25rem;
+  margin-top: -2rem;
 }
 
 .button-row {
@@ -59,6 +65,10 @@
   color: #673ab7;
 }
 
+.form.primary {
+  width: 425px;
+}
+
 .politics {
   display: flex;
   justify-content: center;
@@ -66,6 +76,7 @@
   text-decoration: none;
   color: #673ab7;
   margin-top: 20px;
+  padding-bottom: 20px;
 }
 
 input:focus,
@@ -75,15 +86,81 @@ select:focus {
   outline: 0;
 }
 
-.help {
+.app-form mat-form-field {
+  margin-bottom: -20px;
+}
+
+//tolltip
+.tooltip {
   padding-right: 25px;
   color: #673ab7;
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 350px;
+  height: 15px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 90%;
+  margin-left: -300px;
+
+
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 82%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 @media (max-width: 800px) {
-  .mat-card.mat-focus-indicator  {
+  .mat-card.mat-focus-indicator {
     border: none;
     box-shadow: none;
+  }
+}
+
+@media (max-width: 493px) {
+  .form.primary {
+    width: 350px;
+  }
+
+  .form {
+    width: 350px;
+  }
+
+  .app-form mat-form-field {
+    margin-right: 0px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  legend {
+    margin-left: 0px;
   }
 }
 
