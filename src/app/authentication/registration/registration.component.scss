@@ -1,5 +1,5 @@
 .mat-card {
-  max-width: 600px;
+  max-width: 37.5rem;
   margin: 1em auto;
   text-align: center;
   max-height: 56.75rem;
@@ -17,7 +17,7 @@
 }
 
 .header p {
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .full-width {
@@ -30,9 +30,13 @@ legend {
   margin-top: -2rem;
 }
 
+.app-form fieldset legend {
+  margin-top: 0.1rem;
+}
+
 .button-row {
-  padding-top: 20px;
-  margin-right: 12px;
+  padding-top: 1.25rem;
+  margin-right: 0.75rem;
 }
 
 .button-row a {
@@ -47,12 +51,12 @@ legend {
 }
 
 .button-login {
-  padding-top: 30px;
+  padding-top: 1.875rem;
 }
 
 .aLink {
   float: right;
-  padding-right: 60px;
+  padding-right: 3.75rem;
   text-decoration: none;
   color: #673ab7;
 }
@@ -66,7 +70,7 @@ legend {
 }
 
 .form.primary {
-  width: 425px;
+  width: 26.5625rem;
 }
 
 .politics {
@@ -75,8 +79,8 @@ legend {
   align-items: center;
   text-decoration: none;
   color: #673ab7;
-  margin-top: 20px;
-  padding-bottom: 20px;
+  margin-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 input:focus,
@@ -87,12 +91,12 @@ select:focus {
 }
 
 .app-form .mat-form-field {
-  margin-bottom: -20px;
+  margin-bottom: -1.25rem;
 }
 
 //tolltip
 .tooltip {
-  padding-right: 25px;
+  padding-right: 1.5625rem;
   color: #673ab7;
   position: relative;
   display: inline-block;
@@ -100,8 +104,8 @@ select:focus {
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 350px;
-  height: 15px;
+  width: 21.875rem;
+  height: 0.94rem;
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -111,7 +115,7 @@ select:focus {
   z-index: 1;
   bottom: 125%;
   left: 90%;
-  margin-left: -300px;
+  margin-left: -18.75rem;
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -121,8 +125,8 @@ select:focus {
   position: absolute;
   top: 100%;
   left: 82%;
-  margin-left: -5px;
-  border-width: 5px;
+  margin-left: -0.31rem;
+  border-width: 0.31rem;
   border-style: solid;
   border-color: #555 transparent transparent transparent;
 }
@@ -141,11 +145,11 @@ select:focus {
 
 @media (max-width: 493px) {
   .form.primary {
-    width: 350px;
+    width: 21.875rem;
   }
 
   .form {
-    width: 350px;
+    width: 21.875rem;
   }
 
   .app-form .mat-form-field {
