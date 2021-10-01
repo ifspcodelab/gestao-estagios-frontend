@@ -17,6 +17,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -37,6 +38,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatAutocompleteModule,
     MatRadioModule,
     TextFieldModule,
+    MatCheckboxModule,
   ],
   imports: [
     CommonModule,
@@ -57,6 +59,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatAutocompleteModule,
     MatRadioModule,
     TextFieldModule,
+    MatCheckboxModule,
   ]
 })
 export class SharedModule {

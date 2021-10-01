@@ -69,8 +69,7 @@
             matInput [type]=" hide ? 'text' : 'password' "
             placeholder="Senha"
           />
-          <button  mat-icon-button matSuffix color="primary" (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
-                   [attr.aria-pressed]="hide">
+          <button type="button" mat-icon-button matSuffix color="primary" (click)="hide = !hide" [attr.aria-label]="'Hide Password'" [attr.aria-pressed]="hide">
             <mat-icon>
               {{hide ? 'visibility' : 'visibility_off' }}
             </mat-icon>
@@ -183,9 +182,8 @@
         </mat-form-field>
       </fieldset>
 
-      <div>
-        <input type="checkbox" ng-model="vm.motorista.categoria_cnh.value5"/>Aceito os Termos de Uso e as Políticas de Privacidade
-      </div>
+      <mat-checkbox color="primary" name="checkbox" formControlName="checkbox">Aceitar os Termos de Uso e Políticas de Privacidade</mat-checkbox>
+      <mat-error *ngIf="fieldErrors('checkbox')?.required && submitted">É necessário aceitar os Termos de Uso e Políticas de Privacidade</mat-error>
 
       <div class="button-login">
         <button mat-flat-button color="primary">Cadastrar</button>
@@ -196,7 +194,6 @@
           <mat-icon>chevron_left</mat-icon> Voltar para o Login
         </a>
       </div>
-
     </form>
     <a class="politics" (click)="openDialog()">Termos de Uso e Políticas de Privacidade</a>
   </mat-card-content>

@@ -3,17 +3,18 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AppValidators } from "../../core/validators/app-validators";
 import { MatDialog } from "@angular/material/dialog";
 import { TermsComponent } from "../terms/terms.component";
-import {map, startWith} from "rxjs/operators";
-import {Campus} from "../../core/models/campus.model";
-import {Department} from "../../core/models/department.model";
-import {CampusService} from "../../core/services/campus.service";
-import {Observable} from "rxjs";
-import {DepartmentService} from "../../core/services/department.service";
-import {EntityStatus} from "../../core/models/enums/status";
-import {Course} from "../../core/models/course.model";
-import {Curriculum} from "../../core/models/curriculum.model";
-import {CourseService} from "../../core/services/course.service";
-import {CurriculumService} from "../../core/services/curriculum.service";
+import { map, startWith } from "rxjs/operators";
+import { Campus } from "../../core/models/campus.model";
+import { Department } from "../../core/models/department.model";
+import { CampusService } from "../../core/services/campus.service";
+import { Observable } from "rxjs";
+import { DepartmentService } from "../../core/services/department.service";
+import { EntityStatus } from "../../core/models/enums/status";
+import { Course } from "../../core/models/course.model";
+import { Curriculum } from "../../core/models/curriculum.model";
+import { CourseService } from "../../core/services/course.service";
+import { CurriculumService } from "../../core/services/curriculum.service";
+
 
 @Component({
   selector: 'app-registration',
@@ -202,6 +203,9 @@ export class RegistrationComponent implements OnInit {
       ],
       password: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.lowerCase, AppValidators.upperCase, AppValidators.number, Validators.minLength(8)]
+      ],
+      checkbox: ['',
+        [Validators.requiredTrue]
       ]
     })
   }
