@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AppValidators } from "../../core/validators/app-validators";
 import { MatDialog } from "@angular/material/dialog";
 import { TermsComponent } from "../terms/terms.component";
-import { map, startWith } from "rxjs/operators";
+import { first, map, startWith } from "rxjs/operators";
 import { Campus } from "../../core/models/campus.model";
 import { Department } from "../../core/models/department.model";
 import { CampusService } from "../../core/services/campus.service";
@@ -14,6 +14,11 @@ import { Course } from "../../core/models/course.model";
 import { Curriculum } from "../../core/models/curriculum.model";
 import { CourseService } from "../../core/services/course.service";
 import { CurriculumService } from "../../core/services/curriculum.service";
+import { Student, UserStudentCreate } from 'src/app/core/models/student.model';
+import { StudentService } from 'src/app/core/services/student.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -44,10 +49,13 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private router: Router,
     private campusService: CampusService,
     private departmentService: DepartmentService,
     private courseService: CourseService,
-    private curriculumService: CurriculumService
+    private curriculumService: CurriculumService,
+    private studentService: StudentService,
+    private notificationService: NotificationService
   ) { }
 
   openDialog() {
@@ -158,6 +166,7 @@ export class RegistrationComponent implements OnInit {
 
   onCurriculumSelected(curriculumName: string) {
     this.curriculumSelected = this.curriculums.find(curriculum => curriculum.code == curriculumName);
+    console.log(this.curriculumSelected!.id);
   }
 
   private _filterCourse(value: string): Course[] {
@@ -186,7 +195,7 @@ export class RegistrationComponent implements OnInit {
       email: ['',
         [Validators.required, Validators.email, AppValidators.notBlank, AppValidators.institutionEmail]
       ],
-      matriculation: ['',
+      registration: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.exactLength(9)]
       ],
       campus: ['',
@@ -210,9 +219,45 @@ export class RegistrationComponent implements OnInit {
     })
   }
 
-  onLogin() {
+  onRegister() {
+    this.submitted = true; 
+
     if (!this.form.valid) {
       return;
+    }
+
+    const userStudentCreate = new UserStudentCreate(
+      this.form.value.registration,
+      this.form.value.name,
+      this.form.value.password,
+      this.form.value.email,
+      this.curriculumSelected!.id
+    )
+    this.studentService.postStudent(userStudentCreate)
+    .pipe(first())
+      .subscribe(
+        _ => {
+          this.form.reset({}, {emitEvent: false});
+          this.notificationService.success('Cadastro realizado com sucesso! Verifique o e-mail');
+          this.router.navigate(['authentication/login']);
+        },
+        error => this.handleError(error)
+      )
+  }
+
+  handleError(error: any) {
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 400) {
+        const violations: Array<{ name: string; reason: string }> = error.error.violations;
+        violations.forEach(violation => {
+          const formControl = this.form.get(violation.name);
+          if (formControl) {
+            formControl.setErrors({
+              serverError: violation.reason
+            });
+          }
+        })
+      }
     }
   }
 
