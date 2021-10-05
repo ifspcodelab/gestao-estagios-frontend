@@ -3,7 +3,7 @@
     <div class="header">
       <p>Cadastro</p>
     </div>
-    <form (ngSubmit)="onLogin()" name="registrationForm" [formGroup]="form" class="app-form">
+    <form (ngSubmit)="onRegister()" name="registrationForm" [formGroup]="form" class="app-form">
 
       <fieldset>
         <legend>Informações Pessoais:</legend>
@@ -47,17 +47,17 @@
         <mat-form-field class="form primary" appearance="outline">
           <mat-label>Matrícula</mat-label>
           <input
-            formControlName="matriculation"
-            name="matriculation"
+            formControlName="registration"
+            name="registration"
             matInput
             placeholder="Número de Matrícula"
             autocomplete="off"
           />
-          <mat-error *ngIf="fieldErrors('matriculation')?.required">Matrícula é obrigatória</mat-error>
-          <mat-error *ngIf="fieldErrors('matriculation')?.notblank">Matrícula não pode ser vazia</mat-error>
-          <mat-error *ngIf="fieldErrors('abbreviation')?.exactlength">Matrícula deve ter 9 caracteres</mat-error>
-          <mat-error *ngIf="fieldErrors('matriculation')?.serverError && submitted">
-            {{ fieldErrors('matriculation')?.serverError }}
+          <mat-error *ngIf="fieldErrors('registration')?.required">Matrícula é obrigatória</mat-error>
+          <mat-error *ngIf="fieldErrors('registration')?.notblank">Matrícula não pode ser vazia</mat-error>
+          <mat-error *ngIf="fieldErrors('registration')?.exactlength">Matrícula deve ter 9 caracteres</mat-error>
+          <mat-error *ngIf="fieldErrors('registration')?.serverError && submitted">
+            {{ fieldErrors('registration')?.serverError }}
           </mat-error>
         </mat-form-field>
 
@@ -158,12 +158,14 @@
         <mat-form-field class="form primary" appearance="outline">
           <mat-label>Matriz</mat-label>
           <input type="text"
-                 matInput
-                 placeholder="Selecione..."
-                 formControlName="curriculum"
-                 name="curriculum"
-                 [matAutocomplete]="autoCurriculum"
-                 #curriculum (keyup)="onCurriculumSelected(curriculum.value)">
+            matInput
+            placeholder="Selecione..."
+            formControlName="curriculum"
+            name="curriculum"
+            [matAutocomplete]="curriculumAuto"
+            #curriculum
+            (keyup)="onCurriculumSelected(curriculum.value)"
+          >
 
           <div class="tooltip" mat-icon-button matSuffix><mat-icon>chelp_outline</mat-icon>
             <span class="tooltiptext">É possível encontrar sua matriz em seu perfil do SUAP.</span>
@@ -174,7 +176,7 @@
           <mat-error *ngIf="fieldErrors('curriculum')?.serverError && submitted">
             {{ form.get('curriculum')?.errors?.serverError }}
           </mat-error>
-          <mat-autocomplete autoActiveFirstOption #autoCurriculum="matAutocomplete">
+          <mat-autocomplete autoActiveFirstOption #curriculumAuto="matAutocomplete" (optionSelected)="onCurriculumSelected($event.option.value)">
             <mat-option *ngFor="let curriculum of curriculumFilteredOptions$ | async" [value]="curriculum.code">
               {{curriculum.code}}
             </mat-option>
