@@ -14,7 +14,7 @@ import { Course } from "../../core/models/course.model";
 import { Curriculum } from "../../core/models/curriculum.model";
 import { CourseService } from "../../core/services/course.service";
 import { CurriculumService } from "../../core/services/curriculum.service";
-import { Student, UserStudentCreate } from 'src/app/core/models/student.model';
+import { UserStudentCreate } from 'src/app/core/models/student.model';
 import { StudentService } from 'src/app/core/services/student.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { Router } from '@angular/router';
@@ -55,7 +55,7 @@ export class RegistrationComponent implements OnInit {
     private courseService: CourseService,
     private curriculumService: CurriculumService,
     private studentService: StudentService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) { }
 
   openDialog() {
@@ -238,7 +238,7 @@ export class RegistrationComponent implements OnInit {
       .subscribe(
         _ => {
           this.form.reset({}, {emitEvent: false});
-          this.notificationService.success('Cadastro realizado com sucesso! Verifique o e-mail');
+          this.notificationService.success('Cadastro realizado com sucesso! Verifique seu e-mail para confirmação');
           this.router.navigate(['authentication/login']);
         },
         error => this.handleError(error)

@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import jwt_decode from 'jwt-decode';
+import { TokenData } from "../interfaces/token-data.interface";
+import { Role } from "../models/enums/role";
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,7 @@ import jwt_decode from 'jwt-decode';
 export class JwtTokenService {
 
   jwtToken: string;
-  decodedToken: { [key: string]: string };
+  decodedToken: TokenData;
 
   constructor() { }
 
@@ -28,18 +30,18 @@ export class JwtTokenService {
     return this.decodedToken ? this.decodedToken.sub : null;
   }
 
-  getRoles(): any {
+  getRoles(): Role[] | null {
     this.decodeToken();
     return this.decodedToken ? this.decodedToken.roles : null;
   }
 
-  getExpiryTime(): any {
+  getExpiryTime(): number | null {
     this.decodeToken();
     return this.decodedToken ? this.decodedToken.exp : null;
   }
 
   isTokenExpired(): boolean {
-    const expiryTime: number = this.getExpiryTime();
+    const expiryTime: number | null = this.getExpiryTime();
     if (expiryTime) {
       return ((1000 * expiryTime) - (new Date()).getTime()) < 5000;
     } else {

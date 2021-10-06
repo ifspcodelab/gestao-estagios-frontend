@@ -7,36 +7,36 @@ import { JwtTokenService } from '../services/jwt-token.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthorizationGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
   constructor(
     private jwtTokenService: JwtTokenService,
     private router: Router
   ) { }
 
-
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const access_token = localStorage.getItem('access_token');
 
+    console.log(route);
+    if (route.url.find(r => r.path == "admin")) {
+      console.log('oi');
+    }
+
     this.jwtTokenService.setToken(access_token!);
-    const roles: string[] = this.jwtTokenService.getRoles();
+    const roles: Role[] = this.jwtTokenService.getRoles()!;
 
     if (this.jwtTokenService.getSubject()) {
       if(this.jwtTokenService.isTokenExpired()) {
-        this.router.navigate(['authentication/login']);
-        return false;
+        return this.router.navigate(['authentication/login']);
       }
       else {
-        if (roles.includes(Role.ROLE_ADMIN.toString())) {
-          return true;
+        if (!roles.includes(Role.ROLE_ADMIN)) {
+          return this.router.navigate(['authentication/login']);
         }
-        else {
-          this.router.navigate(['authentication/registration']);
-          return false;
-        }
+        return true;
       }
     }
     else {
-      return false;
+      return this.router.navigate(['authentication/login']);
     }
   }
 }

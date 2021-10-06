@@ -17,9 +17,9 @@
           <mat-error *ngIf="fieldErrors('registration')?.required">Matricula é obrigatória</mat-error>
           <mat-error *ngIf="fieldErrors('registration')?.notblank">Matrícula não pode ser vazia</mat-error>
           <!--<mat-error *ngIf="fieldErrors('registration')?.required">E-mail incorreto</mat-error>-->
-          <mat-error *ngIf="fieldErrors('registration')?.serverError && submitted">
+          <!-- <mat-error *ngIf="fieldErrors('registration')?.serverError && submitted">
             {{ fieldErrors('registration')?.serverError }}
-          </mat-error>
+          </mat-error> -->
         </mat-form-field>
       </div>
 
