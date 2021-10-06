@@ -7,6 +7,7 @@ import { Role } from 'src/app/core/models/enums/role';
 import { TokenResponse } from 'src/app/core/models/token.model';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { JwtTokenService } from 'src/app/core/services/jwt-token.service';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import {AppValidators} from "../../core/validators/app-validators";
 
 @Component({
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService,
+    private localStorageService: LocalStorageService,
     private jwtTokenService: JwtTokenService
   ) { }
 
@@ -68,15 +70,9 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
       (tokenResponse: TokenResponse) => {
-        localStorage.setItem('access_token', tokenResponse.access_token);
-        localStorage.setItem('refresh_token', tokenResponse.refresh_token);
-        this.jwtTokenService.setToken(localStorage.getItem('access_token')!);
-        if (this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADMIN)) {
-          this.router.navigate(['admin']);
-        }
-        else {
-          this.router.navigate(['student']);
-        }
+        this.localStorageService.set('access_token', tokenResponse.access_token);
+        this.localStorageService.set('refresh_token', tokenResponse.refresh_token);
+        this.handleRedirectTo();
       },
       error => { 
         this.handleError(error);
@@ -84,16 +80,22 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  handleRedirectTo() {
+    this.jwtTokenService.setToken(this.localStorageService.get('access_token')!);
+    if (this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADMIN)) {
+      this.router.navigate(['admin']);
+    }
+    else {
+      this.router.navigate(['student']);
+    }
+  }
+
   handleError(error: any) {
     if (error instanceof HttpErrorResponse) {
       if(error.status === 401) {
-        const registrationControl = this.field("registration");
         const passwordControl = this.field("password");
         if (error.error.message.includes("credentials")) {
           passwordControl?.setErrors({
-            serverError: 'Usuário inválido. Informe credenciais corretas e tente novamente.'
-          });
-          registrationControl?.setErrors({
             serverError: 'Usuário inválido. Informe credenciais corretas e tente novamente.'
           });
         }
