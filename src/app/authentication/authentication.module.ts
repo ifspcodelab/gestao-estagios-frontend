@@ -8,6 +8,8 @@ import { AuthenticationComponent } from "./authentication.component";
 import { LoginComponent } from "./login/login.component";
 import { RegistrationComponent } from "./registration/registration.component";
 import { TermsComponent } from "./terms/terms.component";
+import { PasswordComponent } from './password/password.component';
+import { ResetComponent } from './reset/reset.component';
 
 
 @NgModule({
@@ -16,6 +18,8 @@ import { TermsComponent } from "./terms/terms.component";
     LoginComponent,
     RegistrationComponent,
     TermsComponent,
+    PasswordComponent,
+    ResetComponent,
   ],
   imports: [
     CommonModule,
