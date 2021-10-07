@@ -70,7 +70,16 @@ ul {
 }
 
 .button-send {
-  padding: 20px;
+  padding: 1.25rem;
+}
+
+.app-form {
+  padding: 0;
+}
+
+.mat-form-field-appearance-outline, .mat-form-field-flex {
+  width: 25.625rem;
+  margin-left: 1.25rem;
 }
 
 .login {
