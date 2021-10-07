@@ -169,10 +169,9 @@ export class AdvisorCreateComponent implements OnInit {
 
   buildForm(): FormGroup {
     return this.fb.group({
-      registration: ['', [Validators.required, AppValidators.notBlank]],
-      name: ['', [Validators.required, AppValidators.notBlank]],
-      password: ['', [Validators.required, AppValidators.notBlank, Validators.minLength(6), Validators.maxLength(22)]],
-      email: ['', [Validators.required, AppValidators.notBlank, Validators.email]],
+      registration: ['', [ Validators.required, AppValidators.notBlank ]],
+      name: ['', [ Validators.required, AppValidators.notBlank ]],
+      email: ['', [ Validators.required, Validators.email, AppValidators.notBlank, AppValidators.institutionEmail ]],
       campus: ['',],
       department: ['',],
       course: ['',],
@@ -205,7 +204,6 @@ export class AdvisorCreateComponent implements OnInit {
     const userAdvisorCreate = new UserAdvisorCreate (
       this.form.value.registration,
       this.form.value.name,
-      this.form.value.password,
       this.form.value.email,
       roles,
       this.coursesIds
@@ -256,6 +254,21 @@ export class AdvisorCreateComponent implements OnInit {
             });
           }
         })
+      }
+
+      if(error.status === 409) {
+        const registrationControl = this.field("registration");
+        const emailControl = this.field("email");
+        if (error.error.title.includes("Registration")) {
+          registrationControl?.setErrors({
+            serverError: `Orientador já existente com matrícula ${registrationControl.value}`
+          });
+        }
+        if (error.error.title.includes("Email")) {
+          emailControl?.setErrors({
+            serverError: `Orientador já existente com e-mail ${emailControl.value}`
+          });
+        }
       }
     }
   }
