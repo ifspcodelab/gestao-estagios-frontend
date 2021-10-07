@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
-import { Advisor, UserAdvisorCreate } from 'src/app/core/models/advisor.model';
+import { finalize, first, map } from 'rxjs/operators';
+import { Advisor, UserAdvisorCreate, UserAdvisorUpdate } from 'src/app/core/models/advisor.model';
 import { Campus } from 'src/app/core/models/campus.model';
 import { Course } from 'src/app/core/models/course.model';
 import { Department } from 'src/app/core/models/department.model';
@@ -24,7 +24,7 @@ import { AppValidators } from 'src/app/core/validators/app-validators';
   styleUrls: ['./advisor-create.component.scss']
 })
 export class AdvisorCreateComponent implements OnInit {
-  loading: boolean = true;
+  loading: boolean;
   createMode: boolean;
   form: FormGroup;
   submitted = false;
@@ -60,6 +60,7 @@ export class AdvisorCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
+
     this.form = this.buildForm();
     this.fetchCampuses();
 
@@ -67,11 +68,44 @@ export class AdvisorCreateComponent implements OnInit {
       this.createMode = false;
       this.loading = true;
       this.loaderService.show();
-      //this.getAdvisor(this.id);
+      this.fetchAdvisor(this.id);
     } else {
       this.createMode = true;
       this.loading = false;
     }
+
+    if (!this.createMode) {
+      this.fetchCourses();
+    }
+  }
+
+  fetchAdvisor(id: string) {
+    this.advisorService.getAdvisorById(id)
+    .pipe(
+      first(),
+      finalize(() => {
+        this.loaderService.hide();
+        this.loading = false;
+      })
+    )
+    .subscribe(
+      (advisor: Advisor) => {
+        this.advisor = advisor;
+        this.field('admin').disable();
+        this.field('name').patchValue(advisor.user.name);
+        this.field('registration').patchValue(advisor.user.registration);
+        this.field('registration').disable();
+        this.field('email').patchValue(advisor.user.email);
+        this.coursesList = advisor.courses;
+        this.coursesIds = this.coursesList.map(c => c.id);
+      },
+      error => {
+        if(error.status >= 400 || error.status <= 499) {
+          this.notificationService.error(`Orientador não encontrado com id ${this.id}`);
+          this.navigateToList();
+        }
+      }
+    )
   }
 
   fetchCampuses() {
@@ -141,7 +175,8 @@ export class AdvisorCreateComponent implements OnInit {
       email: ['', [Validators.required, AppValidators.notBlank, Validators.email]],
       campus: ['',],
       department: ['',],
-      course: ['',]
+      course: ['',],
+      admin: ['', ]
     });
   }
 
@@ -152,7 +187,12 @@ export class AdvisorCreateComponent implements OnInit {
       return;
     }
 
-    this.createAdvisor();
+    if (this.createMode) {
+      this.createAdvisor()
+    }
+    else {
+      this.updateAdvisor();
+    }
   }
 
   
@@ -184,6 +224,26 @@ export class AdvisorCreateComponent implements OnInit {
       )
   }
 
+  updateAdvisor() {
+    const userAdvisorUpdate = new UserAdvisorUpdate(
+      this.form.value.name,
+      this.form.value.email,
+      this.coursesIds
+    );
+    this.advisorService.updateAdvisor(this.id!, userAdvisorUpdate)
+    .pipe(first())
+    .subscribe(
+      (advisor: Advisor) => {
+        this.form.reset({}, {emitEvent: false});
+        this.id = advisor.id
+        this.advisor = advisor;
+        this.notificationService.success(`Orientador ${this.advisor.user.name} editado com sucesso!`);
+        this.navigateToShow();
+      },
+      error => this.handleError(error)
+    )
+  }
+
   handleError(error: any) {
     if (error instanceof HttpErrorResponse) {
       if (error.status === 400) {
@@ -202,6 +262,10 @@ export class AdvisorCreateComponent implements OnInit {
 
   navigateToList() {
     this.router.navigate(['admin/advisor']);
+  }
+
+  navigateToShow() {
+    this.router.navigate([`admin/advisor/${this.id}`]);
   }
 
   addCourse() {

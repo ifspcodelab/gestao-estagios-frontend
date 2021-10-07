@@ -10,7 +10,7 @@
     <app-content-form>
       <form id="advisor-form" class="app-form" [formGroup]="form" (ngSubmit)="onSubmit()">
 
-        <mat-checkbox class="admin" color="primary" (change)="handleIsAdmin()">Administrador</mat-checkbox>
+        <mat-checkbox formControlName="admin" class="admin" color="primary" (change)="handleIsAdmin()">Administrador</mat-checkbox>
         <fieldset>
           <mat-form-field class="form-field-md">
             <mat-label>Nome</mat-label>
@@ -52,7 +52,7 @@
             <mat-error *ngIf="fieldErrors('password')?.notblank && submitted">Senha não pode ser nulo</mat-error>
             <mat-error *ngIf="fieldErrors('password')?.minlength && submitted">Senha deve conter no mínimo 6 caracteres</mat-error>
             <mat-error *ngIf="fieldErrors('password')?.maxlength && submitted">Senha deve conter no máximo 22 caracteres</mat-error>
-            <mat-error *ngIf="fieldErrors('email')?.serverError && submitted">
+            <mat-error *ngIf="fieldErrors('password')?.serverError && submitted">
               {{ fieldErrors('name')?.serverError }}
             </mat-error>
           </mat-form-field>

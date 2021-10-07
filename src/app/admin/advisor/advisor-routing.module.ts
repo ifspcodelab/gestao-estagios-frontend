@@ -12,7 +12,8 @@ const routes: Routes = [
     children: [
       { path: '', component: AdvisorListComponent },
       { path: 'create', component: AdvisorCreateComponent },
-      { path: ':id', component: AdvisorShowComponent }
+      { path: ':id', component: AdvisorShowComponent },
+      { path: ':id/edit', component: AdvisorCreateComponent }
     ]
   }
 ];

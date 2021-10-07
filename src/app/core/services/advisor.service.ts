@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
-import { Advisor, UserAdvisorCreate } from "../models/advisor.model";
+import { Advisor, UserAdvisorCreate, UserAdvisorUpdate } from "../models/advisor.model";
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +31,9 @@ export class AdvisorService {
 
   getAdvisorById(id: string): Observable<Advisor> {
     return this.httpClient.get<Advisor>(`${this.apiUrl}/${id}`, this.httpOptions);
+  }
+
+  updateAdvisor(id: string, userAdvisorUpdate: UserAdvisorUpdate): Observable<Advisor> {
+    return this.httpClient.put<Advisor>(`${this.apiUrl}/${id}`, userAdvisorUpdate, this.httpOptions);
   }
 }

@@ -25,3 +25,15 @@ export class UserAdvisorCreate {
     this.coursesIds = coursesIds;
   }
 }
+
+export class UserAdvisorUpdate {
+  name: string;
+  email: string;
+  coursesIds: string[];
+
+  constructor( name: string, email: string, coursesIds: string[]) {
+    this.name = name;
+    this.email = email;
+    this.coursesIds = coursesIds;
+  }
+}
