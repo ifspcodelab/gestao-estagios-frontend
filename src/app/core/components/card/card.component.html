@@ -1,7 +1,7 @@
 <mat-card class="mat-elevation-z1" class="app-card" [routerLink]="link">
   <mat-card-header>
     <mat-card-title>{{ title }}</mat-card-title>
-    <mat-card-subtitle>{{ subtitle }} </mat-card-subtitle>
+    <mat-card-subtitle>{{ subtitle }} <span *ngIf="complement">-</span> {{ complement }} </mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions>
     <ng-content select="[card-actions]"></ng-content>
