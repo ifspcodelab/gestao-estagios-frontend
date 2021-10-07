@@ -10,6 +10,7 @@ import { RegistrationComponent } from "./registration/registration.component";
 import { TermsComponent } from "./terms/terms.component";
 import { PasswordComponent } from './password/password.component';
 import { ResetComponent } from './reset/reset.component';
+import { VerificationComponent } from './verification/verification.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { ResetComponent } from './reset/reset.component';
     TermsComponent,
     PasswordComponent,
     ResetComponent,
+    VerificationComponent,
   ],
   imports: [
     CommonModule,
