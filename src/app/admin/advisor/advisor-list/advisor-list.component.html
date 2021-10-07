@@ -9,7 +9,11 @@
   </app-content-toolbar>
   <app-content-main>
     <app-content-cards entityName="advisor" [emptyState]="advisors.length == 0">
-      <app-card *ngFor="let advisor of advisors" [title]="advisor.user.name" [subtitle]="advisor.user.registration">
+      <app-card 
+        *ngFor="let advisor of advisors" 
+        [title]="advisor.user.name" 
+        [subtitle]="advisor.user.registration"
+        [link]="'/admin/advisor/' + advisor.id">
         <div card-actions></div>
         <div card-actions>
           <mat-slide-toggle color="primary"></mat-slide-toggle>

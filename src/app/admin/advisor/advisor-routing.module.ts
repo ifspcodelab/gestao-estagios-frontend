@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdvisorCreateComponent } from './advisor-create/advisor-create.component';
 import { AdvisorListComponent } from './advisor-list/advisor-list.component';
+import { AdvisorShowComponent } from './advisor-show/advisor-show.component';
 import { AdvisorComponent } from './advisor.component';
 
 const routes: Routes = [
@@ -10,7 +11,8 @@ const routes: Routes = [
     component: AdvisorComponent,
     children: [
       { path: '', component: AdvisorListComponent },
-      { path: 'create', component: AdvisorCreateComponent }
+      { path: 'create', component: AdvisorCreateComponent },
+      { path: ':id', component: AdvisorShowComponent }
     ]
   }
 ];

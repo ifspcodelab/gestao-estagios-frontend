@@ -28,4 +28,8 @@ export class AdvisorService {
       map(results => results.sort((a, b) => a.user.name.localeCompare(b.user.name)))
     );
   }
+
+  getAdvisorById(id: string): Observable<Advisor> {
+    return this.httpClient.get<Advisor>(`${this.apiUrl}/${id}`, this.httpOptions);
+  }
 }
