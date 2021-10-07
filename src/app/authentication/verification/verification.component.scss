@@ -1,0 +1,23 @@
+.verification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.infos {
+  display: inline-flex;
+  padding-bottom: 5px;
+  background-color: #f6f3ff;
+  padding-right: 40px;
+  text-align: justify;
+  border-radius: 3px;
+}
+
+.infos span {
+  font-weight: 500;
+}
+
+.infos li {
+  margin-left: 20px;
+}
