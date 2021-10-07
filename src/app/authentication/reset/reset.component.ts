@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NotificationService} from "../../core/services/notification.service";
-import {AppValidators} from "../../core/validators/app-validators";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { NotificationService } from "../../core/services/notification.service";
+import { AppValidators } from "../../core/validators/app-validators";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-reset',
@@ -17,6 +18,7 @@ export class ResetComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private notificationService: NotificationService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -49,7 +51,8 @@ export class ResetComponent implements OnInit {
 
   onReset() {
     if (this.form.valid) {
-      return this.notificationService.success(`Senha alterada com sucesso!`);
+     this.notificationService.success(`Senha alterada com sucesso!`);
+     this.router.navigate(["authentication/login"]);
     }
 
   }
