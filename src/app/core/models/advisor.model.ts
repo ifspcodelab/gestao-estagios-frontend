@@ -11,15 +11,13 @@ export class Advisor {
 export class UserAdvisorCreate {
   registration: string;
   name: string;
-  password: string;
   email: string;
   roles: Role[];
   coursesIds: string[];
 
-  constructor(registration: string, name: string, password: string, email: string, roles: Role[], coursesIds: string[]) {
+  constructor(registration: string, name: string, email: string, roles: Role[], coursesIds: string[]) {
     this.registration = registration;
     this.name = name;
-    this.password = password;
     this.email = email;
     this.roles = roles; 
     this.coursesIds = coursesIds;

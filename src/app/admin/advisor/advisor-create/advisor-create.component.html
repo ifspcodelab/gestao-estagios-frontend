@@ -28,38 +28,27 @@
             <mat-error *ngIf="fieldErrors('registration')?.required && submitted">Matrícula é obrigatória</mat-error>
             <mat-error *ngIf="fieldErrors('registration')?.notblank && submitted">Matrícula não pode ser nula</mat-error>
             <mat-error *ngIf="fieldErrors('registration')?.serverError && submitted">
-              {{ fieldErrors('name')?.serverError }}
+              {{ fieldErrors('registration')?.serverError }}
             </mat-error>
           </mat-form-field>          
         </fieldset>
 
         <fieldset>
-          <mat-form-field class="form-field-sm">
+          <mat-form-field class="form-field-xl">
             <mat-label>E-mail</mat-label>
             <input appearance="fill" matInput placeholder="" formControlName="email" name="email" autocomplete="off">
             <mat-error *ngIf="fieldErrors('email')?.required && submitted">E-mail é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('email')?.notblank && submitted">E-mail não pode ser nulo</mat-error>
-            <mat-error *ngIf="fieldErrors('email')?.email && submitted">E-mail inválido</mat-error>
+          <mat-error *ngIf="fieldErrors('email')?.email && submitted">E-mail deve ser válido</mat-error>
+          <mat-error *ngIf="fieldErrors('email')?.notblank && submitted">E-mail não pode ser vazio</mat-error>
+          <mat-error *ngIf="fieldErrors('email')?.institutionEmail && submitted">E-mail deve ser institucional</mat-error>
             <mat-error *ngIf="fieldErrors('email')?.serverError && submitted">
-              {{ fieldErrors('name')?.serverError }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="form-field-md">
-            <mat-label>Senha</mat-label>
-            <input type="password" appearance="fill" matInput placeholder="" formControlName="password" name="password" autocomplete="off">
-            <mat-error *ngIf="fieldErrors('password')?.required && submitted">Senha é obrigatória</mat-error>
-            <mat-error *ngIf="fieldErrors('password')?.notblank && submitted">Senha não pode ser nulo</mat-error>
-            <mat-error *ngIf="fieldErrors('password')?.minlength && submitted">Senha deve conter no mínimo 6 caracteres</mat-error>
-            <mat-error *ngIf="fieldErrors('password')?.maxlength && submitted">Senha deve conter no máximo 22 caracteres</mat-error>
-            <mat-error *ngIf="fieldErrors('password')?.serverError && submitted">
-              {{ fieldErrors('name')?.serverError }}
+              {{ fieldErrors('email')?.serverError }}
             </mat-error>
           </mat-form-field>
         </fieldset>
-
+        
         <fieldset>
-          <mat-form-field class="form-field-sm campus-department">
+          <mat-form-field class="form-field-md campus-department">
             <mat-label>Campus</mat-label>
             <mat-select (selectionChange)="onCampusSelected($event.value)">
               <mat-option *ngFor="let campus of campuses" [value]="campus.name">
@@ -67,7 +56,6 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-
           <mat-form-field class="form-field-sm campus-department">
             <mat-label>Departamento</mat-label>
             <mat-select (selectionChange)="onDepartmentSelected($event.value)">
@@ -76,8 +64,10 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+        </fieldset>
 
-          <mat-form-field class="form-field-sm course">
+        <fieldset>
+          <mat-form-field class="form-field-xl course">
             <mat-label>Curso</mat-label>
             <mat-select formControlName="course" name="course" (selectionChange)="onCourseSelected($event.value)">
               <mat-option *ngFor="let course of courses" [value]="course.name">
@@ -91,6 +81,7 @@
           <button class="add" mat-button color="primary" type="button" (click)="addCourse()"><mat-icon>add</mat-icon></button>
         </fieldset>
       </form>
+
       <app-content-cards class="course-container" entityName="curso" [emptyState]="coursesList.length == 0">
         <mat-card *ngFor="let course of coursesList" class="course-card">
           <mat-card-header>

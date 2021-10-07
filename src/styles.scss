@@ -44,8 +44,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       width: calc(30% - 20px);
     }
 
-    .form-field-md, .form-field-lg, .form-field-xl, .form-field-xxl {
+    .form-field-md, .form-field-lg, .form-field-xxl {
       width: calc(66.66% - 20px);
+    }
+
+    .form-field-xl {
+      width: calc(96.66% - 20px);
     }
   }
 }
@@ -61,6 +65,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .form-field-md, .form-field-lg, .form-field-xl, .form-field-xxl {
       width: calc(50% - 20px);
     }
+    
+    .form-field-xl {
+      width: calc(75% - 20px);
+    }
   }
 }
 
@@ -72,6 +80,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
     .form-field-md, .form-field-lg, .form-field-xl, .form-field-xxl {
       width: calc(40% - 20px);
+    }
+
+    .form-field-xl {
+      width: calc(60% - 20px);
     }
   }
 }
