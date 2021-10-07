@@ -1,5 +1,7 @@
-<app-content>
-  <app-content-toolbar [title]="'Novo Orientador'">
+<app-content *ngIf="!loading">
+  <app-content-toolbar 
+    [title]="createMode ? 'Novo Orientador' : 'Editar Orientador'"
+    [backUrl]="getBackUrl()">
     <button type="submit" form="advisor-form" mat-flat-button color="primary" [disabled]="coursesIds.length == 0">
       <span>Salvar</span>
     </button>
@@ -89,26 +91,24 @@
           <button class="add" mat-button color="primary" type="button" (click)="addCourse()"><mat-icon>add</mat-icon></button>
         </fieldset>
       </form>
-      <span *ngIf="coursesList.length != 0">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th class="course">Cursos selecionados</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let course of coursesList">
-              <td class="description">{{ course.name }}</td>
-              <button mat-button color="primary" type="button" (click)="removeCourse(course)"><mat-icon>clear</mat-icon></button>
-            </tr>
-          </tbody>
-        </table>
-        <!-- <p>Cursos selecionados:</p>
-        <p *ngFor="let course of coursesList">
-          {{ course.name }}
-          <button mat-button color="primary" type="button" (click)="removeCourse(course)"><mat-icon>clear</mat-icon></button>
-        </p> -->
-      </span>
+      <app-content-cards class="course-container" entityName="curso" [emptyState]="coursesList.length == 0">
+        <mat-card *ngFor="let course of coursesList" class="course-card">
+          <mat-card-header>
+            <mat-card-title>{{ course.name }}</mat-card-title>
+            <mat-card-subtitle>{{ course.department.campus.abbreviation }} - {{ course.department.abbreviation }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <div class="card-actions">
+              <button mat-icon-button (click)="removeCourse(course)">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+            <div class="card-actions" *ngIf="createMode == false">
+              <mat-slide-toggle color="primary"></mat-slide-toggle>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </app-content-cards>
     </app-content-form>
   </app-content-main>
 </app-content>

@@ -17,12 +17,7 @@ export class AdminGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const access_token = this.localStorageService.get('access_token');
-
-    console.log(route);
-    if (route.url.find(r => r.path == "admin")) {
-      console.log('oi');
-    }
-
+    
     this.jwtTokenService.setToken(access_token!);
     const roles: Role[] = this.jwtTokenService.getRoles()!;
 

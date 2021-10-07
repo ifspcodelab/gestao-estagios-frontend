@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { Advisor, UserAdvisorCreate } from 'src/app/core/models/advisor.model';
@@ -14,6 +14,7 @@ import { AdvisorService } from 'src/app/core/services/advisor.service';
 import { CampusService } from 'src/app/core/services/campus.service';
 import { CourseService } from 'src/app/core/services/course.service';
 import { DepartmentService } from 'src/app/core/services/department.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { AppValidators } from 'src/app/core/validators/app-validators';
 
@@ -23,6 +24,8 @@ import { AppValidators } from 'src/app/core/validators/app-validators';
   styleUrls: ['./advisor-create.component.scss']
 })
 export class AdvisorCreateComponent implements OnInit {
+  loading: boolean = true;
+  createMode: boolean;
   form: FormGroup;
   submitted = false;
   isAdmin = false;
@@ -50,12 +53,25 @@ export class AdvisorCreateComponent implements OnInit {
     private courseService: CourseService,
     private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private notificationService: NotificationService,
+    private loaderService: LoaderService,
   ) { }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
     this.form = this.buildForm();
     this.fetchCampuses();
+
+    if(this.id) {
+      this.createMode = false;
+      this.loading = true;
+      this.loaderService.show();
+      //this.getAdvisor(this.id);
+    } else {
+      this.createMode = true;
+      this.loading = false;
+    }
   }
 
   fetchCampuses() {
@@ -204,5 +220,9 @@ export class AdvisorCreateComponent implements OnInit {
 
     this.fetchCourses();
     this.field('course').setValue('');
+  }
+
+  getBackUrl() {
+    return this.createMode ? '/admin/advisor' : `/admin/advisor/${this.advisor.id}`;
   }
 }
