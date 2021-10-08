@@ -10,7 +10,7 @@
     <app-content-form>
       <form id="advisor-form" class="app-form" [formGroup]="form" (ngSubmit)="onSubmit()">
 
-        <mat-checkbox formControlName="admin" class="admin" color="primary" (change)="handleIsAdmin()">Administrador</mat-checkbox>
+        <mat-checkbox *ngIf="createMode" formControlName="admin" class="admin" color="primary" (change)="handleIsAdmin()">Administrador</mat-checkbox>
         <fieldset>
           <mat-form-field class="form-field-md">
             <mat-label>Nome</mat-label>
