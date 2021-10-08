@@ -17,9 +17,27 @@
   align-items: center;
 }
 
+.account {
+  margin-right: 1rem;
+}
+
 .name {
+  display: ruby;
+}
+
+.name p{
   margin: 0;
   font-size: 17px;
+}
+
+@media screen and (max-width: 700px) {
+  .name p {
+    display: none;
+  }
+
+  .account {
+    margin-right: 0;
+  }
 }
 
 

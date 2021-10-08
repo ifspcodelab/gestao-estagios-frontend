@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SidebarService } from "../sidebar/sidebar.service";
-import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,8 +10,6 @@ export class ToolbarComponent implements OnInit {
 
   constructor(
     private sidenavService: SidebarService,
-    private matMenu: MatMenuModule,
-
   ) { }
 
   ngOnInit(): void {
@@ -22,7 +19,4 @@ export class ToolbarComponent implements OnInit {
     this.sidenavService.toggle();
   }
 
-  toggleAccount() {
-
-  }
 }
