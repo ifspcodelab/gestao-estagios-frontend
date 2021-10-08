@@ -1,9 +1,25 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  width: 99%;
+}
+
 .menu-icon {
   margin-right: 0.75rem;
 }
 
 .example-spacer {
   flex: 1 1 auto;
+}
+
+.profile {
+  display: inline-flex;
+  align-items: center;
+}
+
+.name {
+  margin: 0;
+  font-size: 17px;
 }
 
 
