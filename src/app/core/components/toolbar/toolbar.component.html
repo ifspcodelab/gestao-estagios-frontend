@@ -1,6 +1,20 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button class="menu-icon" aria-label="Menu icon" disableRipple (click)="toggleRightSidenav()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>Gestão Estágios</span>
+  <div class="toolbar">
+    <div class="title">
+      <button mat-icon-button class="menu-icon" aria-label="Menu icon" disableRipple (click)="toggleRightSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Gestão Estágios</span>
+    </div>
+
+    <div class="profile">
+      <button class="name" mat-button [matMenuTriggerFor]="menu"><mat-icon class="account">account_circle</mat-icon>
+        <p>Usuário</p>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item><mat-icon>settings</mat-icon>Minha Conta</button>
+        <button mat-menu-item><mat-icon>logout</mat-icon>Sair</button>
+      </mat-menu>
+    </div>
+  </div>
 </mat-toolbar>
