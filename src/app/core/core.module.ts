@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.
     RouterModule,
     ReactiveFormsModule,
     SharedModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatMenuModule
   ],
   exports: [
     ConfirmDialogComponent,

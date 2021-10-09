@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SidebarService} from "../sidebar/sidebar.service";
+import { SidebarService } from "../sidebar/sidebar.service";
 
 @Component({
   selector: 'app-toolbar',
@@ -8,7 +8,9 @@ import {SidebarService} from "../sidebar/sidebar.service";
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private sidenavService: SidebarService) { }
+  constructor(
+    private sidenavService: SidebarService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -16,4 +18,5 @@ export class ToolbarComponent implements OnInit {
   toggleRightSidenav() {
     this.sidenavService.toggle();
   }
+
 }
