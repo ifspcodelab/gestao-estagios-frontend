@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NotificationService } from "../../core/services/notification.service";
 import { AppValidators } from "../../core/validators/app-validators";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Advisor, UserAdvisorActivate } from 'src/app/core/models/advisor.model';
+import { AdvisorService } from 'src/app/core/services/advisor.service';
+import { first } from 'rxjs/operators';
+import { EntityStatus } from 'src/app/core/models/enums/status';
 
 @Component({
   selector: 'app-reset',
@@ -10,19 +14,32 @@ import { Router } from "@angular/router";
   styleUrls: ['./reset.component.scss']
 })
 export class ResetComponent implements OnInit {
-
   hide: boolean = false;
   form: FormGroup;
   submitted = false;
 
+  id: string | null;
+  advisor: Advisor;
+
   constructor(
     private fb: FormBuilder,
     private notificationService: NotificationService,
+    private route: ActivatedRoute,
     private router: Router,
+    private advisorService: AdvisorService
   ) { }
 
   ngOnInit() {
-    this.form= this.buildForm();
+    this.id = this.route.snapshot.paramMap.get('id');
+
+    this.advisorService.getAdvisorById(this.id!).pipe(first())
+    .subscribe(
+      advisor => {
+        this.advisor = advisor;
+      }
+    )
+
+    this.form = this.buildForm();
   }
 
   public onSubmit() {
@@ -31,6 +48,25 @@ export class ResetComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    if (this.advisor.user.isActivated === EntityStatus.ENABLED) {
+      this.notificationService.error("Orientador já habilitado e com senha definida no sistema.");
+      this.router.navigate(['authentication/login']);
+    }
+    else {
+      const userAdvisorActivate = new UserAdvisorActivate(this.field('password').value);
+      this.advisorService.activateAdvisor(this.id!, userAdvisorActivate)
+        .pipe(first())
+        .subscribe(
+          _ => {
+            this.form.reset({}, {emitEvent: false});
+            this.notificationService.success("Senha definida com sucesso!");
+            this.router.navigate(['authentication/login']);
+          }
+        )
+
+    }
+
   }
 
   field(path: string) {
@@ -48,13 +84,4 @@ export class ResetComponent implements OnInit {
       ],
     })
   }
-
-  onReset() {
-    if (this.form.valid) {
-     this.notificationService.success(`Senha alterada com sucesso!`);
-     this.router.navigate(["authentication/login"]);
-    }
-
-  }
-
 }

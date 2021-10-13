@@ -1,4 +1,5 @@
 import { Role } from "./enums/role";
+import { EntityStatus } from "./enums/status";
 
 export class User {
   id: string;
@@ -6,5 +7,6 @@ export class User {
   name: string;
   password: string;
   email: string;
-  roles: Role[]
+  roles: Role[];
+  isActivated: EntityStatus;
 }
