@@ -23,9 +23,11 @@ const routes: Routes = [
         path: '', 
         loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule),
         canActivate: [BlankGuard], 
-      },  
+      },
+      { path: 'advisor', loadChildren: () => import('./advisor/advisor.module').then(m => m.AdvisorModule) },  
     ]
   },
+  
 ];
 
 @NgModule({
