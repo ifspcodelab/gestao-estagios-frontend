@@ -85,6 +85,9 @@ export class LoginComponent implements OnInit {
     if (this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADMIN)) {
       this.router.navigate(['admin']);
     }
+    else if (this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADVISOR)) {
+      this.router.navigate(['advisor']);
+    }
     else {
       this.router.navigate(['student']);
     }
@@ -97,6 +100,11 @@ export class LoginComponent implements OnInit {
         if (error.error.message.includes("credentials")) {
           passwordControl?.setErrors({
             serverError: 'Usuário inválido. Informe credenciais corretas e tente novamente.'
+          });
+        }
+        if (error.error.message.includes("disabled")) {
+          passwordControl?.setErrors({
+            serverError: 'Usuário não habilitado no sistema. Verifique seu e-mail para a confirmação da conta.'
           });
         }
       }
