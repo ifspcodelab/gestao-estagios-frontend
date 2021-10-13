@@ -8,7 +8,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class BlankGuard implements CanActivate {
+export class AdvisorGuard implements CanActivate {
   constructor(
     private localStorageService: LocalStorageService,
     private jwtTokenService: JwtTokenService,
@@ -26,18 +26,10 @@ export class BlankGuard implements CanActivate {
         return this.router.navigate(['authentication/login']);
       }
       else {
-        if (roles.includes(Role.ROLE_ADMIN)) {
-          this.router.navigate(['admin']);
-          return true;
+        if (!roles.includes(Role.ROLE_ADVISOR)) {
+          return this.router.navigate(['authentication/login']);
         }
-        if (roles.includes(Role.ROLE_ADVISOR)) {
-          this.router.navigate(['advisor']);
-          return true;
-        }
-        else {
-          this.router.navigate(['student']);
-          return true;
-        }
+        return true;
       }
     }
     else {
