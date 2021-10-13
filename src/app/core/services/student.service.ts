@@ -21,4 +21,12 @@ export class StudentService {
   postStudent(student: UserStudentCreate): Observable<Student> {
     return this.httpClient.post<Student>(this.apiUrl, student, this.httpOptions);
   }
+
+  getStudentById(id: string): Observable<Student> {
+    return this.httpClient.get<Student>(`${this.apiUrl}/${id}`, this.httpOptions);
+  }
+
+  activateStudent(id: string): Observable<Student> {
+    return this.httpClient.patch<Student>(`${this.apiUrl}/${id}/activate`, this.httpOptions);
+  }
 }

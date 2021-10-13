@@ -35,3 +35,11 @@ export class UserAdvisorUpdate {
     this.coursesIds = coursesIds;
   }
 }
+
+export class UserAdvisorActivate {
+  password: string;
+
+  constructor(password: string) {
+    this.password = password;
+  }
+}

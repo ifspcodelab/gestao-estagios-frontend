@@ -238,7 +238,7 @@ export class RegistrationComponent implements OnInit {
       .subscribe(
         _ => {
           this.form.reset({}, {emitEvent: false});
-          this.notificationService.success('Cadastro realizado com sucesso! Verifique seu e-mail para confirmação');
+          this.notificationService.success('Cadastro realizado com sucesso! Verifique seu e-mail para confirmação da conta');
           this.router.navigate(['authentication/login']);
         },
         error => this.handleError(error)
