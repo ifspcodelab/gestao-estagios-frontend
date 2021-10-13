@@ -43,8 +43,8 @@ export class PasswordComponent implements OnInit {
 
   buildForm(): FormGroup {
     return this.fb.group({
-      matriculation: ['',
-        [Validators.required, AppValidators.notBlank, AppValidators.exactLength(9)]
+      registration: ['',
+        [Validators.required, AppValidators.notBlank, Validators.maxLength(9), Validators.minLength(8)]
       ],
     })
   }
