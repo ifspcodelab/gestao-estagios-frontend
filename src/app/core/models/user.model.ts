@@ -5,8 +5,15 @@ export class User {
   id: string;
   registration: string;
   name: string;
-  password: string;
   email: string;
   roles: Role[];
   isActivated: EntityStatus;
+}
+
+export class UserUpdate {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
 }
