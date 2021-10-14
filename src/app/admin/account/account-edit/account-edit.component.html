@@ -1,0 +1,71 @@
+<app-content *ngIf="!loading">
+  <app-content-toolbar
+    [title]="'Editar Informações da Conta'"
+    [backUrl]="getBackUrl()">
+    <button type="submit" form="campus-form" mat-flat-button color="primary">
+      <span>Salvar</span>
+    </button>
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-form>
+      <form id="campus-form" class="app-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <fieldset>
+          <mat-form-field class="form-field-xl">
+            <mat-label>Nome</mat-label>
+            <input appearance="fill" matInput placeholder="" formControlName="name" name="name">
+            <mat-error *ngIf="fieldErrors('name')?.required">Nome é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.notblank">Nome não pode ser vazio</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.alpha">Nome deve conter apenas letras</mat-error>
+            <mat-error *ngIf="fieldErrors('name')?.serverError && submitted">
+              {{ fieldErrors('name')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- <mat-form-field class="form-field-sm">
+            <mat-label>Matrícula</mat-label>
+            <input
+              formControlName="registration"
+              name="registration"
+              matInput
+              placeholder="Número de Matrícula"
+              autocomplete="off"
+            />
+            <mat-error *ngIf="fieldErrors('registration')?.required">Matrícula é obrigatória</mat-error>
+            <mat-error *ngIf="fieldErrors('registration')?.notblank">Matrícula não pode ser vazia</mat-error>
+            <mat-error *ngIf="fieldErrors('registration')?.minlength">Matrícula deve ter no mínimo 8 caracteres</mat-error>
+            <mat-error *ngIf="fieldErrors('registration')?.maxlength">Matrícula deve ter no máximo 9 caracteres</mat-error>
+            <mat-error *ngIf="fieldErrors('registration')?.serverError && submitted">
+              {{ fieldErrors('registration')?.serverError }}
+            </mat-error>
+          </mat-form-field> -->
+          <!-- <mat-form-field class="form-field-md">
+            <mat-label>Senha</mat-label>
+            <input
+              formControlName="password"
+              name="password"
+              matInput [type]=" hide ? 'text' : 'password' "
+              placeholder="Senha"
+            />
+            <button type="button" mat-icon-button matSuffix color="primary" (click)="hide = !hide" [attr.aria-label]="'Hide Password'" [attr.aria-pressed]="hide">
+              <mat-icon>
+                {{hide ? 'visibility' : 'visibility_off' }}
+              </mat-icon>
+            </button>
+            <mat-error *ngIf="fieldErrors('password')?.required">Senha é obrigatória</mat-error>
+            <mat-error *ngIf="fieldErrors('password')?.notblank">Senha não pode ser vazia</mat-error>
+            <mat-error *ngIf="fieldErrors('password')?.lowerCase">Senha deve conter no mínimo um caracter minúsculo</mat-error>
+            <mat-error *ngIf="fieldErrors('password')?.upperCase">Senha deve conter no mínimo um caracter maiúsculo</mat-error>
+            <mat-error *ngIf="fieldErrors('password')?.number">Senha deve conter no mínimo um número</mat-error> 
+            <mat-error *ngIf="fieldErrors('password')?.special">Senha deve conter no mínimo um caracter especial</mat-error> 
+            <mat-error *ngIf="fieldErrors('password')?.minlength">Senha deve conter no mínimo um 8 caracteres</mat-error>
+            <mat-error *ngIf="fieldErrors('password')?.serverError && submitted">
+              {{ fieldErrors('password')?.serverError }}
+            </mat-error>
+          </mat-form-field> -->
+        </fieldset>
+      </form>
+
+    </app-content-form>
+  </app-content-main>
+</app-content>
+
