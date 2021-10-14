@@ -12,7 +12,7 @@
         <p>{{ user.name }}</p>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item><mat-icon>settings</mat-icon>Minha Conta</button>
+        <button mat-menu-item (click)="navigateToAccount()"><mat-icon>settings</mat-icon>Minha Conta</button>
         <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon>Sair</button>
       </mat-menu>
     </div>

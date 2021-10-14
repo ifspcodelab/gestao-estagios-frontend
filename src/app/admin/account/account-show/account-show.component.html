@@ -1,0 +1,11 @@
+<app-content *ngIf="!loading">
+  <app-content-toolbar backUrl="/admin">
+    <button mat-button color="primary" routerLink="/admin/account/{{ user.registration }}/edit">
+      Editar
+    </button>
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-detail *ngIf="!loading" [title]="user.name" [subtitle]="user.registration" [listItens]="userDetails()">
+    </app-content-detail>
+  </app-content-main>
+</app-content>

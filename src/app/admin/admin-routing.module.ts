@@ -11,9 +11,11 @@ const routes: Routes = [
       { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
       { path: 'campus', loadChildren: () => import('./campus/campus.module').then(m => m.CampusModule) },
       { path: 'course', loadChildren: () => import('./course/course.module').then(m => m.CourseModule) },
-      { path: 'advisor', loadChildren: () => import('./advisor/advisor.module').then(m => m.AdvisorModule) }
+      { path: 'advisor', loadChildren: () => import('./advisor/advisor.module').then(m => m.AdvisorModule) },
+      { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
     ]
   },
+  
 ];
 
 @NgModule({

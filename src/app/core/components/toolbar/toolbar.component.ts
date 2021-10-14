@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { SidebarService } from "../sidebar/sidebar.service";
 import { finalize, first } from 'rxjs/operators';
 import { LoaderService } from '../../services/loader.service';
+import { Role } from '../../models/enums/role';
 
 @Component({
   selector: 'app-toolbar',
@@ -55,6 +56,18 @@ export class ToolbarComponent implements OnInit {
     this.localStorageService.remove('access_token');
     this.localStorageService.remove('refresh_token');
     this.router.navigate(['authentication/login']);
+  }
+
+  navigateToAccount() {    
+    if (this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADMIN)) {
+      this.router.navigate([`admin/account/${this.user.registration}`])
+    }
+    else if (this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADVISOR)) {
+      this.router.navigate(['advisor']);
+    }
+    else {
+      this.router.navigate(['student']);
+    }
   }
 
 }
