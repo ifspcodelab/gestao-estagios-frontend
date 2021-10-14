@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AppValidators } from "../../core/validators/app-validators";
 import { NotificationService } from "../../core/services/notification.service";
 import { Student } from "../../core/models/student.model";
+import { UserService } from 'src/app/core/services/user.service';
+import { UserPasswordReset } from 'src/app/core/models/user.model';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-password',
@@ -19,10 +22,11 @@ export class PasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private notificationService: NotificationService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
-    this.form= this.buildForm();
+    this.form = this.buildForm();
   }
 
   public onSubmit() {
@@ -31,6 +35,15 @@ export class PasswordComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    const userPasswordReset = new UserPasswordReset(this.field('registration').value);
+    this.userService.sendEmailPassword(userPasswordReset)
+      .pipe(first())
+      .subscribe(
+        _ => {
+          this.notificationService.success("E-mail enviado para redefinição de senha.");
+        }
+      )
   }
 
   field(path: string) {
@@ -59,13 +72,6 @@ export class PasswordComponent implements OnInit {
       previous = email[i];
     }
     return maskedEmail.join('');
-  }
-
-  onPassword() {
-    if (this.form.valid) {
-      return this.notificationService.success(`E-mail enviado para ***lo@ifsp.edu.br com as instruções para realizar a mudança de senha.`);
-    }
-
   }
 
 }

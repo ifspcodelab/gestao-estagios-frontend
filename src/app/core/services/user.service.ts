@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { User, UserUpdate } from "../models/user.model";
+import { User, UserPasswordReset, UserRedefinePassword, UserUpdate } from "../models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,13 @@ export class UserService {
 
   updateUser(id: string, userUpdate: UserUpdate): Observable<User> {
     return this.httpClient.put<User>(`${this.apiUrl}/${id}`, userUpdate, this.httpOptions);
+  }
+
+  sendEmailPassword(userPasswordReset: UserPasswordReset): Observable<unknown> {
+    return this.httpClient.post<unknown>(`${this.apiUrl}/${userPasswordReset.registration}`, this.httpOptions);
+  }
+
+  redefinePassword(id: string, userRedefinePassword: UserRedefinePassword): Observable<unknown> {
+    return this.httpClient.patch<unknown>(`${this.apiUrl}/${id}/redefine`, userRedefinePassword, this.httpOptions);
   }
 }

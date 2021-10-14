@@ -11,6 +11,7 @@ import { TermsComponent } from "./terms/terms.component";
 import { PasswordComponent } from './password/password.component';
 import { ResetComponent } from './reset/reset.component';
 import { VerificationComponent } from './verification/verification.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { VerificationComponent } from './verification/verification.component';
     PasswordComponent,
     ResetComponent,
     VerificationComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,

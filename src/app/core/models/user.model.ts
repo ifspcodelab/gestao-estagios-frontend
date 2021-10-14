@@ -17,3 +17,19 @@ export class UserUpdate {
     this.name = name;
   }
 }
+
+export class UserPasswordReset {
+  registration: string;
+
+  constructor(registration: string) {
+    this.registration = registration;
+  }
+}
+
+export class UserRedefinePassword {
+  password: string;
+
+  constructor(password: string) {
+    this.password = password;
+  }
+}
