@@ -166,7 +166,6 @@ export class RegistrationComponent implements OnInit {
 
   onCurriculumSelected(curriculumName: string) {
     this.curriculumSelected = this.curriculums.find(curriculum => curriculum.code == curriculumName);
-    console.log(this.curriculumSelected!.id);
   }
 
   private _filterCourse(value: string): Course[] {
@@ -257,6 +256,20 @@ export class RegistrationComponent implements OnInit {
             });
           }
         })
+      }
+      if(error.status === 409) {
+        const registrationControl = this.field("registration");
+        const emailControl = this.field("email");
+        if (error.error.title.includes("Registration")) {
+          registrationControl?.setErrors({
+            serverError: `Aluno já existente com matrícula ${registrationControl.value}`
+          });
+        }
+        if (error.error.title.includes("Email")) {
+          emailControl?.setErrors({
+            serverError: `Aluno já existente com e-mail ${emailControl.value}`
+          });
+        }
       }
     }
   }

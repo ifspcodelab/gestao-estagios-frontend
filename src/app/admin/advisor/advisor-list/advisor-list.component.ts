@@ -43,7 +43,7 @@ export class AdvisorListComponent implements OnInit {
         .pipe(first())
         .subscribe(
           _ => {
-            this.notificationService.success("Campus desativado com sucesso");
+            this.notificationService.success("Orientador desativado com sucesso");
             advisor.user.isActivated = EntityStatus.DISABLED;
           }
         )
