@@ -26,8 +26,8 @@ export class UserService {
     return this.httpClient.put<User>(`${this.apiUrl}/${id}`, userUpdate, this.httpOptions);
   }
 
-  sendEmailPassword(userPasswordReset: UserPasswordReset): Observable<unknown> {
-    return this.httpClient.post<unknown>(`${this.apiUrl}/${userPasswordReset.registration}`, this.httpOptions);
+  sendEmailPassword(userPasswordReset: UserPasswordReset): Observable<User> {
+    return this.httpClient.post<User>(`${this.apiUrl}/${userPasswordReset.registration}`, this.httpOptions);
   }
 
   redefinePassword(id: string, userRedefinePassword: UserRedefinePassword): Observable<unknown> {

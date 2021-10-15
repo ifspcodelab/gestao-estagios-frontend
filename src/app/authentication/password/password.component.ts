@@ -4,7 +4,7 @@ import { AppValidators } from "../../core/validators/app-validators";
 import { NotificationService } from "../../core/services/notification.service";
 import { Student } from "../../core/models/student.model";
 import { UserService } from 'src/app/core/services/user.service';
-import { UserPasswordReset } from 'src/app/core/models/user.model';
+import { User, UserPasswordReset } from 'src/app/core/models/user.model';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -17,7 +17,7 @@ export class PasswordComponent implements OnInit {
   hide: boolean = false;
   form: FormGroup;
   submitted = false;
-  student: Student;
+  user: User;
 
   constructor(
     private fb: FormBuilder,
@@ -40,8 +40,14 @@ export class PasswordComponent implements OnInit {
     this.userService.sendEmailPassword(userPasswordReset)
       .pipe(first())
       .subscribe(
-        _ => {
-          this.notificationService.success("E-mail enviado para redefinição de senha.");
+        user => {
+          this.user = user;
+          this.notificationService.success(
+            `E-mail enviado para ${this.emailMask(this.user.email)}. Verifique a caixa de entrada para prosseguir com a redefinição de senha`
+          );
+        },
+        error => {
+          this.notificationService.error(`Usuário não encontrado com matrícula ${this.field('registration').value}`)
         }
       )
   }
