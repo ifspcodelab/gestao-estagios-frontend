@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Advisor, UserAdvisorActivate, UserAdvisorCreate, UserAdvisorUpdate } from "../models/advisor.model";
+import { EntityUpdateStatus } from "../models/status.model";
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,9 @@ export class AdvisorService {
 
   activateAdvisor(id: string, UserAdvisorActivate: UserAdvisorActivate): Observable<Advisor> {
     return this.httpClient.patch<Advisor>(`${this.apiUrl}/${id}/activate`, UserAdvisorActivate, this.httpOptions);
+  }
+
+  patchAdvisor(id: String, advisorUpdateStatus: EntityUpdateStatus): Observable<Advisor> {
+    return this.httpClient.patch<Advisor>(`${this.apiUrl}/${id}`, advisorUpdateStatus, this.httpOptions);
   }
 }
