@@ -16,7 +16,10 @@
         [link]="'/admin/advisor/' + advisor.id">
         <div card-actions></div>
         <div card-actions>
-          <mat-slide-toggle color="primary"></mat-slide-toggle>
+          <mat-slide-toggle 
+            color="primary"
+            [checked]="handleEnabled(advisor)"
+            (click)="toggleAdvisor($event, advisor)"></mat-slide-toggle>
         </div>
       </app-card>
     </app-content-cards>
