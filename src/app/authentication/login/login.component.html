@@ -16,10 +16,6 @@
           />
           <mat-error *ngIf="fieldErrors('registration')?.required">Matricula é obrigatória</mat-error>
           <mat-error *ngIf="fieldErrors('registration')?.notblank">Matrícula não pode ser vazia</mat-error>
-          <!--<mat-error *ngIf="fieldErrors('registration')?.required">E-mail incorreto</mat-error>-->
-          <!-- <mat-error *ngIf="fieldErrors('registration')?.serverError && submitted">
-            {{ fieldErrors('registration')?.serverError }}
-          </mat-error> -->
         </mat-form-field>
       </div>
 
@@ -40,7 +36,6 @@
           </button>
           <mat-error *ngIf="fieldErrors('password')?.required">Senha é obrigatória</mat-error>
           <mat-error *ngIf="fieldErrors('password')?.notblank">Senha não pode ser vazia</mat-error>
-          <!-- <mat-error *ngIf="!form.controls['password'].valid">Senha incorreta</mat-error>-->
           <mat-error *ngIf="fieldErrors('password')?.serverError && submitted">
             {{ fieldErrors('password')?.serverError }}
           </mat-error>

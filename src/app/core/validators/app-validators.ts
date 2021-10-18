@@ -46,11 +46,6 @@ export class AppValidators {
     return pattern.test(control.value) ? null : { 'number': true };
   }
 
-  static special(control: AbstractControl): ValidationErrors | null {
-    const pattern = /=.*\d/;
-    return pattern.test(control.value) ? null : { 'special': true };
-  }
-
   static institutionEmail(control: AbstractControl): ValidationErrors | null {
     const pattern = /^[a-zA-Z0-9_.+-]+@(aluno\.ifsp\.edu\.br|ifsp\.edu\.br)$/;
     return pattern.test(control.value) ? null : { 'institutionEmail': true };
