@@ -140,7 +140,7 @@ export class AdvisorCreateComponent implements OnInit {
   }
 
   refreshDepartmentValidator() {
-    this.field('department').setValidators(AppValidators.autocomplete(this.departments.map(d => d.name)));  
+    this.field('department').setValidators(AppValidators.autocomplete(this.departments.map(d => d.name)));
   }
 
   onDepartmentSelected(departmentName: string) {
@@ -194,7 +194,7 @@ export class AdvisorCreateComponent implements OnInit {
     }
   }
 
-  
+
   handleIsAdmin() {
     this.isAdmin = this.isAdmin == false ? true : false;
   }
@@ -261,12 +261,12 @@ export class AdvisorCreateComponent implements OnInit {
         const emailControl = this.field("email");
         if (error.error.title.includes("Registration")) {
           registrationControl?.setErrors({
-            serverError: `Orientador já existente com matrícula ${registrationControl.value}`
+            serverError: `Usuário já existente com matrícula ${registrationControl.value}`
           });
         }
         if (error.error.title.includes("Email")) {
           emailControl?.setErrors({
-            serverError: `Orientador já existente com e-mail ${emailControl.value}`
+            serverError: `Usuário já existente com e-mail ${emailControl.value}`
           });
         }
       }
