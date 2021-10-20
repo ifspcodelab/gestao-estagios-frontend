@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-parameters',
   template: `<router-outlet></router-outlet>`
 })
-export class ParametersComponent implements OnInit {
+export class ParameterComponent implements OnInit {
 
   constructor() { }
 
