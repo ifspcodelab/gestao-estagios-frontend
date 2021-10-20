@@ -6,7 +6,7 @@
   </app-content-toolbar>
   <app-content-main>
     <app-content-cards entityName="parametro">
-      <form class="app-form" id="parameter-form" [formGroup]="form">
+      <form class="app-form" id="parameter-form" [formGroup]="form" (ngSubmit)="onSubmit()">
         <fieldset>
           <legend>Mensagens para os tipos de orientação de estágio</legend>
           <mat-form-field class="form-field-lg">

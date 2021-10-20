@@ -54,7 +54,7 @@ export class AdminComponent implements OnInit, OnDestroy {
           // { name: "Departamentos", url: "/admin/department", icon: "meeting_room"  },
           { name: "Cursos", url: "/admin/course", icon: "school"  },
           // { name: "Usuários", url: "/admin/user", icon: "groups"  }
-          { name: "Parâmetros", url: "/admin/parameters", icon: "manage_accounts"  },
+          { name: "Parâmetros", url: "/admin/parameter", icon: "manage_accounts"  },
         ]
       }
     ])
