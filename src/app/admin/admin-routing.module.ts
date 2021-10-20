@@ -13,9 +13,10 @@ const routes: Routes = [
       { path: 'course', loadChildren: () => import('./course/course.module').then(m => m.CourseModule) },
       { path: 'advisor', loadChildren: () => import('./advisor/advisor.module').then(m => m.AdvisorModule) },
       { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
+      { path: 'parameters', loadChildren: () => import('./parameters/parameters.module').then(m => m.ParametersModule) },
     ]
   },
-  
+
 ];
 
 @NgModule({
