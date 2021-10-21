@@ -1,11 +1,11 @@
-<app-content>
+<app-content *ngIf="!loading">
   <app-content-toolbar title="Parâmetros">
     <button type="submit" form="parameter-form" mat-flat-button color="primary">
       <span>Salvar</span>
     </button>
   </app-content-toolbar>
   <app-content-main>
-    <app-content-cards entityName="parametro">
+    <app-content-form>
       <form class="app-form" id="parameter-form" [formGroup]="form" (ngSubmit)="onSubmit()">
         <fieldset>
           <legend>Mensagens para os tipos de orientação de estágio</legend>
@@ -19,14 +19,14 @@
               appearance="fill"
               matInput
               placeholder=""
-              formControlName="requiredOrNot"
-              name="requiredOrNot"
+              formControlName="internshipRequiredOrNotMessage"
+              name="internshipRequiredOrNotMessage"
               autocomplete="off">
             </textarea>
-            <mat-error *ngIf="fieldErrors('requiredOrNot')?.required">Estágio Obrigatório ou Não Obrigatório é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('requiredOrNot')?.notblank">Estágio Obrigatório ou Não Obrigatório não pode ser vazio</mat-error>
-            <mat-error *ngIf="fieldErrors('requiredOrNot')?.serverError && submitted">
-              {{ fieldErrors('requiredOrNot')?.serverError }}
+            <mat-error *ngIf="fieldErrors('internshipRequiredOrNotMessage')?.required">Estágio Obrigatório ou Não Obrigatório é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('internshipRequiredOrNotMessage')?.notblank">Estágio Obrigatório ou Não Obrigatório não pode ser vazio</mat-error>
+            <mat-error *ngIf="fieldErrors('internshipRequiredOrNotMessage')?.serverError && submitted">
+              {{ fieldErrors('internshipRequiredOrNotMessage')?.serverError }}
             </mat-error>
           </mat-form-field>
 
@@ -42,14 +42,14 @@
               appearance="fill"
               matInput
               placeholder=""
-              formControlName="projectEquivalence"
-              name="projectEquivalence"
+              formControlName="projectEquivalenceMessage"
+              name="projectEquivalenceMessage"
               autocomplete="off">
             </textarea>
-            <mat-error *ngIf="fieldErrors('projectEquivalence')?.required">Equiparação de Projeto Institucional é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('projectEquivalence')?.notblank">Equiparação de Projeto Institucional não pode ser vazio</mat-error>
-            <mat-error *ngIf="fieldErrors('projectEquivalence')?.serverError && submitted">
-              {{ fieldErrors('projectEquivalence')?.serverError }}
+            <mat-error *ngIf="fieldErrors('projectEquivalenceMessage')?.required">Equiparação de Projeto Institucional é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('projectEquivalenceMessage')?.notblank">Equiparação de Projeto Institucional não pode ser vazio</mat-error>
+            <mat-error *ngIf="fieldErrors('projectEquivalenceMessage')?.serverError && submitted">
+              {{ fieldErrors('projectEquivalenceMessage')?.serverError }}
             </mat-error>
           </mat-form-field>
 
@@ -65,14 +65,14 @@
               appearance="fill"
               matInput
               placeholder=""
-              formControlName="professionalEnjoyment"
-              name="professionalEnjoyment"
+              formControlName="professionalValidationMessage"
+              name="professionalValidationMessage"
               autocomplete="off">
             </textarea>
-            <mat-error *ngIf="fieldErrors('professionalEnjoyment')?.required">Aproveitamento Profissional é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('professionalEnjoyment')?.notblank">Aproveitamento Profissional não pode ser vazio</mat-error>
-            <mat-error *ngIf="fieldErrors('professionalEnjoyment')?.serverError && submitted">
-              {{ fieldErrors('professionalEnjoyment')?.serverError }}
+            <mat-error *ngIf="fieldErrors('professionalValidationMessage')?.required">Aproveitamento Profissional é obrigatório</mat-error>
+            <mat-error *ngIf="fieldErrors('professionalValidationMessage')?.notblank">Aproveitamento Profissional não pode ser vazio</mat-error>
+            <mat-error *ngIf="fieldErrors('professionalValidationMessage')?.serverError && submitted">
+              {{ fieldErrors('professionalValidationMessage')?.serverError }}
             </mat-error>
           </mat-form-field>
         </fieldset>
@@ -91,6 +91,6 @@
           </mat-form-field>
         </fieldset>
       </form>
-    </app-content-cards>
+    </app-content-form>
   </app-content-main>
 </app-content>
