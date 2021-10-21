@@ -23,7 +23,7 @@ export class ParameterService {
   }
 
   updateParameters(parameterCreate: ParameterCreate): Observable<Parameter> {
-    return this.httpClient.put<Parameter>(this.apiUrl, this.httpOptions);
+    return this.httpClient.put<Parameter>(this.apiUrl, parameterCreate, this.httpOptions);
   }
 }
 

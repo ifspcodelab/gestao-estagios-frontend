@@ -1,15 +1,23 @@
 export class Parameter {
   id: string;
-  requiredOrNot: string;
-  projectEquivalence: string;
-  professionalEnjoyment: string;
+  internshipRequiredOrNotMessage: string;
+  projectEquivalenceMessage: string;
+  professionalValidationMessage: string;
   advisorRequestDeadline: number;
 }
 
 export class ParameterCreate {
-  requiredOrNot: string;
-  projectEquivalence: string;
-  professionalEnjoyment: string;
+  internshipRequiredOrNotMessage: string;
+  projectEquivalenceMessage: string;
+  professionalValidationMessage: string;
   advisorRequestDeadline: number;
+
+  constructor(internshipRequiredOrNotMessage: string, projectEquivalenceMessage: string, professionalValidationMessage: string, advisorRequestDeadline: number) {
+    this.internshipRequiredOrNotMessage = internshipRequiredOrNotMessage;
+    this.projectEquivalenceMessage = projectEquivalenceMessage;
+    this.professionalValidationMessage = professionalValidationMessage;
+    this.advisorRequestDeadline = advisorRequestDeadline;
+  }
+
 }
 
