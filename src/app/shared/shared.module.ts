@@ -64,7 +64,8 @@ import { MatTabsModule } from "@angular/material/tabs";
     MatRadioModule,
     TextFieldModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTabsModule,
   ]
 })
 export class SharedModule {
