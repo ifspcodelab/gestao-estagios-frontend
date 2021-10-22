@@ -19,6 +19,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from "@angular/material/tabs";
 
 @NgModule({
   declarations: [],
@@ -40,7 +41,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatRadioModule,
     TextFieldModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTabsModule,
   ],
   imports: [
     CommonModule,
