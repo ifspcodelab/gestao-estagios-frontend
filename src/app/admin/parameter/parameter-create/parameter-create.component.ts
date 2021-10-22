@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { AppValidators } from "../../../core/validators/app-validators";
-import {Parameter, ParameterCreate} from "../../../core/models/parameter.model";
-import {ParameterService} from "../../../core/services/parameter.service";
-import {finalize, first} from "rxjs/operators";
-import {NotificationService} from "../../../core/services/notification.service";
-import {HttpErrorResponse} from "@angular/common/http";
-import {LoaderService} from "../../../core/services/loader.service";
+import { Parameter, ParameterCreate } from "../../../core/models/parameter.model";
+import { ParameterService } from "../../../core/services/parameter.service";
+import { finalize, first } from "rxjs/operators";
+import { NotificationService } from "../../../core/services/notification.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { LoaderService } from "../../../core/services/loader.service";
 
 @Component({
   selector: 'app-parameter-create',
