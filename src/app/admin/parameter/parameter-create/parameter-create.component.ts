@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import { AppValidators } from "../../../core/validators/app-validators";
 import {Parameter, ParameterCreate} from "../../../core/models/parameter.model";
 import {ParameterService} from "../../../core/services/parameter.service";
@@ -41,9 +41,7 @@ export class ParameterCreateComponent implements OnInit {
       .subscribe(
         (parameter: Parameter) => {
           this.parameter = parameter;
-          console.log(this.parameter)
           this.form.patchValue(parameter);
-        //   console.log(this.form.patchValue(parameter))
         }
       )
   }
@@ -59,13 +57,13 @@ export class ParameterCreateComponent implements OnInit {
   buildForm(): FormGroup {
     return this.fb.group({
       internshipRequiredOrNotMessage: ['',
-        [Validators.required]
+        [Validators.required, AppValidators.notBlank]
       ],
       projectEquivalenceMessage: ['',
-        [Validators.required]
+        [Validators.required, AppValidators.notBlank]
       ],
       professionalValidationMessage: ['',
-        [Validators.required]
+        [Validators.required, AppValidators.notBlank]
       ],
       advisorRequestDeadline: ['',
         [Validators.required, AppValidators.numeric]

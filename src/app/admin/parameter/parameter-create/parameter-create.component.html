@@ -81,9 +81,8 @@
           <legend>Prazo em dias corridos para avalialiação do pedido de orientação de estágio</legend>
           <mat-form-field class="form-field-sm">
             <mat-label>Prazo</mat-label>
-            <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="advisorRequestDeadline" name="advisorRequestDeadline" autocomplete="off">
+            <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="advisorRequestDeadline" name="advisorRequestDeadline" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
             <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.required">Prazo é obrigatório</mat-error>
-            <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.notblank">Prazo não pode ser vazio</mat-error>
             <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.numeric">Prazo deve conter apenas números</mat-error>
             <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.serverError && submitted">
               {{ fieldErrors('advisorRequestDeadline')?.serverError }}
