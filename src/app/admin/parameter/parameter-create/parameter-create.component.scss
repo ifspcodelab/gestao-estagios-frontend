@@ -1,7 +1,33 @@
+.app-form {
+  padding: 0;
+}
+
+fieldset {
+  margin-top: 1rem;
+}
+
 .form-field-lg {
-  width: 800px;
+  width: 50rem;
 }
 
 .form-field-sm {
-  width: 200px;
+  width: 12.5rem;
+}
+
+@media screen and (max-width: 1154px) {
+  .form-field-lg {
+    width: 97%;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .form-field-lg {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .form-field-lg {
+    width: 93%;
+  }
 }

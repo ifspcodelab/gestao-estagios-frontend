@@ -6,6 +6,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { ParameterComponent } from "./parameter.component";
 import { ParameterRoutingModule } from "./parameter-routing.module";
 import { ParameterCreateComponent } from "./parameter-create/parameter-create.component";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ParameterCreateComponent } from "./parameter-create/parameter-create.co
     ParameterRoutingModule,
     SharedModule,
     CoreModule,
+    MatTabsModule,
   ]
 })
 export class ParameterModule { }
