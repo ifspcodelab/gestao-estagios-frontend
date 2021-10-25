@@ -7,7 +7,7 @@
   <app-content-main>
     <app-content-form>
       <form class="app-form" id="parameter-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-        <mat-tab-group mat-align-tabs="start">
+        <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
           <mat-tab label="Mensagens">
             <fieldset>
               <legend>Mensagens para os tipos de orientação de estágio</legend>
