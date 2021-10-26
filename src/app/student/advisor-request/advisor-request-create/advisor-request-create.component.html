@@ -1,0 +1,54 @@
+<app-content *ngIf="advisors$ | async as advisors">
+  <app-content-toolbar
+    [title]="'Novo Pedido'"
+    [backUrl]="getBackUrl()">
+    <button type="submit" form="advisor-request-form" mat-flat-button color="primary">
+      <span>Realizar Pedido</span>
+    </button>
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-form>
+      <form id="advisor-request-form" class="app-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <app-content-cards entityName="orientador" [emptyState]="advisors.length == 0">
+          <app-card *ngFor="let advisor of advisors" [title]="advisor.user.name" [subtitle]="advisor.user.email">
+          </app-card>
+        </app-content-cards>
+        <fieldset>
+          <legend>Tipo de Estágio</legend>
+          <mat-radio-group class="radio-group" aria-label="Select um tipo de estágio" color="primary">
+            <mat-radio-button class="radio-button" value="1">Estágio Obrigatório ou Não Obrigatório</mat-radio-button>
+            <mat-radio-button class="radio-button" value="2">Equiparação de Projeto Institucional</mat-radio-button>
+            <mat-radio-button class="radio-button" value="3">Aproveitamento Profissional</mat-radio-button>
+          </mat-radio-group>
+        </fieldset>
+        <fieldset>
+          <legend>Informações Adicionais</legend>
+          <mat-form-field class="form-field-lg">
+            <mat-label>Detalhamento do Estágio</mat-label>
+            <textarea
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="11" 
+              appearance="fill" 
+              matInput 
+              placeholder="" 
+              formControlName="details" 
+              name="details"
+            >
+            </textarea>
+            <div class="tooltip" mat-icon-button matSuffix><mat-icon>chelp_outline</mat-icon>
+              <span class="tooltiptext">É possível encontrar sua matriz em seu perfil do SUAP.</span>
+            </div>
+            <mat-error *ngIf="fieldErrors('details')?.required">Detalhes são obrigatórios</mat-error>
+            <mat-error *ngIf="fieldErrors('details')?.notblank">Detalhes não pode ser vazio</mat-error>
+            <mat-error *ngIf="fieldErrors('details')?.serverError && submitted">
+              {{ fieldErrors('details')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+        </fieldset>
+      </form>
+
+    </app-content-form>
+  </app-content-main>
+</app-content>

@@ -30,6 +30,10 @@ export class AdvisorService {
     );
   }
 
+  getAdvisorsByCourseId(id: string): Observable<Advisor[]> {
+    return this.httpClient.get<Advisor[]>(`${environment.apiUrl}/courses/${id}/advisors`, this.httpOptions);
+  }
+
   getAdvisorById(id: string): Observable<Advisor> {
     return this.httpClient.get<Advisor>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
