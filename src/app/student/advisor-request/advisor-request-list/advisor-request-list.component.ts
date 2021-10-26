@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 import { AdvisorRequest } from 'src/app/core/models/advisor-request.model';
@@ -25,7 +26,8 @@ export class AdvisorRequestListComponent implements OnInit {
     private notificationService: NotificationService,
     private loaderService: LoaderService,
     private localStorageService: LocalStorageService,
-    private jwtTokenService: JwtTokenService
+    private jwtTokenService: JwtTokenService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +61,22 @@ export class AdvisorRequestListComponent implements OnInit {
     }
     else {
       return "Indeferido";
+    }
+  }
+
+  handleCanCreate(advisorRequests: AdvisorRequest[]) {
+    let hasRequest: boolean = false;
+    advisorRequests.forEach(request => {
+      if (request.status === RequestStatus.PENDING) {
+        hasRequest = true;
+      }
+    })
+
+    if (hasRequest) {
+      this.notificationService.error('Não é possível realizar um pedido de orientação enquanto há um pendente.');
+    }
+    else {
+      this.router.navigate(['student/advisor-request/create']);
     }
   }
 }

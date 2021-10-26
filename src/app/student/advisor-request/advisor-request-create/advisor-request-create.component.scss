@@ -19,6 +19,10 @@ fieldset {
   display: inline-block;
 }
 
+.tooltip:hover {
+  cursor: default;
+}
+
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 21.875rem;
@@ -51,4 +55,8 @@ fieldset {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+.selected {
+  opacity: 50%;
 }
