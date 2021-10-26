@@ -81,7 +81,7 @@
           <mat-form-field class="form-field-sm">
             <mat-label>Número de Períodos</mat-label>
             <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="numberOfPeriods"
-              name="numberOfPeriods" autocomplete="off">
+              name="numberOfPeriods" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
             <mat-error *ngIf="fieldErrors('numberOfPeriods')?.required && submitted">Número de Período é
               obrigatório
             </mat-error>

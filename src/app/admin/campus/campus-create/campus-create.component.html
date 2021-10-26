@@ -12,7 +12,7 @@
         <fieldset>
           <mat-form-field class="form-field-md">
             <mat-label>Nome</mat-label>
-            <input appearance="fill" matInput placeholder="" formControlName="name" name="name">
+            <input appearance="fill" matInput placeholder="" formControlName="name" name="name" autocomplete="off">
             <mat-error *ngIf="fieldErrors('name')?.required">Nome é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('name')?.notblank">Nome não pode ser vazio</mat-error>
             <mat-error *ngIf="fieldErrors('name')?.alpha">Nome deve conter apenas letras</mat-error>
@@ -23,7 +23,7 @@
 
           <mat-form-field class="form-field-sm">
             <mat-label>Sigla</mat-label>
-            <input matInput placeholder="" formControlName="abbreviation" name="abbreviation">
+            <input matInput placeholder="" formControlName="abbreviation" name="abbreviation" autocomplete="off">
             <mat-error *ngIf="fieldErrors('abbreviation')?.required">Sigla é obrigatória</mat-error>
             <mat-error *ngIf="fieldErrors('abbreviation')?.notblank">Sigla não pode ser vazia</mat-error>
             <mat-error *ngIf="fieldErrors('abbreviation')?.exactlength">Sigla deve ter 3 caracteres</mat-error>
@@ -38,7 +38,7 @@
 
           <mat-form-field class="form-field-sm">
             <mat-label>CEP</mat-label>
-            <input appearance="fill" matInput placeholder="" formControlName="postalCode" name="postalCode">
+            <input appearance="fill" matInput placeholder="" formControlName="postalCode" name="postalCode" mask="00000-000" autocomplete="off">
             <mat-error *ngIf="fieldErrors('address.postalCode')?.required">CEP é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('address.postalCode')?.postalCode">CEP inválido</mat-error>
             <mat-error *ngIf="fieldErrors('address.postalCode')?.serverError && submitted">
@@ -48,7 +48,7 @@
 
           <mat-form-field class="form-field-md">
             <mat-label>Rua</mat-label>
-            <input matInput placeholder="" formControlName="street" name="street">
+            <input matInput placeholder="" formControlName="street" name="street" autocomplete="off">
             <mat-error *ngIf="fieldErrors('address.street')?.required">Rua é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('address.street')?.notblank">Rua não pode ser vazio</mat-error>
             <mat-error *ngIf="fieldErrors('address.street')?.serverError && submitted">
@@ -60,7 +60,7 @@
 
           <mat-form-field class="form-field-sm">
             <mat-label>Número</mat-label>
-            <input matInput placeholder="" formControlName="number" name="number">
+            <input matInput placeholder="" formControlName="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="number" autocomplete="off">
             <mat-error *ngIf="fieldErrors('address.number')?.required">Número é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('address.number')?.numeric">Deve conter apenas números</mat-error>
             <mat-error *ngIf="fieldErrors('address.number')?.serverError && submitted">
@@ -118,7 +118,7 @@
 
           <mat-form-field class="form-field-sm">
             <mat-label>Bairro</mat-label>
-            <input matInput placeholder="" formControlName="neighborhood" name="neighborhood">
+            <input matInput placeholder="" formControlName="neighborhood" name="neighborhood" autocomplete="off">
             <mat-error *ngIf="fieldErrors('address.neighborhood')?.required">Bairro é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('address.neighborhood')?.notblank">Bairro não pode ser vazio</mat-error>
             <mat-error *ngIf="fieldErrors('address.neighborhood')?.serverError && submitted">
@@ -128,7 +128,7 @@
 
           <mat-form-field class="form-field-sm">
             <mat-label>Complemento</mat-label>
-            <input matInput placeholder="" formControlName="complement" name="complement">
+            <input matInput placeholder="" formControlName="complement" name="complement" autocomplete="off">
             <mat-error *ngIf="fieldErrors('address.complement')?.serverError && submitted">
               {{ form.get('address.complement')?.errors?.serverError }}
             </mat-error>
@@ -141,7 +141,7 @@
           <legend>Informações setor de estágio</legend>
           <mat-form-field class="form-field-sm">
             <mat-label>Telefone</mat-label>
-            <input matInput placeholder="" formControlName="telephone" name="telephone">
+            <input matInput placeholder="" formControlName="telephone" name="telephone" mask="(00) 0000-0000||(00) 0 0000-0000" autocomplete="off">
             <mat-error *ngIf="fieldErrors('internshipSector.telephone')?.required">Telefone é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('internshipSector.telephone')?.numeric">Telefone deve conter apenas números</mat-error>
             <mat-error *ngIf="fieldErrors('internshipSector.telephone')?.serverError && submitted">
@@ -151,7 +151,7 @@
 
           <mat-form-field class="form-field-sm">
             <mat-label>E-mail</mat-label>
-            <input matInput placeholder="" formControlName="email" name="email">
+            <input matInput placeholder="" formControlName="email" name="email" autocomplete="off">
             <mat-error *ngIf="fieldErrors('internshipSector.email')?.required">E-mail é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('internshipSector.email')?.email">E-mail inválido</mat-error>
             <mat-error *ngIf="fieldErrors('internshipSector.email')?.serverError && submitted">
@@ -161,7 +161,7 @@
 
           <mat-form-field class="form-field-sm">
             <mat-label>Website</mat-label>
-            <input matInput placeholder="" formControlName="website" name="website">
+            <input matInput placeholder="" formControlName="website" name="website" autocomplete="off">
             <mat-error *ngIf="fieldErrors('internshipSector.website')?.required">Website é obrigatório</mat-error>
             <mat-error *ngIf="fieldErrors('internshipSector.website')?.url">Website inválido</mat-error>
             <mat-error *ngIf="fieldErrors('internshipSector.website')?.serverError && submitted">
