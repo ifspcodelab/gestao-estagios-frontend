@@ -162,3 +162,17 @@ select:focus {
     margin-left: 0;
   }
 }
+
+@media (max-width: 380px) {
+  .form.primary {
+    width: 16.875rem;
+  }
+
+  .form {
+    width: 16.875rem;
+  }
+
+  label.mat-checkbox-layout {
+    white-space: normal !important;
+  }
+}
