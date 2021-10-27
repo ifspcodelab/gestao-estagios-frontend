@@ -38,6 +38,10 @@ export class AdvisorService {
     return this.httpClient.get<Advisor>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
 
+  getAdvisorByUserId(id: string): Observable<Advisor> {
+    return this.httpClient.get<Advisor>(`${environment.apiUrl}/users/${id}/advisors`, this.httpOptions)
+  }
+
   updateAdvisor(id: string, userAdvisorUpdate: UserAdvisorUpdate): Observable<Advisor> {
     return this.httpClient.put<Advisor>(`${this.apiUrl}/${id}`, userAdvisorUpdate, this.httpOptions);
   }

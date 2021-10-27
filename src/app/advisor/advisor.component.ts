@@ -41,10 +41,10 @@ export class AdvisorComponent implements OnInit, OnDestroy {
       {
         name: "default",
         items: [
-          { name: "Estágios", url: "/student/intership", icon: "directions_run" },
-          { name: "Pedidos de orientação", url: "/student/advisor-request", icon: "forward_to_inbox" },
-          { name: "Estudantes", url: "/admin/student", icon: "people" },
-          { name: "Orientadores", url: "/admin/advisor", icon: "supervised_user_circle"  }
+          { name: "Estágios", url: "/advisor/internship", icon: "directions_run" },
+          { name: "Pedidos de orientação", url: "/advisor/advisor-request", icon: "forward_to_inbox" },
+          { name: "Estudantes", url: "/advisor/student", icon: "people" },
+          { name: "Orientadores", url: "/advisor/advisor", icon: "supervised_user_circle"  }
         ]
       },
     ])
