@@ -142,9 +142,10 @@ export class AdvisorRequestCreateComponent implements OnInit {
 
   onAdvisorSelected(advisor: Advisor, index: number): void {
     this.advisor = advisor;
-    document.getElementsByClassName('advisors')[0].classList.remove('selected');
-    document.getElementsByClassName('advisors')[1].classList.remove('selected');
-    document.getElementsByClassName('advisors')[2].classList.remove('selected');
+    const element = document.getElementsByClassName('advisors');
+    for (let i = 0; i < element.length; i++) {
+      element[i].classList.remove('selected');
+    }
     document.getElementsByClassName('advisors')[index].classList.add('selected');
   }
 }
