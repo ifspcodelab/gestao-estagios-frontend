@@ -183,7 +183,11 @@
         </mat-form-field>
       </fieldset>
 
-      <mat-checkbox color="primary" name="checkbox" formControlName="checkbox">Aceitar os Termos de Uso e Políticas de Privacidade</mat-checkbox>
+      <mat-checkbox color="primary" name="checkbox" formControlName="checkbox">
+        <p>
+          Aceitar os Termos de Uso e Políticas de Privacidade
+        </p>
+      </mat-checkbox>
       <mat-error *ngIf="fieldErrors('checkbox')?.required && submitted">É necessário aceitar os Termos de Uso e Políticas de Privacidade</mat-error>
 
       <div class="button-login">
