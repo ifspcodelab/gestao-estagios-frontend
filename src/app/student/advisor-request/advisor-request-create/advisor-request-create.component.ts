@@ -124,8 +124,6 @@ export class AdvisorRequestCreateComponent implements OnInit {
   }
 
   onRadioChange($event: MatRadioChange): void {
-    document.getElementById('tooltip')!.style.display = 'inline-block';
-
     if ($event.value == 1) {
       this.internshipMessage = this.parameter.internshipRequiredOrNotMessage;
       this.internshipType = InternshipType.REQUIRED_OR_NOT;

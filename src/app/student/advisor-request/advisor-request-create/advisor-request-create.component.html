@@ -43,9 +43,7 @@
               name="details"
             >
             </textarea>
-            <div class="tooltip" id="tooltip" mat-icon-button matSuffix><mat-icon>chelp_outline</mat-icon>
-              <span class="tooltiptext">{{ internshipMessage }}</span>
-            </div>
+            <mat-hint class="hint">{{ internshipMessage }}</mat-hint>
             <mat-error *ngIf="fieldErrors('details')?.required">Detalhes são obrigatórios</mat-error>
             <mat-error *ngIf="fieldErrors('details')?.notblank">Detalhes não pode ser vazio</mat-error>
             <mat-error *ngIf="fieldErrors('details')?.serverError && submitted">
