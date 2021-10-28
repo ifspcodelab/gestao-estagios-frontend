@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, first } from 'rxjs/operators';
 import { ListItens } from 'src/app/core/components/content/content-detail/content-detail.component';
@@ -10,6 +11,7 @@ import { Curriculum } from 'src/app/core/models/curriculum.model';
 import { InternshipType } from 'src/app/core/models/enums/internship-type';
 import { AdvisorRequestService } from 'src/app/core/services/advisor-request.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
+import { RequestAppraisalCreateComponent } from '../request-appraisal-create/request-appraisal-create.component';
 
 @Component({
   selector: 'app-advisor-request-show',
@@ -28,7 +30,8 @@ export class AdvisorRequestShowComponent implements OnInit {
     private router: Router,
     private loaderService: LoaderService,
     private advisorRequestService: AdvisorRequestService,
-    public datePipe: DatePipe
+    private datePipe: DatePipe,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -95,5 +98,19 @@ export class AdvisorRequestShowComponent implements OnInit {
 
   openProfile() {
     window.open(this.link);
+  }
+
+  private getDialogConfig(deferred: boolean) {
+    return {
+      autoFocus: true,
+      data: {
+        deferred: deferred,
+        advisorRequestId: this.id
+      }
+    };
+  }
+
+  handlerCreateAppraisal(deferred: boolean) {
+    this.dialog.open(RequestAppraisalCreateComponent, this.getDialogConfig(deferred));
   }
 }

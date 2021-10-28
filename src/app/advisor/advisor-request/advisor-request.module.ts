@@ -7,6 +7,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdvisorRequestListComponent } from './advisor-request-list/advisor-request-list.component';
 import { AdvisorRequestShowComponent } from './advisor-request-show/advisor-request-show.component';
+import { RequestAppraisalCreateComponent } from './request-appraisal-create/request-appraisal-create.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { AdvisorRequestShowComponent } from './advisor-request-show/advisor-requ
     AdvisorRequestComponent,
     AdvisorRequestListComponent,
     AdvisorRequestShowComponent,
+    RequestAppraisalCreateComponent
   ],
   imports: [
     CommonModule,

@@ -1,9 +1,9 @@
 <app-content *ngIf="!loading">
   <app-content-toolbar backUrl="/advisor/advisor-request">
-    <button mat-button color="warn">
+    <button mat-button color="warn" (click)="handlerCreateAppraisal(false)">
       Recusar
     </button>
-    <button mat-button color="primary">
+    <button mat-button color="primary" (click)="handlerCreateAppraisal(true)">
       Aceitar
     </button>
   </app-content-toolbar>
