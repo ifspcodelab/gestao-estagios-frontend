@@ -24,6 +24,10 @@ export class AdvisorRequestService {
     return this.httpClient.post<AdvisorRequestCreate>(this.apiUrl, advisorRequest, this.httpOptions);
   }
 
+  getById(id: string): Observable<AdvisorRequest> {
+    return this.httpClient.get<AdvisorRequest>(`${this.apiUrl}/${id}`, this.httpOptions); 
+  }
+
   getByStudentId(id: string): Observable<AdvisorRequest[]> {
     return this.httpClient.get<AdvisorRequest[]>(`${this.apiUrlStudent}/${id}/advisor-requests`, this.httpOptions);
   }

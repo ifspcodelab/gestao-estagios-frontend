@@ -1,0 +1,27 @@
+<app-content *ngIf="!loading">
+  <app-content-toolbar backUrl="/advisor/advisor-request">
+    <button mat-button color="warn">
+      Recusar
+    </button>
+    <button mat-button color="primary">
+      Aceitar
+    </button>
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-detail 
+      *ngIf="!loading" 
+      [title]="advisorRequest.student.user.name" 
+      [subtitle]="advisorRequest.student.user.registration"
+      [listItens]="requestDetails()" 
+    >
+    </app-content-detail>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <h3 matLine class="line-title">Perfil do aluno no SUAP</h3>
+        <p matLine (click)="openProfile()" class="link">{{ link }}</p>
+      </mat-list-item>
+    </mat-list>
+  </app-content-main>
+</app-content>
+

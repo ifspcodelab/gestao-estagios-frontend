@@ -6,12 +6,14 @@ import { AdvisorRequestComponent } from './advisor-request.component';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdvisorRequestListComponent } from './advisor-request-list/advisor-request-list.component';
+import { AdvisorRequestShowComponent } from './advisor-request-show/advisor-request-show.component';
 
 
 @NgModule({
   declarations: [
     AdvisorRequestComponent,
     AdvisorRequestListComponent,
+    AdvisorRequestShowComponent,
   ],
   imports: [
     CommonModule,

@@ -11,6 +11,7 @@
         [title]="request.student.user.name" 
         [subtitle]="handleStatus(request.status)"
         [complement]="request.expiresAt | date : 'd/M/yy, h:mm a' : 'en-US'"
+        [link]="'/advisor/advisor-request/' + request.id"
       >
       </app-card>
     </app-content-cards>
