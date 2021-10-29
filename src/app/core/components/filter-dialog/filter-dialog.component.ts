@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./filter-dialog.component.scss']
 })
 export class FilterDialogComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { onChange: Function, handleFilter: Function, selected: number }) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { filterNames: string[], onChange: Function, handleFilter: Function, selected: number }) { }
 
   ngOnInit(): void {
   }

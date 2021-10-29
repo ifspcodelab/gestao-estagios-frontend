@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatRadioChange } from '@angular/material/radio';
 import { Observable } from 'rxjs';
-import { finalize, first } from 'rxjs/operators';
+import { finalize, first, map, tap } from 'rxjs/operators';
+import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/filter-dialog.component';
 import { AdvisorRequest } from 'src/app/core/models/advisor-request.model';
+import { Advisor } from 'src/app/core/models/advisor.model';
 import { RequestStatus } from 'src/app/core/models/enums/request-status';
 import { AdvisorRequestService } from 'src/app/core/services/advisor-request.service';
 import { AdvisorService } from 'src/app/core/services/advisor.service';
 import { JwtTokenService } from 'src/app/core/services/jwt-token.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
-import { NotificationService } from 'src/app/core/services/notification.service';
-import { StudentService } from 'src/app/core/services/student.service';
 
 @Component({
   selector: 'app-advisor-request-list',
@@ -18,7 +19,10 @@ import { StudentService } from 'src/app/core/services/student.service';
   styleUrls: ['./advisor-request-list.component.scss']
 })
 export class AdvisorRequestListComponent implements OnInit {
-  advisorRequests$: Observable<AdvisorRequest[]>
+  advisorRequests$: Observable<AdvisorRequest[]>;
+  advisor: Advisor;
+  filterNames: string[] = ['Pendentes', 'Deferidos', 'Indeferidos'];
+  selectedFilter: number = 1;
 
   constructor(
     private advisorRequestService: AdvisorRequestService,
@@ -26,6 +30,7 @@ export class AdvisorRequestListComponent implements OnInit {
     private loaderService: LoaderService,
     private localStorageService: LocalStorageService,
     private jwtTokenService: JwtTokenService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -40,13 +45,19 @@ export class AdvisorRequestListComponent implements OnInit {
       )
       .subscribe(
         advisor => {
-          this.advisorRequests$ = this.advisorRequestService.getByAdvisorId(advisor.id)
-            .pipe(
-              finalize(() => {
-                this.loaderService.hide();
-              })
-            )
+          this.advisor = advisor
+          this.loadPendingAdvisorRequests(advisor);
         }
+      )
+  }
+
+  loadPendingAdvisorRequests(advisor: Advisor) {
+    this.advisorRequests$ = this.advisorRequestService.getByAdvisorId(advisor.id)
+      .pipe(
+        map(request => request.filter(r => r.status === RequestStatus.PENDING)),
+        finalize(() => {
+          this.loaderService.hide();
+        })
       )
   }
 
@@ -60,5 +71,54 @@ export class AdvisorRequestListComponent implements OnInit {
     else {
       return "Indeferido";
     }
+  }
+
+  private getDialogConfig() {
+    return {
+      autoFocus: true,
+      data: {
+        onChange: ($event: MatRadioChange) => {
+          if ($event.value == 1) {
+            this.selectedFilter = 1;
+          }
+          if ($event.value == 2) {
+            this.selectedFilter = 2;
+          }
+          if ($event.value == 3) {
+            this.selectedFilter = 3;
+          } 
+        },
+        handleFilter: () => {
+          if (this.selectedFilter === 1) {
+            this.loadPendingAdvisorRequests(this.advisor);
+          }
+          if (this.selectedFilter === 2) {
+            this.advisorRequests$ = this.advisorRequestService.getByAdvisorId(this.advisor.id)
+              .pipe(
+                map(request => request.filter(r => r.status === RequestStatus.ACCEPTED)),
+                finalize(() => {
+                  this.loaderService.hide();
+                })
+              )
+          }
+          if (this.selectedFilter === 3) {
+            this.advisorRequests$ = this.advisorRequestService.getByAdvisorId(this.advisor.id)
+              .pipe(
+                map(request => request.filter(r => r.status === RequestStatus.REJECTED)),
+                finalize(() => {
+                  this.loaderService.hide();
+                })
+              )
+          }
+        },
+        filterNames: this.filterNames,
+        selected: this.selectedFilter
+      }
+    };
+  }
+
+  openDialog() {
+    this.dialog.open(FilterDialogComponent, this.getDialogConfig())
+    .afterClosed()
   }
 }
