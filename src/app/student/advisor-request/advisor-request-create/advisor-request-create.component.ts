@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, first } from 'rxjs/operators';
+import { finalize, first, map } from 'rxjs/operators';
 import { AdvisorRequestCreate } from 'src/app/core/models/advisor-request.model';
 import { Advisor } from 'src/app/core/models/advisor.model';
 import { InternshipType } from 'src/app/core/models/enums/internship-type';
+import { EntityStatus } from 'src/app/core/models/enums/status';
 import { Parameter } from 'src/app/core/models/parameter.model';
 import { Student } from 'src/app/core/models/student.model';
 import { AdvisorRequestService } from 'src/app/core/services/advisor-request.service';
@@ -71,6 +72,7 @@ export class AdvisorRequestCreateComponent implements OnInit {
           this.student = student;
           this.advisors$ = this.advisorService.getAdvisorsByCourseId(student.curriculum.course.id)
             .pipe(
+              map(advisor => advisor.filter(a => a.user.isActivated === EntityStatus.ENABLED)),
               finalize(() => {
                 this.loaderService.hide();
               })
