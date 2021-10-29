@@ -1,16 +1,16 @@
-<app-content *ngIf="advisorRequests$ | async as requests">
+<app-content *ngIf="advisorRequestsShow">
   <app-content-toolbar title="Pedidos de Orientação">
-    <button mat-icon-button color="primary">
+    <button mat-icon-button color="primary" (click)="orderByName()">
       <mat-icon>import_export</mat-icon>
     </button>
-    <button mat-icon-button color="primary" (click)="openDialog()">
+    <button mat-icon-button color="primary" (click)="openFilterDialog()">
       <mat-icon>filter_list</mat-icon>
     </button>
   </app-content-toolbar>
   <app-content-main>
-    <app-content-cards entityName="pedido" [emptyState]="requests.length == 0">
+    <app-content-cards entityName="pedido" [emptyState]="advisorRequestsShow.length == 0">
       <app-card 
-        *ngFor="let request of requests" 
+        *ngFor="let request of advisorRequestsShow" 
         [title]="request.student.user.name" 
         [subtitle]="handleStatus(request.status)"
         [complement]="request.expiresAt | date : 'd/M/yy, h:mm a' : 'en-US'"

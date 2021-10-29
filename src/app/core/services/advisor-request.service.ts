@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { AdvisorRequest, AdvisorRequestCreate } from "../models/advisor-request.model";
 
@@ -33,6 +34,8 @@ export class AdvisorRequestService {
   }
 
   getByAdvisorId(id: string): Observable<AdvisorRequest[]> {
-    return this.httpClient.get<AdvisorRequest[]>(`${this.apiUrlAdvisor}/${id}/advisor-requests`, this.httpOptions);
+    return this.httpClient.get<AdvisorRequest[]>(`${this.apiUrlAdvisor}/${id}/advisor-requests`, this.httpOptions).pipe(
+      map(results => results.sort((a, b) => a.createdAt.toLocaleString().localeCompare(b.createdAt.toLocaleString())))
+    );
   }
 } 

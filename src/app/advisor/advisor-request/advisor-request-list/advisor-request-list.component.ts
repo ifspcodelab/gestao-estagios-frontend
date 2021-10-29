@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { Observable } from 'rxjs';
-import { finalize, first, map, tap } from 'rxjs/operators';
+import { finalize, first, } from 'rxjs/operators';
 import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/filter-dialog.component';
 import { AdvisorRequest } from 'src/app/core/models/advisor-request.model';
 import { Advisor } from 'src/app/core/models/advisor.model';
@@ -20,9 +20,12 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
 })
 export class AdvisorRequestListComponent implements OnInit {
   advisorRequests$: Observable<AdvisorRequest[]>;
+  advisorRequests: AdvisorRequest[] = [];
+  advisorRequestsShow: AdvisorRequest[] = [];
   advisor: Advisor;
   filterNames: string[] = ['Pendentes', 'Deferidos', 'Indeferidos'];
   selectedFilter: number = 1;
+  sort: boolean = false;
 
   constructor(
     private advisorRequestService: AdvisorRequestService,
@@ -45,19 +48,24 @@ export class AdvisorRequestListComponent implements OnInit {
       )
       .subscribe(
         advisor => {
-          this.advisor = advisor
+          this.advisor = advisor;
           this.loadPendingAdvisorRequests(advisor);
         }
       )
   }
 
   loadPendingAdvisorRequests(advisor: Advisor) {
-    this.advisorRequests$ = this.advisorRequestService.getByAdvisorId(advisor.id)
+    this.advisorRequestService.getByAdvisorId(advisor.id)
       .pipe(
-        map(request => request.filter(r => r.status === RequestStatus.PENDING)),
         finalize(() => {
           this.loaderService.hide();
         })
+      )
+      .subscribe(
+        requests => {
+          this.advisorRequests = requests;
+          this.advisorRequestsShow = this.advisorRequests.filter(r => r.status === RequestStatus.PENDING);
+        }
       )
   }
 
@@ -73,7 +81,7 @@ export class AdvisorRequestListComponent implements OnInit {
     }
   }
 
-  private getDialogConfig() {
+  private getFilterDialogConfig() {
     return {
       autoFocus: true,
       data: {
@@ -90,25 +98,13 @@ export class AdvisorRequestListComponent implements OnInit {
         },
         handleFilter: () => {
           if (this.selectedFilter === 1) {
-            this.loadPendingAdvisorRequests(this.advisor);
+            this.advisorRequestsShow = this.advisorRequests.filter(request => request.status === RequestStatus.PENDING);
           }
           if (this.selectedFilter === 2) {
-            this.advisorRequests$ = this.advisorRequestService.getByAdvisorId(this.advisor.id)
-              .pipe(
-                map(request => request.filter(r => r.status === RequestStatus.ACCEPTED)),
-                finalize(() => {
-                  this.loaderService.hide();
-                })
-              )
+            this.advisorRequestsShow = this.advisorRequests.filter(request => request.status === RequestStatus.ACCEPTED);
           }
           if (this.selectedFilter === 3) {
-            this.advisorRequests$ = this.advisorRequestService.getByAdvisorId(this.advisor.id)
-              .pipe(
-                map(request => request.filter(r => r.status === RequestStatus.REJECTED)),
-                finalize(() => {
-                  this.loaderService.hide();
-                })
-              )
+            this.advisorRequestsShow = this.advisorRequests.filter(request => request.status === RequestStatus.REJECTED);
           }
         },
         filterNames: this.filterNames,
@@ -117,8 +113,18 @@ export class AdvisorRequestListComponent implements OnInit {
     };
   }
 
-  openDialog() {
-    this.dialog.open(FilterDialogComponent, this.getDialogConfig())
-    .afterClosed()
+  openFilterDialog() {
+    this.dialog.open(FilterDialogComponent, this.getFilterDialogConfig())
+      .afterClosed();
+  }
+
+  orderByName() {
+    this.sort = !this.sort;
+    if (this.sort) {
+      this.advisorRequestsShow.sort((a, b) => a.student.user.name.localeCompare(b.student.user.name));
+    }
+    else {
+      this.advisorRequestsShow = this.advisorRequests.filter(r => r.status === RequestStatus.PENDING);
+    }
   }
 }
