@@ -16,6 +16,7 @@ export class ContentDetailSectionComponent implements OnInit {
   @Output() openDialogEvent = new EventEmitter<void>();
   @Output() openFilterEvent = new EventEmitter<number>();
   selectedFilter: number = 1;
+  filterNames: string[] = ['Todos', 'Habilitados', 'Desabilitados'];
 
   constructor(private dialog: MatDialog) { }
 
@@ -30,6 +31,7 @@ export class ContentDetailSectionComponent implements OnInit {
     return {
       autoFocus: true,
       data: {
+        filterNames: this.filterNames,
         onChange: ($event: MatRadioChange) => {
           this.selectedFilter = $event.value;
         },

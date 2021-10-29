@@ -20,7 +20,7 @@ import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/fil
 export class CampusListComponent implements OnInit {
   campuses$: Observable<Campus[]>;
   selectedFilter: number = 1; 
-
+  filterNames: string[] = ['Todos', 'Habilitados', 'Desabilitados'];
   constructor(
     private campusService: CampusService,
     private notificationService: NotificationService,
@@ -52,6 +52,7 @@ export class CampusListComponent implements OnInit {
     return {
       autoFocus: true,
       data: {
+        filterNames: this.filterNames,
         onChange: ($event: MatRadioChange) => {
           if ($event.value == 1) {
             this.selectedFilter = 1;
