@@ -1,7 +1,7 @@
-<app-content *ngIf="advisorRequestsShow">
+<app-content *ngIf="!loading">
   <app-content-toolbar title="Pedidos de Orientação">
     <button mat-icon-button color="primary" (click)="orderByName()">
-      <mat-icon>import_export</mat-icon>
+      <mat-icon>sort_by_alpha</mat-icon>
     </button>
     <button mat-icon-button color="primary" (click)="openFilterDialog()">
       <mat-icon>filter_list</mat-icon>

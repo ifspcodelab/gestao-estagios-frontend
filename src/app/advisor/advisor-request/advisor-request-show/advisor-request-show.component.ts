@@ -9,8 +9,10 @@ import { Campus } from 'src/app/core/models/campus.model';
 import { Course } from 'src/app/core/models/course.model';
 import { Curriculum } from 'src/app/core/models/curriculum.model';
 import { InternshipType } from 'src/app/core/models/enums/internship-type';
+import { RequestStatus } from 'src/app/core/models/enums/request-status';
 import { AdvisorRequestService } from 'src/app/core/services/advisor-request.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { RequestAppraisalCreateComponent } from '../request-appraisal-create/request-appraisal-create.component';
 
 @Component({
@@ -27,7 +29,7 @@ export class AdvisorRequestShowComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    private notificationService: NotificationService,
     private loaderService: LoaderService,
     private advisorRequestService: AdvisorRequestService,
     private datePipe: DatePipe,
@@ -111,6 +113,11 @@ export class AdvisorRequestShowComponent implements OnInit {
   }
 
   handlerCreateAppraisal(deferred: boolean) {
-    this.dialog.open(RequestAppraisalCreateComponent, this.getDialogConfig(deferred));
+    if (this.advisorRequest.status === RequestStatus.PENDING) {
+      this.dialog.open(RequestAppraisalCreateComponent, this.getDialogConfig(deferred));
+    }
+    else {
+      this.notificationService.error('Não é possível avaliar o pedido de avaliação novamente!');
+    }
   }
 }

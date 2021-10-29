@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
-import { Observable } from 'rxjs';
 import { finalize, first, } from 'rxjs/operators';
 import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/filter-dialog.component';
 import { AdvisorRequest } from 'src/app/core/models/advisor-request.model';
@@ -19,7 +18,7 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
   styleUrls: ['./advisor-request-list.component.scss']
 })
 export class AdvisorRequestListComponent implements OnInit {
-  advisorRequests$: Observable<AdvisorRequest[]>;
+  loading: boolean = true;
   advisorRequests: AdvisorRequest[] = [];
   advisorRequestsShow: AdvisorRequest[] = [];
   advisor: Advisor;
@@ -58,6 +57,7 @@ export class AdvisorRequestListComponent implements OnInit {
     this.advisorRequestService.getByAdvisorId(advisor.id)
       .pipe(
         finalize(() => {
+          this.loading = false;
           this.loaderService.hide();
         })
       )
@@ -124,7 +124,7 @@ export class AdvisorRequestListComponent implements OnInit {
       this.advisorRequestsShow.sort((a, b) => a.student.user.name.localeCompare(b.student.user.name));
     }
     else {
-      this.advisorRequestsShow = this.advisorRequests.filter(r => r.status === RequestStatus.PENDING);
+      this.advisorRequests.sort((a, b) => a.expiresAt.toISOString().localeCompare(b.expiresAt.toISOString()));
     }
   }
 }
