@@ -1,0 +1,63 @@
+<h1 id="header" mat-dialog-title></h1>
+<div mat-dialog-content>
+  <form *ngIf="!this.data.deferred" class="app-form" id="request-appraisal-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-checkbox color="primary" (change)="handleSendEmail()">Deseja receber o e-mail enviado para o aluno?</mat-checkbox>
+    <mat-form-field class="form-field-lg">
+      <mat-label>Motivo do indeferimento</mat-label>
+      <textarea 
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="10"
+        appearance="fill" 
+        matInput 
+        placeholder="" 
+        formControlName="details" 
+        name="details"
+      ></textarea>
+      <mat-error *ngIf="fieldErrors('details')?.required && submitted">Motivo do indeferimento é obrigatório</mat-error>
+    </mat-form-field>
+  </form>
+  <form *ngIf="this.data.deferred" class="app-form" id="request-appraisal-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-checkbox color="primary" (change)="handleSendEmail()">Deseja receber o e-mail enviado para o aluno?</mat-checkbox>
+    <fieldset>
+      <mat-form-field class="form-field-lg">
+        <mat-label>Orientações iniciais</mat-label>
+        <textarea 
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          appearance="fill" 
+          matInput 
+          placeholder="" 
+          formControlName="details" 
+          name="details"
+        ></textarea>
+        <mat-error *ngIf="fieldErrors('details')?.required && submitted">Motivo do indeferimento é obrigatório</mat-error>
+      </mat-form-field>
+    </fieldset>
+    <fieldset>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Agendamento inicial
+          </mat-panel-title>
+          <mat-panel-description>
+            Opcional
+            <mat-icon>date_range</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <mat-form-field class="form-field-md">
+            <input onkeydown="return false" matInput type="datetime-local" [min]="minDate" formControlName="date" name="date">
+          </mat-form-field>
+        </ng-template>
+      </mat-expansion-panel>
+    </fieldset>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button type="submit" form="request-appraisal-form" mat-button color="primary">Confirmar</button>
+</div>

@@ -1,0 +1,22 @@
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.radio-button {
+  margin-bottom: 1rem;
+}
+
+fieldset {
+  margin-bottom: 5px;
+}
+
+.hint {
+  font-size: 12px;
+}
+
+.selected {
+  opacity: 50%;
+}

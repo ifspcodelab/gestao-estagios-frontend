@@ -21,6 +21,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskModule } from "ngx-mask";
 import { MatTabsModule } from "@angular/material/tabs";
+import { MatExpansionModule } from "@angular/material/expansion";
 
 @NgModule({
   declarations: [],
@@ -45,6 +46,7 @@ import { MatTabsModule } from "@angular/material/tabs";
     MatSelectModule,
     NgxMaskModule,
     MatTabsModule,
+    MatExpansionModule
   ],
   imports: [
     CommonModule,
@@ -69,6 +71,7 @@ import { MatTabsModule } from "@angular/material/tabs";
     MatSelectModule,
     NgxMaskModule,
     MatTabsModule,
+    MatExpansionModule
   ]
 })
 export class SharedModule {

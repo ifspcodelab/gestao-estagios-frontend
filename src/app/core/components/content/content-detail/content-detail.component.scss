@@ -1,3 +1,9 @@
+::ng-deep .mat-list .mat-list-item .mat-line {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  width: 75%;
+}
+
 .line-title {
   font-weight: 500 !important;
 }

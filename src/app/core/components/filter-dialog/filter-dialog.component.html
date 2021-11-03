@@ -1,13 +1,13 @@
 <h1 mat-dialog-title>Filtrar</h1>
 <mat-dialog-content>
   <mat-radio-group aria-label="Select an option" (change)="data.onChange($event)" color="primary">
-    <mat-radio-button value="1" [checked]="data.selected == 1">Todos</mat-radio-button>
+    <mat-radio-button value="1" [checked]="data.selected == 1">{{ data.filterNames[0] }}</mat-radio-button>
     <br />
     <br />
-    <mat-radio-button value="2" [checked]="data.selected == 2">Apenas habilitados</mat-radio-button>
+    <mat-radio-button value="2" [checked]="data.selected == 2">{{ data.filterNames[1] }}</mat-radio-button>
     <br />
     <br />
-    <mat-radio-button value="3" [checked]="data.selected == 3">Apenas desabilitados</mat-radio-button>
+    <mat-radio-button value="3" [checked]="data.selected == 3">{{ data.filterNames[2] }}</mat-radio-button>
     <br />
     <br />
   </mat-radio-group>

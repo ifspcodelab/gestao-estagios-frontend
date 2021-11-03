@@ -30,6 +30,11 @@ export class JwtTokenService {
     return this.decodedToken ? this.decodedToken.sub : null;
   }
 
+  getSubjectId() {
+    this.decodeToken();
+    return this.decodedToken ? this.decodedToken.id : null; 
+  }
+
   getRoles(): Role[] | null {
     this.decodeToken();
     return this.decodedToken ? this.decodedToken.roles : null;

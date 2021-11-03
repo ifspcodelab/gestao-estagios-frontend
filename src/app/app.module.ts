@@ -15,7 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxMaskModule } from 'ngx-mask'
+import { DatePipe } from '@angular/common';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { NgxMaskModule } from 'ngx-mask'
 })
   ],
   // providers: [httpInterceptorProviders],
-  providers: [],
+  providers: [DatePipe],
   exports: [],
   bootstrap: [AppComponent]
 })

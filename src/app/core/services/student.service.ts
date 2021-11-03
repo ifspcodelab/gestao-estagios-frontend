@@ -26,6 +26,10 @@ export class StudentService {
     return this.httpClient.get<Student>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
 
+  getStudentByUserId(id: string): Observable<Student> {
+    return this.httpClient.get<Student>(`${environment.apiUrl}/users/${id}/students`, this.httpOptions)
+  }
+
   activateStudent(id: string): Observable<Student> {
     return this.httpClient.patch<Student>(`${this.apiUrl}/${id}/activate`, this.httpOptions);
   }

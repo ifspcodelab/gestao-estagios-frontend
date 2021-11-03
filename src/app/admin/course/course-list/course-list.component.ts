@@ -19,6 +19,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 export class CourseListComponent implements OnInit {
   courses$: Observable<Course[]>;
   selectedFilter: number = 1;
+  filterNames: string[] = ['Todos', 'Habilitados', 'Desabilitados'];
 
   constructor(
     private courseService: CourseService,
@@ -41,6 +42,7 @@ export class CourseListComponent implements OnInit {
     return {
       autoFocus: true,
       data: {
+        filterNames: this.filterNames,
         onChange: ($event: MatRadioChange) => {
           if ($event.value == 1) {
             this.selectedFilter = 1;
