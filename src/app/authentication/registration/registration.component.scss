@@ -16,6 +16,10 @@
   color: #494949;
 }
 
+p {
+  margin: 0;
+}
+
 .header p {
   margin-top: 0.625rem;
 }
@@ -155,10 +159,29 @@ select:focus {
   .app-form .mat-form-field {
     margin-right: 0;
   }
+
+  .header p {
+    font-size: 25px;
+  }
 }
 
 @media (max-width: 600px) {
   legend {
     margin-left: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .form.primary {
+    width: 16.875rem;
+  }
+
+  .form {
+    width: 16.875rem;
+  }
+
+  p {
+    white-space: normal !important;
+    margin-top: 25px;
   }
 }

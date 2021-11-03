@@ -19,6 +19,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxMaskModule } from "ngx-mask";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatExpansionModule } from "@angular/material/expansion";
 
@@ -43,6 +44,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
     TextFieldModule,
     MatCheckboxModule,
     MatSelectModule,
+    NgxMaskModule,
     MatTabsModule,
     MatExpansionModule
   ],
@@ -67,6 +69,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
     TextFieldModule,
     MatCheckboxModule,
     MatSelectModule,
+    NgxMaskModule,
     MatTabsModule,
     MatExpansionModule
   ]
