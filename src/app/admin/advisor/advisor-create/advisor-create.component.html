@@ -12,6 +12,7 @@
 
         <mat-checkbox *ngIf="createMode" formControlName="admin" class="admin" color="primary" (change)="handleIsAdmin()">Administrador</mat-checkbox>
         <fieldset>
+          <legend>Informações básicas</legend>
           <mat-form-field class="form-field-md">
             <mat-label>Nome</mat-label>
             <input appearance="fill" matInput placeholder="" formControlName="name" name="name" autocomplete="off">
@@ -48,6 +49,7 @@
         </fieldset>
         
         <fieldset>
+          <legend>Selecionar cursos</legend>
           <mat-form-field class="form-field-md campus-department">
             <mat-label>Campus</mat-label>
             <mat-select (selectionChange)="onCampusSelected($event.value)">
