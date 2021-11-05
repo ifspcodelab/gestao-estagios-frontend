@@ -108,6 +108,10 @@ export class AdvisorRequestCreateComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
+    if(this.form.invalid) {
+      return
+    }
+
     const advisorRequestCreate = new AdvisorRequestCreate(
       this.internshipType, 
       this.field('details').value,
@@ -144,8 +148,8 @@ export class AdvisorRequestCreateComponent implements OnInit {
     this.advisor = advisor;
     const element = document.getElementsByClassName('advisors');
     for (let i = 0; i < element.length; i++) {
-      element[i].classList.remove('selected');
+      element[i].classList.add('selected');
     }
-    document.getElementsByClassName('advisors')[index].classList.add('selected');
+    document.getElementsByClassName('advisors')[index].classList.remove('selected');
   }
 }

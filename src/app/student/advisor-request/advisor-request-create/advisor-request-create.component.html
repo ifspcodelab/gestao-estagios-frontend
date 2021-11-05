@@ -9,9 +9,10 @@
   <app-content-main>
     <app-content-form>
       <form id="advisor-request-form" class="app-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <fieldset><legend>Selecione um orientador</legend></fieldset>
         <app-content-cards entityName="orientador" [emptyState]="advisors.length == 0">
           <app-card 
-            class="advisors" 
+            class="advisors selected" 
             (click)="onAdvisorSelected(advisor, i)" 
             *ngFor="let advisor of advisors; index as i" 
             [title]="advisor.user.name" 
@@ -29,6 +30,7 @@
         </fieldset>
         <fieldset>
           <legend>Informações Adicionais</legend>
+          <pre>{{ internshipMessage }}</pre>
           <mat-form-field class="form-field-lg">
             <mat-label>Detalhamento do Estágio</mat-label>
             <textarea
@@ -38,12 +40,10 @@
               cdkAutosizeMaxRows="30" 
               appearance="fill" 
               matInput 
-              placeholder="" 
               formControlName="details" 
               name="details"
             >
             </textarea>
-            <mat-hint class="hint">{{ internshipMessage }}</mat-hint>
             <mat-error *ngIf="fieldErrors('details')?.required">Detalhes são obrigatórios</mat-error>
             <mat-error *ngIf="fieldErrors('details')?.notblank">Detalhes não pode ser vazio</mat-error>
             <mat-error *ngIf="fieldErrors('details')?.serverError && submitted">
