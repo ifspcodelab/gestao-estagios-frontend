@@ -68,6 +68,27 @@ export class ParameterCreateComponent implements OnInit {
       advisorRequestDeadline: ['',
         [Validators.required, AppValidators.numeric]
       ],
+      activityPlanAppraisalDeadline: ['',
+        [Validators.required, AppValidators.numeric]
+      ],
+      activityPlanLink: ['',
+        [Validators.required, AppValidators.notBlank]
+      ],
+      activityPlanFileSizeBytes: ['',
+        [Validators.required, AppValidators.numeric]
+      ],
+      monthlyReportFileSizeBytes: ['',
+        [Validators.required, AppValidators.numeric]
+      ],
+      monthlyReportDraftSubmissionDeadlineMonths: ['',
+        [Validators.required, AppValidators.numeric]
+      ],
+      monthlyReportDraftAppraisalDeadlineDays: ['',
+        [Validators.required, AppValidators.numeric]
+      ],
+      monthlyReportAppraisalDeadlineDays: ['',
+        [Validators.required, AppValidators.numeric]
+      ],
     });
   }
 
@@ -85,7 +106,14 @@ export class ParameterCreateComponent implements OnInit {
       this.field('internshipRequiredOrNotMessage').value,
       this.field('projectEquivalenceMessage').value,
       this.field('professionalValidationMessage').value,
-      this.field('advisorRequestDeadline').value
+      this.field('advisorRequestDeadline').value,
+      this.field('activityPlanAppraisalDeadline').value,
+      this.field('activityPlanLink').value,
+      this.field('activityPlanFileSizeBytes').value,
+      this.field('monthlyReportFileSizeBytes').value,
+      this.field('monthlyReportDraftSubmissionDeadlineMonths').value,
+      this.field('monthlyReportDraftAppraisalDeadlineDays').value,
+      this.field('monthlyReportAppraisalDeadlineDays').value
     );
 
     this.parameterService.updateParameters(parameterCreate)
