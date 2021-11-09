@@ -70,7 +70,7 @@
                   formControlName="professionalValidationMessage"
                   name="professionalValidationMessage"
                   autocomplete="off">
-            </textarea>
+                </textarea>
                 <mat-error *ngIf="fieldErrors('professionalValidationMessage')?.required">Aproveitamento Profissional é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('professionalValidationMessage')?.notblank">Aproveitamento Profissional não pode ser vazio</mat-error>
                 <mat-error *ngIf="fieldErrors('professionalValidationMessage')?.serverError && submitted">
@@ -80,16 +80,99 @@
             </fieldset>
           </mat-tab>
 
+          <mat-tab label="Links">
+            <fieldset>
+              <legend>Links para modelos de documentação</legend>
+              <mat-form-field class="form-field-lg">
+                <mat-label>Link para o Plano de Atividades</mat-label>
+                <input appearance="fill" matInput placeholder="" formControlName="activityPlanLink" name="activityPlanLink" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('activityPlanLink')?.required">Link para o Plano de Atividades é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanLink')?.notblank">Link para o Plano de Atividades não pode ser vazio</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanLink')?.serverError && submitted">
+                  {{ fieldErrors('activityPlanLink')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+            </fieldset>
+          </mat-tab>
+
           <mat-tab label="Prazos">
             <fieldset>
-              <legend>Prazo em dias corridos para avalialiação do pedido de orientação de estágio</legend>
+              <legend>Prazos em dias corridos para envio de pedidos</legend>
               <mat-form-field class="form-field-sm">
-                <mat-label>Prazo</mat-label>
+                <mat-label>Avalialiação do pedido de orientação de estágio</mat-label>
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="advisorRequestDeadline" name="advisorRequestDeadline" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
-                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.required">Prazo é obrigatório</mat-error>
-                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.numeric">Prazo deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.required">Avaliação do pedido é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.numeric">Avaliação do pedido deve conter apenas números</mat-error>
                 <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.serverError && submitted">
                   {{ fieldErrors('advisorRequestDeadline')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="form-field-sm">
+                <mat-label>Avalialiação do plano de atividades por um orientador </mat-label>
+                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="activityPlanAppraisalDeadline" name="activityPlanAppraisalDeadline" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.required">Avaliação do plano de atividades é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.numeric">Avaliação do plano de atividades deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.serverError && submitted">
+                  {{ fieldErrors('activityPlanAppraisalDeadline')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="form-field-sm">
+                <mat-label>Avaliação do rascunho do relatório mensal</mat-label>
+                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportDraftAppraisalDeadlineDays" name="monthlyReportDraftAppraisalDeadlineDays" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.required">Avaliação do rascunho do relatório mensal é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.numeric">Avaliação do rascunho do relatório mensal deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.serverError && submitted">
+                  {{ fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="form-field-sm">
+                <mat-label>Avaliação do relatório mensal</mat-label>
+                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportAppraisalDeadlineDays" name="monthlyReportAppraisalDeadlineDays" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('monthlyReportAppraisalDeadlineDays')?.required">Avaliação do relatório mensal é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportAppraisalDeadlineDays')?.numeric">Avaliação do relatório mensal deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportAppraisalDeadlineDays')?.serverError && submitted">
+                  {{ fieldErrors('monthlyReportAppraisalDeadlineDays')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+            </fieldset>
+
+            <fieldset>
+              <legend>Prazos em meses para envio de pedidos</legend>
+              <mat-form-field class="form-field-sm">
+                <mat-label>Rascunho do relatório mensal </mat-label>
+                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportDraftSubmissionDeadlineMonths" name="monthlyReportDraftSubmissionDeadlineMonths" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.required">Rascunho do relatório mensal é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.numeric">Rascunho do relatório mensal deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.serverError && submitted">
+                  {{ fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+            </fieldset>
+          </mat-tab>
+
+          <mat-tab label="Arquivos">
+            <fieldset>
+              <legend>Tamanho máximo em bytes dos arquivos que podem ser enviados</legend>
+              <mat-form-field class="form-field-sm">
+                <mat-label>Plano de atividades</mat-label>
+                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="activityPlanFileSizeBytes" name="activityPlanFileSizeBytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('activityPlanFileSizeBytes')?.required">Plano de atividades é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanFileSizeBytes')?.numeric">Plano de atividades deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanFileSizeBytes')?.serverError && submitted">
+                  {{ fieldErrors('activityPlanFileSizeBytes')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="form-field-sm">
+                <mat-label>Relatório mensal</mat-label>
+                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportFileSizeBytes" name="monthlyReportFileSizeBytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeBytes')?.required">Relatório mensal  é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeBytes')?.numeric">Relatório mensal  deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeBytes')?.serverError && submitted">
+                  {{ fieldErrors('monthlyReportFileSizeBytes')?.serverError }}
                 </mat-error>
               </mat-form-field>
             </fieldset>
