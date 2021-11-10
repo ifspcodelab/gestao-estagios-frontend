@@ -155,24 +155,24 @@
 
           <mat-tab label="Arquivos">
             <fieldset>
-              <legend>Tamanho máximo em bytes dos arquivos que podem ser enviados</legend>
+              <legend>Tamanho máximo em megabytes dos arquivos que podem ser enviados</legend>
               <mat-form-field class="form-field-sm">
                 <mat-label>Plano de atividades</mat-label>
-                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="activityPlanFileSizeBytes" name="activityPlanFileSizeBytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
-                <mat-error *ngIf="fieldErrors('activityPlanFileSizeBytes')?.required">Plano de atividades é obrigatório</mat-error>
-                <mat-error *ngIf="fieldErrors('activityPlanFileSizeBytes')?.numeric">Plano de atividades deve conter apenas números</mat-error>
-                <mat-error *ngIf="fieldErrors('activityPlanFileSizeBytes')?.serverError && submitted">
-                  {{ fieldErrors('activityPlanFileSizeBytes')?.serverError }}
+                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="activityPlanFileSizeMegabytes" name="activityPlanFileSizeMegabytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.required">Plano de atividades é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.numeric">Plano de atividades deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.serverError && submitted">
+                  {{ fieldErrors('activityPlanFileSizeMegabytes')?.serverError }}
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field class="form-field-sm">
                 <mat-label>Relatório mensal</mat-label>
-                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportFileSizeBytes" name="monthlyReportFileSizeBytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
-                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeBytes')?.required">Relatório mensal  é obrigatório</mat-error>
-                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeBytes')?.numeric">Relatório mensal  deve conter apenas números</mat-error>
-                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeBytes')?.serverError && submitted">
-                  {{ fieldErrors('monthlyReportFileSizeBytes')?.serverError }}
+                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportFileSizeMegabytes" name="monthlyReportFileSizeMegabytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.required">Relatório mensal  é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.numeric">Relatório mensal  deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.serverError && submitted">
+                  {{ fieldErrors('monthlyReportFileSizeMegabytes')?.serverError }}
                 </mat-error>
               </mat-form-field>
             </fieldset>

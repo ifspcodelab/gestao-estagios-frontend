@@ -74,10 +74,10 @@ export class ParameterCreateComponent implements OnInit {
       activityPlanLink: ['',
         [Validators.required, AppValidators.notBlank]
       ],
-      activityPlanFileSizeBytes: ['',
+      activityPlanFileSizeMegabytes: ['',
         [Validators.required, AppValidators.numeric]
       ],
-      monthlyReportFileSizeBytes: ['',
+      monthlyReportFileSizeMegabytes: ['',
         [Validators.required, AppValidators.numeric]
       ],
       monthlyReportDraftSubmissionDeadlineMonths: ['',
@@ -109,8 +109,8 @@ export class ParameterCreateComponent implements OnInit {
       this.field('advisorRequestDeadline').value,
       this.field('activityPlanAppraisalDeadline').value,
       this.field('activityPlanLink').value,
-      this.field('activityPlanFileSizeBytes').value,
-      this.field('monthlyReportFileSizeBytes').value,
+      this.field('activityPlanFileSizeMegabytes').value,
+      this.field('monthlyReportFileSizeMegabytes').value,
       this.field('monthlyReportDraftSubmissionDeadlineMonths').value,
       this.field('monthlyReportDraftAppraisalDeadlineDays').value,
       this.field('monthlyReportAppraisalDeadlineDays').value
