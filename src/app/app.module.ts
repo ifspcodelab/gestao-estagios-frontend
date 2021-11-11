@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { NgxMaskModule } from 'ngx-mask';
+import { MatNativeDateModule } from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { NgxMaskModule } from 'ngx-mask';
     ReactiveFormsModule,
     MatIconModule,
     NgxMaskModule.forRoot(),
-
+    MatNativeDateModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

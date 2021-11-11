@@ -1,0 +1,82 @@
+<app-content>
+  <app-content-toolbar title="Estágios" [backUrl]="getBackUrl()">
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-form>
+      <form class="app-form" id="internship-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
+          <mat-tab label="Plano de Atividades">
+            <fieldset>
+              <legend>Envie seu plano de atividades</legend>
+              <mat-form-field class="form-field-lg">
+                <mat-label>Nome da Empresa</mat-label>
+                <input type="text" appearance="fill" matInput placeholder="" formControlName="companyName" name="companyName" autocomplete="off">
+                <mat-error *ngIf="fieldErrors('companyName')?.required">Nome da Empresa é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('companyName')?.notblank">Nome da Empresa não pode ser vazio</mat-error>
+                <mat-error *ngIf="fieldErrors('companyName')?.serverError && submitted">
+                  {{ fieldErrors('companyName')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+
+              <br>
+
+              <mat-form-field class="form-field-sm">
+                <mat-label>Data de Início e Término</mat-label>
+                <mat-date-range-input
+                  [formGroup]="campaignOne"
+                  [rangePicker]="campaignOnePicker"
+                  [comparisonStart]="campaignTwo.value.start"
+                  [comparisonEnd]="campaignTwo.value.end">
+                  <input matStartDate placeholder="Data de Início" formControlName="internshipStartDate">
+                  <input matEndDate placeholder="Data de Término" formControlName="internshipEndDate">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                <mat-error *ngIf="fieldErrors('internshipStartDate')?.required">Data de Início é obrigatória</mat-error>
+                <mat-error *ngIf="fieldErrors('internshipStartDate')?.notblank">Data de Início não pode ser vazia</mat-error>
+                <mat-error *ngIf="fieldErrors('internshipStartDate')?.serverError && submitted">
+                  {{ fieldErrors('internshipStartDate')?.serverError }}
+                </mat-error>
+                <mat-error *ngIf="fieldErrors('internshipEndDate')?.required">Data de Término é obrigatória</mat-error>
+                <mat-error *ngIf="fieldErrors('internshipEndDate')?.notblank">Data de Término não pode ser vazia</mat-error>
+                <mat-error *ngIf="fieldErrors('internshipEndDate')?.serverError && submitted">
+                  {{ fieldErrors('internshipEndDate')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+            </fieldset>
+          </mat-tab>
+
+          <mat-tab label="Relatórios Mensais">
+            <fieldset>
+<!--              <legend>Links para modelos de documentação</legend>-->
+<!--              <mat-form-field class="form-field-lg">-->
+<!--                <mat-label>Link para o Plano de Atividades</mat-label>-->
+<!--                <input appearance="fill" matInput placeholder="" formControlName="activityPlanLink" name="activityPlanLink" autocomplete="off">-->
+<!--                <mat-error *ngIf="fieldErrors('activityPlanLink')?.required">Link para o Plano de Atividades é obrigatório</mat-error>-->
+<!--                <mat-error *ngIf="fieldErrors('activityPlanLink')?.notblank">Link para o Plano de Atividades não pode ser vazio</mat-error>-->
+<!--                <mat-error *ngIf="fieldErrors('activityPlanLink')?.serverError && submitted">-->
+<!--                  {{ fieldErrors('activityPlanLink')?.serverError }}-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+            </fieldset>
+          </mat-tab>
+
+          <mat-tab label="Relatório Final">
+            <fieldset>
+<!--              <legend>Prazos em dias corridos para envio de pedidos</legend>-->
+<!--              <mat-form-field class="form-field-sm">-->
+<!--                <mat-label>Avalialiação do pedido de orientação de estágio</mat-label>-->
+<!--                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="advisorRequestDeadline" name="advisorRequestDeadline" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">-->
+<!--                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.required">Avaliação do pedido é obrigatório</mat-error>-->
+<!--                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.numeric">Avaliação do pedido deve conter apenas números</mat-error>-->
+<!--                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.serverError && submitted">-->
+<!--                  {{ fieldErrors('advisorRequestDeadline')?.serverError }}-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+            </fieldset>
+          </mat-tab>
+        </mat-tab-group>
+      </form>
+    </app-content-form>
+  </app-content-main>
+</app-content>

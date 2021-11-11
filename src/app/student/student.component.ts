@@ -41,7 +41,7 @@ export class StudentComponent implements OnInit, OnDestroy {
       {
         name: "default",
         items: [
-          { name: "Estágios", url: "/student/intership", icon: "directions_run" },
+          { name: "Estágios", url: "/student/internship", icon: "directions_run" },
           { name: "Pedidos de orientação", url: "/student/advisor-request", icon: "forward_to_inbox" },
         ]
       },

@@ -41,7 +41,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       {
         name: "default",
         items: [
-          { name: "Estágios", url: "/admin/intership", icon: "directions_run" },
+          { name: "Estágios", url: "/admin/internship", icon: "directions_run" },
           { name: "Pedidos de orientação", url: "/admin/advisor-request", icon: "forward_to_inbox" },
           { name: "Estudantes", url: "/admin/student", icon: "people" },
           { name: "Orientadores", url: "/admin/advisor", icon: "supervised_user_circle"  }
