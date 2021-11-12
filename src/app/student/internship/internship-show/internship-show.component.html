@@ -3,9 +3,9 @@
   </app-content-toolbar>
   <app-content-main>
     <app-content-form>
-      <form class="app-form" id="internship-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-        <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
-          <mat-tab label="Plano de Atividades">
+      <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
+        <mat-tab label="Plano de Atividades">
+          <form class="app-form" id="internship-form" [formGroup]="form" (ngSubmit)="onSubmit()">
             <fieldset>
               <legend>Envie seu plano de atividades</legend>
               <mat-form-field class="form-field-lg">
@@ -21,33 +21,50 @@
               <br>
 
               <mat-form-field class="form-field-sm">
-                <mat-label>Data de Início e Término</mat-label>
-                <mat-date-range-input
-                  [formGroup]="campaignOne"
-                  [rangePicker]="campaignOnePicker"
-                  [comparisonStart]="campaignTwo.value.start"
-                  [comparisonEnd]="campaignTwo.value.end">
-                  <input matStartDate placeholder="Data de Início" formControlName="internshipStartDate">
-                  <input matEndDate placeholder="Data de Término" formControlName="internshipEndDate">
-                </mat-date-range-input>
-                <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                <mat-label>Data de Início</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="internshipStartDate" name="internshipStartDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
                 <mat-error *ngIf="fieldErrors('internshipStartDate')?.required">Data de Início é obrigatória</mat-error>
-                <mat-error *ngIf="fieldErrors('internshipStartDate')?.notblank">Data de Início não pode ser vazia</mat-error>
                 <mat-error *ngIf="fieldErrors('internshipStartDate')?.serverError && submitted">
                   {{ fieldErrors('internshipStartDate')?.serverError }}
                 </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="form-field-sm">
+                <mat-label>Data de Término</mat-label>
+                <input matInput [matDatepicker]="pickerTwo" formControlName="internshipEndDate" name="internshipEndDate">
+                <mat-datepicker-toggle matSuffix [for]="pickerTwo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerTwo></mat-datepicker>
                 <mat-error *ngIf="fieldErrors('internshipEndDate')?.required">Data de Término é obrigatória</mat-error>
-                <mat-error *ngIf="fieldErrors('internshipEndDate')?.notblank">Data de Término não pode ser vazia</mat-error>
                 <mat-error *ngIf="fieldErrors('internshipEndDate')?.serverError && submitted">
                   {{ fieldErrors('internshipEndDate')?.serverError }}
                 </mat-error>
               </mat-form-field>
-            </fieldset>
-          </mat-tab>
 
-          <mat-tab label="Relatórios Mensais">
-            <fieldset>
+              <br>
+
+              <mat-label class="activityPlan">Plano de Atividades</mat-label>
+              <br>
+              <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file">
+              <br>
+              <label for="buttonActivityPlan" class="btn-send">
+                Anexar Arquivo
+              </label>
+              <mat-error *ngIf="fieldErrors('file')?.required && submitted">PDF é obrigatório</mat-error>
+              <mat-error *ngIf="fieldErrors('file')?.serverError && submitted">
+                {{ fieldErrors('file')?.serverError }}
+              </mat-error>
+            </fieldset>
+
+            <button type="submit" form="internship-form" mat-flat-button color="primary">
+              <span>Enviar Plano</span>
+            </button>
+          </form>
+        </mat-tab>
+
+<!--        <mat-tab label="Relatórios Mensais">-->
+<!--          <fieldset>-->
 <!--              <legend>Links para modelos de documentação</legend>-->
 <!--              <mat-form-field class="form-field-lg">-->
 <!--                <mat-label>Link para o Plano de Atividades</mat-label>-->
@@ -58,11 +75,11 @@
 <!--                  {{ fieldErrors('activityPlanLink')?.serverError }}-->
 <!--                </mat-error>-->
 <!--              </mat-form-field>-->
-            </fieldset>
-          </mat-tab>
+<!--          </fieldset>-->
+<!--        </mat-tab>-->
 
-          <mat-tab label="Relatório Final">
-            <fieldset>
+<!--        <mat-tab label="Relatório Final">-->
+<!--          <fieldset>-->
 <!--              <legend>Prazos em dias corridos para envio de pedidos</legend>-->
 <!--              <mat-form-field class="form-field-sm">-->
 <!--                <mat-label>Avalialiação do pedido de orientação de estágio</mat-label>-->
@@ -73,10 +90,9 @@
 <!--                  {{ fieldErrors('advisorRequestDeadline')?.serverError }}-->
 <!--                </mat-error>-->
 <!--              </mat-form-field>-->
-            </fieldset>
-          </mat-tab>
-        </mat-tab-group>
-      </form>
+<!--          </fieldset>-->
+<!--        </mat-tab>-->
+      </mat-tab-group>
     </app-content-form>
   </app-content-main>
 </app-content>
