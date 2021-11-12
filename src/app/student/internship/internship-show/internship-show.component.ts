@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AppValidators } from "../../../core/validators/app-validators";
 
 @Component({
@@ -11,8 +11,6 @@ export class InternshipShowComponent implements OnInit {
   form: FormGroup;
   submitted = false;
   createMode: boolean;
-  campaignOne: FormGroup;
-  campaignTwo: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -20,20 +18,6 @@ export class InternshipShowComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.buildForm();
-    const today = new Date('dd/MM/yyyy');
-    const month = today.getMonth();
-    const year = today.getFullYear();
-    const date = today.getDate();
-
-      this.campaignOne = new FormGroup({
-      start: new FormControl(new Date(year, date,month)),
-      end: new FormControl(new Date(year, date, month)),
-    });
-
-    this.campaignTwo = new FormGroup({
-      start: new FormControl(new Date(year, month, date)),
-      end: new FormControl(new Date(year, month, date)),
-    });
   }
 
   public onSubmit() {
@@ -58,10 +42,13 @@ export class InternshipShowComponent implements OnInit {
         [Validators.required, AppValidators.notBlank]
       ],
       internshipStartDate: ['',
-        [Validators.required, AppValidators.notBlank]
+        [Validators.required]
       ],
       internshipEndDate: ['',
-        [Validators.required, AppValidators.notBlank]
+        [Validators.required]
+      ],
+      pdf: ['',
+        [Validators.required]
       ],
     });
   }
