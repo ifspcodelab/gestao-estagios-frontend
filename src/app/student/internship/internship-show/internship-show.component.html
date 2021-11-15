@@ -1,5 +1,5 @@
 <app-content>
-  <app-content-toolbar title="Estágios" [backUrl]="getBackUrl()">
+  <app-content-toolbar title="Estágios" [backUrl]="'/student/internship/'">
   </app-content-toolbar>
   <app-content-main>
     <app-content-form>
@@ -22,10 +22,10 @@
 
               <mat-form-field class="form-field-sm">
                 <mat-label>Data de Início</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="internshipStartDate" name="internshipStartDate">
+                <input onkeydown="return false" matInput [matDatepicker]="picker" formControlName="internshipStartDate" name="internshipStartDate" (dateChange)="getLimitDate()">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error *ngIf="fieldErrors('internshipStartDate')?.required">Data de Início é obrigatória</mat-error>
+                <mat-error *ngIf="fieldErrors('internshipStartDate')?.required && submitted">Data de Início é obrigatória</mat-error>
                 <mat-error *ngIf="fieldErrors('internshipStartDate')?.serverError && submitted">
                   {{ fieldErrors('internshipStartDate')?.serverError }}
                 </mat-error>
@@ -33,33 +33,35 @@
 
               <mat-form-field class="form-field-sm">
                 <mat-label>Data de Término</mat-label>
-                <input matInput [matDatepicker]="pickerTwo" formControlName="internshipEndDate" name="internshipEndDate">
+                <input onkeydown="return false" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTwo" formControlName="internshipEndDate" name="internshipEndDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerTwo"></mat-datepicker-toggle>
                 <mat-datepicker #pickerTwo></mat-datepicker>
-                <mat-error *ngIf="fieldErrors('internshipEndDate')?.required">Data de Término é obrigatória</mat-error>
+                <mat-error *ngIf="fieldErrors('internshipEndDate')?.required && submitted">Data de Término é obrigatória</mat-error>
                 <mat-error *ngIf="fieldErrors('internshipEndDate')?.serverError && submitted">
                   {{ fieldErrors('internshipEndDate')?.serverError }}
                 </mat-error>
               </mat-form-field>
+            </fieldset>
 
+            <fieldset>
+              <legend>Plano de Atividades</legend>
               <br>
-
-              <mat-label class="activityPlan">Plano de Atividades</mat-label>
+              <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)">
+              <span>{{ fileName }}</span>
+              <label for="buttonActivityPlan" class="btn-send">Anexar Arquivo</label>
               <br>
-              <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file">
               <br>
-              <label for="buttonActivityPlan" class="btn-send">
-                Anexar Arquivo
-              </label>
-              <mat-error *ngIf="fieldErrors('file')?.required && submitted">PDF é obrigatório</mat-error>
+              <mat-error *ngIf="fieldErrors('file')?.required && submitted">Plano de atividades é obrigatório</mat-error>
               <mat-error *ngIf="fieldErrors('file')?.serverError && submitted">
                 {{ fieldErrors('file')?.serverError }}
               </mat-error>
             </fieldset>
 
-            <button type="submit" form="internship-form" mat-flat-button color="primary">
-              <span>Enviar Plano</span>
-            </button>
+            <fieldset>
+              <button type="submit" form="internship-form" mat-flat-button color="primary">
+                <span>Enviar Plano</span>
+              </button>
+            </fieldset>
           </form>
         </mat-tab>
 
