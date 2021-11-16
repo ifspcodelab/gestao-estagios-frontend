@@ -17,5 +17,11 @@ export class ActivityPlan {
 export class ActivityPlanUpdate {
   companyName: string;
   internshipStartDate: string;
-  internshipEndDate: string 
+  internshipEndDate: string;
+
+  constructor(companyName: string, internshipStartDate: string, internshipEndDate: string) {
+    this.companyName = companyName;
+    this.internshipStartDate = internshipStartDate;
+    this.internshipEndDate = internshipEndDate;
+  }
 }
