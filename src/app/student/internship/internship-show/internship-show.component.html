@@ -1,10 +1,10 @@
-<app-content>
+<app-content *ngIf="!loading">
   <app-content-toolbar title="Estágios" [backUrl]="'/student/internship/'">
   </app-content-toolbar>
   <app-content-main>
-    <app-content-form>
-      <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
-        <mat-tab label="Plano de Atividades">
+    <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
+      <mat-tab label="Plano de Atividades">
+        <app-content-form *ngIf="handleCanSendActivityPlan()">
           <form class="app-form" id="internship-form" [formGroup]="form" (ngSubmit)="onSubmit()">
             <fieldset>
               <legend>Envie seu plano de atividades</legend>
@@ -63,38 +63,19 @@
               </button>
             </fieldset>
           </form>
-        </mat-tab>
-
-<!--        <mat-tab label="Relatórios Mensais">-->
-<!--          <fieldset>-->
-<!--              <legend>Links para modelos de documentação</legend>-->
-<!--              <mat-form-field class="form-field-lg">-->
-<!--                <mat-label>Link para o Plano de Atividades</mat-label>-->
-<!--                <input appearance="fill" matInput placeholder="" formControlName="activityPlanLink" name="activityPlanLink" autocomplete="off">-->
-<!--                <mat-error *ngIf="fieldErrors('activityPlanLink')?.required">Link para o Plano de Atividades é obrigatório</mat-error>-->
-<!--                <mat-error *ngIf="fieldErrors('activityPlanLink')?.notblank">Link para o Plano de Atividades não pode ser vazio</mat-error>-->
-<!--                <mat-error *ngIf="fieldErrors('activityPlanLink')?.serverError && submitted">-->
-<!--                  {{ fieldErrors('activityPlanLink')?.serverError }}-->
-<!--                </mat-error>-->
-<!--              </mat-form-field>-->
-<!--          </fieldset>-->
-<!--        </mat-tab>-->
-
-<!--        <mat-tab label="Relatório Final">-->
-<!--          <fieldset>-->
-<!--              <legend>Prazos em dias corridos para envio de pedidos</legend>-->
-<!--              <mat-form-field class="form-field-sm">-->
-<!--                <mat-label>Avalialiação do pedido de orientação de estágio</mat-label>-->
-<!--                <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="advisorRequestDeadline" name="advisorRequestDeadline" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">-->
-<!--                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.required">Avaliação do pedido é obrigatório</mat-error>-->
-<!--                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.numeric">Avaliação do pedido deve conter apenas números</mat-error>-->
-<!--                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.serverError && submitted">-->
-<!--                  {{ fieldErrors('advisorRequestDeadline')?.serverError }}-->
-<!--                </mat-error>-->
-<!--              </mat-form-field>-->
-<!--          </fieldset>-->
-<!--        </mat-tab>-->
-      </mat-tab-group>
-    </app-content-form>
+        </app-content-form>
+        <app-content-cards entityName="planos de atividade">
+          <app-card
+            *ngFor="let activityPlan of internship.activityPlans"
+            [title]="'Empresa: ' + activityPlan.companyName"
+            [subtitle]="activityPlan.internshipStartDate + ' - ' + activityPlan.internshipEndDate"
+            [break]="true"
+            [complement]="handleActivityPlanStatus(activityPlan.status)"
+            (click)="openActivityPlan(activityPlan)"
+          >
+          </app-card>
+        </app-content-cards>
+      </mat-tab>
+    </mat-tab-group>
   </app-content-main>
 </app-content>

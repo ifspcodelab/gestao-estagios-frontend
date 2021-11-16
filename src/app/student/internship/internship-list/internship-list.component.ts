@@ -68,16 +68,16 @@ export class InternshipListComponent implements OnInit {
 
   handleStatus(status: InternshipStatus): string {
     if (status == InternshipStatus.ACTIVITY_PLAN_PENDING) {
-      return 'Plano de atividades pendente';
+      return 'PLANO DE ATIVIDADES PENDENTE';
     }
     else if (status == InternshipStatus.ACTIVITY_PLAN_SENT) {
-      return 'Plano de atividades enviado';
+      return 'PLANO DE ATIVIDADES ENVIADO';
     }
     else if (status == InternshipStatus.IN_PROGRESS) {
-      return 'Em andamento';
+      return 'EM ANDAMENTO';
     }
     else {
-      return 'Em finalização'
+      return 'EM FINALIZAÇÃO'
     }
   }
 
