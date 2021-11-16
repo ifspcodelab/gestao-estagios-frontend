@@ -8,6 +8,7 @@ import { Internship } from "../models/internship.model";
     providedIn: 'root'
   })
 export class InternshipService {
+  apiUrl = `${environment.apiUrl}/internships`;
   apiUrlStudent = `${environment.apiUrl}/students`;
   apiUrlAdvisor = `${environment.apiUrl}/advisors`;
 
@@ -25,5 +26,9 @@ export class InternshipService {
 
   getByAdvisorId(id: string): Observable<Internship[]> {
     return this.httpClient.get<Internship[]>(`${this.apiUrlAdvisor}/${id}/internships`, this.httpOptions);
+  }
+
+  getById(id: string): Observable<Internship> {
+    return this.httpClient.get<Internship>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
 } 

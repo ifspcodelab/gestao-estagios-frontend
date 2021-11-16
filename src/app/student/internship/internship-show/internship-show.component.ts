@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DateAdapter } from '@angular/material/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { finalize, first } from 'rxjs/operators';
+import { ActivityPlan } from 'src/app/core/models/activity-plan.model';
+import { InternshipStatus } from 'src/app/core/models/enums/InternshipStatus';
+import { RequestStatus } from 'src/app/core/models/enums/request-status';
+import { Internship } from 'src/app/core/models/internship.model';
+import { InternshipService } from 'src/app/core/services/internship.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { AppValidators } from "../../../core/validators/app-validators";
 
 @Component({
@@ -9,6 +18,9 @@ import { AppValidators } from "../../../core/validators/app-validators";
   styleUrls: ['./internship-show.component.scss']
 })
 export class InternshipShowComponent implements OnInit {
+  internship: Internship
+  id: string | null;
+  loading: boolean = true;
   form: FormGroup;
   submitted = false;
   minDate: Date;
@@ -18,13 +30,48 @@ export class InternshipShowComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private adapter: DateAdapter<any>,
+    private route: ActivatedRoute,
+    private loaderService: LoaderService,
+    private internshipService: InternshipService,
+    private notificationService: NotificationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+
+    if (this.id) {
+      this.loaderService.show();
+      this.fetchInternship(this.id);
+    }
+
     this.adapter.setLocale('pt-br');
     const currentDate = new Date();
     this.minDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+
     this.form = this.buildForm();
+  }
+
+  fetchInternship(internshipId: string) {
+    this.internshipService.getById(internshipId)
+      .pipe(
+        first(),
+        finalize(() => {
+          this.loaderService.hide();
+          this.loading = false;
+        })
+      )
+      .subscribe (
+        internship => {
+          this.internship = internship;
+        },
+        error => {
+          if(error.status >= 400 || error.status <= 499) {
+            this.notificationService.error(`Campus não encontrado com id ${this.id}`);
+            this.router.navigate(['student/internship']);
+          }
+        }
+      )
   }
 
   public onSubmit() {
@@ -72,5 +119,28 @@ export class InternshipShowComponent implements OnInit {
     if (file) {
       this.fileName = file.name;
     }
+  }
+
+  handleCanSendActivityPlan(): boolean {
+    if (this.internship.status === InternshipStatus.ACTIVITY_PLAN_PENDING) {
+      return true;
+    }
+    return false
+  }
+
+  handleActivityPlanStatus(status: RequestStatus): string {
+    if (status === RequestStatus.PENDING) {
+      return 'AGUARDANDO AVALIAÇÃO';
+    }
+    else if (status === RequestStatus.ACCEPTED) {
+      return 'DEFERIDO';
+    }
+    else {
+      return 'INDEFERIDO';
+    }
+  }
+
+  openActivityPlan(activityPlan: ActivityPlan) {
+    window.open(activityPlan.activityPlanUrl);
   }
 }
