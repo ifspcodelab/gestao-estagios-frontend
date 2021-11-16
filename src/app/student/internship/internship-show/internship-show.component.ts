@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, first } from 'rxjs/operators';
-import { ActivityPlan } from 'src/app/core/models/activity-plan.model';
+import { ActivityPlan, ActivityPlanUpdate } from 'src/app/core/models/activity-plan.model';
 import { InternshipStatus } from 'src/app/core/models/enums/InternshipStatus';
 import { RequestStatus } from 'src/app/core/models/enums/request-status';
 import { Internship } from 'src/app/core/models/internship.model';
+import { ActivityPlanService } from 'src/app/core/services/activity-plan.service';
 import { InternshipService } from 'src/app/core/services/internship.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -26,6 +27,7 @@ export class InternshipShowComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
   fileName: string = "Nenhum arquivo anexado.";
+  data: FormData;
 
   constructor(
     private fb: FormBuilder,
@@ -34,7 +36,8 @@ export class InternshipShowComponent implements OnInit {
     private loaderService: LoaderService,
     private internshipService: InternshipService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private activityPlanService: ActivityPlanService
   ) { }
 
   ngOnInit(): void {
@@ -80,6 +83,30 @@ export class InternshipShowComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    const startDate = new Date(this.form.get('internshipStartDate')!.value).toISOString();
+    const endDate = new Date(this.form.get('internshipEndDate')!.value).toISOString();
+    const activityPlanUpdate: ActivityPlanUpdate = new ActivityPlanUpdate(
+      this.form.get('companyName')!.value,
+      startDate,
+      endDate
+    );
+    this.activityPlanService.create(this.id!, this.data)
+      .pipe(
+        first()
+      )
+      .subscribe(
+        activityPlan => {
+          this.activityPlanService.update(this.id!, activityPlan.id, activityPlanUpdate)
+            .pipe()
+            .subscribe(
+              activityPlan => {
+                this.internship.activityPlans.push(activityPlan);
+                this.internship.status = InternshipStatus.ACTIVITY_PLAN_SENT;
+              }
+            )
+        }
+      )
   }
 
   field(path: string) {
@@ -118,6 +145,8 @@ export class InternshipShowComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.fileName = file.name;
+      this.data = new FormData();
+      this.data.append('file', file);
     }
   }
 

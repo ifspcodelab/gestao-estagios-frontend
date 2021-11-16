@@ -20,10 +20,10 @@ export class ActivityPlanService {
   constructor(private httpClient: HttpClient) { }
 
   create(internshipId: string, data: FormData): Observable<ActivityPlan> {
-    return this.httpClient.post<ActivityPlan>(`${this.apiUrl}/${internshipId}/activity-plans`, data, this.httpOptions);
+    return this.httpClient.post<ActivityPlan>(`${this.apiUrl}/${internshipId}/activity-plans`, data);
   }
 
-  update(internshipId: string, activityPlanId: string, activityPlanUpdate: ActivityPlanUpdate): Observable<Internship[]> {
-    return this.httpClient.put<Internship[]>(`${this.apiUrl}/${internshipId}/activity-plans/${activityPlanId}`, activityPlanUpdate, this.httpOptions);
+  update(internshipId: string, activityPlanId: string, activityPlanUpdate: ActivityPlanUpdate): Observable<ActivityPlan> {
+    return this.httpClient.put<ActivityPlan>(`${this.apiUrl}/${internshipId}/activity-plans/${activityPlanId}`, activityPlanUpdate, this.httpOptions);
   }
 } 

@@ -9,10 +9,10 @@
             <fieldset>
               <legend>Envie seu plano de atividades</legend>
               <mat-form-field class="form-field-lg">
-                <mat-label>Nome da Empresa</mat-label>
+                <mat-label>Razão Social</mat-label>
                 <input type="text" appearance="fill" matInput placeholder="" formControlName="companyName" name="companyName" autocomplete="off">
-                <mat-error *ngIf="fieldErrors('companyName')?.required">Nome da Empresa é obrigatório</mat-error>
-                <mat-error *ngIf="fieldErrors('companyName')?.notblank">Nome da Empresa não pode ser vazio</mat-error>
+                <mat-error *ngIf="fieldErrors('companyName')?.required">Razão Social é obrigatória</mat-error>
+                <mat-error *ngIf="fieldErrors('companyName')?.notblank">Razão Social não pode ser vazia</mat-error>
                 <mat-error *ngIf="fieldErrors('companyName')?.serverError && submitted">
                   {{ fieldErrors('companyName')?.serverError }}
                 </mat-error>
