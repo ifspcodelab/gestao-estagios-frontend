@@ -1,0 +1,47 @@
+<h1 id="header" mat-dialog-title></h1>
+<div mat-dialog-content>
+  <form>
+    <mat-form-field class="form-field-lg">
+      <mat-label>Motivo do indeferimento</mat-label>
+      <textarea
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="10"
+        appearance="fill"
+        matInput
+        placeholder=""
+        formControlName="details"
+        name="details">
+      </textarea>
+      <mat-error *ngIf="fieldErrors('details')?.required && submitted">Motivo do indeferimento é obrigatório</mat-error>
+    </mat-form-field>
+  </form>
+  <form>
+    <fieldset>
+      <mat-label>Tipo de Estágio</mat-label>
+      <mat-radio-button color="primary">Estágio Obrigatório</mat-radio-button>
+      <mat-radio-button color="primary">Estágio Não Obrigatório</mat-radio-button>
+
+      <mat-form-field class="form-field-lg">
+        <mat-label>Mensagem</mat-label>
+        <textarea
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          appearance="fill"
+          matInput
+          placeholder=""
+          formControlName="message"
+          name="message">
+        </textarea>
+        <mat-error *ngIf="fieldErrors('message')?.required && submitted">Mensagem é obrigatória</mat-error>
+      </mat-form-field>
+    </fieldset>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button type="submit">Confirmar</button>
+</div>

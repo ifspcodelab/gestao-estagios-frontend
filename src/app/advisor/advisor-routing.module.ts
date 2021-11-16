@@ -3,11 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdvisorComponent } from './advisor.component';
 
 const routes: Routes = [
-  { 
-    path: '', 
+  {
+    path: '',
     component: AdvisorComponent,
     children: [
-      { path: 'advisor-request', loadChildren: () => import('./advisor-request/advisor-request.module').then(m => m.AdvisorRequestModule) }
+      { path: 'advisor-request', loadChildren: () => import('./advisor-request/advisor-request.module').then(m => m.AdvisorRequestModule) },
+      { path: 'internship', loadChildren: () => import('./internship/internship.module').then(m => m.InternshipModule) }
     ]
   }
 ];

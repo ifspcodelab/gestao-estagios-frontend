@@ -1,0 +1,25 @@
+.form-field-lg {
+  width: 100%;
+}
+
+.mat-dialog-content {
+  width: 35vw;
+  height: 50%;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 700px) {
+  .mat-dialog-content {
+    width: 65vw;
+    height: 20vh;
+  }
+}
