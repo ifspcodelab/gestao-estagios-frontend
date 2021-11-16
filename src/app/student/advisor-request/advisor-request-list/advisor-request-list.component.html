@@ -13,6 +13,7 @@
         *ngFor="let request of requests" 
         [title]="request.advisor.user.name" 
         [subtitle]="handleStatus(request.status)"
+        [separator]="true"
         [complement]="request.expiresAt | date : 'd/M/yy, h:mm a' : 'en-US'"
       >
       </app-card>

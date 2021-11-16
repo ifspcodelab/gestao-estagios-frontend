@@ -7,7 +7,7 @@ import { Internship } from "../models/internship.model";
 @Injectable({
     providedIn: 'root'
   })
-export class AdvisorRequestService {
+export class InternshipService {
   apiUrlStudent = `${environment.apiUrl}/students`;
   apiUrlAdvisor = `${environment.apiUrl}/advisors`;
 
