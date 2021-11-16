@@ -1,9 +1,15 @@
-<app-content>
+<app-content *ngIf="internships$ | async as internships">
   <app-content-toolbar title="Estágios">
   </app-content-toolbar>
   <app-content-main>
-    <app-content-cards entityName="estágio" >
-      <app-card [title]="'Orientador: Leonardo Motta'" [subtitle]="'Estágio Obrigatório ou Não Obrigatório'"  [link]="'/student/internship/1234'">
+    <app-content-cards entityName="estágio" [emptyState]="internships.length == 0">
+      <app-card
+      *ngFor="let internship of internships" 
+      [title]="'Orientador: ' + internship.advisorRequest.advisor.user.name" 
+      [subtitle]="handleType(internship.internshipType)"
+      [break]="true"
+      [complement]="handleStatus(internship.status)"  
+      [link]="'/student/internship/' + internship.id">
       </app-card>
     </app-content-cards>
   </app-content-main>
