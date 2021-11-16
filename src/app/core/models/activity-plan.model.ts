@@ -13,3 +13,9 @@ export class ActivityPlan {
   details: string;
   internship: Internship;
 }
+
+export class ActivityPlanUpdate {
+  companyName: string;
+  internshipStartDate: string;
+  internshipEndDate: string 
+}
