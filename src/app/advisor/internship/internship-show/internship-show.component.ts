@@ -82,7 +82,18 @@ export class InternshipShowComponent implements OnInit {
     }
   }
 
-  
+  handleActivityPlanStatus(status: RequestStatus): string {
+    if (status === RequestStatus.PENDING) {
+      return 'AGUARDANDO AVALIAÇÃO';
+    }
+    else if (status === RequestStatus.ACCEPTED) {
+      return 'DEFERIDO';
+    }
+    else {
+      return 'INDEFERIDO';
+    }
+  }
+
   openActivityPlan(activityPlan: ActivityPlan) {
     window.open(activityPlan.activityPlanUrl);
   }
