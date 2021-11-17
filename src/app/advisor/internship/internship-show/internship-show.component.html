@@ -8,6 +8,15 @@
       [subtitle]="handleType(internship.internshipType)"
     >
     </app-content-detail>
+    <mat-list *ngIf="handleInternshipIsInProgress()">
+      <mat-list-item>
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <h3 matLine class="line-title">Informações do estágio</h3>
+        <p matLine>Razão social: {{ deferredActivityPlan!.companyName }}</p>
+        <p matLine>Início do estágio: {{ deferredActivityPlan!.internshipStartDate }}</p>
+        <p matLine>Término do estágio: {{ deferredActivityPlan!.internshipStartDate }}</p>
+      </mat-list-item>
+    </mat-list>
     <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
       <mat-tab label="Plano de Atividades">
         <app-content-cards entityName="planos de atividade">
@@ -18,12 +27,12 @@
             (click)="openActivityPlan(activityPlan)"
           >
           <div card-actions>
-            <button mat-button color="warn" (click)="handleAppraiseActivityPlan($event, false)">
+            <button *ngIf="handleCanAppraiseActivityPlan(activityPlan)" mat-button color="warn" (click)="handleAppraiseActivityPlan($event, false, activityPlan.id)">
               Indeferir
             </button>
           </div>
           <div card-actions>
-            <button mat-button color="primary" (click)="handleAppraiseActivityPlan($event, true)">
+            <button *ngIf="handleCanAppraiseActivityPlan(activityPlan)" mat-button color="primary" (click)="handleAppraiseActivityPlan($event, true, activityPlan.id)">
               Deferir
             </button>
           </div>

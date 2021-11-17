@@ -7,12 +7,14 @@ import { InternshipComponent } from "./internship.component";
 import { InternshipListComponent } from "./internship-list/internship-list.component";
 import { InternshipRoutingModule } from "./internship-routing.module";
 import { InternshipShowComponent } from './internship-show/internship-show.component';
+import { ActivityPlanAppraisalComponent } from './activity-plan-appraisal/activity-plan-appraisal.component';
 
 @NgModule({
   declarations: [
     InternshipComponent,
     InternshipListComponent,
-    InternshipShowComponent
+    InternshipShowComponent,
+    ActivityPlanAppraisalComponent
   ],
   imports: [
     CommonModule,
