@@ -1,0 +1,35 @@
+<app-content *ngIf="!loading">
+  <app-content-toolbar title="Estágios" [backUrl]="'/advisor/internship/'">
+  </app-content-toolbar>
+  <app-content-main>
+    <app-content-detail 
+      *ngIf="!loading" 
+      [title]="internship.advisorRequest.student.user.name" 
+      [subtitle]="handleType(internship.internshipType)"
+    >
+    </app-content-detail>
+    <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
+      <mat-tab label="Plano de Atividades">
+        <app-content-cards entityName="planos de atividade">
+          <app-card
+            *ngFor="let activityPlan of internship.activityPlans"
+            [title]="'Razão social: ' + activityPlan.companyName"
+            [subtitle]="activityPlan.internshipStartDate + ' - ' + activityPlan.internshipEndDate"
+            (click)="openActivityPlan(activityPlan)"
+          >
+          <div card-actions>
+            <button mat-button color="warn" (click)="handleAppraiseActivityPlan($event, false)">
+              Indeferir
+            </button>
+          </div>
+          <div card-actions>
+            <button mat-button color="primary" (click)="handleAppraiseActivityPlan($event, true)">
+              Deferir
+            </button>
+          </div>
+          </app-card>
+        </app-content-cards>
+      </mat-tab>
+    </mat-tab-group>
+  </app-content-main>
+</app-content>

@@ -1,0 +1,24 @@
+<app-content *ngIf="internships$ | async as internships">
+  <app-content-toolbar title="Estágios">
+  </app-content-toolbar>
+  <app-content-main>
+    <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
+      <mat-tab label="Aguardando Documentação">
+        <app-content-cards entityName="estágio" [emptyState]="internships.length == 0">
+          <app-card
+          *ngFor="let internship of internships" 
+          [title]="'Aluno: ' + internship.advisorRequest.student.user.name" 
+          [subtitle]="handleType(internship.internshipType)"
+          [break]="true"
+          [complement]="handleStatus(internship.status)"  
+          [link]="'/advisor/internship/' + internship.id">
+          </app-card>
+        </app-content-cards>
+      </mat-tab>
+      <mat-tab label="Em andamento">
+      </mat-tab>
+      <mat-tab label="Finalização">
+      </mat-tab>
+    </mat-tab-group>
+  </app-content-main>
+</app-content>
