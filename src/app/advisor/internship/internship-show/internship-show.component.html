@@ -24,6 +24,8 @@
             *ngFor="let activityPlan of internship.activityPlans"
             [title]="'Razão social: ' + activityPlan.companyName"
             [subtitle]="activityPlan.internshipStartDate + ' - ' + activityPlan.internshipEndDate"
+            [break]="true"
+            [complement]="handleActivityPlanStatus(activityPlan.status)"
             (click)="openActivityPlan(activityPlan)"
           >
           <div card-actions>
