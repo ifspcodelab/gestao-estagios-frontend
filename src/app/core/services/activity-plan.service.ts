@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { ActivityPlan, ActivityPlanUpdate } from "../models/activity-plan.model";
+import { ActivityPlan, ActivityPlanAppraisal, ActivityPlanUpdate } from "../models/activity-plan.model";
 import { Internship } from "../models/internship.model";
 
 @Injectable({
@@ -25,5 +25,9 @@ export class ActivityPlanService {
 
   update(internshipId: string, activityPlanId: string, activityPlanUpdate: ActivityPlanUpdate): Observable<ActivityPlan> {
     return this.httpClient.put<ActivityPlan>(`${this.apiUrl}/${internshipId}/activity-plans/${activityPlanId}`, activityPlanUpdate, this.httpOptions);
+  }
+
+  appraise(internshipId: string, activityPlanId: string, activityPlanAprraisal: ActivityPlanAppraisal): Observable<ActivityPlan> {
+    return this.httpClient.put<ActivityPlan>(`${this.apiUrl}/${internshipId}/activity-plans/${activityPlanId}/appraisal`, activityPlanAprraisal, this.httpOptions);
   }
 } 

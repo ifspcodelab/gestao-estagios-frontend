@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DateAdapter } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, first } from 'rxjs/operators';
 import { ActivityPlan, ActivityPlanUpdate } from 'src/app/core/models/activity-plan.model';
@@ -8,11 +7,10 @@ import { InternshipType } from 'src/app/core/models/enums/internship-type';
 import { InternshipStatus } from 'src/app/core/models/enums/InternshipStatus';
 import { RequestStatus } from 'src/app/core/models/enums/request-status';
 import { Internship } from 'src/app/core/models/internship.model';
-import { ActivityPlanService } from 'src/app/core/services/activity-plan.service';
 import { InternshipService } from 'src/app/core/services/internship.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
-import { AppValidators } from "../../../core/validators/app-validators";
+import { ActivityPlanAppraisalComponent } from '../activity-plan-appraisal/activity-plan-appraisal.component';
 
 @Component({
   selector: 'app-internship-show',
@@ -20,23 +18,18 @@ import { AppValidators } from "../../../core/validators/app-validators";
   styleUrls: ['./internship-show.component.scss']
 })
 export class InternshipShowComponent implements OnInit {
-  internship: Internship
+  internship: Internship;
+  deferredActivityPlan: ActivityPlan | undefined;
   id: string | null;
   loading: boolean = true;
-  form: FormGroup;
-  submitted = false;
-  minDate: Date;
-  maxDate: Date;
-  fileName: string = "Nenhum arquivo anexado.";
-  data: FormData;
 
   constructor(
     private route: ActivatedRoute,
     private loaderService: LoaderService,
     private internshipService: InternshipService,
     private notificationService: NotificationService,
-    private activityPlanService: ActivityPlanService,
     private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -60,6 +53,7 @@ export class InternshipShowComponent implements OnInit {
       .subscribe (
         internship => {
           this.internship = internship;
+          this.deferredActivityPlan = this.internship.activityPlans.find(p => p.status === RequestStatus.ACCEPTED);
         },
         error => {
           if(error.status >= 400 || error.status <= 499) {
@@ -88,11 +82,38 @@ export class InternshipShowComponent implements OnInit {
     }
   }
 
-  handleAppraiseActivityPlan($event: Event, deferred: boolean) {
-    $event.stopPropagation();
-  }
-
+  
   openActivityPlan(activityPlan: ActivityPlan) {
     window.open(activityPlan.activityPlanUrl);
+  }
+  
+  private getDialogConfig(deferred: boolean, activityPlanId: string) {
+    return {
+      autoFocus: true,
+      data: {
+        deferred: deferred,
+        activityPlanId: activityPlanId,
+        internshipId: this.id
+      }
+    };
+  }
+
+  handleCanAppraiseActivityPlan(activityPlan: ActivityPlan) {
+    if (activityPlan.status === RequestStatus.PENDING) {
+      return true;
+    }
+    return false;
+  }
+
+  handleInternshipIsInProgress() {
+    if (this.internship.status === InternshipStatus.IN_PROGRESS) {
+      return true
+    }
+    return false;
+  }
+
+  handleAppraiseActivityPlan($event: Event, deferred: boolean, activityPlanId: string) {
+    $event.stopPropagation();
+    this.dialog.open(ActivityPlanAppraisalComponent, this.getDialogConfig(deferred, activityPlanId));
   }
 }

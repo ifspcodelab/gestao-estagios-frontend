@@ -25,3 +25,15 @@ export class ActivityPlanUpdate {
     this.internshipEndDate = internshipEndDate;
   }
 }
+
+export class ActivityPlanAppraisal {
+  status: RequestStatus;
+  details: string;
+  isRequired: boolean | undefined
+
+  constructor(status: RequestStatus, details: string, isRequired?: boolean) {
+    this.status = status;
+    this.details = details;
+    this.isRequired = isRequired
+  }
+}

@@ -1,0 +1,48 @@
+<h1 id="header" mat-dialog-title></h1>
+<div mat-dialog-content>
+  <form *ngIf="!data.deferred" class="app-form" id="activity-plan-appraisal-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field class="form-field-lg">
+      <mat-label>Motivo do indeferimento</mat-label>
+      <textarea
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="10"
+        appearance="fill"
+        matInput
+        placeholder=""
+        formControlName="details"
+        name="details">
+      </textarea>
+      <mat-error *ngIf="fieldErrors('details')?.required">Motivo do indeferimento é obrigatório</mat-error>
+    </mat-form-field>
+  </form>
+  <form *ngIf="data.deferred" class="app-form" id="activity-plan-appraisal-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <fieldset>
+      <legend>Tipo de Estágio</legend>
+      <mat-radio-group required (change)="onRadioChange($event)" class="radio-group" aria-label="Selecione um tipo de estágio" color="primary">
+        <mat-radio-button class="radio-button" value="1" checked>Estágio Obrigatório</mat-radio-button>
+        <mat-radio-button class="radio-button" value="2">Estágio Não Obrigatório</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+    <mat-form-field class="form-field-lg">
+      <mat-label>Detalhes do Estágio</mat-label>
+      <textarea
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="10"
+        appearance="fill"
+        matInput
+        placeholder=""
+        formControlName="details"
+        name="details">
+      </textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button type="submit" form="activity-plan-appraisal-form" mat-button color="primary">Confirmar</button>
+</div>
+
