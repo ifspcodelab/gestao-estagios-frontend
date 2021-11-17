@@ -89,12 +89,10 @@ export class ActivityPlanAppraisalComponent implements OnInit {
     this.activityPlanService.appraise(this.data.internshipId, this.data.activityPlanId, activityPlanAppraisal)
       .pipe(first())
       .subscribe(
-        _ => {
+        activityPlan => {
           this.notificationService.success('Plano de atividades avaliado com sucesso!');
-          this.dialogRef.close();
+          this.dialogRef.close(activityPlan);
         }
       )
-
   }
-
 }

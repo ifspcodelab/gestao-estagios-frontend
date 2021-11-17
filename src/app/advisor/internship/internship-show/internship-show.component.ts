@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, first } from 'rxjs/operators';
-import { ActivityPlan, ActivityPlanUpdate } from 'src/app/core/models/activity-plan.model';
+import { ActivityPlan } from 'src/app/core/models/activity-plan.model';
 import { InternshipType } from 'src/app/core/models/enums/internship-type';
 import { InternshipStatus } from 'src/app/core/models/enums/InternshipStatus';
 import { RequestStatus } from 'src/app/core/models/enums/request-status';
@@ -125,6 +125,19 @@ export class InternshipShowComponent implements OnInit {
 
   handleAppraiseActivityPlan($event: Event, deferred: boolean, activityPlanId: string) {
     $event.stopPropagation();
-    this.dialog.open(ActivityPlanAppraisalComponent, this.getDialogConfig(deferred, activityPlanId));
+    this.dialog.open(ActivityPlanAppraisalComponent, this.getDialogConfig(deferred, activityPlanId))
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.deferredActivityPlan = result;
+          if(result.status == RequestStatus.ACCEPTED) {
+            this.internship.status = InternshipStatus.IN_PROGRESS;
+          }
+          const activityPlanFound = this.internship.activityPlans.find(p => p.id == result.id);
+          if (activityPlanFound) {
+            activityPlanFound.status = result.status;
+          }
+        }
+      });
   }
 }

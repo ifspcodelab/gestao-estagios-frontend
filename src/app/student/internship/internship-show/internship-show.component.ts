@@ -103,6 +103,7 @@ export class InternshipShowComponent implements OnInit {
               activityPlan => {
                 this.internship.activityPlans.push(activityPlan);
                 this.internship.status = InternshipStatus.ACTIVITY_PLAN_SENT;
+                this.notificationService.success('Plano de atividades enviado com sucesso!');
               }
             )
         }

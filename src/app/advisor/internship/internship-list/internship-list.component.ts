@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 import { InternshipType } from 'src/app/core/models/enums/internship-type';
 import { InternshipStatus } from 'src/app/core/models/enums/InternshipStatus';
@@ -9,7 +8,6 @@ import { InternshipService } from 'src/app/core/services/internship.service';
 import { JwtTokenService } from 'src/app/core/services/jwt-token.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
-import { StudentService } from 'src/app/core/services/student.service';
 
 @Component({
   selector: 'app-internship-list',
@@ -17,7 +15,11 @@ import { StudentService } from 'src/app/core/services/student.service';
   styleUrls: ['./internship-list.component.scss']
 })
 export class InternshipListComponent implements OnInit {
-  internships$: Observable<Internship[]>
+  loading: boolean = true;
+  internships: Internship[] = [];
+  waitingDocsInternships: Internship[] = [];
+  inProgressInternships: Internship[] = [];
+  finishedInternships: Internship[] = [];
 
   constructor(
     private advisorService: AdvisorService,
@@ -39,11 +41,20 @@ export class InternshipListComponent implements OnInit {
       )
       .subscribe(
         advisor => {
-          this.internships$ = this.internshipService.getByAdvisorId(advisor.id)
+          this.internshipService.getByAdvisorId(advisor.id)
             .pipe(
               finalize(() => {
+                this.loading = false;
                 this.loaderService.hide();
               })
+            )
+            .subscribe(
+              internships => {
+                this.internships = internships;
+                this.waitingDocsInternships = this.internships.filter(i => i.status === InternshipStatus.ACTIVITY_PLAN_PENDING || i.status === InternshipStatus.ACTIVITY_PLAN_SENT);
+                this.inProgressInternships = this.internships.filter(i => i.status === InternshipStatus.IN_PROGRESS);
+                this.finishedInternships = this.internships.filter(i => i.status === InternshipStatus.FINISHED);
+              }
             )
         }
       )
