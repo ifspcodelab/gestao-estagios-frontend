@@ -44,17 +44,19 @@
             </fieldset>
 
             <fieldset>
-              <legend>Plano de Atividades</legend>
+              <legend>Enviar plano de atividades: tamanho máximo ()</legend>
               <br>
-              <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)">
+              <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)" (change)="ValidateSize($event)" >
               <span>{{ fileName }}</span>
               <label for="buttonActivityPlan" class="btn-send">Anexar Arquivo</label>
               <br>
               <br>
               <mat-error *ngIf="fieldErrors('file')?.required && submitted">Plano de atividades é obrigatório</mat-error>
+              <mat-error *ngIf="fieldErrors('file')?.required && submitted">Plano de atividades deve ter no máximo:</mat-error>
               <mat-error *ngIf="fieldErrors('file')?.serverError && submitted">
                 {{ fieldErrors('file')?.serverError }}
               </mat-error>
+              <small>*Modelo Plano de Atividades <a href="">(Clique aqui!)</a></small>
             </fieldset>
 
             <fieldset>

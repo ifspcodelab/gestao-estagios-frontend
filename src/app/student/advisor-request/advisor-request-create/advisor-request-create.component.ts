@@ -64,7 +64,7 @@ export class AdvisorRequestCreateComponent implements OnInit {
           this.internshipMessage = this.parameter.internshipRequiredOrNotMessage;
         }
       )
-      
+
     this.studentService.getStudentByUserId(userId!)
       .pipe(first())
       .subscribe(
@@ -84,9 +84,6 @@ export class AdvisorRequestCreateComponent implements OnInit {
 
   buildForm(): FormGroup {
     return this.fb.group({
-      name: ['',
-        [Validators.required, AppValidators.notBlank, AppValidators.alpha]
-      ],
       details: ['',
         [Validators.required, AppValidators.notBlank]
       ]
@@ -96,15 +93,15 @@ export class AdvisorRequestCreateComponent implements OnInit {
   getBackUrl(): string {
     return '/student/advisor-request';
   }
- 
+
   field(path: string) {
     return this.form.get(path)!;
   }
-  
+
   fieldErrors(path: string) {
     return this.field(path)?.errors;
   }
-  
+
   onSubmit() {
     this.submitted = true;
 
@@ -113,7 +110,7 @@ export class AdvisorRequestCreateComponent implements OnInit {
     }
 
     const advisorRequestCreate = new AdvisorRequestCreate(
-      this.internshipType, 
+      this.internshipType,
       this.field('details').value,
       this.student.id,
       this.student.curriculum.id,
@@ -141,7 +138,7 @@ export class AdvisorRequestCreateComponent implements OnInit {
     if ($event.value == 3) {
       this.internshipMessage = this.parameter.professionalValidationMessage;
       this.internshipType = InternshipType.PROFESSIONAL_VALIDATION;
-    } 
+    }
   }
 
   onAdvisorSelected(advisor: Advisor, index: number): void {
