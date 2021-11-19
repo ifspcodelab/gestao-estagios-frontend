@@ -151,6 +151,14 @@ export class InternshipShowComponent implements OnInit {
     }
   }
 
+  ValidateSize(event: any) {
+    const file = event.target.files[0];
+    if (file.size > 1048576) {
+      alert("é maior amado!");
+      return;
+    }
+  }
+
   handleCanSendActivityPlan(): boolean {
     if (this.internship.status === InternshipStatus.ACTIVITY_PLAN_PENDING) {
       return true;
