@@ -44,7 +44,7 @@
             </fieldset>
 
             <fieldset>
-              <legend>Enviar plano de atividades: tamanho máximo ()</legend>
+              <legend>Enviar plano de atividades: tamanho máximo (1mb)</legend>
               <br>
               <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)" (change)="ValidateSize($event)" >
               <span>{{ fileName }}</span>
