@@ -2,9 +2,9 @@
   <app-content-toolbar title="Estágios" [backUrl]="'/advisor/internship/'">
   </app-content-toolbar>
   <app-content-main>
-    <app-content-detail 
-      *ngIf="!loading" 
-      [title]="internship.advisorRequest.student.user.name" 
+    <app-content-detail
+      *ngIf="!loading"
+      [title]="internship.advisorRequest.student.user.name"
       [subtitle]="handleType(internship.internshipType)"
     >
     </app-content-detail>
@@ -13,8 +13,8 @@
         <mat-icon mat-list-icon>folder</mat-icon>
         <h3 matLine class="line-title">Informações do estágio</h3>
         <p matLine>Razão social: {{ deferredActivityPlan!.companyName }}</p>
-        <p matLine>Início do estágio: {{ deferredActivityPlan!.internshipStartDate }}</p>
-        <p matLine>Término do estágio: {{ deferredActivityPlan!.internshipStartDate }}</p>
+        <p matLine>Início do estágio: {{ deferredActivityPlan!.internshipStartDate | date:'dd/MM/yyyy'}}</p>
+        <p matLine>Término do estágio: {{ deferredActivityPlan!.internshipEndDate | date:'dd/MM/yyyy' }}</p>
       </mat-list-item>
     </mat-list>
     <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">

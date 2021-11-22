@@ -12,6 +12,8 @@ import { InternshipService } from 'src/app/core/services/internship.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { AppValidators } from "../../../core/validators/app-validators";
+import {ParameterService} from "../../../core/services/parameter.service";
+import {Parameter} from "../../../core/models/parameter.model";
 
 @Component({
   selector: 'app-internship-show',
@@ -28,6 +30,7 @@ export class InternshipShowComponent implements OnInit {
   maxDate: Date;
   fileName: string = "Nenhum arquivo anexado.";
   data: FormData;
+  parameter: Parameter;
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +40,8 @@ export class InternshipShowComponent implements OnInit {
     private internshipService: InternshipService,
     private notificationService: NotificationService,
     private router: Router,
-    private activityPlanService: ActivityPlanService
+    private activityPlanService: ActivityPlanService,
+    private parameterService: ParameterService,
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +49,7 @@ export class InternshipShowComponent implements OnInit {
 
     if (this.id) {
       this.loaderService.show();
+      this.fetchParameters();
       this.fetchInternship(this.id);
     }
 
@@ -53,6 +58,22 @@ export class InternshipShowComponent implements OnInit {
     this.minDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
 
     this.form = this.buildForm();
+  }
+
+  fetchParameters() {
+    this.parameterService.getParameters()
+      .pipe(
+        first(),
+      )
+      .subscribe(
+        parameter => {
+          this.parameter = parameter;
+        },error => {
+          if(error.status >= 400 || error.status <= 499) {
+            this.notificationService.error(`Parâmetros não encontrados!`);
+          }
+        }
+      )
   }
 
   fetchInternship(internshipId: string) {
@@ -145,18 +166,21 @@ export class InternshipShowComponent implements OnInit {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
+      if(this.ValidateSize(file)) {
+        return;
+      }
       this.fileName = file.name;
       this.data = new FormData();
       this.data.append('file', file);
     }
   }
 
-  ValidateSize(event: any) {
-    const file = event.target.files[0];
-    if (file.size > 1048576) {
-      alert("é maior amado!");
-      return;
+  ValidateSize(file: any): boolean {
+    if (file.size > this.parameter.activityPlanFileSizeMegabytes * 1048576) {
+      this.notificationService.success(`Arquivo maior que ${this.parameter.activityPlanFileSizeMegabytes}MB!`);
+      return true;
     }
+    return false;
   }
 
   handleCanSendActivityPlan(): boolean {
