@@ -97,7 +97,7 @@ export class InternshipShowComponent implements OnInit {
   openActivityPlan(activityPlan: ActivityPlan) {
     window.open(activityPlan.activityPlanUrl);
   }
-  
+
   private getDialogConfig(deferred: boolean, activityPlanId: string) {
     return {
       autoFocus: true,
