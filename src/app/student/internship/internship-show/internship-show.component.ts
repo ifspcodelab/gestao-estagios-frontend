@@ -14,6 +14,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { AppValidators } from "../../../core/validators/app-validators";
 import {ParameterService} from "../../../core/services/parameter.service";
 import {Parameter} from "../../../core/models/parameter.model";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-internship-show',
@@ -42,6 +43,7 @@ export class InternshipShowComponent implements OnInit {
     private router: Router,
     private activityPlanService: ActivityPlanService,
     private parameterService: ParameterService,
+    private datePipe: DatePipe,
   ) { }
 
   ngOnInit(): void {
@@ -204,5 +206,9 @@ export class InternshipShowComponent implements OnInit {
 
   openActivityPlan(activityPlan: ActivityPlan) {
     window.open(activityPlan.activityPlanUrl);
+  }
+
+  formatDate(internshipStartDate: string, internshipEndDate: string) : string {
+    return `${this.datePipe.transform(internshipStartDate, 'dd/MM/yyyy')} - ${this.datePipe.transform(internshipEndDate, 'dd/MM/yyyy')}`
   }
 }

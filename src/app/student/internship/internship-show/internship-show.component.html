@@ -69,7 +69,7 @@
           <app-card
             *ngFor="let activityPlan of internship.activityPlans"
             [title]="'Empresa: ' + activityPlan.companyName"
-            [subtitle]="activityPlan.internshipStartDate + ' - ' + activityPlan.internshipEndDate"
+            [subtitle]="formatDate(activityPlan.internshipStartDate, activityPlan.internshipEndDate)"
             [break]="true"
             [complement]="handleActivityPlanStatus(activityPlan.status)"
             (click)="openActivityPlan(activityPlan)"

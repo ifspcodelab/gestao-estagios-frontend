@@ -11,6 +11,7 @@ import { InternshipService } from 'src/app/core/services/internship.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { ActivityPlanAppraisalComponent } from '../activity-plan-appraisal/activity-plan-appraisal.component';
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: 'app-internship-show',
@@ -29,7 +30,8 @@ export class InternshipShowComponent implements OnInit {
     private internshipService: InternshipService,
     private notificationService: NotificationService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private datePipe: DatePipe,
   ) { }
 
   ngOnInit(): void {
@@ -139,5 +141,9 @@ export class InternshipShowComponent implements OnInit {
           }
         }
       });
+  }
+
+  formatDate(internshipStartDate: string, internshipEndDate: string) : string {
+    return `${this.datePipe.transform(internshipStartDate, 'dd/MM/yyyy')} - ${this.datePipe.transform(internshipEndDate, 'dd/MM/yyyy')}`
   }
 }
