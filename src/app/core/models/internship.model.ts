@@ -2,6 +2,7 @@ import { InternshipType } from "./enums/internship-type";
 import { InternshipStatus } from "./enums/InternshipStatus";
 import { AdvisorRequest } from "./advisor-request.model";
 import { ActivityPlan } from "./activity-plan.model";
+import { MonthlyReport } from "./monthly-report.model";
 
 export class Internship {
   id: string;
@@ -9,4 +10,5 @@ export class Internship {
   status: InternshipStatus;
   advisorRequest: AdvisorRequest;
   activityPlans: ActivityPlan[];
+  monthlyReports: MonthlyReport[];
 }

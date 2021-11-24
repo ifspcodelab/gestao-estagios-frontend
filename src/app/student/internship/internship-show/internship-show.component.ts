@@ -15,6 +15,8 @@ import { AppValidators } from "../../../core/validators/app-validators";
 import {ParameterService} from "../../../core/services/parameter.service";
 import {Parameter} from "../../../core/models/parameter.model";
 import {DatePipe} from "@angular/common";
+import { MonthlyReport } from 'src/app/core/models/monthly-report.model';
+import { ReportStatus } from 'src/app/core/models/enums/report-status';
 
 @Component({
   selector: 'app-internship-show',
@@ -22,7 +24,7 @@ import {DatePipe} from "@angular/common";
   styleUrls: ['./internship-show.component.scss']
 })
 export class InternshipShowComponent implements OnInit {
-  internship: Internship
+  internship: Internship;
   id: string | null;
   loading: boolean = true;
   form: FormGroup;
@@ -32,6 +34,9 @@ export class InternshipShowComponent implements OnInit {
   fileName: string = "Nenhum arquivo anexado.";
   data: FormData;
   parameter: Parameter;
+  deferredActivityPlan: ActivityPlan | undefined;
+  displayedColumns: string[] = ['month', 'draft', 'report'];
+  monthlyReports: MonthlyReport[];
 
   constructor(
     private fb: FormBuilder,
@@ -48,16 +53,16 @@ export class InternshipShowComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
+    
+    this.adapter.setLocale('pt-br');
+    const currentDate = new Date();
+    this.minDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
 
     if (this.id) {
       this.loaderService.show();
       this.fetchParameters();
       this.fetchInternship(this.id);
     }
-
-    this.adapter.setLocale('pt-br');
-    const currentDate = new Date();
-    this.minDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
 
     this.form = this.buildForm();
   }
@@ -90,14 +95,23 @@ export class InternshipShowComponent implements OnInit {
       .subscribe (
         internship => {
           this.internship = internship;
+          this.deferredActivityPlan = this.internship.activityPlans.find(p => p.status === RequestStatus.ACCEPTED);
+          this.monthlyReports = internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));
         },
         error => {
           if(error.status >= 400 || error.status <= 499) {
-            this.notificationService.error(`Campus não encontrado com id ${this.id}`);
+            this.notificationService.error(`Estágio não encontrado com id ${this.id}`);
             this.router.navigate(['student/internship']);
           }
         }
       )
+  }
+
+  handleInternshipIsInProgress() {
+    if (this.internship.status === InternshipStatus.IN_PROGRESS) {
+      return true
+    }
+    return false;
   }
 
   public onSubmit() {
@@ -210,5 +224,46 @@ export class InternshipShowComponent implements OnInit {
 
   formatDate(internshipStartDate: string, internshipEndDate: string) : string {
     return `${this.datePipe.transform(internshipStartDate, 'dd/MM/yyyy')} - ${this.datePipe.transform(internshipEndDate, 'dd/MM/yyyy')}`
+  }
+
+  handleCantSendDraft(reportMonth: Date) {
+    return new Date(reportMonth) > new Date() ? true : false;
+  }
+
+  handleCantSendReport(report: MonthlyReport) {
+    return report.status !== ReportStatus.FINAL_PENDING ? true : false;
+  }
+
+  handleDraftReportStatus(report: MonthlyReport): string {
+    if (report.status === ReportStatus.DRAFT_PENDING && this.handleCantSendDraft(report.month)) {
+      return 'Não liberado';
+    }
+    else if (report.status === ReportStatus.DRAFT_PENDING) {
+      return 'Enviar';
+    }
+    else if (report.status === ReportStatus.DRAFT_SENT && report.draftSubmittedOnDeadline) {
+      return 'Enviado';
+    }
+    else if (report.status === ReportStatus.DRAFT_SENT) {
+      return 'Enviado fora do prazo';
+    }
+    else {
+      return 'Enviado e aprovado';
+    }
+  }
+
+  handleReportStatus(report: MonthlyReport): string {
+    if (this.handleCantSendReport(report)) {
+      return 'Não liberado';
+    }
+    else if (!this.handleCantSendReport(report)) {
+      return 'Enviar';
+    }
+    else if (report.status === ReportStatus.FINAL_SENT) {
+      return 'Enviado';
+    }
+    else {
+      return 'Enviado e aprovado';
+    }
   }
 }

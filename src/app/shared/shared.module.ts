@@ -23,6 +23,7 @@ import { NgxMaskModule } from "ngx-mask";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [],
@@ -48,7 +49,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     NgxMaskModule,
     MatTabsModule,
     MatExpansionModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatTableModule
   ],
   imports: [
     CommonModule,
@@ -74,7 +76,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     NgxMaskModule,
     MatTabsModule,
     MatExpansionModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatTableModule
   ]
 })
 export class SharedModule {
