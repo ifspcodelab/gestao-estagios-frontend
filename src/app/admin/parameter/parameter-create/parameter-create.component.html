@@ -177,6 +177,51 @@
               </mat-form-field>
             </fieldset>
           </mat-tab>
+          <mat-tab label="Despacho">
+            <fieldset>
+              <legend>HTML de despacho inicial e despacho final</legend>
+              <mat-form-field class="form-field-lg">
+                <mat-label>Despacho Inicial</mat-label>
+                <textarea
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="15"
+                  appearance="fill"
+                  matInput
+                  placeholder=""
+                  formControlName="initialDispatchHtml"
+                  name="initialDispatchHtml"
+                  autocomplete="off">
+                </textarea>
+                <mat-error *ngIf="fieldErrors('initialDispatchHtml')?.required">Despacho Inicial é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('initialDispatchHtml')?.notblank">Despacho Inicial não pode ser vazio</mat-error>
+                <mat-error *ngIf="fieldErrors('initialDispatchHtml')?.serverError && submitted">
+                  {{ fieldErrors('initialDispatchHtml')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-field-lg">
+                <mat-label>Despacho Final</mat-label>
+                <textarea
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="15"
+                  appearance="fill"
+                  matInput
+                  placeholder=""
+                  formControlName="finalDispatchHtml"
+                  name="finalDispatchHtml"
+                  autocomplete="off">
+                </textarea>
+                <mat-error *ngIf="fieldErrors('finalDispatchHtml')?.required">Despacho Final é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('finalDispatchHtml')?.notblank">Despacho Final não pode ser vazio</mat-error>
+                <mat-error *ngIf="fieldErrors('finalDispatchHtml')?.serverError && submitted">
+                  {{ fieldErrors('finalDispatchHtml')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+            </fieldset>
+          </mat-tab>
         </mat-tab-group>
       </form>
     </app-content-form>

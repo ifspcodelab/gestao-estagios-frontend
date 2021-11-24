@@ -89,6 +89,12 @@ export class ParameterCreateComponent implements OnInit {
       monthlyReportAppraisalDeadlineDays: ['',
         [Validators.required, AppValidators.numeric]
       ],
+      initialDispatchHtml: ['',
+        [Validators.required, AppValidators.notBlank]
+      ],
+      finalDispatchHtml: ['',
+        [Validators.required, AppValidators.notBlank]
+      ]
     });
   }
 
@@ -113,7 +119,9 @@ export class ParameterCreateComponent implements OnInit {
       this.field('monthlyReportFileSizeMegabytes').value,
       this.field('monthlyReportDraftSubmissionDeadlineMonths').value,
       this.field('monthlyReportDraftAppraisalDeadlineDays').value,
-      this.field('monthlyReportAppraisalDeadlineDays').value
+      this.field('monthlyReportAppraisalDeadlineDays').value,
+      this.field('initialDispatchHtml').value,
+      this.field('finalDispatchHtml').value,
     );
 
     this.parameterService.updateParameters(parameterCreate)
