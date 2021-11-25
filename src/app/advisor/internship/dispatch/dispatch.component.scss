@@ -1,0 +1,21 @@
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  border: none;
+  background: white;
+  cursor: pointer;
+}
+
+.dispatch {
+  border: 1px solid #673ab7;
+  padding: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+pre {
+  white-space: pre-wrap;
+}
