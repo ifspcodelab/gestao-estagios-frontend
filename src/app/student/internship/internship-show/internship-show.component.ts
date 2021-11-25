@@ -22,6 +22,8 @@ import { DraftMonthlyReportListComponent } from '../draft-monthly-report-list/dr
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { FinalMonthlyReportListComponent } from '../final-monthly-report-list/final-monthly-report-list.component';
+import { RealizationTermService } from 'src/app/core/services/realization-term.service';
+import { RealizationTermUpdate } from 'src/app/core/models/realization-term.model';
 
 @Component({
   selector: 'app-internship-show',
@@ -38,14 +40,17 @@ export class InternshipShowComponent implements OnInit {
   maxDate: Date;
   fileName: string = "Nenhum arquivo anexado.";
   data: FormData;
+  dataRealizationTerm: FormData;
   parameter: Parameter;
   deferredActivityPlan: ActivityPlan | undefined;
   displayedColumns: string[] = ['month', 'draft', 'report'];
   monthlyReports: MonthlyReport[];
   isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.XSmall);
+  formRealizationTerm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
+    private fbrt: FormBuilder,
     private adapter: DateAdapter<any>,
     private route: ActivatedRoute,
     private loaderService: LoaderService,
@@ -53,6 +58,7 @@ export class InternshipShowComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private activityPlanService: ActivityPlanService,
+    private realizationTermService: RealizationTermService,
     private parameterService: ParameterService,
     private datePipe: DatePipe,
     private dialog: MatDialog,
@@ -73,6 +79,7 @@ export class InternshipShowComponent implements OnInit {
     }
 
     this.form = this.buildForm();
+    this.formRealizationTerm = this.buildFormRealizationTerm();
   }
 
   fetchParameters() {
@@ -155,12 +162,57 @@ export class InternshipShowComponent implements OnInit {
       )
   }
 
+  public onSubmitRealizationTerm() {
+    this.submitted = true;
+
+    if (this.formRealizationTerm.invalid) {
+      return;
+    }
+
+    const startDate = new Date(this.formRealizationTerm.get('internshipStartDate')!.value).toISOString();
+    const endDate = new Date(this.formRealizationTerm.get('internshipEndDate')!.value).toISOString();
+    const realizationTermUpdate: RealizationTermUpdate = new RealizationTermUpdate(
+      startDate,
+      endDate
+    );
+    this.realizationTermService.create(this.id!, this.data)
+      .pipe(
+        first()
+      )
+      .subscribe(
+        realizationTerm => {
+          this.realizationTermService.update(this.id!, realizationTerm.id, realizationTermUpdate)
+            .pipe()
+            .subscribe(
+              realizationTerm => {
+                this.internship.realizationTerms.push(realizationTerm);
+                this.notificationService.success('Termo de Realização enviado com sucesso!');
+              }
+            )
+        }
+      )
+  }
+
   field(path: string) {
     return this.form.get(path)!;
   }
 
   fieldErrors(path: string) {
     return this.field(path)?.errors;
+  }
+
+  buildFormRealizationTerm(): FormGroup {
+    return this.fbrt.group({
+      internshipStartDate: ['',
+        [Validators.required]
+      ],
+      internshipEndDate: ['',
+        [Validators.required]
+      ],
+      file: ['',
+        [Validators.required]
+      ],
+    });
   }
 
   buildForm(): FormGroup {
@@ -214,6 +266,16 @@ export class InternshipShowComponent implements OnInit {
     return false
   }
 
+  handleCanSendRealizationTerm(): boolean {
+    let aux = true;
+    this.internship.realizationTerms.forEach(e => {
+      if (e.status === RequestStatus.PENDING) {
+        aux = false
+      }
+    });
+    return aux;
+  }
+
   handleActivityPlanStatus(status: RequestStatus): string {
     if (status === RequestStatus.PENDING) {
       return 'AGUARDANDO AVALIAÇÃO';
@@ -228,6 +290,10 @@ export class InternshipShowComponent implements OnInit {
 
   openActivityPlan(activityPlan: ActivityPlan) {
     window.open(activityPlan.activityPlanUrl);
+  }
+
+  openRealizationTerm(realizationTermUrl: string) {
+    window.open(realizationTermUrl);
   }
 
   formatDate(internshipStartDate: string, internshipEndDate: string) : string {
@@ -321,5 +387,9 @@ export class InternshipShowComponent implements OnInit {
   openFinalDialog(monthlyReport: MonthlyReport) {
     const dialog = this.dialog.open(FinalMonthlyReportListComponent, this.getDialogConfig(monthlyReport));
     this.handleResponsiveDialog(dialog);
+  }
+
+  formatDateRealizationTerm(realizationTermCreatedAt: Date) : string {
+    return `${this.datePipe.transform(realizationTermCreatedAt, 'dd/MM/yyyy')}`
   }
 }
