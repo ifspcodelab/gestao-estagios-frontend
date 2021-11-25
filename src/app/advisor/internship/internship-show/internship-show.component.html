@@ -26,18 +26,22 @@
             [subtitle]="formatDate(activityPlan.internshipStartDate, activityPlan.internshipEndDate)"
             [break]="true"
             [complement]="handleActivityPlanStatus(activityPlan.status)"
-            (click)="openActivityPlan(activityPlan)"
-          >
-          <div card-actions>
-            <button *ngIf="handleCanAppraiseActivityPlan(activityPlan)" mat-button color="warn" (click)="handleAppraiseActivityPlan($event, false, activityPlan.id)">
-              Indeferir
-            </button>
-          </div>
-          <div card-actions>
-            <button *ngIf="handleCanAppraiseActivityPlan(activityPlan)" mat-button color="primary" (click)="handleAppraiseActivityPlan($event, true, activityPlan.id)">
-              Deferir
-            </button>
-          </div>
+            (click)="openActivityPlan(activityPlan)">
+            <div card-actions>
+              <button (click)="openDialog($event)" mat-flat-button color="primary">
+                <span>Despacho Inicial</span>
+              </button>
+            </div>
+            <div card-actions>
+              <button *ngIf="handleCanAppraiseActivityPlan(activityPlan)" mat-button color="warn" (click)="handleAppraiseActivityPlan($event, false, activityPlan.id)">
+                Indeferir
+              </button>
+            </div>
+            <div card-actions>
+              <button *ngIf="handleCanAppraiseActivityPlan(activityPlan)" mat-button color="primary" (click)="handleAppraiseActivityPlan($event, true, activityPlan.id)">
+                Deferir
+              </button>
+            </div>
           </app-card>
         </app-content-cards>
       </mat-tab>

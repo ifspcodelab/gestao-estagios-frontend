@@ -20,6 +20,9 @@ import { DraftMonthlyReportListComponent } from '../draft-monthly-report-list/dr
 import { FinalMonthlyReportListComponent } from '../final-monthly-report-list/final-monthly-report-list.component';
 import { RealizationTermAppraisalComponent } from '../realization-term-appraisal/realization-term-appraisal.component';
 import { RealizationTerm } from 'src/app/core/models/realization-term.model';
+import { DispatchComponent } from "../dispatch/dispatch.component";
+import {Parameter} from "../../../core/models/parameter.model";
+import {ParameterService} from "../../../core/services/parameter.service";
 
 @Component({
   selector: 'app-internship-show',
@@ -36,6 +39,7 @@ export class InternshipShowComponent implements OnInit {
   isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.XSmall);
   internshipStartDate: string;
   internshipEndDate: string;
+  parameter: Parameter;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,15 +50,34 @@ export class InternshipShowComponent implements OnInit {
     private dialog: MatDialog,
     private datePipe: DatePipe,
     private breakpointObserver: BreakpointObserver,
+    private parameterService: ParameterService,
   ) { }
+
+  openDialog($event: Event) {
+    $event.stopPropagation();
+    this.dialog.open(DispatchComponent, {data: { parameter: this.parameter }})
+  }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
       this.loaderService.show();
+      this.fetchParameters();
       this.fetchInternship(this.id);
     }
+  }
+
+  fetchParameters() {
+    this.parameterService.getParameters()
+      .pipe(
+        first()
+      )
+      .subscribe(
+        parameter => {
+          this.parameter = parameter;
+        }
+      )
   }
 
   fetchInternship(internshipId: string) {
