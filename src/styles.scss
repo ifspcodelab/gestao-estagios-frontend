@@ -90,3 +90,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; min-width: 
   }
 }
 
+.dialog-center {
+  mat-dialog-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

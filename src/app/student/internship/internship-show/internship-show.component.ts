@@ -282,15 +282,18 @@ export class InternshipShowComponent implements OnInit {
       maxHeight: '100vh',
       autoFocus: false,
       data: {
-        monthlyReport: monthlyReport
+        internshipId: this.id,
+        monthlyReport: monthlyReport,
       }
     });
      
     const smallDialogSubscription = this.isExtraSmall.subscribe(result => {
       if (result.matches) {
         dialog.updateSize('100%', '100%');
+        dialog.addPanelClass('dialog-center');
       } else {
-        dialog.updateSize('70%', '55%');
+        dialog.updateSize('70%', '60%');
+        dialog.removePanelClass('dialog-center');
       }
     });
      

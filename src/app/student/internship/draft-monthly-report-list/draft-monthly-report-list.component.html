@@ -1,5 +1,8 @@
-<h1 id="header" mat-dialog-title>Rascunho de Relatório</h1>
-<div mat-dialog-content>
+<h1 id="header" mat-dialog-title>
+  Rascunho de {{ data.monthlyReport.month | date:'MM/yyyy':'pt-BR' }}
+  <button mat-button color="primary" mat-dialog-close>X</button>
+</h1>
+<div mat-dialog-content *ngIf="!loading">
   <mat-list *ngIf="handleDraftWasAccepted()">
     <mat-list-item *ngIf="handleDraftWasAccepted()">
       <mat-icon mat-list-icon>folder</mat-icon>
@@ -11,9 +14,45 @@
   </mat-list>
   <mat-tab-group dynamicHeight mat-align-tabs="start">
     <mat-tab label="Enviar" *ngIf="handleCanSubmitDraft()">
-      <form>
-        
+      <form class="app-form" id="draft-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <fieldset>
+          <legend>Informações do rascunho</legend>
+          <mat-form-field class="form-field-sm">
+            <mat-label>Data de Início</mat-label>
+            <input onkeydown="return false" matInput [matDatepicker]="picker" formControlName="reportStartDate" name="reportStartDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="fieldErrors('reportStartDate')?.required && submitted">Data de Início é obrigatória</mat-error>
+            <mat-error *ngIf="fieldErrors('reportStartDate')?.serverError && submitted">
+              {{ fieldErrors('internshipStartDate')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="form-field-sm">
+            <mat-label>Data de Término</mat-label>
+            <input onkeydown="return false" matInput [matDatepicker]="pickerTwo" formControlName="reportEndDate" name="reportEndDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerTwo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTwo></mat-datepicker>
+            <mat-error *ngIf="fieldErrors('reportEndDate')?.required && submitted">Data de Término é obrigatória</mat-error>
+            <mat-error *ngIf="fieldErrors('reportEndDate')?.serverError && submitted">
+              {{ fieldErrors('internshipStartDate')?.serverError }}
+            </mat-error>
+          </mat-form-field>
+          <br>
+          <br>
+          <fieldset>
+            <legend>Envio do rascunho (tamanho máximo: {{ parameter.monthlyReportFileSizeMegabytes }} MB)</legend>
+            <br>
+            <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)">
+            <span>{{ fileName }}</span>
+            <label for="buttonActivityPlan" class="btn-send">Anexar</label>
+          </fieldset>
+        </fieldset>
       </form>
+      <div mat-dialog-actions>
+        <button *ngIf="handleCanSubmitDraft()" mat-button color="primary" mat-dialog-close>Cancelar</button>
+        <button *ngIf="handleCanSubmitDraft()" type="submit" form="draft-form" mat-button color="primary">Salvar</button>
+      </div>
+      <br>
     </mat-tab>
     <mat-tab label="Histórico">
       <app-content-cards entityName="rascunho de relatório mensal" [emptyState]="data.monthlyReport.draftMonthlyReportSubmissions.length == 0">
@@ -26,8 +65,4 @@
       </app-content-cards>
     </mat-tab>
   </mat-tab-group>
-</div>
-<div mat-dialog-actions>
-  <button mat-button color="primary" mat-dialog-close>Sair</button>
-  <!-- <button type="submit" form="department-form" mat-button color="primary">Salvar</button> -->
 </div>
