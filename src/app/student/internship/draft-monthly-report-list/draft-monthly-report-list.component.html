@@ -6,7 +6,7 @@
   <mat-list *ngIf="handleDraftWasAccepted()">
     <mat-list-item *ngIf="handleDraftWasAccepted()">
       <mat-icon mat-list-icon>folder</mat-icon>
-      <h3 matLine class="line-title">Rascunho aprovado</h3>
+      <h3 matLine class="line-title">Rascunho deferido</h3>
       <p matLine>{{ data.monthlyReport.draftSubmittedOnDeadline ? 'Enviado no prazo' : 'Não enviado no prazo' }}</p>
       <p matLine>Data de início: {{ data.monthlyReport.startDate | date:'dd/MM/yyyy' }}</p>
       <p matLine>Data de término: {{ data.monthlyReport.endDate | date:'dd/MM/yyyy' }}</p>

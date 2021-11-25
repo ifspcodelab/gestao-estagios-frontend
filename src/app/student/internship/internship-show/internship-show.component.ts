@@ -17,10 +17,11 @@ import {Parameter} from "../../../core/models/parameter.model";
 import {DatePipe} from "@angular/common";
 import { MonthlyReport } from 'src/app/core/models/monthly-report.model';
 import { ReportStatus } from 'src/app/core/models/enums/report-status';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DraftMonthlyReportListComponent } from '../draft-monthly-report-list/draft-monthly-report-list.component';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
+import { FinalMonthlyReportListComponent } from '../final-monthly-report-list/final-monthly-report-list.component';
 
 @Component({
   selector: 'app-internship-show',
@@ -245,7 +246,9 @@ export class InternshipShowComponent implements OnInit {
   }
 
   handleCantSendReport(report: MonthlyReport) {
-    return report.status !== ReportStatus.FINAL_PENDING ? true : false;
+    return report.status === ReportStatus.DRAFT_PENDING ||
+      report.status === ReportStatus.DRAFT_SENT
+      ? true : false;
   }
 
   handleDraftReportStatus(report: MonthlyReport): string {
@@ -262,7 +265,7 @@ export class InternshipShowComponent implements OnInit {
       return 'Enviado fora do prazo';
     }
     else {
-      return 'Aprovado';
+      return 'Deferido';
     }
   }
 
@@ -270,19 +273,19 @@ export class InternshipShowComponent implements OnInit {
     if (this.handleCantSendReport(report)) {
       return 'Não liberado';
     }
-    else if (!this.handleCantSendReport(report)) {
+    else if (!this.handleCantSendReport(report) && report.status !== ReportStatus.FINAL_SENT && report.status !== ReportStatus.FINAL_ACCEPTED) {
       return 'Enviar';
     }
     else if (report.status === ReportStatus.FINAL_SENT) {
       return 'Enviado';
     }
     else {
-      return 'Aprovado';
+      return 'Deferido';
     }
   }
 
-  openDialog(monthlyReport: MonthlyReport) {
-    const dialog = this.dialog.open(DraftMonthlyReportListComponent, {
+  private getDialogConfig(monthlyReport: MonthlyReport) {
+    return {
       width: '70%',
       height: '70%',
       maxWidth: '100vw',
@@ -292,8 +295,10 @@ export class InternshipShowComponent implements OnInit {
         internshipId: this.id,
         monthlyReport: monthlyReport,
       }
-    });
-     
+    }
+  }
+
+  private handleResponsiveDialog(dialog: MatDialogRef<any>) {
     const smallDialogSubscription = this.isExtraSmall.subscribe(result => {
       if (result.matches) {
         dialog.updateSize('100%', '100%');
@@ -302,10 +307,19 @@ export class InternshipShowComponent implements OnInit {
         dialog.updateSize('70%', '60%');
         dialog.removePanelClass('dialog-center');
       }
-    });
-     
+    });    
     dialog.afterClosed().subscribe(_ => {
       smallDialogSubscription.unsubscribe();
     });
+  }
+
+  openDraftDialog(monthlyReport: MonthlyReport) {
+    const dialog = this.dialog.open(DraftMonthlyReportListComponent, this.getDialogConfig(monthlyReport));
+    this.handleResponsiveDialog(dialog);
+  }
+
+  openFinalDialog(monthlyReport: MonthlyReport) {
+    const dialog = this.dialog.open(FinalMonthlyReportListComponent, this.getDialogConfig(monthlyReport));
+    this.handleResponsiveDialog(dialog);
   }
 }

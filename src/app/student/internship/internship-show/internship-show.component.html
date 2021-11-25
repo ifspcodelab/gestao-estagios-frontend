@@ -98,7 +98,7 @@
               <button 
                 mat-button color="primary"
                 [disabled]="handleCantSendDraft(report.month)"
-                (click)="openDialog(report)"
+                (click)="openDraftDialog(report)"
               >
                 {{ handleDraftReportStatus(report) }}
               </button>
@@ -110,6 +110,7 @@
               <button 
                 mat-button color="primary" 
                 [disabled]="handleCantSendReport(report)"
+                (click)="openFinalDialog(report)"
               >
                 {{ handleReportStatus(report) }}
               </button>
