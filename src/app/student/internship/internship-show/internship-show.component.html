@@ -11,7 +11,7 @@
         <p matLine>Término do estágio: {{ deferredActivityPlan!.internshipEndDate | date:'dd/MM/yyyy' }}</p>
       </mat-list-item>
     </mat-list>
-    <mat-tab-group [dynamicHeight]='true' mat-align-tabs="start">
+    <mat-tab-group [dynamicHeight]='true' [selectedIndex]="handleDefaultTab()" mat-align-tabs="start">
       <mat-tab label="Plano de Atividades">
         <app-content-form *ngIf="handleCanSendActivityPlan()">
           <form class="app-form" id="internship-form" [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -86,7 +86,7 @@
           </app-card>
         </app-content-cards>
       </mat-tab>
-      <mat-tab label="Relatórios Mensais">
+      <mat-tab label="Relatórios Mensais" [disabled]="monthlyReports.length == 0">
         <table mat-table [dataSource]="monthlyReports" class="mat-elevation-z8">
           <ng-container matColumnDef="month">
             <th mat-header-cell *matHeaderCellDef>Mês</th>

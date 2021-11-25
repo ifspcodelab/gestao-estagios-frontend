@@ -233,6 +233,13 @@ export class InternshipShowComponent implements OnInit {
     return `${this.datePipe.transform(internshipStartDate, 'dd/MM/yyyy')} - ${this.datePipe.transform(internshipEndDate, 'dd/MM/yyyy')}`
   }
 
+  handleDefaultTab() {
+    if (this.internship.status === InternshipStatus.IN_PROGRESS) {
+      return 1;
+    }
+    return 0;
+  }
+
   handleCantSendDraft(reportMonth: Date) {
     return new Date(reportMonth) > new Date() ? true : false;
   }
