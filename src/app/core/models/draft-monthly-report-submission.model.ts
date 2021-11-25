@@ -12,3 +12,13 @@ export class DraftMonthlyReportSubmission {
   numberOfApprovedHours: number;
   monthlyReport: MonthlyReport;
 }
+
+export class DraftMonthlyReportSubmissionUpdate {
+  reportStartDate: string;
+  reportEndDate: string;
+
+  constructor(reportStartDate: string, reportEndDate: string) {
+    this.reportEndDate = reportStartDate;
+    this.reportEndDate = reportEndDate
+  }
+}
