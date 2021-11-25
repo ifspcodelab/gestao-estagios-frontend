@@ -119,8 +119,67 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-      <mat-tab label="Termo de Realização">
 
+      <mat-tab label="Termo de Realização">
+        <app-content-form *ngIf="handleCanSendRealizationTerm()">
+          <form class="app-form" id="internship-form" [formGroup]="formRealizationTerm" (ngSubmit)="onSubmitRealizationTerm()">
+            <fieldset>
+              <legend>Envie seu termo de realização</legend>
+
+              <mat-form-field class="form-field-sm">
+                <mat-label>Primeiro dia de estágio</mat-label>
+                <input onkeydown="return false" matInput [matDatepicker]="picker" formControlName="internshipStartDate" name="internshipStartDate" (dateChange)="getLimitDate()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="fieldErrors('internshipStartDate')?.required && submitted">Primeiro dia de estágio é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('internshipStartDate')?.serverError && submitted">
+                  {{ fieldErrors('internshipStartDate')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="form-field-sm">
+                <mat-label>Último dia de estágio</mat-label>
+                <input onkeydown="return false" matInput [matDatepicker]="pickerTwo" formControlName="internshipEndDate" name="internshipEndDate">
+                <mat-datepicker-toggle matSuffix [for]="pickerTwo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerTwo></mat-datepicker>
+                <mat-error *ngIf="fieldErrors('internshipEndDate')?.required && submitted">Último dia de estágio é obrigatório</mat-error>
+                <mat-error *ngIf="fieldErrors('internshipEndDate')?.serverError && submitted">
+                  {{ fieldErrors('internshipEndDate')?.serverError }}
+                </mat-error>
+              </mat-form-field>
+            </fieldset>
+
+            <fieldset>
+              <legend>Enviar termo de realização: tamanho máximo ({{parameter.activityPlanFileSizeMegabytes}} MB)</legend>
+              <br>
+              <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)">
+              <span>{{ fileName }}</span>
+              <label for="buttonActivityPlan" class="btn-send">Anexar Arquivo</label>
+              <br>
+              <br>
+              <mat-error *ngIf="fieldErrors('file')?.required && submitted">Termo de realização é obrigatório</mat-error>
+              <mat-error *ngIf="fieldErrors('file')?.serverError && submitted">
+                {{ fieldErrors('file')?.serverError }}
+              </mat-error>
+              <small>*Modelo Termo de realização <a href="{{parameter.activityPlanLink}}">(Clique aqui!)</a></small>
+            </fieldset>
+
+            <fieldset>
+              <button type="submit" form="internship-form" mat-flat-button color="primary">
+                <span>Enviar Termo</span>
+              </button>
+            </fieldset>
+          </form>
+        </app-content-form>
+        <app-content-cards entityName="Termos de realização">
+          <app-card
+            *ngFor="let realizationTerm of internship.realizationTerms"
+            [title]="'Enviado em: ' + formatDateRealizationTerm(realizationTerm.createdAt)"
+            [subtitle]="realizationTerm.status.toString()"
+            (click)="openRealizationTerm(realizationTerm.realizationTermUrl)"
+          >
+          </app-card>
+        </app-content-cards>
       </mat-tab>
     </mat-tab-group>
   </app-content-main>
