@@ -1,0 +1,41 @@
+<h1 id="header" mat-dialog-title>
+  Relatório de {{ data.monthlyReport.month | date:'MM/yyyy':'pt-BR' }}
+  <button mat-button color="primary" mat-dialog-close [disabled]="submitted">X</button>
+</h1>
+<div mat-dialog-content *ngIf="!loading">
+  <mat-list *ngIf="handleFinalWasAccepted()">
+    <mat-list-item>
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <h3 matLine class="line-title">Relatório aprovado</h3>
+      <p matLine>Data de envio: {{ deferredReport.submissionDate | date:'dd/MM/yyyy' }}</p>
+    </mat-list-item>
+  </mat-list>
+  <mat-tab-group dynamicHeight mat-align-tabs="start">
+    <mat-tab label="Enviar" *ngIf="handleCanSubmitFinal()">
+      <form class="app-form" id="final-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <fieldset>
+          <legend>Envio do relatório (tamanho máximo: {{ parameter.monthlyReportFileSizeMegabytes }} MB)</legend>
+          <br>
+          <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)">
+          <span>{{ fileName }}</span>
+          <label for="buttonActivityPlan" class="btn-send">Anexar</label>
+        </fieldset>
+      </form>
+      <div mat-dialog-actions>
+        <button *ngIf="handleCanSubmitFinal()" [disabled]="submitted" mat-button color="primary" mat-dialog-close>Cancelar</button>
+        <button *ngIf="handleCanSubmitFinal()" [disabled]="submitted" type="submit" form="final-form" mat-button color="primary">Enviar</button>
+      </div>
+      <br>
+    </mat-tab>
+    <mat-tab label="Histórico">
+      <app-content-cards entityName="rascunho de relatório mensal" [emptyState]="data.monthlyReport.finalMonthlyReportSubmissions.length == 0">
+        <app-card
+          *ngFor="let final of data.monthlyReport.finalMonthlyReportSubmissions" 
+          [title]="'Enviado em: ' + formatSubmissionDate(final.submissionDate)" 
+          [subtitle]="handleStatus(final.status)" 
+          (click)="openDraftReport(final)">
+        </app-card>
+      </app-content-cards>
+    </mat-tab>
+  </mat-tab-group>
+</div>

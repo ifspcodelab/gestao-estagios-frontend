@@ -1,0 +1,45 @@
+h1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-field-lg {
+  width: 100%;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+app-card {
+  margin-left: 0.3rem;
+  margin-top: 0.8rem;
+}
+
+input[type = "file"] {
+  display: none;
+  margin-bottom: 2rem;
+}
+
+.btn-send {
+  background: #fff;
+  border: 2px solid #673ab7;
+  border-radius: 5px;
+  color: #673ab7;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 6px 10px;
+  margin-left: 0.5rem;
+}
+
+.btn-send:hover {
+  opacity: 50%;
+}
+
+@media screen and (max-width: 1024px) {
+  app-card {
+    flex: 0 0 97%;
+    margin-bottom: 25px;
+  }
+}
