@@ -17,6 +17,10 @@ import {Parameter} from "../../../core/models/parameter.model";
 import {DatePipe} from "@angular/common";
 import { MonthlyReport } from 'src/app/core/models/monthly-report.model';
 import { ReportStatus } from 'src/app/core/models/enums/report-status';
+import { MatDialog } from '@angular/material/dialog';
+import { DraftMonthlyReportListComponent } from '../draft-monthly-report-list/draft-monthly-report-list.component';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-internship-show',
@@ -37,6 +41,7 @@ export class InternshipShowComponent implements OnInit {
   deferredActivityPlan: ActivityPlan | undefined;
   displayedColumns: string[] = ['month', 'draft', 'report'];
   monthlyReports: MonthlyReport[];
+  isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.XSmall);
 
   constructor(
     private fb: FormBuilder,
@@ -49,6 +54,8 @@ export class InternshipShowComponent implements OnInit {
     private activityPlanService: ActivityPlanService,
     private parameterService: ParameterService,
     private datePipe: DatePipe,
+    private dialog: MatDialog,
+    private breakpointObserver: BreakpointObserver,
   ) { }
 
   ngOnInit(): void {
@@ -248,7 +255,7 @@ export class InternshipShowComponent implements OnInit {
       return 'Enviado fora do prazo';
     }
     else {
-      return 'Enviado e aprovado';
+      return 'Aprovado';
     }
   }
 
@@ -263,7 +270,32 @@ export class InternshipShowComponent implements OnInit {
       return 'Enviado';
     }
     else {
-      return 'Enviado e aprovado';
+      return 'Aprovado';
     }
+  }
+
+  openDialog(monthlyReport: MonthlyReport) {
+    const dialog = this.dialog.open(DraftMonthlyReportListComponent, {
+      width: '70%',
+      height: '70%',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      autoFocus: false,
+      data: {
+        monthlyReport: monthlyReport
+      }
+    });
+     
+    const smallDialogSubscription = this.isExtraSmall.subscribe(result => {
+      if (result.matches) {
+        dialog.updateSize('100%', '100%');
+      } else {
+        dialog.updateSize('70%', '55%');
+      }
+    });
+     
+    dialog.afterClosed().subscribe(_ => {
+      smallDialogSubscription.unsubscribe();
+    });
   }
 }

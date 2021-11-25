@@ -1,0 +1,33 @@
+<h1 id="header" mat-dialog-title>Rascunho de Relatório</h1>
+<div mat-dialog-content>
+  <mat-list *ngIf="handleDraftWasAccepted()">
+    <mat-list-item *ngIf="handleDraftWasAccepted()">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <h3 matLine class="line-title">Rascunho aprovado</h3>
+      <p matLine>{{ data.monthlyReport.draftSubmittedOnDeadline ? 'Enviado no prazo' : 'Não enviado no prazo' }}</p>
+      <p matLine>Data de início: {{ data.monthlyReport.startDate | date:'dd/MM/yyyy' }}</p>
+      <p matLine>Data de término: {{ data.monthlyReport.endDate | date:'dd/MM/yyyy' }}</p>
+    </mat-list-item>
+  </mat-list>
+  <mat-tab-group dynamicHeight mat-align-tabs="start">
+    <mat-tab label="Enviar" *ngIf="handleCanSubmitDraft()">
+      <form>
+        
+      </form>
+    </mat-tab>
+    <mat-tab label="Histórico">
+      <app-content-cards entityName="rascunho de relatório mensal" [emptyState]="data.monthlyReport.draftMonthlyReportSubmissions.length == 0">
+        <app-card
+        *ngFor="let draft of data.monthlyReport.draftMonthlyReportSubmissions" 
+        [title]="'Enviado em: ' + formatSubmissionDate(draft.submissionDate)" 
+        [subtitle]="handleStatus(draft.status)" 
+        (click)="openDraftReport(draft)">
+        </app-card>
+      </app-content-cards>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="primary" mat-dialog-close>Sair</button>
+  <!-- <button type="submit" form="department-form" mat-button color="primary">Salvar</button> -->
+</div>
