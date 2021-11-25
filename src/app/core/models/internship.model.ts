@@ -2,7 +2,11 @@ import { InternshipType } from "./enums/internship-type";
 import { InternshipStatus } from "./enums/InternshipStatus";
 import { AdvisorRequest } from "./advisor-request.model";
 import { ActivityPlan } from "./activity-plan.model";
+<<<<<<< HEAD
 import { MonthlyReport } from "./monthly-report.model";
+=======
+import { RealizationTerm } from "./realization-term.model";
+>>>>>>> 8b6ba33 (feat: add realization term attribute on internship model)
 
 export class Internship {
   id: string;
@@ -10,5 +14,9 @@ export class Internship {
   status: InternshipStatus;
   advisorRequest: AdvisorRequest;
   activityPlans: ActivityPlan[];
+<<<<<<< HEAD
   monthlyReports: MonthlyReport[];
+=======
+  realizationTerms: RealizationTerm[];
+>>>>>>> 8b6ba33 (feat: add realization term attribute on internship model)
 }
