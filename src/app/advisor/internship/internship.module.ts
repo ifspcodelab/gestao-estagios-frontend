@@ -8,13 +8,17 @@ import { InternshipListComponent } from "./internship-list/internship-list.compo
 import { InternshipRoutingModule } from "./internship-routing.module";
 import { InternshipShowComponent } from './internship-show/internship-show.component';
 import { ActivityPlanAppraisalComponent } from './activity-plan-appraisal/activity-plan-appraisal.component';
+import { DraftMonthlyReportListComponent } from './draft-monthly-report-list/draft-monthly-report-list.component';
+import { DraftMonthlyReportAppraisalComponent } from './draft-monthly-report-appraisal/draft-monthly-report-appraisal.component';
 
 @NgModule({
   declarations: [
     InternshipComponent,
     InternshipListComponent,
     InternshipShowComponent,
-    ActivityPlanAppraisalComponent
+    ActivityPlanAppraisalComponent,
+    DraftMonthlyReportListComponent,
+    DraftMonthlyReportAppraisalComponent
   ],
   imports: [
     CommonModule,
