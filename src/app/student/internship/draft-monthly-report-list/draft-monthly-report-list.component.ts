@@ -131,7 +131,8 @@ export class DraftMonthlyReportListComponent implements OnInit {
           .subscribe(draft => {
             this.data.monthlyReport.draftMonthlyReportSubmissions.push(draft);
             this.data.monthlyReport.status = ReportStatus.DRAFT_SENT;
-            this.handleDraftSubmittedOnDeadLine(draft);
+            this.data.monthlyReport.draftSubmittedOnDeadline = this.handleDraftSubmittedOnDeadLine(draft);
+            this.submitted = false;
           })
         }
       )
@@ -152,14 +153,16 @@ export class DraftMonthlyReportListComponent implements OnInit {
     return `${this.datePipe.transform(submissionDate, 'dd/MM/yyyy')}`;
   }
 
-  handleDraftSubmittedOnDeadLine(draft: DraftMonthlyReportSubmission) {
+  handleDraftSubmittedOnDeadLine(draft: DraftMonthlyReportSubmission): boolean {
     const deadline = new Date(this.data.monthlyReport.month);
     deadline.setMonth(deadline.getMonth() + 2);
     if (new Date(draft.submissionDate) >= deadline) {
       this.notificationService.success('Rascunho de relatório mensal enviado em atraso! Suas horas de estágio poderão ser indeferidas.');
+      return false;
     }
     else {
       this.notificationService.success('Rascunho de relatório mensal enviado com sucesso!');
+      return true
     }
   }
 

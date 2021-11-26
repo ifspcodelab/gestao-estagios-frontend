@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { DraftMonthlyReportSubmission, DraftMonthlyReportSubmissionUpdate } from "../models/draft-monthly-report-submission.model";
+import { DraftMonthlyReportSubmission, DraftMonthlyReportSubmissionAppraise, DraftMonthlyReportSubmissionUpdate } from "../models/draft-monthly-report-submission.model";
 
 @Injectable({
     providedIn: 'root'
@@ -34,6 +34,18 @@ export class DraftMonthlyReportSubmissionService {
     return this.httpClient.put<DraftMonthlyReportSubmission>(
       `${this.apiUrl}/${internshipId}/monthly-reports/${monthlyReportId}/drafts/${draftMonthlyReportSubmissionId}`,
       draftMonthlyReportSubmissionUpdate,
+      this.httpOptions
+    );
+  }
+
+  appraiseDraftMonthlyReportSubmission(
+    internshipId: string, 
+    monthlyReportId: string,
+    draftMonthlyReportSubmissionId: string,
+    draftMonthlyReportSubmissionApprase: DraftMonthlyReportSubmissionAppraise): Observable<DraftMonthlyReportSubmission> {
+    return this.httpClient.put<DraftMonthlyReportSubmission>(
+      `${this.apiUrl}/${internshipId}/monthly-reports/${monthlyReportId}/drafts/${draftMonthlyReportSubmissionId}/appraisals`,
+      draftMonthlyReportSubmissionApprase,
       this.httpOptions
     );
   }

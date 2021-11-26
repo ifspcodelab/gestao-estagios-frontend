@@ -114,6 +114,7 @@ export class FinalMonthlyReportListComponent implements OnInit {
           this.data.monthlyReport.finalMonthlyReportSubmissions.push(final);
           this.data.monthlyReport.status = ReportStatus.FINAL_SENT;
           this.notificationService.success('Relatório mensal enviado com sucesso!');
+          this.submitted = false;
         }
       )
   }

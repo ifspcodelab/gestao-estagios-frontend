@@ -18,7 +18,19 @@ export class DraftMonthlyReportSubmissionUpdate {
   reportEndDate: string;
 
   constructor(reportStartDate: string, reportEndDate: string) {
-    this.reportEndDate = reportStartDate;
+    this.reportStartDate = reportStartDate;
     this.reportEndDate = reportEndDate
   }
 }
+
+export class DraftMonthlyReportSubmissionAppraise {
+  status: RequestStatus;
+  details: string;
+  numberOfApprovedHours: number;
+
+  constructor (status: RequestStatus, details: string, numberOfApprovedHours: number) {
+    this.status = status;
+    this.details = details;
+    this.numberOfApprovedHours = numberOfApprovedHours
+  }
+} 
