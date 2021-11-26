@@ -26,7 +26,7 @@ export class FinalMonthlyReportListComponent implements OnInit {
   fileName: string = "Nenhum arquivo anexado.";
   formData: FormData;
   parameter: Parameter;
-  deferredReport: FinalMonthlyReportSubmission;
+  acceptedReport: FinalMonthlyReportSubmission;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { monthlyReport: MonthlyReport, internshipId: string },
@@ -42,7 +42,7 @@ export class FinalMonthlyReportListComponent implements OnInit {
     this.loaderService.show();
     this.data.monthlyReport.finalMonthlyReportSubmissions.sort((a, b) => b.submissionDate.localeCompare(a.submissionDate));
     this.fetchParameters();
-    this.deferredReport = this.data.monthlyReport.finalMonthlyReportSubmissions.find(r => r.status === RequestStatus.ACCEPTED)!;
+    this.acceptedReport = this.data.monthlyReport.finalMonthlyReportSubmissions.find(r => r.status === RequestStatus.ACCEPTED)!;
     this.form = this.buildForm();
   }
 
