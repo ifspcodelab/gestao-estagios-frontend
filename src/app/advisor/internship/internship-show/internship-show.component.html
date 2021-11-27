@@ -62,7 +62,8 @@
             <th mat-header-cell *matHeaderCellDef>Relatório Mensal</th>
             <td mat-cell *matCellDef="let report">
               <button 
-                mat-button color="primary" 
+                mat-button color="primary"
+                (click)="openFinalDialog(report)"
               >
               {{ handleReportStatus(report) }}
               </button>

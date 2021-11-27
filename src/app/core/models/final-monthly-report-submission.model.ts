@@ -9,3 +9,13 @@ export class FinalMonthlyReportSubmission {
   details: string;
   monthlyReport: MonthlyReport;
 }
+
+export class FinalMonthlyReportSubmissionAppraise {
+  status: RequestStatus;
+  details: string;
+
+  constructor(details: string, status: RequestStatus) {
+    this.status = status;
+    this.details = details;
+  }
+}

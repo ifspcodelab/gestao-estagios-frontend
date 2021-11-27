@@ -42,10 +42,10 @@ export class DraftMonthlyReportSubmissionService {
     internshipId: string, 
     monthlyReportId: string,
     draftMonthlyReportSubmissionId: string,
-    draftMonthlyReportSubmissionApprase: DraftMonthlyReportSubmissionAppraise): Observable<DraftMonthlyReportSubmission> {
+    draftMonthlyReportSubmissionAppraise: DraftMonthlyReportSubmissionAppraise): Observable<DraftMonthlyReportSubmission> {
     return this.httpClient.put<DraftMonthlyReportSubmission>(
       `${this.apiUrl}/${internshipId}/monthly-reports/${monthlyReportId}/drafts/${draftMonthlyReportSubmissionId}/appraisals`,
-      draftMonthlyReportSubmissionApprase,
+      draftMonthlyReportSubmissionAppraise,
       this.httpOptions
     );
   }
