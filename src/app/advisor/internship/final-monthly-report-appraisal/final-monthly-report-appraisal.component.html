@@ -1,0 +1,35 @@
+<h1 id="header" mat-dialog-title *ngIf="!loading">
+  {{ data.deferred ? 'Deferir Relatório' : 'Indeferir Relatório' }}
+  <button mat-button color="primary" mat-dialog-close>X</button>
+</h1>
+<div mat-dialog-content *ngIf="!loading">
+  <form class="app-form" id="draft-appraisal-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field class="form-field-lg">
+      <mat-label>{{ data.deferred ? 'Detalhes' : 'Motivo do indeferimento' }}</mat-label>
+      <textarea
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="10"
+        appearance="fill"
+        matInput
+        placeholder=""
+        formControlName="details"
+        name="details">
+      </textarea>
+      <mat-error *ngIf="fieldErrors('details')?.required">Detalhes é obrigatório</mat-error>
+    </mat-form-field>
+    <fieldset *ngIf="data.deferred">
+      <legend>Envio de anexo opcional (tamanho máximo: {{ parameter.monthlyReportFileSizeMegabytes }} MB)</legend>
+      <br>
+      <input class="form-field-lg" id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)">
+      <span>{{ fileName }}</span>
+      <label for="buttonActivityPlan" class="btn-send">Anexar</label>
+    </fieldset>
+  </form>
+</div>
+<div mat-dialog-actions *ngIf="!loading">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button type="submit" form="draft-appraisal-form" mat-button color="primary">Confirmar</button>
+</div>
+

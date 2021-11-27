@@ -17,6 +17,7 @@ import { ReportStatus } from 'src/app/core/models/enums/report-status';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { DraftMonthlyReportListComponent } from '../draft-monthly-report-list/draft-monthly-report-list.component';
+import { FinalMonthlyReportListComponent } from '../final-monthly-report-list/final-monthly-report-list.component';
 
 @Component({
   selector: 'app-internship-show',
@@ -215,6 +216,11 @@ export class InternshipShowComponent implements OnInit {
 
   openDraftDialog(report: MonthlyReport) {
     const dialog = this.dialog.open(DraftMonthlyReportListComponent, this.getReportDialogConfig(report));
+    this.handleResponsiveDialog(dialog, report);
+  }
+
+  openFinalDialog(report: MonthlyReport) {
+    const dialog = this.dialog.open(FinalMonthlyReportListComponent, this.getReportDialogConfig(report));
     this.handleResponsiveDialog(dialog, report);
   }
 

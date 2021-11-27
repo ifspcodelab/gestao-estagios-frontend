@@ -1,0 +1,45 @@
+h1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-field-lg {
+  width: 100%;
+}
+
+.mat-dialog-content {
+  width: 35vw;
+  height: 50%;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+input[type = "file"] {
+  display: none;
+  margin-bottom: 2rem;
+}
+
+.btn-send {
+  background: #fff;
+  border: 2px solid #673ab7;
+  border-radius: 5px;
+  color: #673ab7;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 6px 10px;
+  margin-left: 0.5rem;
+}
+
+.btn-send:hover {
+  opacity: 50%;
+}
+
+@media (max-width: 700px) {
+  .mat-dialog-content {
+    width: 65vw;
+    height: 20vh;
+  }
+}

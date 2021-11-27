@@ -10,6 +10,8 @@ import { InternshipShowComponent } from './internship-show/internship-show.compo
 import { ActivityPlanAppraisalComponent } from './activity-plan-appraisal/activity-plan-appraisal.component';
 import { DraftMonthlyReportListComponent } from './draft-monthly-report-list/draft-monthly-report-list.component';
 import { DraftMonthlyReportAppraisalComponent } from './draft-monthly-report-appraisal/draft-monthly-report-appraisal.component';
+import { FinalMonthlyReportListComponent } from './final-monthly-report-list/final-monthly-report-list.component';
+import { FinalMonthlyReportAppraisalComponent } from './final-monthly-report-appraisal/final-monthly-report-appraisal.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { DraftMonthlyReportAppraisalComponent } from './draft-monthly-report-app
     InternshipShowComponent,
     ActivityPlanAppraisalComponent,
     DraftMonthlyReportListComponent,
-    DraftMonthlyReportAppraisalComponent
+    DraftMonthlyReportAppraisalComponent,
+    FinalMonthlyReportListComponent,
+    FinalMonthlyReportAppraisalComponent
   ],
   imports: [
     CommonModule,
