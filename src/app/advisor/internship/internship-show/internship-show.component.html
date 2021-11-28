@@ -72,6 +72,28 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+      <mat-tab label="Termo de Realização">
+        <app-content-cards entityName="planos de atividade">
+          <app-card
+            *ngFor="let realizationTerm of internship.realizationTerms"
+            [title]="internship.advisorRequest.student.user.name"
+            [subtitle]="'Enviado em: ' + formatDateRealizationTerm(realizationTerm.createdAt)"
+            [break]="true"
+            [complement]="handleActivityPlanStatus(realizationTerm.status)"
+            (click)="openRealizationTerm(realizationTerm.realizationTermUrl)"
+          >
+          <div card-actions>
+            <button *ngIf="realizationTerm.status.toString() === 'PENDING' ? true : false" mat-button color="warn" (click)="handleAppraiseRealizationTerm($event, false, realizationTerm.id)">
+              Indeferir
+            </button>
+          </div>
+          <div card-actions>
+            <button *ngIf="realizationTerm.status.toString() === 'PENDING' ? true : false" mat-button color="primary" (click)="handleAppraiseRealizationTerm($event, true, realizationTerm.id)">
+              Deferir
+            </button>
+          </div>
+          </app-card>
+        </app-content-cards>
       </mat-tab>
     </mat-tab-group>
   </app-content-main>
