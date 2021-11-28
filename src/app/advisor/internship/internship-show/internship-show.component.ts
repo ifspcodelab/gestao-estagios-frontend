@@ -18,6 +18,8 @@ import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { DraftMonthlyReportListComponent } from '../draft-monthly-report-list/draft-monthly-report-list.component';
 import { FinalMonthlyReportListComponent } from '../final-monthly-report-list/final-monthly-report-list.component';
+import { RealizationTermAppraisalComponent } from '../realization-term-appraisal/realization-term-appraisal.component';
+import { RealizationTerm } from 'src/app/core/models/realization-term.model';
 
 @Component({
   selector: 'app-internship-show',
@@ -111,12 +113,27 @@ export class InternshipShowComponent implements OnInit {
     window.open(activityPlan.activityPlanUrl);
   }
 
+  openRealizationTerm(realizationTermUrl: string) {
+    window.open(realizationTermUrl);
+  }
+
   private getDialogConfig(deferred: boolean, activityPlanId: string) {
     return {
       autoFocus: true,
       data: {
         deferred: deferred,
         activityPlanId: activityPlanId,
+        internshipId: this.id
+      }
+    };
+  }
+
+  private getDialogConfigRealizationTerm(deferred: boolean, realizationTermId: string) {
+    return {
+      autoFocus: true,
+      data: {
+        deferred: deferred,
+        realizationTermId: realizationTermId,
         internshipId: this.id
       }
     };
@@ -149,6 +166,20 @@ export class InternshipShowComponent implements OnInit {
           const activityPlanFound = this.internship.activityPlans.find(p => p.id == result.id);
           if (activityPlanFound) {
             activityPlanFound.status = result.status;
+          }
+        }
+      });
+  }
+
+  handleAppraiseRealizationTerm($event: Event, deferred: boolean, realizationTermId: string) {
+    $event.stopPropagation();
+    this.dialog.open(RealizationTermAppraisalComponent, this.getDialogConfigRealizationTerm(deferred, realizationTermId))
+      .afterClosed()
+      .subscribe(result => {
+        if(result) {
+          const realizationTermFound = this.internship.realizationTerms.find(r => r.id == result.id);
+          if (realizationTermFound) {
+            realizationTermFound.status = result.status;
           }
         }
       });
@@ -229,5 +260,9 @@ export class InternshipShowComponent implements OnInit {
       return 1;
     }
     return 0;
+  }
+
+  formatDateRealizationTerm(createdAt: Date) : string {
+    return `${this.datePipe.transform(createdAt, 'dd/MM/yyyy')}`
   }
 }
