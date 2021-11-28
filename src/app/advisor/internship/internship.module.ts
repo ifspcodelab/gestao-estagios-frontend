@@ -12,6 +12,7 @@ import { DraftMonthlyReportListComponent } from './draft-monthly-report-list/dra
 import { DraftMonthlyReportAppraisalComponent } from './draft-monthly-report-appraisal/draft-monthly-report-appraisal.component';
 import { FinalMonthlyReportListComponent } from './final-monthly-report-list/final-monthly-report-list.component';
 import { FinalMonthlyReportAppraisalComponent } from './final-monthly-report-appraisal/final-monthly-report-appraisal.component';
+import { RealizationTermAppraisalComponent } from './realization-term-appraisal/realization-term-appraisal.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FinalMonthlyReportAppraisalComponent } from './final-monthly-report-app
     DraftMonthlyReportListComponent,
     DraftMonthlyReportAppraisalComponent,
     FinalMonthlyReportListComponent,
-    FinalMonthlyReportAppraisalComponent
+    FinalMonthlyReportAppraisalComponent,
+    RealizationTermAppraisalComponent
   ],
   imports: [
     CommonModule,
