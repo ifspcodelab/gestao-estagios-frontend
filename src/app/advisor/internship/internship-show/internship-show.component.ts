@@ -19,7 +19,6 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { DraftMonthlyReportListComponent } from '../draft-monthly-report-list/draft-monthly-report-list.component';
 import { FinalMonthlyReportListComponent } from '../final-monthly-report-list/final-monthly-report-list.component';
 import { RealizationTermAppraisalComponent } from '../realization-term-appraisal/realization-term-appraisal.component';
-import { RealizationTerm } from 'src/app/core/models/realization-term.model';
 import { DispatchComponent } from "../dispatch/dispatch.component";
 import {Parameter} from "../../../core/models/parameter.model";
 import {ParameterService} from "../../../core/services/parameter.service";
@@ -55,7 +54,7 @@ export class InternshipShowComponent implements OnInit {
 
   openDialog($event: Event) {
     $event.stopPropagation();
-    this.dialog.open(DispatchComponent, {data: { parameter: this.parameter }})
+    this.dialog.open(DispatchComponent, {data: { parameter: this.parameter, internship: this.internship, activityPlan: this.deferredActivityPlan, date: this.datePipe }})
   }
 
   ngOnInit(): void {
@@ -173,6 +172,10 @@ export class InternshipShowComponent implements OnInit {
         internshipId: this.id
       }
     };
+  }
+  
+  handleCanCopyDispatch(activityPlan: ActivityPlan) {
+    return activityPlan.status === RequestStatus.ACCEPTED
   }
 
   handleCanAppraiseActivityPlan(activityPlan: ActivityPlan) {

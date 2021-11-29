@@ -1,17 +1,16 @@
 <div class="title">
   <h1 mat-dialog-title>HTML Despacho Inicial</h1>
   <button>
-    <mat-icon id="copy" color="primary" (click)="copyCode('{{data.parameter.initialDispatchHtml}}')">content_copy</mat-icon>
+    <mat-icon id="copy" color="primary" (click)="copyCode(replacedDispatch)">content_copy</mat-icon>
   </button>
 </div>
 <div class="dispatch" mat-dialog-content>
   <code>
     <pre>
-      {{data.parameter.initialDispatchHtml}}
+      {{replacedDispatch}}
     </pre>
   </code>
 </div>
 <div mat-dialog-actions>
   <button color="primary" mat-flat-button mat-dialog-close>Fechar</button>
 </div>
-
