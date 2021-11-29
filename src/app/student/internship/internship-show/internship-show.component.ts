@@ -267,13 +267,18 @@ export class InternshipShowComponent implements OnInit {
   }
 
   handleCanSendRealizationTerm(): boolean {
-    let aux = true;
-    this.internship.realizationTerms.forEach(e => {
-      if (e.status === RequestStatus.PENDING) {
-        aux = false
+    const monthlyReportsUntilActualMonth = this.monthlyReports.filter(r => new Date(r.month) <= new Date(new Date().setDate(1)));
+    for (const realizationTerm of this.internship.realizationTerms) {
+      if (realizationTerm.status === RequestStatus.PENDING || realizationTerm.status === RequestStatus.ACCEPTED) {
+        return false;
       }
-    });
-    return aux;
+    }
+    for (const report of monthlyReportsUntilActualMonth) {
+      if (report.status !== ReportStatus.FINAL_ACCEPTED) {
+        return false;
+      }
+    }
+    return true;
   }
 
   handleRequestStatus(status: RequestStatus): string {
