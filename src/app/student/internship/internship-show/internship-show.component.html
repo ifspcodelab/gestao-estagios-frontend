@@ -80,7 +80,7 @@
             [title]="'Empresa: ' + activityPlan.companyName"
             [subtitle]="formatDate(activityPlan.internshipStartDate, activityPlan.internshipEndDate)"
             [break]="true"
-            [complement]="handleActivityPlanStatus(activityPlan.status)"
+            [complement]="handleRequestStatus(activityPlan.status)"
             (click)="openActivityPlan(activityPlan)"
           >
           </app-card>
@@ -155,13 +155,6 @@
               <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)">
               <span>{{ fileName }}</span>
               <label for="buttonActivityPlan" class="btn-send">Anexar Arquivo</label>
-              <br>
-              <br>
-              <mat-error *ngIf="fieldErrors('file')?.required && submitted">Termo de realização é obrigatório</mat-error>
-              <mat-error *ngIf="fieldErrors('file')?.serverError && submitted">
-                {{ fieldErrors('file')?.serverError }}
-              </mat-error>
-              <small>*Modelo Termo de realização <a href="{{parameter.activityPlanLink}}">(Clique aqui!)</a></small>
             </fieldset>
 
             <fieldset>
@@ -175,7 +168,7 @@
           <app-card
             *ngFor="let realizationTerm of internship.realizationTerms"
             [title]="'Enviado em: ' + formatDateRealizationTerm(realizationTerm.createdAt)"
-            [subtitle]="realizationTerm.status.toString()"
+            [subtitle]="handleRequestStatus(realizationTerm.status)"
             (click)="openRealizationTerm(realizationTerm.realizationTermUrl)"
           >
           </app-card>

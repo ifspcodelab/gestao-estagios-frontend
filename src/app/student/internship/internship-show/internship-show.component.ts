@@ -276,7 +276,7 @@ export class InternshipShowComponent implements OnInit {
     return aux;
   }
 
-  handleActivityPlanStatus(status: RequestStatus): string {
+  handleRequestStatus(status: RequestStatus): string {
     if (status === RequestStatus.PENDING) {
       return 'AGUARDANDO AVALIAÇÃO';
     }
