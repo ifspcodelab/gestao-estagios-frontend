@@ -27,7 +27,7 @@
             [break]="true"
             [complement]="handleActivityPlanStatus(activityPlan.status)"
             (click)="openActivityPlan(activityPlan)">
-            <div card-actions>
+            <div card-actions *ngIf="handleCanCopyDispatch(activityPlan)">
               <button (click)="openDialog($event)" mat-flat-button color="primary">
                 <span>Despacho Inicial</span>
               </button>
