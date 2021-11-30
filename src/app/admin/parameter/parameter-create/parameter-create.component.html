@@ -177,9 +177,39 @@
               </mat-form-field>
             </fieldset>
           </mat-tab>
-          <mat-tab label="Despacho">
+
+          <mat-tab label="Despacho Inicial">
             <fieldset>
-              <legend>HTML de despacho inicial e despacho final</legend>
+              <legend>HTML de despacho inicial</legend>
+              <div class="options">
+                <div class="title">
+                  <p>Os parâmetros que podem ser modificados nesse HTML são:</p>
+                  <a class="politics" (click)="openDialog()"><mat-icon color="primary">help_outline</mat-icon></a>
+                </div>
+                <div class="colum">
+                  <ul>
+                    <li>$STUDENTNAME</li>
+                    <li>$REGISTRATION</li>
+                    <li>$COURSENAME</li>
+                    <li>$INTERNSHIPTYPE</li>
+                    <li>$COMPANYNAME</li>
+                    <li>$INTERNSHIPSTARTDATE</li>
+                    <li>$INTERNSHIPENDDATE</li>
+                    <li>$REQUIRED</li>
+                  </ul>
+
+                  <ul>
+                    <li>$NOTREQUIRED</li>
+                    <li>$COURSENAME</li>
+                    <li>$TODAY</li>
+                    <li>$MONTH</li>
+                    <li>$YEAR</li>
+                    <li>$ADVISORCOURSES</li>
+                    <li>$ADVISORNAME</li>
+                    <li>$ADVISOREMAIL</li>
+                  </ul>
+                </div>
+              </div>
               <mat-form-field class="form-field-lg">
                 <mat-label>Despacho Inicial</mat-label>
                 <textarea
@@ -200,6 +230,47 @@
                   {{ fieldErrors('initialDispatchHtml')?.serverError }}
                 </mat-error>
               </mat-form-field>
+            </fieldset>
+          </mat-tab>
+
+          <mat-tab label="Despacho Final">
+            <fieldset>
+              <legend>HTML de despacho final</legend>
+              <div class="optionsTwo">
+                <div class="title">
+                  <p>Os parâmetros que podem ser modificados nesse HTML são:</p>
+                  <a class="politics" (click)="openDialog()"><mat-icon color="primary">help_outline</mat-icon></a>
+                </div>
+                <div class="columTwo">
+                  <ul>
+                    <li>$STUDENTNAME</li>
+                    <li>$REGISTRATION</li>
+                    <li>$COURSENAME</li>
+                    <li>$INTERNSHIPTYPE</li>
+                    <li>$COMPANYNAME</li>
+                    <li>$INTERNSHIPSTARTDATE</li>
+                    <li>$INTERNSHIPENDDATE</li>
+                    <li>$REQUIRED</li>
+                    <li>$NOTREQUIRED</li>
+                    <li>$COURSENAME</li>
+                    <li>$TODAY</li>
+                  </ul>
+
+                  <ul>
+                    <li>$MONTH</li>
+                    <li>$YEAR</li>
+                    <li>$ADVISORCOURSES</li>
+                    <li>$ADVISORNAME</li>
+                    <li>$ADVISOREMAIL</li>
+                    <li>$MONTHLYREPORTSTARTDATE</li>
+                    <li>$MONTHLYREPORTENDDATE</li>
+                    <li>$VALIDATEDHOURS</li>
+                    <li>$TERMOFACCOMPLISHMENTSTARTDATE</li>
+                    <li>$TERMOFACCOMPLISHMENTENDDATE</li>
+                    <li>$TOTALAMOUNTOFHOURS</li>
+                  </ul>
+                </div>
+              </div>
               <mat-form-field class="form-field-lg">
                 <mat-label>Despacho Final</mat-label>
                 <textarea

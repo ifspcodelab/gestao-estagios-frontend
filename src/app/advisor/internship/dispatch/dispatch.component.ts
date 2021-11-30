@@ -23,26 +23,34 @@ export class DispatchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const currentDate = new Date()
+    const formatter = new Intl.DateTimeFormat('pt-BR', { month: 'long' });
+    const currentMonthName = formatter.format(new Date());
+
+    // let advisorCourses = "alo";
+    //
+    // this.data.internship.advisorRequest.advisor.courses.forEach(e => {
+    //   advisorCourses += e.name;
+    // });
+
     this.replacedDispatch = this.data.parameter.initialDispatchHtml
       .replace(new RegExp(/\$STUDENTNAME/g), this.data.internship.advisorRequest.student.user.name)
       .replace(new RegExp(/\$REGISTRATION/g), this.data.internship.advisorRequest.student.user.registration)
       .replace(new RegExp(/\$COURSENAME/g), this.data.internship.advisorRequest.curriculum.course.name)
-      // .replace(new RegExp(/\$INTERNSHIPTYPE/g), this.data.internship.internshipType)
+      // .replace(new RegExp(/\$INTERNSHIPTYPE/g), this.data.internship.internshipType.toString())
       .replace(new RegExp(/\$COMPANYNAME/g), this.data.activityPlan.companyName)
       .replace(new RegExp(/\$INTERNSHIPSTARTDATE/g), this.data.activityPlan.internshipStartDate)
       .replace(new RegExp(/\$INTERNSHIPENDDATE/g), this.data.activityPlan.internshipEndDate)
+      // .replace(new RegExp(/\$INTERNSHIPSTARTDATE/g), `${this.data.activityPlan.internshipStartDate.toString(), this.datePipe.transform('dd/MM/yyyy')}`)
+      // .replace(new RegExp(/\$INTERNSHIPENDDATE/g), `${this.data.activityPlan.internshipEndDate.toString(), this.datePipe.transform('dd/MM/yyyy')}`)
       // .replace(new RegExp(/\$REQUIRED/g), )
       // .replace(new RegExp(/\$NOTREQUIRED/g), )
-      // .replace(new RegExp(/\$TODAY/g), )
-      // .replace(new RegExp(/\$MONTH/g), )
-      // .replace(new RegExp(/\$YEAR/g), this.data.date.getDate.toString)
-      // .replace(new RegExp(/\$ADVISORCOURSES/g), this.data.internship.advisorRequest.advisor.courses)
+      .replace(new RegExp(/\$TODAY/g), currentDate.getDate().toString())
+      .replace(new RegExp(/\$MONTH/g), currentMonthName)
+      .replace(new RegExp(/\$YEAR/g), currentDate.getFullYear().toString())
+      // .replace(new RegExp(/\$ADVISORCOURSES/g), advisorCourses)
       .replace(new RegExp(/\$ADVISORNAME/g), this.data.internship.advisorRequest.advisor.user.name)
       .replace(new RegExp(/\$ADVISOREMAIL/g), this.data.internship.advisorRequest.advisor.user.email)
-  }
-
-  formatDate(internshipStartDate: string, internshipEndDate: string) : string {
-    return `${this.datePipe.transform(internshipStartDate, 'dd/MM/yyyy')} - ${this.datePipe.transform(internshipEndDate, 'dd/MM/yyyy')}`
   }
 
   copyCode(val: string){
