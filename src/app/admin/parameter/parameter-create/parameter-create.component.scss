@@ -6,6 +6,38 @@ fieldset {
   margin-top: 1rem;
 }
 
+.options,
+.optionsTwo {
+  margin-top: 1rem;
+  border: 1px solid #673ab7;
+  border-radius: 10px;
+  padding: 16px;
+  width: 50%;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  border: none;
+  background: #ffffff;
+}
+
+.options p {
+  font-size: 14px;
+}
+
+.colum,
+.columTwo {
+  display: flex;
+}
+
+ul {
+  margin-right: 2rem;
+}
+
 .form-field-lg {
   width: 50rem;
 }
@@ -14,15 +46,71 @@ fieldset {
   width: 16rem;
 }
 
+@media screen and (max-width: 1454px) {
+  .optionsTwo {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1169px) {
+  .options {
+    width: 60%;
+  }
+}
+
 @media screen and (max-width: 1154px) {
   .form-field-lg {
     width: 97%;
+  }
+
+  .optionsTwo {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 1043px) {
+  .options {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 939px) {
+  .options {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 986px) {
+  .columTwo {
+    display: block;
+  }
+
+  .optionsTwo {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 902px) {
+  .optionsTwo {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 805px) {
+  .colum {
+    display: block;
   }
 }
 
 @media screen and (max-width: 920px) {
   .form-field-lg {
     width: 95%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .colum {
+    display: flex;
   }
 }
 

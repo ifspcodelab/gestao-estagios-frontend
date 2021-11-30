@@ -6,11 +6,13 @@ import { CoreModule } from 'src/app/core/core.module';
 import { ParameterComponent } from "./parameter.component";
 import { ParameterRoutingModule } from "./parameter-routing.module";
 import { ParameterCreateComponent } from "./parameter-create/parameter-create.component";
+import { InformationComponent } from './information/information.component';
 
 @NgModule({
   declarations: [
     ParameterComponent,
-    ParameterCreateComponent
+    ParameterCreateComponent,
+    InformationComponent
   ],
   imports: [
     CommonModule,

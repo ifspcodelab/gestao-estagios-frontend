@@ -7,6 +7,8 @@ import { finalize, first } from "rxjs/operators";
 import { NotificationService } from "../../../core/services/notification.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { LoaderService } from "../../../core/services/loader.service";
+import { InformationComponent } from "../information/information.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-parameter-create',
@@ -25,6 +27,7 @@ export class ParameterCreateComponent implements OnInit {
     private parameterService: ParameterService,
     private notificationService: NotificationService,
     private loaderService: LoaderService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +47,10 @@ export class ParameterCreateComponent implements OnInit {
           this.form.patchValue(parameter);
         }
       )
+  }
+
+  openDialog() {
+    this.dialog.open(InformationComponent);
   }
 
   field(path: string) {
