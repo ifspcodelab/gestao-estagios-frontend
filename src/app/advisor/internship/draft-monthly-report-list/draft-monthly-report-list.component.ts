@@ -75,6 +75,10 @@ export class DraftMonthlyReportListComponent implements OnInit {
     return `${this.datePipe.transform(submissionDate, 'dd/MM/yyyy')}`;
   }
 
+  formatStartEndDate(reportStartDate: string, reportEndDate: string) {
+    return `${this.datePipe.transform(reportStartDate, 'dd/MM/yyyy')} - ${this.datePipe.transform(reportEndDate, 'dd/MM/yyyy')}`;
+  }
+
   handleStatus(status: RequestStatus) {
     if (status === RequestStatus.PENDING) {
       return 'PENDENTE';
