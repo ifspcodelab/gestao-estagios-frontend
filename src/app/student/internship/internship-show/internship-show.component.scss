@@ -23,7 +23,7 @@ input[type = "file"] {
 }
 
 app-card {
-  margin-left: 0.8rem;
+  margin-left: 0.3rem;
   margin-top: 0.8rem;
 }
 
@@ -41,4 +41,18 @@ table {
   color: #bbbbbb;
   font-weight: normal;
   margin-left: 15px;
+}
+
+@media screen and (max-width: 1024px) {
+  app-card {
+    flex: 0 0 97%;
+    margin-bottom: 25px;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  table {
+    display: block;
+    overflow-x: auto;
+  }
 }

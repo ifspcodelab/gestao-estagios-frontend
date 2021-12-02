@@ -79,8 +79,8 @@ export class RequestAppraisalCreateComponent implements OnInit {
     }
 
     let date = '';
-    if (this.data.deferred) {
-      date = new Date(this.field('date')?.value).toISOString();
+    if (this.data.deferred && this.field('date').value != '') {
+      date = new Date(this.field('date').value).toISOString();
     }
     const requestAppraisalCreate = new RequestAppraisalCreate(
       this.field('details').value,
