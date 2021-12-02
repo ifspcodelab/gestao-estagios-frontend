@@ -36,6 +36,15 @@
               Deferir
             </button>
           </div>
+          <div card-actions *ngIf="handleCanOpenAttachment(final)"></div>
+          <div card-actions *ngIf="handleCanOpenAttachment(final)">
+            <button 
+              mat-button color="primary" 
+              (click)="openAttachment($event)"
+            >
+              Acessar anexo
+            </button>
+          </div>
         </app-card>
       </app-content-cards>
     </mat-tab>

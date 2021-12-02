@@ -33,7 +33,7 @@ export class DraftMonthlyReportListComponent implements OnInit {
     private parameterService: ParameterService,
     private loaderService: LoaderService,
     private notificationService: NotificationService,
-    private draftMonthlyReportSubmissionService: DraftMonthlyReportSubmissionService
+    private draftMonthlyReportSubmissionService: DraftMonthlyReportSubmissionService,
   ) { }
 
   ngOnInit(): void {

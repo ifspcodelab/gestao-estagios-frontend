@@ -5,7 +5,7 @@
     <app-content-cards entityName="estágio" [emptyState]="internships.length == 0">
       <app-card
       *ngFor="let internship of internships" 
-      [title]="'Orientador: ' + internship.advisorRequest.advisor.user.name" 
+      [title]="internship.advisorRequest.advisor.user.name + getInternshipCompanyName(internship)" 
       [subtitle]="handleType(internship.internshipType)"
       [break]="true"
       [complement]="handleStatus(internship.status)"  

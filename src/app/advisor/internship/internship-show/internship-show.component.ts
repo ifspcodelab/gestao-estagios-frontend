@@ -161,7 +161,9 @@ export class InternshipShowComponent implements OnInit {
         if (result) {
           this.deferredActivityPlan = result;
           if(result.status == RequestStatus.ACCEPTED) {
+            this.internship.internshipType = result.internship.internshipType;
             this.internship.status = InternshipStatus.IN_PROGRESS;
+            this.monthlyReports = result.internship.monthlyReports;
           }
           const activityPlanFound = this.internship.activityPlans.find(p => p.id == result.id);
           if (activityPlanFound) {
@@ -189,7 +191,20 @@ export class InternshipShowComponent implements OnInit {
     return `${this.datePipe.transform(internshipStartDate, 'dd/MM/yyyy')} - ${this.datePipe.transform(internshipEndDate, 'dd/MM/yyyy')}`
   }
 
+  handleCantAppraiseDraft(reportMonth: Date) {
+    return new Date(reportMonth) > new Date() ? true : false;
+  }
+
+  handleCantAppraiseReport(report: MonthlyReport) {
+    return report.status === ReportStatus.DRAFT_PENDING ||
+      report.status === ReportStatus.DRAFT_SENT
+      ? true : false;
+  }
+
   handleDraftReportStatus(report: MonthlyReport) {
+    if (report.status === ReportStatus.DRAFT_PENDING && this.handleCantAppraiseDraft(report.month)) {
+      return 'Não Liberado';
+    }
     if (report.status === ReportStatus.DRAFT_PENDING) {
       return 'Pendente';
     }
@@ -200,9 +215,10 @@ export class InternshipShowComponent implements OnInit {
   }
 
   handleReportStatus(report: MonthlyReport) {
-    if (report.status === ReportStatus.FINAL_PENDING ||
-      report.status === ReportStatus.DRAFT_PENDING || 
-      report.status === ReportStatus.DRAFT_SENT
+    if (this.handleCantAppraiseReport(report)) {
+      return "Não Liberado";
+    }
+    if (!this.handleCantAppraiseReport(report) && report.status === ReportStatus.FINAL_PENDING 
     ) {
       return 'Pendente';
     }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { finalize, first } from 'rxjs/operators';
 import { InternshipType } from 'src/app/core/models/enums/internship-type';
 import { InternshipStatus } from 'src/app/core/models/enums/InternshipStatus';
+import { RequestStatus } from 'src/app/core/models/enums/request-status';
 import { Internship } from 'src/app/core/models/internship.model';
 import { AdvisorService } from 'src/app/core/services/advisor.service';
 import { InternshipService } from 'src/app/core/services/internship.service';
@@ -93,4 +94,12 @@ export class InternshipListComponent implements OnInit {
     }
   }
 
+  getInternshipCompanyName(internship: Internship): string {
+    for (const activityPlan of internship.activityPlans) {
+      if (activityPlan.status === RequestStatus.ACCEPTED) {
+        return ' - ' + activityPlan.companyName;
+      }
+    }
+    return '';
+  }
 }

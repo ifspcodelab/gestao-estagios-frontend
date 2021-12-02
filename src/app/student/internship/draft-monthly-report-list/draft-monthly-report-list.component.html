@@ -18,7 +18,7 @@
         <fieldset>
           <legend>Informações do rascunho</legend>
           <mat-form-field class="form-field-sm">
-            <mat-label>Data de Início</mat-label>
+            <mat-label>Data de Início do Rascunho</mat-label>
             <input onkeydown="return false" matInput [matDatepicker]="picker" formControlName="reportStartDate" name="reportStartDate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -28,7 +28,7 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field class="form-field-sm">
-            <mat-label>Data de Término</mat-label>
+            <mat-label>Data de Término do Rascunho</mat-label>
             <input onkeydown="return false" matInput [matDatepicker]="pickerTwo" formControlName="reportEndDate" name="reportEndDate">
             <mat-datepicker-toggle matSuffix [for]="pickerTwo"></mat-datepicker-toggle>
             <mat-datepicker #pickerTwo></mat-datepicker>

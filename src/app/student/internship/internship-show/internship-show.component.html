@@ -121,11 +121,13 @@
         </table>
       </mat-tab>
       <mat-tab label="Termo de Realização">
+        <p *ngIf="!handleCanSendRealizationTerm() && internship.realizationTerms.length == 0" class="cant-send">
+          Não é possível enviar o termo de realização neste momento. Todos os relatórios mensais até o mês atual devem ser aceitos.
+        </p>
         <app-content-form *ngIf="handleCanSendRealizationTerm()">
           <form class="app-form" id="internship-form" [formGroup]="formRealizationTerm" (ngSubmit)="onSubmitRealizationTerm()">
             <fieldset>
               <legend>Envie seu termo de realização</legend>
-
               <mat-form-field class="form-field-sm">
                 <mat-label>Primeiro dia de estágio</mat-label>
                 <input onkeydown="return false" matInput [matDatepicker]="picker" formControlName="internshipStartDate" name="internshipStartDate" (dateChange)="getLimitDate()">
@@ -136,7 +138,6 @@
                   {{ fieldErrors('internshipStartDate')?.serverError }}
                 </mat-error>
               </mat-form-field>
-
               <mat-form-field class="form-field-sm">
                 <mat-label>Último dia de estágio</mat-label>
                 <input onkeydown="return false" matInput [matDatepicker]="pickerTwo" formControlName="internshipEndDate" name="internshipEndDate">
@@ -148,7 +149,6 @@
                 </mat-error>
               </mat-form-field>
             </fieldset>
-
             <fieldset>
               <legend>Enviar termo de realização: tamanho máximo ({{parameter.activityPlanFileSizeMegabytes}} MB)</legend>
               <br>
@@ -156,7 +156,6 @@
               <span>{{ fileName }}</span>
               <label for="buttonActivityPlan" class="btn-send">Anexar Arquivo</label>
             </fieldset>
-
             <fieldset>
               <button type="submit" form="internship-form" mat-flat-button color="primary">
                 <span>Enviar Termo</span>

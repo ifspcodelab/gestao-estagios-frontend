@@ -50,7 +50,7 @@ import { MatTableModule } from '@angular/material/table';
     MatTabsModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatTableModule
+    MatTableModule,
   ],
   imports: [
     CommonModule,
@@ -77,7 +77,7 @@ import { MatTableModule } from '@angular/material/table';
     MatTabsModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatTableModule
+    MatTableModule,
   ]
 })
 export class SharedModule {
