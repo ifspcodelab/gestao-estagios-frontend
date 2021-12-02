@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { NgxMaskModule } from 'ngx-mask';
-import { MatNativeDateModule } from "@angular/material/core";
+import { MatNativeDateModule, MAT_DATE_LOCALE } from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -44,7 +44,7 @@ import { MatNativeDateModule } from "@angular/material/core";
 })
   ],
   // providers: [httpInterceptorProviders],
-  providers: [DatePipe],
+  providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
   exports: [],
   bootstrap: [AppComponent]
 })

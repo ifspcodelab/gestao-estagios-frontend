@@ -35,7 +35,7 @@
           *ngFor="let final of data.monthlyReport.finalMonthlyReportSubmissions" 
           [title]="'Enviado em: ' + formatSubmissionDate(final.submissionDate)" 
           [subtitle]="handleStatus(final.status)" 
-          (click)="openDraftReport(final)">
+          (click)="openFinalReport(final)">
         </app-card>
       </app-content-cards>
     </mat-tab>

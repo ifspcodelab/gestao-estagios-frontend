@@ -140,7 +140,7 @@ export class FinalMonthlyReportListComponent implements OnInit {
     return 'INDEFERIDO'
   }
 
-  openDraftReport(final: FinalMonthlyReportSubmission) {
+  openFinalReport(final: FinalMonthlyReportSubmission) {
     window.open(final.finalMonthlyReportUrl);
   }
 }
