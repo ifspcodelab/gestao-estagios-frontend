@@ -19,7 +19,7 @@
         <app-content-cards entityName="estágio" [emptyState]="inProgressInternships.length == 0">
           <app-card
           *ngFor="let internship of inProgressInternships" 
-          [title]="'Aluno: ' + internship.advisorRequest.student.user.name" 
+          [title]="internship.advisorRequest.student.user.name + getInternshipCompanyName(internship)" 
           [subtitle]="handleType(internship.internshipType)"
           [break]="true"
           [complement]="handleStatus(internship.status)"  

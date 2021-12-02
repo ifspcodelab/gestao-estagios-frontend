@@ -6,7 +6,6 @@ import { ReportStatus } from 'src/app/core/models/enums/report-status';
 import { RequestStatus } from 'src/app/core/models/enums/request-status';
 import { FinalMonthlyReportSubmission } from 'src/app/core/models/final-monthly-report-submission.model';
 import { MonthlyReport } from 'src/app/core/models/monthly-report.model';
-import { DraftMonthlyReportAppraisalComponent } from '../draft-monthly-report-appraisal/draft-monthly-report-appraisal.component';
 import { FinalMonthlyReportAppraisalComponent } from '../final-monthly-report-appraisal/final-monthly-report-appraisal.component';
 
 @Component({
@@ -82,8 +81,18 @@ export class FinalMonthlyReportListComponent implements OnInit {
     return 'INDEFERIDO'
   }
 
-  openFinalReport(draft: FinalMonthlyReportSubmission) {
-    window.open(draft.finalMonthlyReportUrl);
+  handleCanOpenAttachment(final: FinalMonthlyReportSubmission) {
+    return final.status === RequestStatus.ACCEPTED && this.data.monthlyReport.attachmentUrl !== null ? true : false;
+  }
+
+  openAttachment($event: Event) {
+    $event.stopPropagation();
+    console.log(this.data.monthlyReport.attachmentUrl);
+    window.open(this.data.monthlyReport.attachmentUrl);
+  }
+
+  openFinalReport(final: FinalMonthlyReportSubmission) {
+    window.open(final.finalMonthlyReportUrl);
   }
 
   closeDialog() {

@@ -268,6 +268,9 @@ export class InternshipShowComponent implements OnInit {
 
   handleCanSendRealizationTerm(): boolean {
     const monthlyReportsUntilActualMonth = this.monthlyReports.filter(r => new Date(r.month) <= new Date(new Date().setDate(1)));
+    if (this.internship.monthlyReports.length == 0) {
+      return false;
+    }
     for (const realizationTerm of this.internship.realizationTerms) {
       if (realizationTerm.status === RequestStatus.PENDING || realizationTerm.status === RequestStatus.ACCEPTED) {
         return false;

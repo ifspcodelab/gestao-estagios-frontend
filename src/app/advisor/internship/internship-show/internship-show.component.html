@@ -42,7 +42,7 @@
         </app-content-cards>
       </mat-tab>
       <mat-tab label="Relatórios Mensais">
-        <table mat-table [dataSource]="monthlyReports" class="mat-elevation-z8">
+        <table *ngIf="monthlyReports.length != 0" mat-table [dataSource]="monthlyReports" class="mat-elevation-z8">
           <ng-container matColumnDef="month">
             <th mat-header-cell *matHeaderCellDef>Mês</th>
             <td mat-cell *matCellDef="let report">{{ report.month | date: 'MM/yyyy' }}</td>
@@ -53,6 +53,7 @@
               <button 
                 mat-button color="primary"
                 (click)="openDraftDialog(report)"
+                [disabled]="handleCantAppraiseDraft(report.month)"
               >
                 {{ handleDraftReportStatus(report) }} 
               </button>
@@ -64,6 +65,7 @@
               <button 
                 mat-button color="primary"
                 (click)="openFinalDialog(report)"
+                [disabled]="handleCantAppraiseReport(report)"
               >
               {{ handleReportStatus(report) }}
               </button>
