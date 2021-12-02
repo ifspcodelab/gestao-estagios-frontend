@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, first } from 'rxjs/operators';
 import { ActivityPlan, ActivityPlanUpdate } from 'src/app/core/models/activity-plan.model';
@@ -51,7 +50,6 @@ export class InternshipShowComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private fbrt: FormBuilder,
-    private adapter: DateAdapter<any>,
     private route: ActivatedRoute,
     private loaderService: LoaderService,
     private internshipService: InternshipService,
@@ -68,7 +66,6 @@ export class InternshipShowComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     
-    this.adapter.setLocale('pt-br');
     const currentDate = new Date();
     this.minDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
 
