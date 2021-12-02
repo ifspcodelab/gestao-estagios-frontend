@@ -18,7 +18,9 @@
         <app-card
           *ngFor="let draft of data.monthlyReport.draftMonthlyReportSubmissions" 
           [title]="'Enviado em: ' + formatSubmissionDate(draft.submissionDate)" 
-          [subtitle]="handleStatus(draft.status)" 
+          [subtitle]="formatStartEndDate(draft.reportStartDate, draft.reportEndDate)"
+          [break]="true"
+          [complement]="handleStatus(draft.status)" 
           (click)="openDraftReport(draft)">
           <div card-actions *ngIf="handleCanAppraiseDraft(draft)">
             <button 
