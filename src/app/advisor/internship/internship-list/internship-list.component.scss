@@ -1,5 +1,11 @@
-::ng-deep.mat-card {
-  margin-top: 1rem;
-  margin-left: 0.1rem;
-  flex: calc(100% - 10px);
+app-card {
+  margin-top: 0.8rem;
+  margin-left: 0.3rem;
+}
+
+@media screen and (max-width: 1024px) {
+  app-card {
+    flex: 0 0 97%;
+    margin-bottom: 25px;
+  }
 }

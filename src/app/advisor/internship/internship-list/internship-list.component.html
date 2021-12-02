@@ -7,7 +7,7 @@
         <app-content-cards entityName="estágio" [emptyState]="waitingDocsInternships.length == 0">
           <app-card
           *ngFor="let internship of waitingDocsInternships" 
-          [title]="'Aluno: ' + internship.advisorRequest.student.user.name" 
+          [title]="internship.advisorRequest.student.user.name" 
           [subtitle]="handleType(internship.internshipType)"
           [break]="true"
           [complement]="handleStatus(internship.status)"  
@@ -27,7 +27,7 @@
           </app-card>
         </app-content-cards>
       </mat-tab>
-      <mat-tab label="Finalização">
+      <mat-tab label="Finalizados">
       </mat-tab>
     </mat-tab-group>
   </app-content-main>

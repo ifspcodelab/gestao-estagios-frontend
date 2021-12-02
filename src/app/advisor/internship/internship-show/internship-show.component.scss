@@ -3,16 +3,23 @@ app-card {
   margin-left: 0.4rem;
 }
 
-@media only screen and (max-width: 800px) {
-  app-card {
-    flex: 0 0 98%;
-  }
+table {
+  width: 100%;
 }
 
 .line-title {
   font-weight: 500 !important;
 }
 
-table {
-  width: 100%;
+@media only screen and (max-width: 800px) {
+  app-card {
+    flex: 0 0 98%;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  table {
+    display: block;
+    overflow-x: auto;
+  }
 }
