@@ -46,6 +46,8 @@ export class InternshipShowComponent implements OnInit {
   monthlyReports: MonthlyReport[];
   isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.XSmall);
   formRealizationTerm: FormGroup;
+  internshipStartDate: string;
+  internshipEndDate: string;
 
   constructor(
     private fb: FormBuilder,
@@ -75,7 +77,6 @@ export class InternshipShowComponent implements OnInit {
       this.fetchInternship(this.id);
     }
 
-    this.form = this.buildForm();
     this.formRealizationTerm = this.buildFormRealizationTerm();
   }
 
@@ -107,8 +108,20 @@ export class InternshipShowComponent implements OnInit {
       .subscribe (
         internship => {
           this.internship = internship;
-          this.deferredActivityPlan = this.internship.activityPlans.find(p => p.status === RequestStatus.ACCEPTED);
+          const deferredActivityPlans = this.internship.activityPlans
+            .filter(p => p.status === RequestStatus.ACCEPTED)
+            .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+          if (deferredActivityPlans.length == 1) {
+            this.deferredActivityPlan = deferredActivityPlans[0];
+            this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
+            this.internshipEndDate = this.deferredActivityPlan.internshipEndDate;
+          } else {
+            this.deferredActivityPlan = deferredActivityPlans[0];
+            this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
+            this.internshipEndDate = deferredActivityPlans[deferredActivityPlans.length - 1].internshipEndDate;
+          }
           this.monthlyReports = internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));
+          this.form = this.buildForm();
         },
         error => {
           if(error.status >= 400 || error.status <= 499) {
@@ -133,10 +146,14 @@ export class InternshipShowComponent implements OnInit {
       return;
     }
 
+    let companyName = null;
+    if (!this.handleInternshipIsInProgress()) {
+      companyName = this.form.get('companyName')!.value;
+    }
     const startDate = new Date(this.form.get('internshipStartDate')!.value).toISOString();
     const endDate = new Date(this.form.get('internshipEndDate')!.value).toISOString();
     const activityPlanUpdate: ActivityPlanUpdate = new ActivityPlanUpdate(
-      this.form.get('companyName')!.value,
+      companyName,
       startDate,
       endDate
     );
@@ -151,7 +168,9 @@ export class InternshipShowComponent implements OnInit {
             .subscribe(
               activityPlan => {
                 this.internship.activityPlans.push(activityPlan);
-                this.internship.status = InternshipStatus.ACTIVITY_PLAN_SENT;
+                if (this.internship.status !== InternshipStatus.IN_PROGRESS) {
+                  this.internship.status = InternshipStatus.ACTIVITY_PLAN_SENT;
+                }
                 this.notificationService.success('Plano de atividades enviado com sucesso!');
               }
             )
@@ -213,20 +232,34 @@ export class InternshipShowComponent implements OnInit {
   }
 
   buildForm(): FormGroup {
-    return this.fb.group({
-      companyName: ['',
-        [Validators.required, AppValidators.notBlank]
-      ],
-      internshipStartDate: ['',
-        [Validators.required]
-      ],
-      internshipEndDate: [{value: '', disabled: true },
-        [Validators.required]
-      ],
-      file: ['',
-        [Validators.required]
-      ],
-    });
+    if (!this.handleInternshipIsInProgress()) {
+      return this.fb.group({
+        companyName: ['',
+          [Validators.required, AppValidators.notBlank]
+        ],
+        internshipStartDate: ['',
+          [Validators.required]
+        ],
+        internshipEndDate: [{value: '', disabled: true },
+          [Validators.required]
+        ],
+        file: ['',
+          [Validators.required]
+        ],
+      });
+    } else {
+      return this.fb.group({
+        internshipStartDate: ['',
+          [Validators.required]
+        ],
+        internshipEndDate: [{value: '', disabled: true },
+          [Validators.required]
+        ],
+        file: ['',
+          [Validators.required]
+        ],
+      });
+    }
   }
 
   getLimitDate() {
@@ -257,10 +290,12 @@ export class InternshipShowComponent implements OnInit {
   }
 
   handleCanSendActivityPlan(): boolean {
-    if (this.internship.status === InternshipStatus.ACTIVITY_PLAN_PENDING) {
-      return true;
+    for (const activityPlan of this.internship.activityPlans) {
+      if (activityPlan.status === RequestStatus.PENDING) {
+        return false;
+      }
     }
-    return false
+    return true;
   }
 
   handleCanSendRealizationTerm(): boolean {

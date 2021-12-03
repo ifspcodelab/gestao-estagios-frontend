@@ -34,6 +34,8 @@ export class InternshipShowComponent implements OnInit {
   displayedColumns: string[] = ['month', 'draft', 'report'];
   monthlyReports: MonthlyReport[];
   isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.XSmall);
+  internshipStartDate: string;
+  internshipEndDate: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,7 +69,18 @@ export class InternshipShowComponent implements OnInit {
       .subscribe (
         internship => {
           this.internship = internship;
-          this.deferredActivityPlan = this.internship.activityPlans.find(p => p.status === RequestStatus.ACCEPTED);
+          const deferredActivityPlans = this.internship.activityPlans
+            .filter(p => p.status === RequestStatus.ACCEPTED)
+            .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+          if (deferredActivityPlans.length == 1) {
+            this.deferredActivityPlan = deferredActivityPlans[0];
+            this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
+            this.internshipEndDate = this.deferredActivityPlan.internshipEndDate;
+          } else {
+            this.deferredActivityPlan = deferredActivityPlans[0];
+            this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
+            this.internshipEndDate = deferredActivityPlans[deferredActivityPlans.length - 1].internshipEndDate;
+          }
           this.monthlyReports = internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));
         },
         error => {

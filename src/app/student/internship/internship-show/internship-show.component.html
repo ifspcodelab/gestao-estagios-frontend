@@ -7,8 +7,8 @@
         <mat-icon mat-list-icon>folder</mat-icon>
         <h3 matLine class="line-title">Informações do estágio</h3>
         <p matLine>Razão social: {{ deferredActivityPlan!.companyName }}</p>
-        <p matLine>Início do estágio: {{ deferredActivityPlan!.internshipStartDate | date:'dd/MM/yyyy'}}</p>
-        <p matLine>Término do estágio: {{ deferredActivityPlan!.internshipEndDate | date:'dd/MM/yyyy' }}</p>
+        <p matLine>Início do estágio: {{ internshipStartDate | date:'dd/MM/yyyy'}}</p>
+        <p matLine>Término do estágio: {{ internshipEndDate | date:'dd/MM/yyyy' }}</p>
       </mat-list-item>
     </mat-list>
     <mat-tab-group [dynamicHeight]='true' [selectedIndex]="handleDefaultTab()" mat-align-tabs="start">
@@ -16,8 +16,8 @@
         <app-content-form *ngIf="handleCanSendActivityPlan()">
           <form class="app-form" id="internship-form" [formGroup]="form" (ngSubmit)="onSubmit()">
             <fieldset>
-              <legend>Envie seu plano de atividades</legend>
-              <mat-form-field class="form-field-lg">
+              <legend *ngIf="!handleInternshipIsInProgress()">Envie seu plano de atividades</legend>
+              <mat-form-field *ngIf="!handleInternshipIsInProgress()" class="form-field-lg">
                 <mat-label>Razão Social</mat-label>
                 <input type="text" appearance="fill" matInput placeholder="" formControlName="companyName" name="companyName" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('companyName')?.required">Razão Social é obrigatória</mat-error>
