@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <form class="app-form" id="realization-term-appraisal-form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-form-field class="form-field-lg">
-      <mat-label>Motivo do {{data.deferred ? 'deferimento' : 'indeferimento'}}</mat-label>
+      <mat-label>{{data.deferred ? 'Detalhes' : 'Motivo do indeferimento'}}</mat-label>
       <textarea
         cdkTextareaAutosize
         #autosize="cdkTextareaAutosize"
@@ -14,7 +14,7 @@
         formControlName="details"
         name="details">
       </textarea>
-      <mat-error *ngIf="fieldErrors('details')?.required">Motivo do {{data.deferred ? 'deferimento' : 'indeferimento'}} é obrigatório</mat-error>
+      <mat-error *ngIf="fieldErrors('details')?.required">{{data.deferred ? 'Detalhes' : 'Motivo do indeferimento'}} é obrigatório</mat-error>
     </mat-form-field>
   </form>
 </div>
