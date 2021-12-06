@@ -20,8 +20,8 @@ import { DraftMonthlyReportListComponent } from '../draft-monthly-report-list/dr
 import { FinalMonthlyReportListComponent } from '../final-monthly-report-list/final-monthly-report-list.component';
 import { RealizationTermAppraisalComponent } from '../realization-term-appraisal/realization-term-appraisal.component';
 import { DispatchComponent } from "../dispatch/dispatch.component";
-import {Parameter} from "../../../core/models/parameter.model";
-import {ParameterService} from "../../../core/services/parameter.service";
+import { Parameter } from "../../../core/models/parameter.model";
+import { ParameterService } from "../../../core/services/parameter.service";
 
 @Component({
   selector: 'app-internship-show',
@@ -39,6 +39,7 @@ export class InternshipShowComponent implements OnInit {
   internshipStartDate: string;
   internshipEndDate: string;
   parameter: Parameter;
+  enableConsolidation: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -104,6 +105,11 @@ export class InternshipShowComponent implements OnInit {
             this.internshipEndDate = deferredActivityPlans[deferredActivityPlans.length - 1].internshipEndDate;
           }
           this.monthlyReports = internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));
+          internship.realizationTerms.forEach(e => {
+            if(e.status === RequestStatus.ACCEPTED) {
+              this.enableConsolidation = true;
+            }
+          });
         },
         error => {
           if(error.status >= 400 || error.status <= 499) {
@@ -319,5 +325,10 @@ export class InternshipShowComponent implements OnInit {
 
   formatDateRealizationTerm(createdAt: Date) : string {
     return `${this.datePipe.transform(createdAt, 'dd/MM/yyyy')}`
+  }
+
+  consolidateDocumentation() {
+    //TODO: lógica de consolidação da documentação
+    //setar o status do estágio como finalizado
   }
 }
