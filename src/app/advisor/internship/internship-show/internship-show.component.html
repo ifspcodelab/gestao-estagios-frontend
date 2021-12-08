@@ -27,18 +27,19 @@
             [break]="true"
             [complement]="handleActivityPlanStatus(activityPlan.status)"
             (click)="openActivityPlan(activityPlan)">
+            <div card-actions *ngIf="handleCanCopyDispatch(activityPlan)"></div>
             <div card-actions *ngIf="handleCanCopyDispatch(activityPlan)">
-              <button (click)="openDialog($event)" mat-flat-button color="primary">
+              <button (click)="openDialog($event)" mat-button color="primary">
                 <span>Despacho Inicial</span>
               </button>
             </div>
-            <div card-actions>
-              <button *ngIf="handleCanAppraiseActivityPlan(activityPlan)" mat-button color="warn" (click)="handleAppraiseActivityPlan($event, false, activityPlan.id)">
+            <div card-actions *ngIf="handleCanAppraiseActivityPlan(activityPlan)">
+              <button mat-button color="warn" (click)="handleAppraiseActivityPlan($event, false, activityPlan.id)">
                 Indeferir
               </button>
             </div>
-            <div card-actions>
-              <button *ngIf="handleCanAppraiseActivityPlan(activityPlan)" mat-button color="primary" (click)="handleAppraiseActivityPlan($event, true, activityPlan.id)">
+            <div card-actions *ngIf="handleCanAppraiseActivityPlan(activityPlan)">
+              <button mat-button color="primary" (click)="handleAppraiseActivityPlan($event, true, activityPlan.id)">
                 Deferir
               </button>
             </div>

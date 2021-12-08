@@ -24,6 +24,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [],
@@ -51,6 +52,7 @@ import { MatTableModule } from '@angular/material/table';
     MatExpansionModule,
     MatDatepickerModule,
     MatTableModule,
+    ClipboardModule,
   ],
   imports: [
     CommonModule,
@@ -78,6 +80,7 @@ import { MatTableModule } from '@angular/material/table';
     MatExpansionModule,
     MatDatepickerModule,
     MatTableModule,
+    ClipboardModule,
   ]
 })
 export class SharedModule {

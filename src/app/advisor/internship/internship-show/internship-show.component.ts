@@ -54,7 +54,7 @@ export class InternshipShowComponent implements OnInit {
 
   openDialog($event: Event) {
     $event.stopPropagation();
-    this.dialog.open(DispatchComponent, {data: { parameter: this.parameter, internship: this.internship, activityPlan: this.deferredActivityPlan, date: this.datePipe }})
+    this.dialog.open(DispatchComponent, { data: { internship: this.internship, activityPlan: this.deferredActivityPlan } })
   }
 
   ngOnInit(): void {
