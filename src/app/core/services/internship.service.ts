@@ -31,4 +31,40 @@ export class InternshipService {
   getById(id: string): Observable<Internship> {
     return this.httpClient.get<Internship>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
+
+  updateInternshipStatus(id: string): Observable<Internship> {
+    return this.httpClient.patch<Internship>(`${this.apiUrl}/${id}/update-status`, this.httpOptions);
+  }
+
+  finalDocumentation(id: string) {
+    return this.httpClient.get(`${this.apiUrl}/${id}/final-documentation`, {
+      responseType: 'blob' as 'json'
+    });
+  }
+
+  handleFile(res: any) {
+    const file = new Blob([res], {
+      type: res.type
+    });
+
+    
+
+    const blob = window.URL.createObjectURL(file);
+
+    const link = document.createElement('a');
+    link.href = blob;
+    link.download;
+
+    
+    link.dispatchEvent(new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window
+    }));
+
+    setTimeout(() => { // firefox
+      window.URL.revokeObjectURL(blob);
+      link.remove();
+    }, 100);
+  }
 } 
