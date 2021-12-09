@@ -53,7 +53,7 @@ export class InternshipListComponent implements OnInit {
               internships => {
                 this.internships = internships;
                 this.waitingDocsInternships = this.internships.filter(i => i.status === InternshipStatus.ACTIVITY_PLAN_PENDING || i.status === InternshipStatus.ACTIVITY_PLAN_SENT);
-                this.inProgressInternships = this.internships.filter(i => i.status === InternshipStatus.IN_PROGRESS);
+                this.inProgressInternships = this.internships.filter(i => i.status === InternshipStatus.IN_PROGRESS || i.status === InternshipStatus.REALIZATION_TERM_ACCEPTED);
                 this.finishedInternships = this.internships.filter(i => i.status === InternshipStatus.FINISHED);
               }
             )

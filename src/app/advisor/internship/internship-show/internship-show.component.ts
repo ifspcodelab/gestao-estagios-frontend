@@ -22,6 +22,8 @@ import { RealizationTermAppraisalComponent } from '../realization-term-appraisal
 import { DispatchComponent } from "../dispatch/dispatch.component";
 import { Parameter } from "../../../core/models/parameter.model";
 import { ParameterService } from "../../../core/services/parameter.service";
+import { FinalDocumentationComponent } from '../final-documentation/final-documentation.component';
+import { RealizationTerm } from 'src/app/core/models/realization-term.model';
 
 @Component({
   selector: 'app-internship-show',
@@ -184,6 +186,13 @@ export class InternshipShowComponent implements OnInit {
     return activityPlan.status === RequestStatus.ACCEPTED
   }
 
+  private getDialogFinalDocumentation() {
+    return {
+      autoFocus: true,
+      data: {}
+    };
+  }
+
   handleCanAppraiseActivityPlan(activityPlan: ActivityPlan) {
     if (activityPlan.status === RequestStatus.PENDING) {
       return true;
@@ -327,8 +336,12 @@ export class InternshipShowComponent implements OnInit {
     return `${this.datePipe.transform(createdAt, 'dd/MM/yyyy')}`
   }
 
-  consolidateDocumentation() {
+  consolidateDocumentation($event: Event) {
     //TODO: lógica de consolidação da documentação
     //setar o status do estágio como finalizado
+    $event.stopPropagation();
+    this.dialog.open(FinalDocumentationComponent, this.getDialogFinalDocumentation())
+      .afterClosed()
+      .subscribe();
   }
 }
