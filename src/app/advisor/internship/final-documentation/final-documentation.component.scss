@@ -1,0 +1,16 @@
+.mat-dialog-content {
+    width: 35vw;
+    height: 50%;
+  }
+  
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 700px) {
+  .mat-dialog-content {
+    width: 65vw;
+    height: 20vh;
+  }
+}
