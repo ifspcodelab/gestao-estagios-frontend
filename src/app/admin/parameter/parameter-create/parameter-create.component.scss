@@ -15,6 +15,11 @@ fieldset {
   width: 50%;
 }
 
+legend {
+  display: flex;
+  gap: 2rem;
+}
+
 .title {
   display: flex;
   justify-content: space-between;
@@ -44,78 +49,4 @@ ul {
 
 .form-field-sm {
   width: 16rem;
-}
-
-@media screen and (max-width: 1454px) {
-  .optionsTwo {
-    width: 70%;
-  }
-}
-
-@media screen and (max-width: 1169px) {
-  .options {
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 1154px) {
-  .form-field-lg {
-    width: 97%;
-  }
-
-  .optionsTwo {
-    width: 95%;
-  }
-}
-
-@media screen and (max-width: 1043px) {
-  .options {
-    width: 70%;
-  }
-}
-
-@media screen and (max-width: 939px) {
-  .options {
-    width: 90%;
-  }
-}
-
-@media screen and (max-width: 986px) {
-  .columTwo {
-    display: block;
-  }
-
-  .optionsTwo {
-    width: 80%;
-  }
-}
-
-@media screen and (max-width: 902px) {
-  .optionsTwo {
-    width: 85%;
-  }
-}
-
-@media screen and (max-width: 805px) {
-  .colum {
-    display: block;
-  }
-}
-
-@media screen and (max-width: 920px) {
-  .form-field-lg {
-    width: 95%;
-  }
-}
-
-@media screen and (max-width: 700px) {
-  .colum {
-    display: flex;
-  }
-}
-
-@media screen and (max-width: 370px) {
-  .form-field-lg {
-    width: 93%;
-  }
 }

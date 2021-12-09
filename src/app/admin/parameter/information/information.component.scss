@@ -1,12 +1,24 @@
+.mat-dialog-actions {
+  display: block;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .instructions {
-  width: 90%;
+  width: 30rem !important;
 }
 
-button {
-  margin-top: 2rem;
+.description {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-ul {
-  line-height: 2;
+h1 {
+  margin: 0px;
 }
 
+a {
+  text-decoration:none;
+  margin-top: -2rem;
+}
