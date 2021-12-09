@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -36,35 +36,39 @@ export class InternshipService {
     return this.httpClient.patch<Internship>(`${this.apiUrl}/${id}/update-status`, this.httpOptions);
   }
 
-  finalDocumentation(id: string) {
-    return this.httpClient.get(`${this.apiUrl}/${id}/final-documentation`, {
+  finalDocumentation(id: string): Observable<HttpResponse<Blob>> {
+    return this.httpClient.get<Blob>(`${this.apiUrl}/${id}/final-documentation`, {
+      observe: 'response',
       responseType: 'blob' as 'json'
     });
   }
 
   handleFile(res: any) {
-    const file = new Blob([res], {
+    const file = new Blob([res.body], {
       type: res.type
     });
-
-    
 
     const blob = window.URL.createObjectURL(file);
 
     const link = document.createElement('a');
     link.href = blob;
-    link.download;
+    link.download = this.getFileNameFromHttpResponse(res);
 
-    
     link.dispatchEvent(new MouseEvent('click', {
       bubbles: true,
       cancelable: true,
       view: window
     }));
 
-    setTimeout(() => { // firefox
+    setTimeout(() => {
       window.URL.revokeObjectURL(blob);
       link.remove();
     }, 100);
+  }
+
+  getFileNameFromHttpResponse(httpResponse: any) {
+    var contentDispositionHeader = httpResponse.headers.get('Content-Disposition');
+    var result = contentDispositionHeader.split(';')[1].trim().split('=')[1];
+    return result.replace(/"/g, '');
   }
 } 
