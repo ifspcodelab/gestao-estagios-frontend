@@ -2,30 +2,188 @@
   <h1 mat-dialog-title>Instruções</h1>
 </div>
 
-<div class="instructions" mat-dialog-actions>
-  <ul>
-    <li>$STUDENTNAME - Nome do Estudante</li>
-    <li>$REGISTRATION - Matrícula do Estudante</li>
-    <li>$COURSENAME - Nome do Curso</li>
-    <li>$INTERNSHIPTYPE - Tipo de Estágio</li>
-    <li>$COMPANYNAME - Nome da Razão Social</li>
-    <li>$INTERNSHIPSTARTDATE - Data de Início de Estágio</li>
-    <li>$INTERNSHIPENDDATE - Data de Término de Estágio</li>
-    <li>$REQUIRED - Condição de Estágio Obrigatório</li>
-    <li>$NOTREQUIRED- Condição de Estágio Não Obrigatório</li>
-    <li>$COURSENAME - Nome do Curso</li>
-    <li>$TODAY - Dia Atual</li>
-    <li>$MONTH - Mês Atual</li>
-    <li>$YEAR - Ano Atual</li>
-    <li>$ADVISORCOURSES - Cursos orientados pelo Orientador</li>
-    <li>$ADVISORNAME - Nome do Orientador</li>
-    <li>$ADVISOREMAIL - E-mail do Orientador</li>
-    <li>$MONTHLYREPORTSTARTDATE - Data Inicial Relatório mensal</li>
-    <li>$MONTHLYREPORTENDDATE - Data Final Relatório mensal</li>
-    <li>$VALIDATEDHOURS - Horas de Estágio Validadas</li>
-    <li>$TERMOFACCOMPLISHMENTSTARTDATE - Data Inicial do Termo de Realização</li>
-    <li>$TERMOFACCOMPLISHMENTENDDATE - Data Final de Termo de Realização</li>
-    <li>$TOTALAMOUNTOFHOURS - Total de Horas</li>
-  </ul>
+<div class="instructions" mat-dialog-content>
+  <a href="https://www.thymeleaf.org/" target="_blank">Documentação Thymeleaf</a>
+  <div class="description">
+    <h4>Hierarquia de objetos</h4>
+    <ul>
+      <li>internship
+        <ul>
+          <li>internshipType</li>
+          <li>status</li>
+          <li>advisorRequest
+            <ul>
+              <ul>
+                <li>createdAt</li>
+                <li>expiresAt</li>
+                <li>internshipType</li>
+                <li>details</li>
+                <li>status</li>
+                <li>
+                  <strong>student</strong>
+                  <ul>
+                    <li>
+                      <strong>user</strong>
+                      <ul>
+                        <li>registration</li>
+                        <li>name</li>
+                        <li>email</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>advisor
+                  <ul>
+                    <li>
+                      <strong>user</strong>
+                      <ul>
+                        <li>registration</li>
+                        <li>name</li>
+                        <li>email</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <ul>
+                  <li>courses
+                    <ul>
+                      <li>name</li>
+                      <li>abbreviation</li>
+                      <li>numberOfPeriods</li>
+                      <li>status</li>
+                      <li>
+                        <strong>department</strong>
+                        <ul>
+                          <li>name</li>
+                          <li>abbreviation</li>
+                          <li>
+                            <strong>campus</strong>
+                            <ul>
+                              <li>name</li>
+                              <li>abbreviation</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <li>curriculum
+                  <ul>
+                    <li>code</li>
+                    <li>courseLoad</li>
+                    <li>internshipCourseLoad</li>
+                    <li>internshipStartCriteria</li>
+                    <li>internshipAllowedActivities</li>
+                    <li>status</li>
+                    <li>
+                      <strong>course</strong>
+                      <ul>
+                        <li>name</li>
+                        <li>abbreviation</li>
+                        <li>numberOfPeriods</li>
+                        <li>status</li>
+                        <li>
+                          <strong>department</strong>
+                          <ul>
+                            <li>name</li>
+                            <li>abbreviation</li>
+                            <li>
+                              <strong>campus</strong>
+                              <ul>
+                                <li>name</li>
+                                <li>abbreviation</li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </ul>
+          </li>
+        </ul>
+        <ul>
+          <li>activityPlans
+            <ul>
+              <li>companyName</li>
+              <li>internshipStartDate</li>
+              <li>internshipEndDate</li>
+              <li>createdAt</li>
+              <li>expiresAt</li>
+              <li>activityPlanUrl</li>
+              <li>status</li>
+              <li>details</li>
+            </ul>
+          </li>
+          <li>monthlyReports
+            <ul>
+              <li>month</li>
+              <li>draftSubmittedOnDeadline</li>
+              <li>finalAcceptationDate</li>
+              <li>startDate</li>
+              <li>endDate</li>
+              <li>attachmentUrl</li>
+              <li>numberOfApprovedHours</li>
+              <li>finalMonthlyReportUrl</li>
+              <li>status</li>
+              <li>
+                <strong>activityPlan</strong>
+                <ul>
+                  <li>companyName</li>
+                  <li>internshipStartDate</li>
+                  <li>internshipEndDate</li>
+                  <li>createdAt</li>
+                  <li>expiresAt</li>
+                  <li>activityPlanUrl</li>
+                  <li>status</li>
+                  <li>details</li>
+                </ul>
+              </li>
+              <li>
+                <strong>draftMonthlyReportSubmissions</strong>
+                <ul>
+                  <li>submissionDate</li>
+                  <li>reportStartDate</li>
+                  <li>reportEndDate</li>
+                  <li>draftMonthlyReportUrl</li>
+                  <li>status</li>
+                  <li>details</li>
+                  <li>numberOfApprovedHours</li>
+                  <li>monthlyReportId</li>
+                </ul>
+              </li>
+              <li>
+                <strong>finalMonthlyReportSubmissions</strong>
+                <ul>
+                  <li>submissionDate</li>
+                  <li>finalMonthlyReportUrl</li>
+                  <li>status</li>
+                  <li>details</li>
+                  <li>monthlyReportId</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>realizationTerms
+            <ul>
+              <li>createdAt</li>
+              <li>internshipStartDate</li>
+              <li>internshipEndDate</li>
+              <li>realizationTermUrl</li>
+              <li>status</li>
+              <li>details</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p><strong>Exemplo:</strong> $&#123;internship.advisorRequest.student.user.name&#125;</p>
+  </div>
 </div>
-<button color="primary" mat-flat-button mat-dialog-close>Fechar</button>
+<div mat-dialog-actions>
+  <button color="primary" mat-flat-button mat-dialog-close>Fechar</button>
+</div>
+
