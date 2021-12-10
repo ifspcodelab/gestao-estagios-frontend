@@ -62,7 +62,7 @@ export class InternshipListComponent implements OnInit {
   }
 
   handleType(internshipType: InternshipType): string {
-    if (internshipType === InternshipType.REQUIRED_OR_NOT) {
+    /*if (internshipType === InternshipType.REQUIRED_OR_NOT) {
       return 'Estágio obrigatório ou não obrigatório';
     }
     else if (internshipType === InternshipType.REQUIRED) {
@@ -76,22 +76,12 @@ export class InternshipListComponent implements OnInit {
     }
     else {
       return 'Aproveitamento Profissional';
-    }
+    }*/
+    return InternshipType.toString(internshipType)
   }
 
   handleStatus(status: InternshipStatus): string {
-    if (status == InternshipStatus.ACTIVITY_PLAN_PENDING) {
-      return 'PLANO DE ATIVIDADES PENDENTE';
-    }
-    else if (status == InternshipStatus.ACTIVITY_PLAN_SENT) {
-      return 'PLANO DE ATIVIDADES ENVIADO';
-    }
-    else if (status == InternshipStatus.IN_PROGRESS) {
-      return 'EM ANDAMENTO';
-    }
-    else {
-      return 'EM FINALIZAÇÃO'
-    }
+    return InternshipStatus.toString(status);
   }
 
   getInternshipCompanyName(internship: Internship): string {
