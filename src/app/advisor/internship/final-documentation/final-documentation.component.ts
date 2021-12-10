@@ -27,7 +27,6 @@ export class FinalDocumentationComponent implements OnInit {
     this.internshipService.finalDocumentation(this.data.internship.id)
       .subscribe(
         data => {
-          console.log(data);
           this.internshipService.handleFile(data);
         }
       );
@@ -42,11 +41,5 @@ export class FinalDocumentationComponent implements OnInit {
           this.dialogRef.close(realizationTerm);
         }
       )
-  }
-
-  getFileNameFromHttpResponse(httpResponse: any) {
-    var contentDispositionHeader = httpResponse.headers.get('content-disposition');
-    var result = contentDispositionHeader.split(';')[1].trim().split('=')[1];
-    return result.replace(/"/g, '');
   }
 }
