@@ -62,21 +62,6 @@ export class InternshipListComponent implements OnInit {
   }
 
   handleType(internshipType: InternshipType): string {
-    /*if (internshipType === InternshipType.REQUIRED_OR_NOT) {
-      return 'Estágio obrigatório ou não obrigatório';
-    }
-    else if (internshipType === InternshipType.REQUIRED) {
-      return 'Estágio obrigatório';
-    }
-    else if (internshipType === InternshipType.NOT_REQUIRED) {
-      return 'Estágio não obrigatório';
-    }
-    else if (internshipType === InternshipType.PROJECT_EQUIVALENCE) {
-      return 'Equiparação de projeto institucional';
-    }
-    else {
-      return 'Aproveitamento Profissional';
-    }*/
     return InternshipType.toString(internshipType)
   }
 

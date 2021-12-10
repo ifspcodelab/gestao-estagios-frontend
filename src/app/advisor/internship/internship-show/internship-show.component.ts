@@ -23,7 +23,6 @@ import { DispatchComponent } from "../dispatch/dispatch.component";
 import { Parameter } from "../../../core/models/parameter.model";
 import { ParameterService } from "../../../core/services/parameter.service";
 import { FinalDocumentationComponent } from '../final-documentation/final-documentation.component';
-import { RealizationTerm } from 'src/app/core/models/realization-term.model';
 
 @Component({
   selector: 'app-internship-show',
@@ -123,21 +122,7 @@ export class InternshipShowComponent implements OnInit {
   }
 
   handleType(internshipType: InternshipType): string {
-    if (internshipType === InternshipType.REQUIRED_OR_NOT) {
-      return 'Estágio obrigatório ou não obrigatório';
-    }
-    else if (internshipType === InternshipType.REQUIRED) {
-      return 'Estágio obrigatório';
-    }
-    else if (internshipType === InternshipType.NOT_REQUIRED) {
-      return 'Estágio não obrigatório';
-    }
-    else if (internshipType === InternshipType.PROJECT_EQUIVALENCE) {
-      return 'Equiparação de projeto institucional';
-    }
-    else {
-      return 'Aproveitamento Profissional';
-    }
+    return InternshipType.toString(internshipType)
   }
 
   handleActivityPlanStatus(status: RequestStatus): string {
@@ -339,8 +324,6 @@ export class InternshipShowComponent implements OnInit {
   }
 
   consolidateDocumentation($event: Event) {
-    //TODO: lógica de consolidação da documentação
-    //setar o status do estágio como finalizado
     $event.stopPropagation();
     this.dialog.open(FinalDocumentationComponent, this.getDialogFinalDocumentation())
       .afterClosed()
