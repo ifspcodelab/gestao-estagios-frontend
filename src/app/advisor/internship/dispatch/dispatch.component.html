@@ -1,16 +1,16 @@
-<div class="title" *ngIf="!loading">
-  <h1 mat-dialog-title>HTML Despacho Inicial</h1>
-  <button [cdkCopyToClipboard]="replacedDispatch" (click)="notifyCopiedToClipboard()">
+<div class="title">
+  <h1 mat-dialog-title>{{ data.title }}</h1>
+  <button [cdkCopyToClipboard]="data.dispatch" (click)="notifyCopiedToClipboard()">
     <mat-icon id="copy" color="primary">content_copy</mat-icon>
   </button>
 </div>
-<div class="dispatch" mat-dialog-content *ngIf="!loading">
+<div class="dispatch" mat-dialog-content>
   <code>
     <pre>
-      {{ replacedDispatch }}
+      {{ data.dispatch }}
     </pre>
   </code>
 </div>
-<div mat-dialog-actions *ngIf="!loading">
+<div mat-dialog-actions>
   <button color="primary" mat-flat-button mat-dialog-close>Fechar</button>
 </div>

@@ -23,6 +23,7 @@ import { DispatchComponent } from "../dispatch/dispatch.component";
 import { Parameter } from "../../../core/models/parameter.model";
 import { ParameterService } from "../../../core/services/parameter.service";
 import { FinalDocumentationComponent } from '../final-documentation/final-documentation.component';
+import { DispatchService } from 'src/app/core/services/dispatch.service';
 
 @Component({
   selector: 'app-internship-show',
@@ -52,11 +53,45 @@ export class InternshipShowComponent implements OnInit {
     private datePipe: DatePipe,
     private breakpointObserver: BreakpointObserver,
     private parameterService: ParameterService,
+    private dispatchService: DispatchService,
   ) { }
 
-  openDialog($event: Event) {
+  openInitialDispatchDialog($event: Event) {
     $event.stopPropagation();
-    this.dialog.open(DispatchComponent, { data: { internship: this.internship, activityPlan: this.deferredActivityPlan } })
+
+    this.loaderService.show();
+    this.dispatchService.getInitialDispatch(this.internship.id, this.deferredActivityPlan!.id)
+      .pipe(
+        first(),
+        finalize(() => {
+          this.loaderService.hide();
+          this.loading = false;
+        })
+      )
+      .subscribe(
+        dispatch => {
+          this.dialog.open(DispatchComponent, { data: { dispatch: dispatch, title: 'HTML Despacho Inicial' } })
+        }
+      )
+  }
+
+  openFinalDispatchDialog($event: Event) {
+    $event.stopPropagation();
+
+    this.loaderService.show();
+    this.dispatchService.getFinalDispatch(this.internship.id)
+      .pipe(
+        first(),
+        finalize(() => {
+          this.loaderService.hide();
+          this.loading = false;
+        })
+      )
+      .subscribe(
+        dispatch => {
+          this.dialog.open(DispatchComponent, { data: { dispatch: dispatch, title: 'HTML Despacho Final' } })
+        }
+      )
   }
 
   ngOnInit(): void {

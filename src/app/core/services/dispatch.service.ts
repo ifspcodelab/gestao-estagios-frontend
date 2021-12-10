@@ -21,4 +21,8 @@ export class DispatchService {
   getInitialDispatch(internshipId: string, activityPlanId: String): Observable<string> {
     return this.httpClient.get<string>(`${this.apiUrl}/${internshipId}/activity-plans/${activityPlanId}/initial-dispatch`, this.httpOptions);
   }
+
+  getFinalDispatch(internshipId: string): Observable<string> {
+    return this.httpClient.get<string>(`${this.apiUrl}/${internshipId}/final-dispatch`, this.httpOptions);
+  }
 } 
