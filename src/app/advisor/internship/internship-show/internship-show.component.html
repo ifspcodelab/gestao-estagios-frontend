@@ -1,7 +1,7 @@
 <app-content *ngIf="!loading">
   <app-content-toolbar title="Estágios" [backUrl]="'/advisor/internship/'">
     <button *ngIf="enableConsolidation" (click)="consolidateDocumentation($event)" mat-flat-button color="primary">
-      <span>Consolidar documentação</span>
+      <span>{{ isInternshipFinished() ? 'Documentação Consolidada' : 'Consolidar Documentação' }}</span>
     </button>
   </app-content-toolbar>
   <app-content-main>

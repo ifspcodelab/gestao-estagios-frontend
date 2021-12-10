@@ -329,4 +329,8 @@ export class InternshipShowComponent implements OnInit {
       .afterClosed()
       .subscribe();
   }
+
+  isInternshipFinished() {
+    return this.internship.status === InternshipStatus.FINISHED;
+  }
 }
