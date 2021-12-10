@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InternshipService } from 'src/app/core/services/internship.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { InternshipService } from 'src/app/core/services/internship.service';
 export class FinalDocumentationComponent implements OnInit {
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { internshipId: string },
     private internshipService: InternshipService,
   ) { }
 
@@ -16,7 +18,7 @@ export class FinalDocumentationComponent implements OnInit {
   }
 
   getDocumentation() {
-    this.internshipService.finalDocumentation('708af3e2-f02e-4f2e-b01b-0757a7ac5728')
+    this.internshipService.finalDocumentation(this.data.internshipId)
       .subscribe(
         data => {
           console.log(data);
