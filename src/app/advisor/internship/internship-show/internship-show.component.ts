@@ -188,9 +188,9 @@ export class InternshipShowComponent implements OnInit {
 
   private getDialogFinalDocumentation() {
     return {
-      autoFocus: true,
+      autoFocus: false,
       data: {
-        internshipId: this.internship.id
+        internship: this.internship
       }
     };
   }

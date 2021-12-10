@@ -28,6 +28,17 @@
         </app-content-cards>
       </mat-tab>
       <mat-tab label="Finalizados">
+        <app-content-cards entityName="estágio" [emptyState]="finishedInternships.length == 0">
+          <app-card
+            *ngFor="let internship of finishedInternships" 
+            [title]="'Aluno: ' + internship.advisorRequest.student.user.name" 
+            [subtitle]="handleType(internship.internshipType)"
+            [break]="true"
+            [complement]="handleStatus(internship.status)"  
+            [link]="'/advisor/internship/' + internship.id"
+          >
+          </app-card>
+        </app-content-cards>
       </mat-tab>
     </mat-tab-group>
   </app-content-main>

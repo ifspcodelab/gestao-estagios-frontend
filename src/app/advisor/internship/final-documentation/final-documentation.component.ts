@@ -1,6 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { first } from 'rxjs/operators';
+import { Internship } from 'src/app/core/models/internship.model';
 import { InternshipService } from 'src/app/core/services/internship.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { RealizationTermAppraisalComponent } from '../realization-term-appraisal/realization-term-appraisal.component';
 
 @Component({
   selector: 'app-final-documentation',
@@ -10,15 +14,17 @@ import { InternshipService } from 'src/app/core/services/internship.service';
 export class FinalDocumentationComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { internshipId: string },
+    @Inject(MAT_DIALOG_DATA) public data: { internship: Internship },
+    private dialogRef: MatDialogRef<RealizationTermAppraisalComponent>,
     private internshipService: InternshipService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
   }
 
   getDocumentation() {
-    this.internshipService.finalDocumentation(this.data.internshipId)
+    this.internshipService.finalDocumentation(this.data.internship.id)
       .subscribe(
         data => {
           console.log(data);
@@ -27,9 +33,16 @@ export class FinalDocumentationComponent implements OnInit {
       );
   }
 
-  // getDocumentation() {
-  //   window.open('http://localhost:8080/api/v1/internships/708af3e2-f02e-4f2e-b01b-0757a7ac5728/final-documentation', "_blank");
-  // }
+  confirmConsolidation(){
+    this.internshipService.updateInternshipStatus(this.data.internship.id)
+    .pipe(first())
+      .subscribe(
+        realizationTerm => {
+          this.notificationService.success('Estágio marcado como finalizado com sucesso!');
+          this.dialogRef.close(realizationTerm);
+        }
+      )
+  }
 
   getFileNameFromHttpResponse(httpResponse: any) {
     var contentDispositionHeader = httpResponse.headers.get('content-disposition');
