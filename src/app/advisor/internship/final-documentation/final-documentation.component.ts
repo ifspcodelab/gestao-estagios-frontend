@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
+import { InternshipStatus } from 'src/app/core/models/enums/InternshipStatus';
 import { Internship } from 'src/app/core/models/internship.model';
 import { InternshipService } from 'src/app/core/services/internship.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -32,7 +33,7 @@ export class FinalDocumentationComponent implements OnInit {
       );
   }
 
-  confirmConsolidation(){
+  confirmConsolidation() {
     this.internshipService.updateInternshipStatus(this.data.internship.id)
     .pipe(first())
       .subscribe(
@@ -41,5 +42,9 @@ export class FinalDocumentationComponent implements OnInit {
           this.dialogRef.close(realizationTerm);
         }
       )
+  }
+
+  isInternshipFinished() {
+    return this.data.internship.status === InternshipStatus.FINISHED;
   }
 }
