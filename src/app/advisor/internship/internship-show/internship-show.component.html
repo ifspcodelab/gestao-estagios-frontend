@@ -1,9 +1,9 @@
 <app-content *ngIf="!loading">
   <app-content-toolbar title="Estágios" [backUrl]="'/advisor/internship/'">
-    <button *ngIf="enableConsolidation" (click)="openFinalDispatchDialog($event)" mat-button color="primary">
+    <button *ngIf="handleRealizationTermIsAccepted()" (click)="openFinalDispatchDialog($event)" mat-button color="primary">
       <span>Despacho Final</span>
     </button>
-    <button *ngIf="enableConsolidation" (click)="consolidateDocumentation($event)" mat-button color="primary">
+    <button *ngIf="handleRealizationTermIsAccepted()" (click)="consolidateDocumentation($event)" mat-button color="primary">
       <span>{{ isInternshipFinished() ? 'Documentação Consolidada' : 'Consolidar Documentação' }}</span>
     </button>
   </app-content-toolbar>

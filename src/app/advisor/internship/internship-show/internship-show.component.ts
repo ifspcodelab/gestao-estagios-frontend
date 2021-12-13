@@ -41,7 +41,6 @@ export class InternshipShowComponent implements OnInit {
   internshipStartDate: string;
   internshipEndDate: string;
   parameter: Parameter;
-  enableConsolidation: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -141,11 +140,6 @@ export class InternshipShowComponent implements OnInit {
             this.internshipEndDate = deferredActivityPlans[deferredActivityPlans.length - 1].internshipEndDate;
           }
           this.monthlyReports = internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));
-          internship.realizationTerms.forEach(e => {
-            if(e.status === RequestStatus.ACCEPTED) {
-              this.enableConsolidation = true;
-            }
-          });
         },
         error => {
           if(error.status >= 400 || error.status <= 499) {
@@ -223,7 +217,8 @@ export class InternshipShowComponent implements OnInit {
   }
 
   handleInternshipIsInProgress() {
-    if (this.internship.status === InternshipStatus.IN_PROGRESS) {
+    if (this.internship.status === InternshipStatus.IN_PROGRESS || this.internship.status === InternshipStatus.REALIZATION_TERM_ACCEPTED ||
+      this.internship.status === InternshipStatus.FINISHED) {
       return true
     }
     return false;
@@ -356,6 +351,10 @@ export class InternshipShowComponent implements OnInit {
 
   formatDateRealizationTerm(createdAt: Date) : string {
     return `${this.datePipe.transform(createdAt, 'dd/MM/yyyy')}`
+  }
+
+  handleRealizationTermIsAccepted() {
+    return this.internship.status === InternshipStatus.REALIZATION_TERM_ACCEPTED ? true : false;
   }
 
   consolidateDocumentation($event: Event) {
