@@ -30,6 +30,7 @@ export class SidebarComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
+    event.stopPropagation();
     this.updateSidenavState(event.target.innerWidth);
   }
 
