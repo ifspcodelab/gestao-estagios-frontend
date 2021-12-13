@@ -4,8 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { finalize, first } from 'rxjs/operators';
 import { DraftMonthlyReportSubmission, DraftMonthlyReportSubmissionUpdate } from 'src/app/core/models/draft-monthly-report-submission.model';
+import { InternshipStatus } from 'src/app/core/models/enums/InternshipStatus';
 import { ReportStatus } from 'src/app/core/models/enums/report-status';
 import { RequestStatus } from 'src/app/core/models/enums/request-status';
+import { Internship } from 'src/app/core/models/internship.model';
 import { MonthlyReport } from 'src/app/core/models/monthly-report.model';
 import { Parameter } from 'src/app/core/models/parameter.model';
 import { DraftMonthlyReportSubmissionService } from 'src/app/core/services/draft-monthly-report.service';
@@ -27,7 +29,7 @@ export class DraftMonthlyReportListComponent implements OnInit {
   parameter: Parameter;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { monthlyReport: MonthlyReport, internshipId: string },
+    @Inject(MAT_DIALOG_DATA) public data: { monthlyReport: MonthlyReport, internship: Internship },
     private datePipe: DatePipe,
     private fb: FormBuilder,
     private parameterService: ParameterService,
@@ -114,7 +116,7 @@ export class DraftMonthlyReportListComponent implements OnInit {
     );
 
     this.draftMonthlyReportSubmissionService.postDraftMonthlyReportSubmission(
-      this.data.internshipId, 
+      this.data.internship.id, 
       this.data.monthlyReport.id, 
       this.formData
     )
@@ -122,7 +124,7 @@ export class DraftMonthlyReportListComponent implements OnInit {
       .subscribe(
         draft => {
           this.draftMonthlyReportSubmissionService.putDraftMonthlyReportSubmission(
-            this.data.internshipId,
+            this.data.internship.id,
             this.data.monthlyReport.id,
             draft.id,
             draftMonthlyReportSubmissionUpdate
@@ -146,6 +148,9 @@ export class DraftMonthlyReportListComponent implements OnInit {
   }
   
   handleCanSubmitDraft() {
+    if (this.data.internship.status === InternshipStatus.FINISHED || this.data.internship.status === InternshipStatus.REALIZATION_TERM_ACCEPTED) {
+      return false;
+    }
     return this.data.monthlyReport.status === ReportStatus.DRAFT_PENDING ? true : false;
   }
 

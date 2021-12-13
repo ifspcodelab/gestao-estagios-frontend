@@ -133,7 +133,8 @@ export class InternshipShowComponent implements OnInit {
   }
 
   handleInternshipIsInProgress() {
-    if (this.internship.status === InternshipStatus.IN_PROGRESS) {
+    if (this.internship.status === InternshipStatus.IN_PROGRESS || this.internship.status === InternshipStatus.REALIZATION_TERM_ACCEPTED ||
+      this.internship.status === InternshipStatus.FINISHED) {
       return true
     }
     return false;
@@ -290,6 +291,9 @@ export class InternshipShowComponent implements OnInit {
   }
 
   handleCanSendActivityPlan(): boolean {
+    if (this.internship.status === InternshipStatus.FINISHED || this.internship.status === InternshipStatus.REALIZATION_TERM_ACCEPTED) {
+      return false;
+    }
     for (const activityPlan of this.internship.activityPlans) {
       if (activityPlan.status === RequestStatus.PENDING) {
         return false;
@@ -398,7 +402,7 @@ export class InternshipShowComponent implements OnInit {
       maxHeight: '100vh',
       autoFocus: false,
       data: {
-        internshipId: this.id,
+        internship: this.internship,
         monthlyReport: monthlyReport,
       }
     }
