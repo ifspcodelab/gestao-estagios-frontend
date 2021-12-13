@@ -353,8 +353,8 @@ export class InternshipShowComponent implements OnInit {
     return `${this.datePipe.transform(createdAt, 'dd/MM/yyyy')}`
   }
 
-  handleRealizationTermIsAccepted() {
-    return this.internship.status === InternshipStatus.REALIZATION_TERM_ACCEPTED ? true : false;
+  handleCanConsolidateDocumentation() {
+    return this.internship.status === InternshipStatus.REALIZATION_TERM_ACCEPTED || this.internship.status === InternshipStatus.FINISHED ? true : false;
   }
 
   consolidateDocumentation($event: Event) {
