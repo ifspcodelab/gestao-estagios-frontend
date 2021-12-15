@@ -38,7 +38,7 @@ export class FinalDocumentationComponent implements OnInit {
     .pipe(first())
       .subscribe(
         realizationTerm => {
-          this.notificationService.success('Estágio marcado como finalizado com sucesso!');
+          this.notificationService.success('Documentação consolidada com sucesso! O estágio foi finalizado.');
           this.dialogRef.close(realizationTerm);
         }
       )

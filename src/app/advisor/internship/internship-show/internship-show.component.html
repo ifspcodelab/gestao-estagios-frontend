@@ -25,7 +25,7 @@
     </mat-list>
     <mat-tab-group [dynamicHeight]='true' [selectedIndex]="handleDefaultTab()" mat-align-tabs="start">
       <mat-tab label="Plano de Atividades">
-        <app-content-cards entityName="planos de atividade">
+        <app-content-cards entityName="planos de atividade" [emptyState]="internship.activityPlans.length == 0">
           <app-card
             *ngFor="let activityPlan of internship.activityPlans"
             [title]="'Razão social: ' + activityPlan.companyName"
@@ -87,7 +87,7 @@
         </table>
       </mat-tab>
       <mat-tab label="Termo de Realização">
-        <app-content-cards entityName="planos de atividade">
+        <app-content-cards entityName="termo de realização" [emptyState]="internship.realizationTerms.length == 0">
           <app-card
             *ngFor="let realizationTerm of internship.realizationTerms"
             [title]="internship.advisorRequest.student.user.name"

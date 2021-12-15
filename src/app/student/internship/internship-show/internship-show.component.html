@@ -12,7 +12,7 @@
       </mat-list-item>
     </mat-list>
     <mat-tab-group [dynamicHeight]='true' [selectedIndex]="handleDefaultTab()" mat-align-tabs="start">
-      <mat-tab label="Plano de Atividades">
+      <mat-tab label="Plano de Atividades" *ngIf="!loading">
         <app-content-form *ngIf="handleCanSendActivityPlan()">
           <form class="app-form" id="internship-form" [formGroup]="form" (ngSubmit)="onSubmit()">
             <fieldset>
@@ -53,7 +53,7 @@
             </fieldset>
 
             <fieldset>
-              <legend>Enviar plano de atividades: tamanho máximo ({{parameter.activityPlanFileSizeMegabytes}} MB)</legend>
+              <legend>Enviar plano de atividades: tamanho máximo ({{activityPlanFileSizeMegabytes}} MB)</legend>
               <br>
               <input id="buttonActivityPlan" type="file" accept=".pdf" formControlName="file" name="file" (change)="onFileSelected($event)">
               <span>{{ fileName }}</span>
@@ -64,7 +64,7 @@
               <mat-error *ngIf="fieldErrors('file')?.serverError && submitted">
                 {{ fieldErrors('file')?.serverError }}
               </mat-error>
-              <small>*Modelo Plano de Atividades <a href="{{parameter.activityPlanLink}}">(Clique aqui!)</a></small>
+              <small>*Modelo Plano de Atividades <a href="{{activityPlanLink}}">(Clique aqui!)</a></small>
             </fieldset>
 
             <fieldset>
