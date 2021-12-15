@@ -41,9 +41,11 @@ export class InternshipShowComponent implements OnInit {
   data: FormData;
   dataRealizationTerm: FormData;
   parameter: Parameter;
+  activityPlanFileSizeMegabytes: number = 0;
+  activityPlanLink: string = '';
   deferredActivityPlan: ActivityPlan | undefined;
   displayedColumns: string[] = ['month', 'draft', 'report'];
-  monthlyReports: MonthlyReport[];
+  monthlyReports: MonthlyReport[] = [];
   isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.XSmall);
   formRealizationTerm: FormGroup;
   internshipStartDate: string;
@@ -88,6 +90,8 @@ export class InternshipShowComponent implements OnInit {
       .subscribe(
         parameter => {
           this.parameter = parameter;
+          this.activityPlanFileSizeMegabytes = parameter.activityPlanFileSizeMegabytes;
+          this.activityPlanLink = parameter.activityPlanLink;
         },error => {
           if(error.status >= 400 || error.status <= 499) {
             this.notificationService.error(`Parâmetros não encontrados!`);
@@ -111,15 +115,15 @@ export class InternshipShowComponent implements OnInit {
           const deferredActivityPlans = this.internship.activityPlans
             .filter(p => p.status === RequestStatus.ACCEPTED)
             .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-          if (deferredActivityPlans.length == 1) {
-            this.deferredActivityPlan = deferredActivityPlans[0];
-            this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
-            this.internshipEndDate = this.deferredActivityPlan.internshipEndDate;
-          } else {
-            this.deferredActivityPlan = deferredActivityPlans[0];
-            this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
-            this.internshipEndDate = deferredActivityPlans[deferredActivityPlans.length - 1].internshipEndDate;
-          }
+            if (deferredActivityPlans.length == 1) {
+              this.deferredActivityPlan = deferredActivityPlans[0];
+              this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
+              this.internshipEndDate = this.deferredActivityPlan.internshipEndDate;
+            } else if (deferredActivityPlans.length > 1) {
+              this.deferredActivityPlan = deferredActivityPlans[0];
+              this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
+              this.internshipEndDate = deferredActivityPlans[deferredActivityPlans.length - 1].internshipEndDate;
+            }
           this.monthlyReports = internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));
           this.form = this.buildForm();
         },

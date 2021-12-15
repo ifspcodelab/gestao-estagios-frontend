@@ -24,6 +24,7 @@ import { Parameter } from "../../../core/models/parameter.model";
 import { ParameterService } from "../../../core/services/parameter.service";
 import { FinalDocumentationComponent } from '../final-documentation/final-documentation.component';
 import { DispatchService } from 'src/app/core/services/dispatch.service';
+import { RealizationTerm } from 'src/app/core/models/realization-term.model';
 
 @Component({
   selector: 'app-internship-show',
@@ -134,7 +135,7 @@ export class InternshipShowComponent implements OnInit {
             this.deferredActivityPlan = deferredActivityPlans[0];
             this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
             this.internshipEndDate = this.deferredActivityPlan.internshipEndDate;
-          } else {
+          } else if (deferredActivityPlans.length > 1) {
             this.deferredActivityPlan = deferredActivityPlans[0];
             this.internshipStartDate = this.deferredActivityPlan.internshipStartDate;
             this.internshipEndDate = deferredActivityPlans[deferredActivityPlans.length - 1].internshipEndDate;
@@ -228,13 +229,14 @@ export class InternshipShowComponent implements OnInit {
     $event.stopPropagation();
     this.dialog.open(ActivityPlanAppraisalComponent, this.getDialogConfig(deferred, activityPlanId))
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result: ActivityPlan) => {
         if (result) {
           this.deferredActivityPlan = result;
           if(result.status == RequestStatus.ACCEPTED) {
+            this.monthlyReports.length = 0;
             this.internship.internshipType = result.internship.internshipType;
             this.internship.status = InternshipStatus.IN_PROGRESS;
-            this.monthlyReports = result.internship.monthlyReports;
+            this.monthlyReports = result.internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));;
           }
           const activityPlanFound = this.internship.activityPlans.find(p => p.id == result.id);
           if (activityPlanFound) {
@@ -248,9 +250,12 @@ export class InternshipShowComponent implements OnInit {
     $event.stopPropagation();
     this.dialog.open(RealizationTermAppraisalComponent, this.getDialogConfigRealizationTerm(deferred, realizationTermId))
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result: RealizationTerm) => {
         if(result) {
           const realizationTermFound = this.internship.realizationTerms.find(r => r.id == result.id);
+          if (result.status === RequestStatus.ACCEPTED) {
+            this.internship.status = InternshipStatus.REALIZATION_TERM_ACCEPTED;
+          }
           if (realizationTermFound) {
             realizationTermFound.status = result.status;
           }
@@ -346,6 +351,9 @@ export class InternshipShowComponent implements OnInit {
     if (this.internship.status === InternshipStatus.IN_PROGRESS) {
       return 1;
     }
+    if (this.internship.status === InternshipStatus.REALIZATION_TERM_ACCEPTED || this.internship.status === InternshipStatus.FINISHED) {
+      return 2;
+    }
     return 0;
   }
 
@@ -361,7 +369,11 @@ export class InternshipShowComponent implements OnInit {
     $event.stopPropagation();
     this.dialog.open(FinalDocumentationComponent, this.getDialogFinalDocumentation())
       .afterClosed()
-      .subscribe();
+      .subscribe((result: RealizationTerm) => {
+        if(result) {
+          this.internship.status = InternshipStatus.FINISHED;
+        }
+      });
   }
 
   isInternshipFinished() {
