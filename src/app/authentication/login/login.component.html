@@ -28,7 +28,7 @@
             matInput [type]=" hide ? 'text' : 'password' "
             placeholder="Senha"
           />
-          <button type="button" color="primary" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+          <button data-test="button-password-show" type="button" color="primary" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
                    [attr.aria-pressed]="hide">
             <mat-icon>
               {{hide ? 'visibility' : 'visibility_off' }}
@@ -45,7 +45,7 @@
           </span>
       </div>
       <div class="button-login">
-        <button mat-flat-button color="primary">Entrar</button>
+        <button data-test="button-login" mat-flat-button color="primary">Entrar</button>
       </div>
     </form>
 
