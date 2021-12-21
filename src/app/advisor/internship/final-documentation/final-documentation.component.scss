@@ -1,11 +1,24 @@
 .mat-dialog-content {
-    width: 35vw;
-    height: 50%;
-  }
+  width: 35vw;
+  height: 50%;
+}
   
 .mat-dialog-actions {
   display: flex;
   justify-content: flex-end;
+}
+
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-spinner {
+  position: absolute;
+  z-index: 5;
+  width: 1rem;
+  height: 1rem;
 }
 
 @media (max-width: 700px) {
