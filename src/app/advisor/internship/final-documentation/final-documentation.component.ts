@@ -28,22 +28,22 @@ export class FinalDocumentationComponent implements OnInit {
   getDocumentation() {
     this.loading = true;
     this.internshipService.finalDocumentation(this.data.internship.id)
-    .pipe(
-      first(),
-      finalize(() => {
-        this.loading = false;
-      })
-    )
-    .subscribe(
-      data => {
-        this.internshipService.handleFile(data);
-      }
-    );
+      .pipe(
+        first(),
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe(
+        data => {
+          this.internshipService.handleFile(data);
+        }
+      );
   }
 
   confirmConsolidation() {
     this.internshipService.updateInternshipStatus(this.data.internship.id)
-    .pipe(first())
+      .pipe(first())
       .subscribe(
         realizationTerm => {
           this.notificationService.success('Documentação consolidada com sucesso! O estágio foi finalizado.');
