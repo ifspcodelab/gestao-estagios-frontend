@@ -25,7 +25,7 @@
     </mat-list>
     <mat-tab-group [dynamicHeight]='true' [selectedIndex]="handleDefaultTab()" mat-align-tabs="start">
       <mat-tab label="Plano de Atividades">
-        <app-content-cards entityName="planos de atividade" [emptyState]="internship.activityPlans.length == 0">
+        <app-content-cards entityName="plano de atividades" [emptyState]="internship.activityPlans.length == 0">
           <app-card
             *ngFor="let activityPlan of internship.activityPlans"
             [title]="'Razão social: ' + activityPlan.companyName"
@@ -53,6 +53,9 @@
         </app-content-cards>
       </mat-tab>
       <mat-tab label="Relatórios Mensais">
+        <p *ngIf="monthlyReports.length == 0" class="empty-state">
+          Nenhum registro de relatório mensal encontrado
+        </p>
         <table *ngIf="monthlyReports.length != 0" mat-table [dataSource]="monthlyReports" class="mat-elevation-z8">
           <ng-container matColumnDef="month">
             <th mat-header-cell *matHeaderCellDef>Mês</th>
