@@ -1,8 +1,11 @@
 <h1 id="header" mat-dialog-title>{{ isInternshipFinished() ? 'Documentação Consolidada' : 'Consolidar Documentação' }}</h1>
 <div mat-dialog-content>
-  <button mat-button color="primary" (click)="getDocumentation()">Download da documentação consolidada</button>
+  <button mat-button color="primary" (click)="getDocumentation()" [disabled]="loading">Download da documentação consolidada</button>
+  <div class="spinner-container">
+    <mat-spinner diameter="50" *ngIf="loading"></mat-spinner>
+  </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-button color="primary" (click)="confirmConsolidation()" *ngIf="!isInternshipFinished()">Confirmar</button>
+  <button mat-button mat-dialog-close [disabled]="loading">Cancelar</button>
+  <button mat-button color="primary" (click)="confirmConsolidation()" *ngIf="!isInternshipFinished()" [disabled]="loading">Confirmar</button>
 </div>
