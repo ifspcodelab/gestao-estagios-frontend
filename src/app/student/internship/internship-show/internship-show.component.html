@@ -42,7 +42,7 @@
 
               <mat-form-field class="form-field-sm">
                 <mat-label>Data de Término</mat-label>
-                <input onkeydown="return false" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTwo" formControlName="internshipEndDate" name="internshipEndDate">
+                <input onkeydown="return false" matInput [max]="maxDate" [matDatepicker]="pickerTwo" formControlName="internshipEndDate" name="internshipEndDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerTwo"></mat-datepicker-toggle>
                 <mat-datepicker #pickerTwo></mat-datepicker>
                 <mat-error *ngIf="fieldErrors('internshipEndDate')?.required && submitted">Data de Término é obrigatória</mat-error>
