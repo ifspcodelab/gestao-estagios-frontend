@@ -30,7 +30,7 @@
       <br>
     </mat-tab>
     <mat-tab label="Histórico">
-      <app-content-cards entityName="rascunho de relatório mensal" [emptyState]="data.monthlyReport.finalMonthlyReportSubmissions.length == 0">
+      <app-content-cards entityName="relatório mensal" [emptyState]="data.monthlyReport.finalMonthlyReportSubmissions.length == 0">
         <app-card
           *ngFor="let final of data.monthlyReport.finalMonthlyReportSubmissions" 
           [title]="'Enviado em: ' + formatSubmissionDate(final.submissionDate)" 

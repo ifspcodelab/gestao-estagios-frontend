@@ -11,6 +11,13 @@ table {
   font-weight: 500 !important;
 }
 
+.empty-state {
+  margin-top: 30px;
+  color: #bbbbbb;
+  font-weight: normal;
+  margin-left: 15px;
+}
+
 @media only screen and (max-width: 800px) {
   app-card {
     flex: 0 0 98%;

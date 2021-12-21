@@ -86,8 +86,11 @@
           </app-card>
         </app-content-cards>
       </mat-tab>
-      <mat-tab label="Relatórios Mensais" [disabled]="monthlyReports.length == 0">
-        <table mat-table [dataSource]="monthlyReports" class="mat-elevation-z8">
+      <mat-tab label="Relatórios Mensais">
+        <p *ngIf="monthlyReports.length == 0" class="cant-send">
+          Não há relatórios mensais disponíveis nesse momento. O plano de atividades deve ser aceito para prosseguir.
+        </p>
+        <table *ngIf="monthlyReports.length != 0" mat-table [dataSource]="monthlyReports" class="mat-elevation-z8">
           <ng-container matColumnDef="month">
             <th mat-header-cell *matHeaderCellDef>Mês</th>
             <td mat-cell *matCellDef="let report">{{ report.month | date: 'MM/yyyy' }}</td>

@@ -23,7 +23,9 @@ export class DraftMonthlyReportListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.data.monthlyReport.draftMonthlyReportSubmissions.sort((a, b) => b.submissionDate.localeCompare(a.submissionDate));
+    if (this.data.monthlyReport.draftMonthlyReportSubmissions) {
+      this.data.monthlyReport.draftMonthlyReportSubmissions.sort((a, b) => b.submissionDate.localeCompare(a.submissionDate));
+    }
   }
 
   handleDraftWasAccepted() {

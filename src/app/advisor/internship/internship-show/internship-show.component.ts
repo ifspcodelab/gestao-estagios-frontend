@@ -236,6 +236,8 @@ export class InternshipShowComponent implements OnInit {
             this.monthlyReports.length = 0;
             this.internship.internshipType = result.internship.internshipType;
             this.internship.status = InternshipStatus.IN_PROGRESS;
+            this.internshipStartDate = result.internshipStartDate;
+            this.internshipEndDate = result.internshipEndDate;
             this.monthlyReports = result.internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));;
           }
           const activityPlanFound = this.internship.activityPlans.find(p => p.id == result.id);
