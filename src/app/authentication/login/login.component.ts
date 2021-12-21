@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
 
   handleRedirectTo() {
     this.jwtTokenService.setToken(this.localStorageService.get('access_token')!);
-    if (this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADMIN)) {
+    if (this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADMIN) && !this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADVISOR)) {
       this.router.navigate(['admin']);
     }
     else if (this.jwtTokenService.getRoles()!.includes(Role.ROLE_ADVISOR)) {

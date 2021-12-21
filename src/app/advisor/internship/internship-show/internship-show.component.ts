@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { finalize, first } from 'rxjs/operators';
 import { ActivityPlan } from 'src/app/core/models/activity-plan.model';
 import { InternshipType } from 'src/app/core/models/enums/internship-type';
@@ -233,12 +233,14 @@ export class InternshipShowComponent implements OnInit {
         if (result) {
           this.deferredActivityPlan = result;
           if(result.status == RequestStatus.ACCEPTED) {
+            if (this.internship.status === InternshipStatus.ACTIVITY_PLAN_SENT) {
+              this.internshipStartDate = result.internshipStartDate;
+            }
             this.monthlyReports.length = 0;
             this.internship.internshipType = result.internship.internshipType;
             this.internship.status = InternshipStatus.IN_PROGRESS;
-            this.internshipStartDate = result.internshipStartDate;
             this.internshipEndDate = result.internshipEndDate;
-            this.monthlyReports = result.internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));;
+            this.monthlyReports = result.internship.monthlyReports.sort((a, b) => a.month.toString().localeCompare(b.month.toString()));
           }
           const activityPlanFound = this.internship.activityPlans.find(p => p.id == result.id);
           if (activityPlanFound) {
