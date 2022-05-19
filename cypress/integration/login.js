@@ -28,7 +28,4 @@ describe('Login', () => {
     cy.get('[data-test=button-login]').click();
     cy.get('mat-error').should('have.text', 'Senha é obrigatória');
   })
-
-
-
 })
