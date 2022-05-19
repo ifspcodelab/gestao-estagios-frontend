@@ -19,8 +19,9 @@ import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/fil
 })
 export class CampusListComponent implements OnInit {
   campuses$: Observable<Campus[]>;
-  selectedFilter: number = 1; 
+  selectedFilter: number = 1;
   filterNames: string[] = ['Todos', 'Habilitados', 'Desabilitados'];
+  errorMessage: string = "Erro ao carregar os campus";
   constructor(
     private campusService: CampusService,
     private notificationService: NotificationService,
@@ -47,7 +48,7 @@ export class CampusListComponent implements OnInit {
         })
     );
   }
-  
+
   private getDialogConfig() {
     return {
       autoFocus: true,
@@ -62,7 +63,7 @@ export class CampusListComponent implements OnInit {
           }
           if ($event.value == 3) {
             this.selectedFilter = 3;
-          } 
+          }
         },
         handleFilter: () => {
           if (this.selectedFilter == 1) {
