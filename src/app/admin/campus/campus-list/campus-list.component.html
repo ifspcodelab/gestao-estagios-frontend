@@ -13,9 +13,9 @@
         [link]="'/admin/campus/' + campus.id">
         <div card-actions></div>
         <div card-actions>
-          <mat-slide-toggle 
-            color="primary" 
-            [checked]="handleEnabled(campus)" 
+          <mat-slide-toggle
+            color="primary"
+            [checked]="handleEnabled(campus)"
             (click)="toggleCampus($event, campus)"></mat-slide-toggle>
         </div>
       </app-card>

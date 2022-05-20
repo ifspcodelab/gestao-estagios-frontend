@@ -3,7 +3,7 @@ import { Campus } from "../../../core/models/campus.model";
 import { CampusService } from "../../../core/services/campus.service";
 import { NotificationService } from "../../../core/services/notification.service";
 import { LoaderService } from "../../../core/services/loader.service";
-import { finalize, first, map } from "rxjs/operators";
+import {finalize, first, map, retry} from "rxjs/operators";
 import { Observable } from "rxjs";
 import { EntityStatus } from 'src/app/core/models/enums/status';
 import { EntityUpdateStatus } from 'src/app/core/models/status.model';
@@ -21,7 +21,7 @@ export class CampusListComponent implements OnInit {
   campuses$: Observable<Campus[]>;
   selectedFilter: number = 1;
   filterNames: string[] = ['Todos', 'Habilitados', 'Desabilitados'];
-  errorMessage: string = "Erro ao carregar os campus";
+  errorMessage: string = "";
   constructor(
     private campusService: CampusService,
     private notificationService: NotificationService,
@@ -33,6 +33,7 @@ export class CampusListComponent implements OnInit {
     this.loaderService.show();
     this.campuses$ = this.campusService.getCampuses()
       .pipe(
+        retry(1),
         finalize(() => {
           this.loaderService.hide();
         })
