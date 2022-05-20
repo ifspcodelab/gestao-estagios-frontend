@@ -3,8 +3,8 @@ import { Campus } from "../../../core/models/campus.model";
 import { CampusService } from "../../../core/services/campus.service";
 import { NotificationService } from "../../../core/services/notification.service";
 import { LoaderService } from "../../../core/services/loader.service";
-import {finalize, first, map, retry} from "rxjs/operators";
-import { Observable } from "rxjs";
+import {catchError, finalize, first, map, retry} from "rxjs/operators";
+import {Observable, of} from "rxjs";
 import { EntityStatus } from 'src/app/core/models/enums/status';
 import { EntityUpdateStatus } from 'src/app/core/models/status.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -34,6 +34,9 @@ export class CampusListComponent implements OnInit {
     this.campuses$ = this.campusService.getCampuses()
       .pipe(
         retry(1),
+        catchError(error => {
+          return of([]);
+        }),
         finalize(() => {
           this.loaderService.hide();
         })
