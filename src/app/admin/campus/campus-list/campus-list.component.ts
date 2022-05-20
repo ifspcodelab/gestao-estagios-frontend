@@ -35,6 +35,7 @@ export class CampusListComponent implements OnInit {
       .pipe(
         retry(1),
         catchError(error => {
+          this.notificationService.error("Erro ao carregar os campus");
           return of([]);
         }),
         finalize(() => {
