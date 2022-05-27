@@ -56,6 +56,7 @@
           <mat-error *ngIf="fieldErrors('registration')?.required">Matrícula é obrigatória</mat-error>
           <mat-error *ngIf="fieldErrors('registration')?.notblank">Matrícula não pode ser vazia</mat-error>
           <mat-error *ngIf="fieldErrors('registration')?.exactlength">Matrícula deve ter 9 caracteres</mat-error>
+          <mat-error *ngIf="fieldErrors('registration')?.startWithTwoAlphas">Matrícula deve iniciar com duas letras</mat-error>
           <mat-error *ngIf="fieldErrors('registration')?.serverError && submitted">
             {{ fieldErrors('registration')?.serverError }}
           </mat-error>
