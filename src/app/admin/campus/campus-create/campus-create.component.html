@@ -31,7 +31,22 @@
               {{ fieldErrors('abbreviation')?.serverError }}
             </mat-error>
           </mat-form-field>
+
+
+        <mat-form-field class="form-field-sm">
+          <mat-label>Registro inicial</mat-label>
+          <input matInput placeholder="" formControlName="initialRegistrationPattern" name="initialRegistrationPattern" autocomplete="off">
+          <mat-error *ngIf="fieldErrors('initialRegistrationPattern')?.required">Registro inicial é obrigatório</mat-error>
+          <mat-error *ngIf="fieldErrors('initialRegistrationPattern')?.notblank">Registro inicial não pode ser vazio</mat-error>
+          <mat-error *ngIf="fieldErrors('initialRegistrationPattern')?.alpha">Registro inicial deve conter apenas letras</mat-error>
+          <mat-error *ngIf="fieldErrors('initialRegistrationPattern')?.exactlength">Registro deve ter 2 caracteres</mat-error>
+          <mat-error *ngIf="fieldErrors('initialRegistrationPattern')?.serverError && submitted">
+            {{ fieldErrors('initialRegistrationPattern')?.serverError }}
+          </mat-error>
+        </mat-form-field>
         </fieldset>
+
+
 
         <fieldset formGroupName="address">
           <legend>Endereço</legend>
