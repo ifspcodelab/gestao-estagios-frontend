@@ -21,6 +21,11 @@ export class AppValidators {
     return pattern.test(control.value) ? null : { 'alpha': true };
   }
 
+  static startWithTwoAlphas (control: AbstractControl): ValidationErrors | null {
+    const pattern = /^[A-Za-z]{2}/;
+    return pattern.test(control.value) ? null : {'startWithTwoAlphas' : true};
+  }
+
   static numeric(control: AbstractControl): ValidationErrors | null {
     const pattern = /^\d+$/;
     return pattern.test(control.value) ? null : { 'numeric': true };

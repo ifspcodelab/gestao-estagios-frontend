@@ -176,7 +176,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
         [Validators.required, AppValidators.notBlank, AppValidators.exactLength(3)]
       ],
       initialRegistrationPattern: ['',
-        [Validators.required, AppValidators.notBlank, AppValidators.exactLength(2)]
+        [Validators.required, AppValidators.notBlank, AppValidators.exactLength(2), AppValidators.startWithTwoAlphas]
       ],
       address: this.fb.group({
         postalCode: ['', [Validators.required, AppValidators.postalCode]],
