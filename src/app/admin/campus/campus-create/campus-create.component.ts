@@ -82,7 +82,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
 
   onStateSelected(stateSelected: string){
     this.cities = [];
-    
+
     this.field('address.city').enable();
     this.field('address.city').setValue('');
 
@@ -112,7 +112,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
 
   private _filterCity(value: string): City[] {
     const filterValues = value.toLowerCase();
-    
+
     return this.cities.filter(city => city.name.toLowerCase().includes(filterValues));
   }
 
@@ -174,6 +174,9 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
       ],
       abbreviation: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.exactLength(3)]
+      ],
+      initialRegistrationPattern: ['',
+        [Validators.required, AppValidators.notBlank, AppValidators.exactLength(2)]
       ],
       address: this.fb.group({
         postalCode: ['', [Validators.required, AppValidators.postalCode]],
