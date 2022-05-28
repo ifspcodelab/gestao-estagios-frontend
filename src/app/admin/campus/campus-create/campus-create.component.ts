@@ -225,6 +225,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     const campusCreate = new CampusCreate(
       this.field('name')?.value,
       this.field('abbreviation')?.value,
+      this.field('initialRegistrationPattern')?.value,
       addressCreate,
       this.field('internshipSector')?.value
     );
@@ -258,6 +259,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     const campusCreate = new CampusCreate(
       this.field('name')?.value,
       this.field('abbreviation')?.value,
+      this.field('initialRegistrationPattern')?.value,
       addressCreate,
       this.field('internshipSector')?.value
     );

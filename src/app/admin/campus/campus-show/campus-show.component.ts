@@ -37,12 +37,13 @@ export class CampusShowComponent implements OnInit {
     private notificationService: NotificationService,
     private confirmDialogService: ConfirmDialogService,
     private dialog: MatDialog,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
 
-    if(this.id) {
+    if (this.id) {
       this.loaderService.show();
       this.fetchCampus(this.id);
     }
@@ -51,36 +52,36 @@ export class CampusShowComponent implements OnInit {
   handlerFilterSelected(selected: number) {
     if (selected == 1) {
       this.departmentService.getDepartments(this.campus.id)
-      .pipe(first())
-      .subscribe(
-        departments => {
-          this.departments = departments
-        },
-      )
+        .pipe(first())
+        .subscribe(
+          departments => {
+            this.departments = departments
+          },
+        )
     }
     if (selected == 2) {
       this.departmentService.getDepartments(this.campus.id)
-      .pipe(
-        first(),
-        map(department => department.filter(d => d.status === EntityStatus.ENABLED)),
-      )
-      .subscribe(
-        departments => {
-          this.departments = departments
-        },
-      )
+        .pipe(
+          first(),
+          map(department => department.filter(d => d.status === EntityStatus.ENABLED)),
+        )
+        .subscribe(
+          departments => {
+            this.departments = departments
+          },
+        )
     }
     if (selected == 3) {
       this.departmentService.getDepartments(this.campus.id)
-      .pipe(
-        first(),
-        map(department => department.filter(d => d.status === EntityStatus.DISABLED)),
-      )
-      .subscribe(
-        departments => {
-          this.departments = departments
-        },
-      )
+        .pipe(
+          first(),
+          map(department => department.filter(d => d.status === EntityStatus.DISABLED)),
+        )
+        .subscribe(
+          departments => {
+            this.departments = departments
+          },
+        )
     }
   }
 
@@ -93,7 +94,7 @@ export class CampusShowComponent implements OnInit {
           this.fetchDepartments(id);
         },
         error => {
-          if(error.status >= 400 || error.status <= 499) {
+          if (error.status >= 400 || error.status <= 499) {
             this.notificationService.error(`Campus não encontrado com id ${this.id}`);
             this.navigateToList();
           }
@@ -115,7 +116,7 @@ export class CampusShowComponent implements OnInit {
           this.departments = departments
         },
         error => {
-          if(error.status >= 400 || error.status <= 499) {
+          if (error.status >= 400 || error.status <= 499) {
             console.error(error);
             this.notificationService.error(`Error ao carregar departamentos`);
             this.navigateToList();
@@ -125,7 +126,7 @@ export class CampusShowComponent implements OnInit {
   }
 
   handlerDeleteCampus() {
-    if(this.departments.length != 0) {
+    if (this.departments.length != 0) {
       this.notificationService.error('O campus possui departamentos associados e não pode ser excluído.');
     } else {
       this.deleteCampus()
@@ -137,13 +138,13 @@ export class CampusShowComponent implements OnInit {
       .pipe(first())
       .subscribe(
         departments => {
-          if(departments.length > 0) {
+          if (departments.length > 0) {
             this.notificationService.error('O campus possui departamentos associados e não pode ser excluído.');
             return;
           }
           this.confirmDialogService.confirmRemoval('Campus').subscribe(
             result => {
-              if(result) {
+              if (result) {
                 this.campusService.deleteCampus(this.id!)
                   .pipe(first())
                   .subscribe(
@@ -152,9 +153,9 @@ export class CampusShowComponent implements OnInit {
                       this.navigateToList();
                     },
                     error => {
-                      if(error.status === 409) {
+                      if (error.status === 409) {
                         const problemDetail: ProblemDetail = error.error;
-                        if(problemDetail.title == 'Referential integrity exception') {
+                        if (problemDetail.title == 'Referential integrity exception') {
                           this.notificationService.error('O campus possui departamentos associados e não pode ser excluído.');
                         }
                       }
@@ -181,7 +182,7 @@ export class CampusShowComponent implements OnInit {
     this.dialog.open(DepartmentCreateComponent, this.getDialogConfig(undefined))
       .afterClosed()
       .subscribe(result => {
-        if(result) {
+        if (result) {
           this.departments = [...this.departments, result]
         }
       });
@@ -191,9 +192,9 @@ export class CampusShowComponent implements OnInit {
     this.dialog.open(DepartmentCreateComponent, this.getDialogConfig(department))
       .afterClosed()
       .subscribe(result => {
-          if(result) {
+          if (result) {
             const departmentFound = this.departments.find(d => d.id == result.id);
-            if(departmentFound) {
+            if (departmentFound) {
               departmentFound.abbreviation = result.abbreviation;
               departmentFound.name = result.name;
             }
@@ -206,16 +207,16 @@ export class CampusShowComponent implements OnInit {
     $event.stopPropagation();
     this.confirmDialogService.confirmRemoval('Departamento').subscribe(
       result => {
-        if(result) {
+        if (result) {
           this.departmentService.deleteDepartment(this.id!, department!.id).subscribe(
             _ => {
               this.departments = this.departments.filter(d => d.id != department!.id);
               this.notificationService.success(`Department ${department!.abbreviation} removido com sucesso`);
             },
             error => {
-              if(error.status === 409) {
+              if (error.status === 409) {
                 const problemDetail: ProblemDetail = error.error;
-                if(problemDetail.title == 'Referential integrity exception') {
+                if (problemDetail.title == 'Referential integrity exception') {
                   this.notificationService.error('O Departamento possui curso associado e não pode ser excluído.');
                 }
               }
@@ -236,7 +237,7 @@ export class CampusShowComponent implements OnInit {
 
   toggleDepartment($event: Event, department: Department) {
     $event.stopPropagation();
-    if (department.status === EntityStatus.ENABLED){
+    if (department.status === EntityStatus.ENABLED) {
       this.departmentService.patchDepartment(department.campus.id, department.id, new EntityUpdateStatus(EntityStatus.DISABLED))
         .pipe(first())
         .subscribe(
@@ -256,6 +257,9 @@ export class CampusShowComponent implements OnInit {
         )
     }
   }
+
+
+
 
   campusDetails(): ListItens {
     const getAddressData = () => {
