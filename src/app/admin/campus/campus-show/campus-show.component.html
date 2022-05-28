@@ -8,7 +8,7 @@
     </button>
   </app-content-toolbar>
   <app-content-main>
-    <app-content-detail *ngIf="!loading" [title]="campus.name" [subtitle]="campus.abbreviation"[listItens]="campusDetails()">
+    <app-content-detail *ngIf="!loading" [title]="campus.name" [subtitle]="campus.abbreviation"  [subtitle2]="campus.initialRegistrationPattern" [listItens]="campusDetails()">
       <app-content-detail-section
         title="Departamentos"
         icon="domain"
@@ -17,9 +17,9 @@
         (openFilterEvent)="handlerFilterSelected($event)">
         <app-content-cards entityName="departamento" [emptyState]="departments.length == 0">
           <app-card *ngFor="let department of departments"
-            (click)="handlerUpdateDepartment(department)"
-            [title]="department.name"
-            [subtitle]="department.abbreviation">
+                    (click)="handlerUpdateDepartment(department)"
+                    [title]="department.name"
+                    [subtitle]="department.abbreviation">
             <div card-actions>
               <button mat-icon-button (click)="handlerDeleteDepartment($event, department)">
                 <mat-icon>delete_outline</mat-icon>

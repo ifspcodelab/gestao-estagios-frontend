@@ -18,6 +18,7 @@ export interface ListItemDetail {
 export class ContentDetailComponent implements OnInit {
   @Input() title: string | undefined;
   @Input() subtitle: string | undefined;
+  @Input() subtitle2: string | undefined;
   @Input() listItens: ListItens | undefined;
 
   constructor() { }

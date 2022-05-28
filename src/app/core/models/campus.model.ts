@@ -6,6 +6,7 @@ export class Campus {
   id: string;
   name: string;
   abbreviation: string;
+  initialRegistrationPattern: string;
   address: Address;
   internshipSector: InternshipSector;
   status: EntityStatus;
@@ -14,12 +15,14 @@ export class Campus {
 export class CampusCreate {
   name: string;
   abbreviation: string;
+  initialRegistrationPattern: string;
   address: Address | AddressCreate;
   internshipSector: InternshipSector;
 
-  constructor(name: string, abbreviation: string, address: Address | AddressCreate, internshipSector: InternshipSector){
+  constructor(name: string, abbreviation: string, initialRegistrationPattern: string, address: Address | AddressCreate, internshipSector: InternshipSector){
     this.name = name;
     this.abbreviation = abbreviation;
+    this.initialRegistrationPattern = initialRegistrationPattern;
     this.address = address;
     this.internshipSector = internshipSector;
   }
