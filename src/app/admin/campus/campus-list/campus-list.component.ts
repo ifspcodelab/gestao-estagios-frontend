@@ -21,7 +21,6 @@ export class CampusListComponent implements OnInit {
   campuses$: Observable<Campus[]>;
   selectedFilter: number = 1;
   filterNames: string[] = ['Todos', 'Habilitados', 'Desabilitados'];
-  errorMessage: string = "";
   constructor(
     private campusService: CampusService,
     private notificationService: NotificationService,
@@ -34,20 +33,10 @@ export class CampusListComponent implements OnInit {
     this.campuses$ = this.campusService.getCampuses()
       .pipe(
         retry(1),
-        catchError(error => {
+        catchError(() => {
           this.notificationService.error("Erro ao carregar os campus");
           return of([]);
         }),
-        finalize(() => {
-          this.loaderService.hide();
-        })
-      );
-  }
-
-  loadAll(): void {
-    this.loaderService.show();
-    this.campuses$ = this.campusService.getCampuses()
-      .pipe(
         finalize(() => {
           this.loaderService.hide();
         })
@@ -103,7 +92,7 @@ export class CampusListComponent implements OnInit {
   }
 
   handleEnabled(campus: Campus): boolean {
-    return campus.status == EntityStatus.ENABLED ? true : false;
+    return campus.status == EntityStatus.ENABLED;
   }
 
   toggleCampus($event: Event, campus: Campus) {
