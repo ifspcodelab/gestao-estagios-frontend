@@ -3,7 +3,7 @@ import { Campus } from "../../../core/models/campus.model";
 import { CampusService } from "../../../core/services/campus.service";
 import { NotificationService } from "../../../core/services/notification.service";
 import { LoaderService } from "../../../core/services/loader.service";
-import {catchError, finalize, first, map, retry} from "rxjs/operators";
+import {catchError, finalize, first, retry} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import { EntityStatus } from 'src/app/core/models/enums/status';
 import { EntityUpdateStatus } from 'src/app/core/models/status.model';
@@ -41,7 +41,7 @@ export class CampusListComponent implements OnInit {
         finalize(() => {
           this.loaderService.hide();
         })
-    );
+      );
   }
 
   loadAll(): void {
@@ -51,7 +51,7 @@ export class CampusListComponent implements OnInit {
         finalize(() => {
           this.loaderService.hide();
         })
-    );
+      );
   }
 
   private getDialogConfig() {
@@ -74,9 +74,8 @@ export class CampusListComponent implements OnInit {
           }
           if (this.selectedFilter == 2 ) {
             this.loaderService.show();
-            this.campuses$ = this.campusService.getCampuses()
+            this.campuses$ = this.campusService.getAllCampusByStatus(EntityStatus.ENABLED)
               .pipe(
-                map(campus => campus.filter(c => c.status === EntityStatus.ENABLED)),
                 finalize(() => {
                   this.loaderService.hide();
                 })
@@ -84,9 +83,8 @@ export class CampusListComponent implements OnInit {
           }
           if (this.selectedFilter == 3) {
             this.loaderService.show();
-            this.campuses$ = this.campusService.getCampuses()
+            this.campuses$ = this.campusService.getAllCampusByStatus(EntityStatus.DISABLED)
               .pipe(
-                map(campus => campus.filter(c => c.status === EntityStatus.DISABLED)),
                 finalize(() => {
                   this.loaderService.hide();
                 })
@@ -101,7 +99,7 @@ export class CampusListComponent implements OnInit {
 
   openDialog() {
     this.dialog.open(FilterDialogComponent, this.getDialogConfig())
-    .afterClosed()
+      .afterClosed()
   }
 
   handleEnabled(campus: Campus): boolean {

@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { EntityUpdateStatus } from '../models/status.model';
 import { map } from "rxjs/operators";
+import { EntityStatus } from '../models/enums/status';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,12 @@ export class CampusService {
 
   getCampusById(id: String): Observable<Campus> {
     return this.httpClient.get<Campus>(`${this.apiUrl}/${id}`, this.httpOptions);
+  }
+
+  getAllCampusByStatus(status: EntityStatus): Observable<Campus[]> {
+    return this.httpClient.get<Campus[]>(`${this.apiUrl}?status=${status}`, this.httpOptions).pipe(
+      map(results => results.sort((a, b) => a.name.localeCompare(b.name)))
+    );
   }
 
   updateCampus(id: String, campus: CampusCreate): Observable<Campus> {
