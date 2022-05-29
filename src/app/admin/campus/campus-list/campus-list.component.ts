@@ -63,7 +63,7 @@ export class CampusListComponent implements OnInit {
           }
           if (this.selectedFilter == 2 ) {
             this.loaderService.show();
-            this.campuses$ = this.campusService.getAllCampusByStatus(EntityStatus.ENABLED)
+            this.campuses$ = this.campusService.getAllCampusesByStatus(EntityStatus.ENABLED)
               .pipe(
                 finalize(() => {
                   this.loaderService.hide();
@@ -72,7 +72,7 @@ export class CampusListComponent implements OnInit {
           }
           if (this.selectedFilter == 3) {
             this.loaderService.show();
-            this.campuses$ = this.campusService.getAllCampusByStatus(EntityStatus.DISABLED)
+            this.campuses$ = this.campusService.getAllCampusesByStatus(EntityStatus.DISABLED)
               .pipe(
                 finalize(() => {
                   this.loaderService.hide();
