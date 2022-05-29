@@ -35,7 +35,7 @@ export class CampusService {
     return this.httpClient.get<Campus>(`${this.apiUrl}/${id}`, this.httpOptions);
   }
 
-  getAllCampusByStatus(status: EntityStatus): Observable<Campus[]> {
+  getAllCampusesByStatus(status: EntityStatus): Observable<Campus[]> {
     return this.httpClient.get<Campus[]>(`${this.apiUrl}?status=${status}`, this.httpOptions).pipe(
       map(results => results.sort((a, b) => a.name.localeCompare(b.name)))
     );
