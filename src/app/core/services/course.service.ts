@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Course, CourseCreate } from '../models/course.model';
 import { EntityUpdateStatus } from '../models/status.model';
 import { map } from "rxjs/operators";
+import {EntityStatus} from "../models/enums/status";
+
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,12 @@ export class CourseService {
 
   getCourses(): Observable<Course[]> {
     return this.httpClient.get<Course[]>(this.apiUrl, this.httpOptions).pipe(
+      map(results => results.sort((a, b) => a.name.localeCompare(b.name)))
+    );
+  }
+
+  getAllCoursesByStatus(status: EntityStatus): Observable<Course[]> {
+    return this.httpClient.get<Course[]>(`${this.apiUrl}?status=${status}`, this.httpOptions).pipe(
       map(results => results.sort((a, b) => a.name.localeCompare(b.name)))
     );
   }
