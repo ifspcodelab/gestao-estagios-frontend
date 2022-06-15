@@ -44,15 +44,7 @@ export class CourseListComponent implements OnInit {
       data: {
         filterNames: this.filterNames,
         onChange: ($event: MatRadioChange) => {
-          if ($event.value == 1) {
-            this.selectedFilter = 1;
-          }
-          if ($event.value == 2) {
-            this.selectedFilter = 2;
-          }
-          if ($event.value == 3) {
-            this.selectedFilter = 3;
-          } 
+          this.selectedFilter = $event.value;
         },
         handleFilter: () => {
           if (this.selectedFilter == 1) {
