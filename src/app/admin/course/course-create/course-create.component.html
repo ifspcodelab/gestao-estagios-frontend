@@ -82,14 +82,18 @@
             <mat-label>Número de Períodos</mat-label>
             <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="numberOfPeriods"
               name="numberOfPeriods" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
-            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.required && submitted">Número de Período é
-              obrigatório
+            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.required && submitted">
+              Número de Período é obrigatório
             </mat-error>
-            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.numberOfPeriods && submitted">Número de Período
-              inválido
+            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.numberOfPeriods && submitted">
+              Número de Período inválido
             </mat-error>
-            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.numeric && submitted">Número de Período deve conter
-              apenas números</mat-error>
+            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.numeric && submitted">
+              Número de Período deve conter apenas números
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.max && submitted">
+              Número de Períodos deve ser menor ou igual a 20
+            </mat-error>
             <mat-error *ngIf="fieldErrors('numberOfPeriods')?.serverError && submitted">
               {{ fieldErrors('numberOfPeriods')?.serverError }}
             </mat-error>
