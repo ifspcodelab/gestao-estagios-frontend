@@ -87,7 +87,7 @@ export class CourseListComponent implements OnInit {
   }
 
   handleEnabled(course: Course): boolean {
-    return course.status == EntityStatus.ENABLED ? true : false;
+    return course.status == EntityStatus.ENABLED;
   }
 
   toggleCourse($event: Event, course: Course) {
