@@ -35,7 +35,7 @@ export class CurriculumService {
   }
 
   getCurriculumsByStatus(courseId: string, status: EntityStatus): Observable<Curriculum[]>{
-    const url = `${this.apiUrl}/${courseId}/curriculums?=${status}`;
+    const url = `${this.apiUrl}/${courseId}/curriculums?status=${status}`;
     return this.httpClient.get<Curriculum[]>(url, this.httpOptions).pipe(
       map(results => results.sort((a, b) => a.code.localeCompare(b.code)))
     );

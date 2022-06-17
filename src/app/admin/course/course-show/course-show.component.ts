@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Course } from "../../../core/models/course.model";
-import { CourseService } from 'src/app/core/services/course.service';
-import { ActivatedRoute, Router } from "@angular/router";
-import { finalize, first, map } from "rxjs/operators";
-import { NotificationService } from "../../../core/services/notification.service";
-import { ConfirmDialogService } from "../../../core/services/confirm-dialog.service";
-import { MatDialog } from "@angular/material/dialog";
-import { ProblemDetail } from "../../../core/interfaces/problem-detail.interface";
-import { ListItens } from "../../../core/components/content/content-detail/content-detail.component";
-import { LoaderService } from "../../../core/services/loader.service";
-import { Department } from 'src/app/core/models/department.model';
-import { Campus } from 'src/app/core/models/campus.model';
-import { CurriculumService } from 'src/app/core/services/curriculum.service';
-import { Curriculum } from 'src/app/core/models/curriculum.model';
-import { CurriculumCreateComponent } from '../curriculum-create/curriculum-create.component';
-import { EntityStatus } from 'src/app/core/models/enums/status';
-import { EntityUpdateStatus } from 'src/app/core/models/status.model';
+import {Component, OnInit} from '@angular/core';
+import {Course} from "../../../core/models/course.model";
+import {CourseService} from 'src/app/core/services/course.service';
+import {ActivatedRoute, Router} from "@angular/router";
+import {finalize, first} from "rxjs/operators";
+import {NotificationService} from "../../../core/services/notification.service";
+import {ConfirmDialogService} from "../../../core/services/confirm-dialog.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ProblemDetail} from "../../../core/interfaces/problem-detail.interface";
+import {ListItens} from "../../../core/components/content/content-detail/content-detail.component";
+import {LoaderService} from "../../../core/services/loader.service";
+import {Department} from 'src/app/core/models/department.model';
+import {Campus} from 'src/app/core/models/campus.model';
+import {CurriculumService} from 'src/app/core/services/curriculum.service';
+import {Curriculum} from 'src/app/core/models/curriculum.model';
+import {CurriculumCreateComponent} from '../curriculum-create/curriculum-create.component';
+import {EntityStatus} from 'src/app/core/models/enums/status';
+import {EntityUpdateStatus} from 'src/app/core/models/status.model';
 
 @Component({
   selector: 'app-course-show',
@@ -50,38 +50,48 @@ export class CourseShowComponent implements OnInit {
   }
 
   handlerFilterSelected(selected: number) {
+    this.loaderService.show();
     if (selected == 1) {
       this.curriculumService.getCurriculums(this.course.id)
-      .pipe(first())
+      .pipe(
+        first(),
+        finalize(() => {
+          this.loaderService.hide();
+        })
+      )
       .subscribe(
         curriculums => {
           this.curriculums = curriculums
-        },
-      )
+        }
+      );
     }
     if (selected == 2) {
-      this.curriculumService.getCurriculums(this.course.id)
-      .pipe(
-        first(),
-        map(curriculum => curriculum.filter(c => c.status === EntityStatus.ENABLED)),
-      )
-      .subscribe(
-        curriculums => {
-          this.curriculums = curriculums
-        },
-      )
+      this.curriculumService.getCurriculumsByStatus(this.course.id, EntityStatus.ENABLED)
+        .pipe(
+          first(),
+          finalize(() => {
+            this.loaderService.hide();
+          })
+        )
+        .subscribe(
+          curriculums => {
+            this.curriculums = curriculums
+          }
+        );
     }
     if (selected == 3) {
-      this.curriculumService.getCurriculums(this.course.id)
-      .pipe(
-        first(),
-        map(curriculum => curriculum.filter(c => c.status === EntityStatus.DISABLED)),
-      )
-      .subscribe(
-        curriculums => {
-          this.curriculums = curriculums
-        },
-      )
+      this.curriculumService.getCurriculumsByStatus(this.course.id, EntityStatus.DISABLED)
+        .pipe(
+          first(),
+          finalize(() => {
+            this.loaderService.hide();
+          })
+        )
+        .subscribe(
+          curriculums => {
+            this.curriculums = curriculums
+          }
+        );
     }
   }
 
