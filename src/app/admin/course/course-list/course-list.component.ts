@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatRadioChange} from '@angular/material/radio';
 import {Observable} from 'rxjs';
-import {finalize, first} from "rxjs/operators";
+import {finalize, first, retry} from "rxjs/operators";
 import {FilterDialogComponent} from 'src/app/core/components/filter-dialog/filter-dialog.component';
 import {Course} from 'src/app/core/models/course.model';
 import {EntityStatus} from 'src/app/core/models/enums/status';
@@ -33,6 +33,7 @@ export class CourseListComponent implements OnInit {
     this.loaderService.show();
     this.courses$ = this.courseService.getCourses()
       .pipe(
+        retry(1),
         finalize(() => {
           this.loaderService.hide();
         })
