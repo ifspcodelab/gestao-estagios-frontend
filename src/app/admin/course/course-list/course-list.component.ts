@@ -20,6 +20,7 @@ export class CourseListComponent implements OnInit {
   courses$: Observable<Course[]>;
   selectedFilter: number = 1;
   filterNames: string[] = ['Todos', 'Habilitados', 'Desabilitados'];
+  errorMessage: string = "";
 
   constructor(
     private courseService: CourseService,
