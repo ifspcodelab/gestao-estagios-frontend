@@ -93,7 +93,7 @@ export class CourseListComponent implements OnInit {
   toggleCourse($event: Event, course: Course) {
     $event.stopPropagation();
     if (course.status === EntityStatus.ENABLED){
-      this.courseService.patchCampus(course.id, new EntityUpdateStatus(EntityStatus.DISABLED))
+      this.courseService.patchCourse(course.id, new EntityUpdateStatus(EntityStatus.DISABLED))
         .pipe(first())
         .subscribe(
           _ => {
@@ -102,7 +102,7 @@ export class CourseListComponent implements OnInit {
           }
         )
     } else {
-      this.courseService.patchCampus(course.id, new EntityUpdateStatus(EntityStatus.ENABLED))
+      this.courseService.patchCourse(course.id, new EntityUpdateStatus(EntityStatus.ENABLED))
         .pipe(first())
         .subscribe(
           _ => {

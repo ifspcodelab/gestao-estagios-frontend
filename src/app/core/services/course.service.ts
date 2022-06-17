@@ -51,7 +51,7 @@ export class CourseService {
     return this.httpClient.delete(`${this.apiUrl}/${id}`, this.httpOptions);
   }
 
-  patchCampus(id: String, courseUpdateStatus: EntityUpdateStatus): Observable<Course> {
+  patchCourse(id: String, courseUpdateStatus: EntityUpdateStatus): Observable<Course> {
     return this.httpClient.patch<Course>(`${this.apiUrl}/${id}`, courseUpdateStatus, this.httpOptions);
   }
 }
