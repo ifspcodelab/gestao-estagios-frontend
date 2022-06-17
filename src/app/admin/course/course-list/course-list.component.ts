@@ -35,6 +35,7 @@ export class CourseListComponent implements OnInit {
       .pipe(
         retry(1),
         catchError(() => {
+          this.notificationService.error("Erro ao carregar os cursos");
           return of([]);
         }),
         finalize(() => {
