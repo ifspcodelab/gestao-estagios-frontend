@@ -173,7 +173,7 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
         [Validators.required, AppValidators.notBlank, Validators.max(10)]
       ],
       numberOfPeriods: ['',
-        [Validators.required, AppValidators.numeric, Validators.max(20)]
+        [Validators.required, AppValidators.numeric, Validators.min(1), Validators.max(20)]
       ],
       campus: ['',
         [Validators.required]
