@@ -86,10 +86,13 @@
               Número de Período é obrigatório
             </mat-error>
             <mat-error *ngIf="fieldErrors('numberOfPeriods')?.numberOfPeriods && submitted">
-              Número de Período inválido
+              Número de Período Inválido
             </mat-error>
             <mat-error *ngIf="fieldErrors('numberOfPeriods')?.numeric && submitted">
               Número de Período deve conter apenas números
+            </mat-error>
+            <mat-error *ngIf="fieldErrors('numberOfPeriods')?.min && submitted">
+              Número de Períodos deve ser maior que 0
             </mat-error>
             <mat-error *ngIf="fieldErrors('numberOfPeriods')?.max && submitted">
               Número de Períodos deve ser menor ou igual a 20
