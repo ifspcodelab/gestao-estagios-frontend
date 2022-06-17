@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Curriculum, CurriculumCreate } from '../models/curriculum.model';
 import { EntityUpdateStatus } from '../models/status.model';
 import { map } from "rxjs/operators";
+import {EntityStatus} from "../models/enums/status";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,13 @@ export class CurriculumService {
 
   getCurriculums(courseId: string): Observable<Curriculum[]> {
     const url = `${this.apiUrl}/${courseId}/curriculums`;
+    return this.httpClient.get<Curriculum[]>(url, this.httpOptions).pipe(
+      map(results => results.sort((a, b) => a.code.localeCompare(b.code)))
+    );
+  }
+
+  getCurriculumsByStatus(courseId: string, status: EntityStatus): Observable<Curriculum[]>{
+    const url = `${this.apiUrl}/${courseId}/curriculums?=${status}`;
     return this.httpClient.get<Curriculum[]>(url, this.httpOptions).pipe(
       map(results => results.sort((a, b) => a.code.localeCompare(b.code)))
     );
