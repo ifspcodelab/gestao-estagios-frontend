@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {MatRadioChange} from '@angular/material/radio';
-import {Observable, of} from 'rxjs';
-import {catchError, finalize, first, retry} from "rxjs/operators";
-import {FilterDialogComponent} from 'src/app/core/components/filter-dialog/filter-dialog.component';
-import {Course} from 'src/app/core/models/course.model';
-import {EntityStatus} from 'src/app/core/models/enums/status';
-import {EntityUpdateStatus} from 'src/app/core/models/status.model';
-import {CourseService} from 'src/app/core/services/course.service';
-import {LoaderService} from 'src/app/core/services/loader.service';
-import {NotificationService} from 'src/app/core/services/notification.service';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatRadioChange } from '@angular/material/radio';
+import { Observable, of } from 'rxjs';
+import { catchError, finalize, first, retry } from "rxjs/operators";
+import { FilterDialogComponent } from 'src/app/core/components/filter-dialog/filter-dialog.component';
+import { Course } from 'src/app/core/models/course.model';
+import { EntityStatus } from 'src/app/core/models/enums/status';
+import { EntityUpdateStatus } from 'src/app/core/models/status.model';
+import { CourseService } from 'src/app/core/services/course.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-course-list',
