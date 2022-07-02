@@ -153,6 +153,7 @@
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportDraftSubmissionDeadlineMonths" name="monthlyReportDraftSubmissionDeadlineMonths" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.required">Rascunho do relatório mensal é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.numeric">Rascunho do relatório mensal deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.max">Rascunho do relatório mensal não deve ser maior que 12</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.serverError && submitted">
                   {{ fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.serverError }}
                 </mat-error>
