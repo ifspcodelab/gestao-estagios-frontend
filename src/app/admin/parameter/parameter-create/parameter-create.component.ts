@@ -73,10 +73,10 @@ export class ParameterCreateComponent implements OnInit {
         [Validators.required, AppValidators.notBlank]
       ],
       advisorRequestDeadline: ['',
-        [Validators.required, AppValidators.numeric]
+        [Validators.required, AppValidators.numeric, Validators.max(180)]
       ],
       activityPlanAppraisalDeadline: ['',
-        [Validators.required, AppValidators.numeric]
+        [Validators.required, AppValidators.numeric, Validators.max(180)]
       ],
       activityPlanLink: ['',
         [Validators.required, AppValidators.notBlank]
@@ -91,10 +91,10 @@ export class ParameterCreateComponent implements OnInit {
         [Validators.required, AppValidators.numeric]
       ],
       monthlyReportDraftAppraisalDeadlineDays: ['',
-        [Validators.required, AppValidators.numeric]
+        [Validators.required, AppValidators.numeric, Validators.max(180)]
       ],
       monthlyReportAppraisalDeadlineDays: ['',
-        [Validators.required, AppValidators.numeric]
+        [Validators.required, AppValidators.numeric, Validators.max(180)]
       ],
       initialDispatchHtml: ['',
         [Validators.required, AppValidators.notBlank]
