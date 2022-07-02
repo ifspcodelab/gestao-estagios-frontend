@@ -169,6 +169,7 @@
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="activityPlanFileSizeMegabytes" name="activityPlanFileSizeMegabytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.required">Plano de atividades é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.numeric">Plano de atividades deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.max">Plano de atividades não deve conter mais que 100MB</mat-error>
                 <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.serverError && submitted">
                   {{ fieldErrors('activityPlanFileSizeMegabytes')?.serverError }}
                 </mat-error>
@@ -178,7 +179,8 @@
                 <mat-label>Relatório mensal</mat-label>
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportFileSizeMegabytes" name="monthlyReportFileSizeMegabytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.required">Relatório mensal  é obrigatório</mat-error>
-                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.numeric">Relatório mensal  deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.numeric">Relatório mensal deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.max">Relatório mensal não deve conter mais que 100MB</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.serverError && submitted">
                   {{ fieldErrors('monthlyReportFileSizeMegabytes')?.serverError }}
                 </mat-error>

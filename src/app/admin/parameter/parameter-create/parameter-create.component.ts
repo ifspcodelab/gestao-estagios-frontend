@@ -82,10 +82,10 @@ export class ParameterCreateComponent implements OnInit {
         [Validators.required, AppValidators.notBlank]
       ],
       activityPlanFileSizeMegabytes: ['',
-        [Validators.required, AppValidators.numeric]
+        [Validators.required, AppValidators.numeric, Validators.max(100)]
       ],
       monthlyReportFileSizeMegabytes: ['',
-        [Validators.required, AppValidators.numeric]
+        [Validators.required, AppValidators.numeric, Validators.max(100)]
       ],
       monthlyReportDraftSubmissionDeadlineMonths: ['',
         [Validators.required, AppValidators.numeric, Validators.max(12)]
