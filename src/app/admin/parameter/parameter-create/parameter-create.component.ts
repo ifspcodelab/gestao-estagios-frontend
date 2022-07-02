@@ -88,7 +88,7 @@ export class ParameterCreateComponent implements OnInit {
         [Validators.required, AppValidators.numeric]
       ],
       monthlyReportDraftSubmissionDeadlineMonths: ['',
-        [Validators.required, AppValidators.numeric]
+        [Validators.required, AppValidators.numeric, Validators.max(12)]
       ],
       monthlyReportDraftAppraisalDeadlineDays: ['',
         [Validators.required, AppValidators.numeric, Validators.max(180)]
