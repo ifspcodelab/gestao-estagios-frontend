@@ -103,6 +103,7 @@
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="advisorRequestDeadline" name="advisorRequestDeadline" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.required">Avaliação do pedido é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.numeric">Avaliação do pedido deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.min">Avaliação do pedido não deve ser menor que 0</mat-error>
                 <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.max">Avaliação do pedido não deve ser maior que 180</mat-error>
                 <mat-error *ngIf="fieldErrors('advisorRequestDeadline')?.serverError && submitted">
                   {{ fieldErrors('advisorRequestDeadline')?.serverError }}
@@ -117,6 +118,7 @@
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="activityPlanAppraisalDeadline" name="activityPlanAppraisalDeadline" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.required">Avaliação do plano de atividades é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.numeric">Avaliação do plano de atividades deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.min">Avaliação do plano não deve ser menor que 0</mat-error>
                 <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.max">Avaliação do plano não deve ser maior que 180</mat-error>
                 <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.serverError && submitted">
                   {{ fieldErrors('activityPlanAppraisalDeadline')?.serverError }}
@@ -128,6 +130,7 @@
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportDraftAppraisalDeadlineDays" name="monthlyReportDraftAppraisalDeadlineDays" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.required">Avaliação do rascunho do relatório mensal é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.numeric">Avaliação do rascunho do relatório mensal deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.min">Avaliação do rascunho não deve ser menor que 0</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.max">Avaliação do rascunho não deve ser maior que 180</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.serverError && submitted">
                   {{ fieldErrors('monthlyReportDraftAppraisalDeadlineDays')?.serverError }}
@@ -139,6 +142,7 @@
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportAppraisalDeadlineDays" name="monthlyReportAppraisalDeadlineDays" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('monthlyReportAppraisalDeadlineDays')?.required">Avaliação do relatório mensal é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportAppraisalDeadlineDays')?.numeric">Avaliação do relatório mensal deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportAppraisalDeadlineDays')?.min">Avaliação do relatório mensal não deve ser menor que 0</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportAppraisalDeadlineDays')?.max">Avaliação do relatório mensal não deve ser maior que 180</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportAppraisalDeadlineDays')?.serverError && submitted">
                   {{ fieldErrors('monthlyReportAppraisalDeadlineDays')?.serverError }}
@@ -153,6 +157,7 @@
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportDraftSubmissionDeadlineMonths" name="monthlyReportDraftSubmissionDeadlineMonths" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.required">Rascunho do relatório mensal é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.numeric">Rascunho do relatório mensal deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.min">Rascunho do relatório mensal não deve ser menor que 0</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.max">Rascunho do relatório mensal não deve ser maior que 12</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.serverError && submitted">
                   {{ fieldErrors('monthlyReportDraftSubmissionDeadlineMonths')?.serverError }}
@@ -169,6 +174,7 @@
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="activityPlanFileSizeMegabytes" name="activityPlanFileSizeMegabytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.required">Plano de atividades é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.numeric">Plano de atividades deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.min">Plano de atividades não deve ser menor que 0</mat-error>
                 <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.max">Plano de atividades não deve conter mais que 100MB</mat-error>
                 <mat-error *ngIf="fieldErrors('activityPlanFileSizeMegabytes')?.serverError && submitted">
                   {{ fieldErrors('activityPlanFileSizeMegabytes')?.serverError }}
@@ -180,6 +186,7 @@
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="monthlyReportFileSizeMegabytes" name="monthlyReportFileSizeMegabytes" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.required">Relatório mensal  é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.numeric">Relatório mensal deve conter apenas números</mat-error>
+                <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.min">Relatório mensal não deve ser menor que 0</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.max">Relatório mensal não deve conter mais que 100MB</mat-error>
                 <mat-error *ngIf="fieldErrors('monthlyReportFileSizeMegabytes')?.serverError && submitted">
                   {{ fieldErrors('monthlyReportFileSizeMegabytes')?.serverError }}
