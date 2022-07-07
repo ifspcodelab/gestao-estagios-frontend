@@ -195,7 +195,7 @@ export class RegistrationComponent implements OnInit {
         [Validators.required, Validators.email, AppValidators.notBlank, AppValidators.institutionEmail]
       ],
       registration: ['',
-        [Validators.required, AppValidators.notBlank, AppValidators.exactLength(9)]
+        [Validators.required, AppValidators.notBlank, AppValidators.exactLength(9), AppValidators.startWithTwoAlphas]
       ],
       campus: ['',
         [Validators.required, AppValidators.notBlank]
@@ -219,7 +219,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRegister() {
-    this.submitted = true; 
+    this.submitted = true;
 
     if (!this.form.valid) {
       return;
