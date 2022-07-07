@@ -114,7 +114,7 @@
               </mat-form-field>
 
               <mat-form-field class="form-field-sm">
-                <mat-label>Avaiação do plano de atividades por um orientador </mat-label>
+                <mat-label>Avaliação do plano de atividades por um orientador </mat-label>
                 <input type="number" min="0" appearance="fill" matInput placeholder="" formControlName="activityPlanAppraisalDeadline" name="activityPlanAppraisalDeadline" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
                 <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.required">Avaliação do plano de atividades é obrigatório</mat-error>
                 <mat-error *ngIf="fieldErrors('activityPlanAppraisalDeadline')?.numeric">Avaliação do plano de atividades deve conter apenas números</mat-error>
