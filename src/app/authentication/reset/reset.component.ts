@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { NotificationService } from "../../core/services/notification.service";
 import { AppValidators } from "../../core/validators/app-validators";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -15,14 +15,14 @@ import { EntityStatus } from 'src/app/core/models/enums/status';
 })
 export class ResetComponent implements OnInit {
   hide: boolean = false;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
 
   id: string | null;
   advisor: Advisor;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
@@ -77,7 +77,7 @@ export class ResetComponent implements OnInit {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       password: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.lowerCase, AppValidators.upperCase, AppValidators.number, Validators.minLength(8)]

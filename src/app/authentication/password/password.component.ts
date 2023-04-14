@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { AppValidators } from "../../core/validators/app-validators";
 import { NotificationService } from "../../core/services/notification.service";
 import { Student } from "../../core/models/student.model";
@@ -15,12 +15,12 @@ import { first } from 'rxjs/operators';
 export class PasswordComponent implements OnInit {
 
   hide: boolean = false;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
   user: User;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private notificationService: NotificationService,
     private userService: UserService,
   ) { }
@@ -60,7 +60,7 @@ export class PasswordComponent implements OnInit {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       registration: ['',
         [Validators.required, AppValidators.notBlank, Validators.maxLength(9), Validators.minLength(8)]

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { AppValidators } from "../../core/validators/app-validators";
 import { MatDialog } from "@angular/material/dialog";
 import { TermsComponent } from "../terms/terms.component";
@@ -29,7 +29,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegistrationComponent implements OnInit {
 
   hide: boolean = false;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
 
   campuses: Campus[];
@@ -47,7 +47,7 @@ export class RegistrationComponent implements OnInit {
   curriculumSelected?: Curriculum;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private dialog: MatDialog,
     private router: Router,
     private campusService: CampusService,
@@ -186,7 +186,7 @@ export class RegistrationComponent implements OnInit {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       name: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.alpha]

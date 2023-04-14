@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, first, map } from 'rxjs/operators';
@@ -26,7 +26,7 @@ import { AppValidators } from 'src/app/core/validators/app-validators';
 export class AdvisorCreateComponent implements OnInit {
   loading: boolean;
   createMode: boolean;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
   isAdmin = false;
   id: string | null;
@@ -51,7 +51,7 @@ export class AdvisorCreateComponent implements OnInit {
     private campusService: CampusService,
     private departmentService: DepartmentService,
     private courseService: CourseService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
@@ -167,7 +167,7 @@ export class AdvisorCreateComponent implements OnInit {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       registration: ['', [ Validators.required, AppValidators.notBlank ]],
       name: ['', [ Validators.required, AppValidators.notBlank ]],

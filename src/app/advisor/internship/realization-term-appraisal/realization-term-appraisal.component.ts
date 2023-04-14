@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RequestStatus } from 'src/app/core/models/enums/request-status';
 import { RealizationTermAppraisal } from 'src/app/core/models/realization-term.model';
@@ -13,7 +13,7 @@ import { RealizationTermService } from 'src/app/core/services/realization-term.s
   styleUrls: ['./realization-term-appraisal.component.scss']
 })
 export class RealizationTermAppraisalComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted: boolean;
   realizationTermStatus: RequestStatus;
 
@@ -21,7 +21,7 @@ export class RealizationTermAppraisalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { internshipId: string, realizationTermId: string, deferred: boolean },
     private dialogRef: MatDialogRef<RealizationTermAppraisalComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private realizationTermService: RealizationTermService,
     private notificationService: NotificationService
   ) { }
@@ -39,7 +39,7 @@ export class RealizationTermAppraisalComponent implements OnInit {
     this.form = this.buildForm();
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     if (this.data.deferred) {
       return this.fb.group({
         'details': ['', [Validators.required]],

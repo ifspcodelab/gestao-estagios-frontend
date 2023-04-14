@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from 'src/app/core/services/course.service';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize, first, map, startWith } from "rxjs/operators";
 
@@ -24,7 +24,7 @@ import { EntityStatus } from 'src/app/core/models/enums/status';
 })
 export class CourseCreateComponent implements OnInit, CanBeSave {
   loading: boolean = true;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
   createMode: boolean;
   id: string | null;
@@ -39,7 +39,7 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
 
   constructor(
     private courseService: CourseService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
@@ -164,7 +164,7 @@ export class CourseCreateComponent implements OnInit, CanBeSave {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       name: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.alpha]

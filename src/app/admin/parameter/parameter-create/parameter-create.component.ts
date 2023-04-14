@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { AppValidators } from "../../../core/validators/app-validators";
 import { Parameter, ParameterCreate } from "../../../core/models/parameter.model";
 import { ParameterService } from "../../../core/services/parameter.service";
@@ -16,14 +16,14 @@ import { MatDialog } from "@angular/material/dialog";
   styleUrls: ['./parameter-create.component.scss']
 })
 export class ParameterCreateComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
   parameter: Parameter;
   createMode: boolean;
   loading: boolean = true;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private parameterService: ParameterService,
     private notificationService: NotificationService,
     private loaderService: LoaderService,
@@ -61,7 +61,7 @@ export class ParameterCreateComponent implements OnInit {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       internshipRequiredOrNotMessage: ['',
         [Validators.required, AppValidators.notBlank]

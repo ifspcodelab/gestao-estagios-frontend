@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { RequestAppraisalService } from 'src/app/core/services/request-appraisal
   styleUrls: ['./request-appraisal-create.component.scss']
 })
 export class RequestAppraisalCreateComponent implements OnInit {
-  form: FormGroup; 
+  form: UntypedFormGroup; 
   submitted: boolean = false;
   date: number;
   minDate: string;
@@ -22,7 +22,7 @@ export class RequestAppraisalCreateComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { advisorRequestId: string, deferred: boolean },
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private datePipe: DatePipe,
     private dialogRef: MatDialogRef<RequestAppraisalCreateComponent>,
     private router: Router,
@@ -53,7 +53,7 @@ export class RequestAppraisalCreateComponent implements OnInit {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     if (this.data.deferred) {
       return this.fb.group({
         'details': ['', [Validators.required]],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -27,7 +27,7 @@ import { AppValidators } from 'src/app/core/validators/app-validators';
 })
 export class AdvisorRequestCreateComponent implements OnInit {
   advisors$: Observable<Advisor[]>;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted: boolean = false;
   parameter: Parameter;
   internshipMessage: string = '';
@@ -37,7 +37,7 @@ export class AdvisorRequestCreateComponent implements OnInit {
   internshipType: InternshipType = InternshipType.REQUIRED_OR_NOT;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private studentService: StudentService,
     private advisorService: AdvisorService,
     private advisorRequestService: AdvisorRequestService,
@@ -82,7 +82,7 @@ export class AdvisorRequestCreateComponent implements OnInit {
 
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       details: ['',
         [Validators.required, AppValidators.notBlank]

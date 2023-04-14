@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { finalize, first } from 'rxjs/operators';
 import { InternshipStatus } from 'src/app/core/models/enums/InternshipStatus';
@@ -22,7 +22,7 @@ import { ParameterService } from 'src/app/core/services/parameter.service';
 })
 export class FinalMonthlyReportListComponent implements OnInit {
   loading: boolean = true;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted: boolean = false;
   fileName: string = "Nenhum arquivo anexado.";
   formData: FormData;
@@ -32,7 +32,7 @@ export class FinalMonthlyReportListComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { monthlyReport: MonthlyReport, internship: Internship },
     private datePipe: DatePipe,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private parameterService: ParameterService,
     private loaderService: LoaderService,
     private notificationService: NotificationService,
@@ -67,7 +67,7 @@ export class FinalMonthlyReportListComponent implements OnInit {
       )
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       file: ['',
         [Validators.required]

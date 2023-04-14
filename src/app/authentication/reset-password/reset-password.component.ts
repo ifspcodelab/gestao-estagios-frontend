@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { UserRedefinePassword } from 'src/app/core/models/user.model';
@@ -15,13 +15,13 @@ import { AppValidators } from 'src/app/core/validators/app-validators';
 export class ResetPasswordComponent implements OnInit {
 
   hide: boolean = false;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
 
   id: string | null;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
@@ -60,7 +60,7 @@ export class ResetPasswordComponent implements OnInit {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       password: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.lowerCase, AppValidators.upperCase, AppValidators.number, Validators.minLength(8)]

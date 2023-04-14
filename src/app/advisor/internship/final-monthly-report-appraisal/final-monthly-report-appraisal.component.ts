@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { finalize, first } from 'rxjs/operators';
 import { RequestStatus } from 'src/app/core/models/enums/request-status';
@@ -17,7 +17,7 @@ import { ParameterService } from 'src/app/core/services/parameter.service';
   styleUrls: ['./final-monthly-report-appraisal.component.scss']
 })
 export class FinalMonthlyReportAppraisalComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted: boolean;
   finalStatus: RequestStatus;
   fileName: string = 'Nenhum arquivo anexado.';
@@ -27,7 +27,7 @@ export class FinalMonthlyReportAppraisalComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { internshipId: string, monthlyReportId: string, finalId: string, deferred: boolean },
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private finalMonthlyReportSubmissionService: FinalMonthlyReportSubmissionService,
     private monthlyReportService: MonthlyReportService,
     private notificationService: NotificationService,
@@ -59,7 +59,7 @@ export class FinalMonthlyReportAppraisalComponent implements OnInit {
       )
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     if (this.data.deferred) {
       return this.fb.group({
         'details': ['', [Validators.required]],
