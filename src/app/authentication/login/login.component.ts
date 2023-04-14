@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Role } from 'src/app/core/models/enums/role';
@@ -17,11 +17,11 @@ import {AppValidators} from "../../core/validators/app-validators";
 })
 export class LoginComponent implements OnInit {
   hide: boolean = false;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService,
     private localStorageService: LocalStorageService,
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       registration: ['',
         [Validators.required, AppValidators.notBlank]

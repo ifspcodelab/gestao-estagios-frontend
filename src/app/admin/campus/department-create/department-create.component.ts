@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
 import { Violation } from 'src/app/core/interfaces/violation.interface';
@@ -15,12 +15,12 @@ import { Campus } from "../../../core/models/campus.model";
   styleUrls: ['./department-create.component.scss']
 })
 export class DepartmentCreateComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted: boolean = false;
   createMode: boolean;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private departmentService: DepartmentService,
     private dialogRef: MatDialogRef<DepartmentCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { campus: Campus, department?: Department }
@@ -48,7 +48,7 @@ export class DepartmentCreateComponent implements OnInit {
     }
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       name: ['', [Validators.required, AppValidators.notBlank]],
       abbreviation: ['', [Validators.required, AppValidators.notBlank, AppValidators.exactLength(3)]]

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
 import { DraftMonthlyReportSubmissionAppraise } from 'src/app/core/models/draft-monthly-report-submission.model';
@@ -13,13 +13,13 @@ import { NotificationService } from 'src/app/core/services/notification.service'
   styleUrls: ['./draft-monthly-report-appraisal.component.scss']
 })
 export class DraftMonthlyReportAppraisalComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted: boolean;
   draftStatus: RequestStatus;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { internshipId: string, monthlyReportId: string, draftId: string, deferred: boolean },
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private draftMonthlyReportSubmissionService: DraftMonthlyReportSubmissionService,
     private notificationService: NotificationService,
     private dialogRef: MatDialogRef<DraftMonthlyReportAppraisalComponent>
@@ -30,7 +30,7 @@ export class DraftMonthlyReportAppraisalComponent implements OnInit {
     this.form = this.buildForm();
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     if (this.data.deferred) {
       return this.fb.group({
         'details': ['', [Validators.required]],

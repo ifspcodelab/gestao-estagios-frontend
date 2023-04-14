@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, first } from 'rxjs/operators';
 import { ActivityPlan, ActivityPlanUpdate } from 'src/app/core/models/activity-plan.model';
@@ -33,7 +33,7 @@ export class InternshipShowComponent implements OnInit {
   internship: Internship;
   id: string | null;
   loading: boolean = true;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
   minDate: Date;
   maxDate: Date;
@@ -47,13 +47,13 @@ export class InternshipShowComponent implements OnInit {
   displayedColumns: string[] = ['month', 'draft', 'report'];
   monthlyReports: MonthlyReport[] = [];
   isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.XSmall);
-  formRealizationTerm: FormGroup;
+  formRealizationTerm: UntypedFormGroup;
   internshipStartDate: string;
   internshipEndDate: string;
 
   constructor(
-    private fb: FormBuilder,
-    private fbrt: FormBuilder,
+    private fb: UntypedFormBuilder,
+    private fbrt: UntypedFormBuilder,
     private route: ActivatedRoute,
     private loaderService: LoaderService,
     private internshipService: InternshipService,
@@ -222,7 +222,7 @@ export class InternshipShowComponent implements OnInit {
     return this.field(path)?.errors;
   }
 
-  buildFormRealizationTerm(): FormGroup {
+  buildFormRealizationTerm(): UntypedFormGroup {
     return this.fbrt.group({
       internshipStartDate: ['',
         [Validators.required]
@@ -236,7 +236,7 @@ export class InternshipShowComponent implements OnInit {
     });
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     if (!this.handleInternshipIsInProgress()) {
       return this.fb.group({
         companyName: ['',

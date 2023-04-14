@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CampusService } from "../../../core/services/campus.service";
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize, first, map, startWith } from "rxjs/operators";
 
@@ -27,7 +27,7 @@ import { Address, AddressCreate } from 'src/app/core/models/address.model';
 })
 export class CampusCreateComponent implements OnInit, CanBeSave {
   loading: boolean = true;
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
   createMode: boolean;
   id: string | null;
@@ -42,7 +42,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
 
   constructor(
     private campusService: CampusService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
@@ -167,7 +167,7 @@ export class CampusCreateComponent implements OnInit, CanBeSave {
     return this.field(path)?.errors;
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       name: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.alpha]

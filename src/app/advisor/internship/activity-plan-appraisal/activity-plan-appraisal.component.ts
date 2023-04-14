@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { first } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
   styleUrls: ['./activity-plan-appraisal.component.scss']
 })
 export class ActivityPlanAppraisalComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted: boolean;
   activityPlanStatus: RequestStatus;
   isRequired: boolean | undefined = true;
@@ -22,7 +22,7 @@ export class ActivityPlanAppraisalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { internshipId: string, activityPlanId: string, deferred: boolean },
     private dialogRef: MatDialogRef<ActivityPlanAppraisalComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private activityPlanService: ActivityPlanService,
     private notificationService: NotificationService
   ) { }
@@ -41,7 +41,7 @@ export class ActivityPlanAppraisalComponent implements OnInit {
     this.form = this.buildForm();
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     if (this.data.deferred) {
       return this.fb.group({
         'details': ['', [Validators.required]],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, first } from 'rxjs/operators';
 import { User, UserUpdate } from 'src/app/core/models/user.model';
@@ -14,7 +14,7 @@ import { AppValidators } from 'src/app/core/validators/app-validators';
   styleUrls: ['./account-edit.component.scss']
 })
 export class AccountEditComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading: boolean = true;
   submitted: boolean = false;
   registration: string;
@@ -25,7 +25,7 @@ export class AccountEditComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private loaderService: LoaderService,
     private userService: UserService,
     private notificationService: NotificationService,
@@ -59,7 +59,7 @@ export class AccountEditComponent implements OnInit {
       )
   }
 
-  buildForm(): FormGroup {
+  buildForm(): UntypedFormGroup {
     return this.fb.group({
       name: ['',
         [Validators.required, AppValidators.notBlank, AppValidators.alpha]
