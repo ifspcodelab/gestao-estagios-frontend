@@ -4,15 +4,15 @@
     <mat-checkbox color="primary" (change)="handleSendEmail()">Deseja receber o e-mail enviado para o aluno?</mat-checkbox>
     <mat-form-field class="form-field-lg">
       <mat-label>Motivo do indeferimento</mat-label>
-      <textarea 
+      <textarea
         cdkTextareaAutosize
         #autosize="cdkTextareaAutosize"
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="10"
-        appearance="fill" 
-        matInput 
-        placeholder="" 
-        formControlName="details" 
+        appearance="fill"
+        matInput
+        placeholder=""
+        formControlName="details"
         name="details"
       ></textarea>
       <mat-error *ngIf="fieldErrors('details')?.required && submitted">Motivo do indeferimento é obrigatório</mat-error>
@@ -23,18 +23,18 @@
     <fieldset>
       <mat-form-field class="form-field-lg">
         <mat-label>Orientações iniciais</mat-label>
-        <textarea 
+        <textarea
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
           cdkAutosizeMinRows="1"
           cdkAutosizeMaxRows="5"
-          appearance="fill" 
-          matInput 
-          placeholder="" 
-          formControlName="details" 
+          appearance="fill"
+          matInput
+          placeholder=""
+          formControlName="details"
           name="details"
         ></textarea>
-        <mat-error *ngIf="fieldErrors('details')?.required && submitted">Motivo do indeferimento é obrigatório</mat-error>
+        <mat-error *ngIf="fieldErrors('details')?.required && submitted">Orientação inicial é obrigatória</mat-error>
       </mat-form-field>
     </fieldset>
     <fieldset>
