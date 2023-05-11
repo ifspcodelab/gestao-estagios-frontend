@@ -1,27 +1,31 @@
-# GestaoEstagiosFrontend
+# Internship Management Front-end
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
+![Internship Management Front-end image](/readme-files/GestaoEstagioGif.gif)
 
-## Development server
+The Internship Management project aims to contribute to a better organization of internships
+at the Federal Institute of Education, Science and Technology of São Paulo.
+The application centralizes the information related to the sending of
+activity plans, reports, term of realization and request for orientation of internships.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The project work with the [Internship Management Back-end](https://github.com/ifspcodelab/gestao-estagios-backend).
 
-## Code scaffolding
+## How to run
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Clone this repo
 
-## Build
+2. Install [Node.js]( https://nodejs.org/en)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+3. Open the terminal in the same directory as the project and run `npm install`
 
-## Running unit tests
+4. Run with Angular
+```
+ng serve
+```
+5. Navigate to `http://localhost:4200/`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Tech Stack
 
-## Running end-to-end tests
+- Node.js
+- Angular CLI 14
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
